@@ -1,14 +1,15 @@
 package com.pre21.entity;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Table
 @Entity
 @Getter
-@AllArgsConstructor
+@Setter
 public class Answers {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
