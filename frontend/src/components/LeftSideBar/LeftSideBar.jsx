@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import Menu from './Menu';
 
 const LeftMenuStyle = styled.div`
-	width: 164px;
+	min-width: 164px;
 	border-right: 1px solid rgb(209, 211, 215);
 	padding-top: 25px;
 
