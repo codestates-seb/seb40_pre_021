@@ -27,7 +27,7 @@
 		"import/resolver": {
 			"node": {
 				"paths": ["src"],
-				"extensions": [".js", ".ts", ".d.ts", ".tsx"]
+				"extensions": [".js", ".jsx"]
 			}
 		}
 	}
