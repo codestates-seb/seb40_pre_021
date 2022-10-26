@@ -8,6 +8,11 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * JavaDocs 테스트
+ * User entity입니다.
+ */
 @Entity
 @Getter
 @Setter
