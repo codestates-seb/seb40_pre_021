@@ -14,9 +14,9 @@ import java.util.List;
 @Table(name = "Users")
 public class User {
     @Id
-    @Column
+    @Column(name = "user_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    private Long userId;
 
     @Column(nullable = false)
     private String email;
@@ -31,8 +31,8 @@ public class User {
     private List<String> roles = new ArrayList<>();
 
     @Column(nullable = false)
-    private LocalDateTime created_at = LocalDateTime.now();
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(nullable = false, name = "LAST_MODIFIED_AT")
-    private LocalDateTime modified_at = LocalDateTime.now();
+    private LocalDateTime modifiedAt = LocalDateTime.now();
 }
