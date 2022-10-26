@@ -1,5 +1,7 @@
+import AppRouter from './routes/AppRouter';
+
 function App() {
-	return <div>스택오버플로우</div>;
+	return <AppRouter />;
 }
 
 export default App;
