@@ -8,13 +8,12 @@ import UserInfo from '../components/Mypage/UserInfo';
 import useDate from '../hooks/useDate';
 import { RiPencilFill } from 'react-icons/ri';
 import { BiMessageDetail } from 'react-icons/bi';
+import Navigation from '../components/Mypage/Navigation';
 
 const Mypage = () => {
 	const [info, setInfo] = useState({ nickname: '', createdAt: '' });
 	const { nickname, createdAt } = info;
 	const [date] = useDate(createdAt);
-
-	console.log(info);
 
 	useEffect(() => {
 		getMypageInfo(1).then((res) => {
@@ -24,15 +23,20 @@ const Mypage = () => {
 
 	return (
 		<Container>
-			<Avatar nickname={nickname} />
-			<UserInfoBox>
-				<UserNickname nickname={nickname} />
-				<UserInfo date={date} />
-			</UserInfoBox>
-			<ProfileBtnArea>
-				<ProfileButton text="Edit profile" icon={<RiPencilFill />} />
-				<ProfileButton text="Newwork profile" icon={<BiMessageDetail />} />
-			</ProfileBtnArea>
+			<Box>
+				<Avatar nickname={nickname} />
+				<UserInfoBox>
+					<UserNickname nickname={nickname} />
+					<UserInfo date={date} />
+				</UserInfoBox>
+				<ProfileBtnArea>
+					<ProfileButton text="Edit profile" icon={<RiPencilFill />} />
+					<ProfileButton text="Newwork profile" icon={<BiMessageDetail />} />
+				</ProfileBtnArea>
+			</Box>
+			<Box>
+				<Navigation />
+			</Box>
 		</Container>
 	);
 };
@@ -43,6 +47,12 @@ const Container = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	padding: 24px;
+`;
+
+const Box = styled.div`
+	display: flex;
+	flex-wrap: wrap;
+	margin: 16px 0;
 `;
 
 const UserInfoBox = styled.div`
