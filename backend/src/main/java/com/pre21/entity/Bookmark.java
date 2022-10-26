@@ -11,16 +11,16 @@ import javax.persistence.*;
 @Table
 public class Bookmark {
     @Id
-    @Column
+    @Column(name = "bookmark_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long bookmark_id;
+    private Long bookmarkId;
 
-    @Column
-    private Long user_id;
+    @Column(name = "user_id")
+    private Long userId;
 
-    @Column
-    private Long question_id;
+    @Column(name = "question_id")
+    private Long questionId;
 
-    @Column
-    private Long answer_id;
+    @Column(name = "answer_id")
+    private Long answerId;
 }

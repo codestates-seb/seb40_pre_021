@@ -1,5 +1,5 @@
 function App() {
-	return <div>스택오버플로우</div>;
+	return <div></div>;
 }
 
 export default App;
