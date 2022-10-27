@@ -8,7 +8,7 @@ export default UserNickname;
 
 const Nickname = styled.span`
 	color: #232629;
-	margin: 4px 4px 12px 0px;
-	font-size: 40px;
-	font-weight: 500;
+	margin: 4px;
+	font-size: 34px;
+	font-weight: 600;
 `;

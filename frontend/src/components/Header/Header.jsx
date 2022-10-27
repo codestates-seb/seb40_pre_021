@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { logo } from '../../assets/images/logo';
 import RightMenu from './RightMenu';
@@ -8,7 +9,7 @@ const HeaderStyle = styled.header`
 	border-top: 3px solid rgb(223, 126, 44);
 	background-color: rgb(248, 248, 248);
 	box-shadow: 0 0 3px 0 rgb(202, 197, 197);
-	padding: 0 16%;
+	padding: 0;
 
 	ul {
 		display: flex;
@@ -37,7 +38,9 @@ const Header = () => {
 		<HeaderStyle>
 			<ul>
 				<LogoStyle>
-					<img src={logo} alt="logo" />
+					<Link to="/">
+						<img src={logo} alt="logo" />
+					</Link>
 				</LogoStyle>
 				<Search />
 				<RightMenu />

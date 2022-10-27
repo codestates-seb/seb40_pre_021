@@ -1,10 +1,11 @@
 package com.pre21.entity;
 
+import com.pre21.util.auditable.Auditable;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,15 +14,16 @@ import java.util.List;
  * JavaDocs 테스트
  * User entity입니다.
  */
-@Entity
+@NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "Users")
-public class User {
+@Entity(name = "USERS")
+public class User extends Auditable {
+
     @Id
-    @Column(name = "user_id")
+    @Column(name = "USER_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long id;
 
     @Column(nullable = false)
     private String email;
@@ -35,9 +37,19 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
-    @Column(nullable = false)
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @OneToMany(mappedBy = "user")
+    private List<UserTags> userTags = new ArrayList<>();
 
-    @Column(nullable = false, name = "LAST_MODIFIED_AT")
-    private LocalDateTime modifiedAt = LocalDateTime.now();
+    public void addUserTags(UserTags userTags) {
+        this.userTags.add(userTags);
+        if(userTags.getUser() != this) {
+            userTags.setUser(this);
+        }
+    }
+
+    public User(String nickname, String email, String password) {
+        this.nickname = nickname;
+        this.email = email;
+        this.password = password;
+    }
 }
