@@ -3,7 +3,7 @@ import { logo } from '../../assets/images/logo';
 
 const FooterStyle = styled.div`
 	background-color: rgb(32, 34, 36);
-	height: 400px;
+	height: 200px;
 	padding: 0 17%;
 `;
 
