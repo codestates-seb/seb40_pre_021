@@ -1,35 +1,68 @@
 import styled from 'styled-components';
 import Title from './Title';
 import aside1 from '../../../assets/images/Mypage/aside1.png';
+import aside2 from '../../../assets/images/Mypage/aside2.png';
+import aside3 from '../../../assets/images/Mypage/aside3.png';
+import SummaryAside from './SummaryAside';
 
 const Summary = () => {
 	return (
-		<div>
+		<Container>
 			<Title text="Summary" />
-			<Container>
+			<div>
 				<FlexBox>
-					<SummaryAside>
-						<ContentBox>
-							<img src={aside1} alt="" width={48} height={48} />
-							<AsideTitle>
-								Reputation is how the community thanks you
-							</AsideTitle>
-							<AsideContent>
-								When users upvote your helpful posts, you`ll earn reputation and
-								unlock new privileges.
-							</AsideContent>
-							<AsideContentFooter>
-								Learn more about reputation and privileges
-							</AsideContentFooter>
-						</ContentBox>
-					</SummaryAside>
+					<SummaryAside
+						img={aside1}
+						size={50}
+						title={'Reputation is how the community thanks you'}
+						content={
+							"When users upvote your helpful posts, you'll earn reputation and unlock new privileges."
+						}
+						footer={AsideContentFooter1()}
+						basis={25}
+					/>
+					<SummaryAside
+						img={aside2}
+						size={50}
+						title={'Earn badges for helpful actions'}
+						content={
+							'Badges are bits of digital flair that you get when you participate in especially helpful ways.'
+						}
+						footer={AsideContentFooter2()}
+						basis={16.6}
+					/>
+					<SummaryAside
+						img={aside3}
+						size={50}
+						title={'Measure your impact'}
+						content={
+							'Your posts and helpful actions here help hundreds or thousands of people searching for help.'
+						}
+						basis={8.3}
+					/>
 				</FlexBox>
-			</Container>
-		</div>
+			</div>
+		</Container>
 	);
 };
 
 export default Summary;
+
+function AsideContentFooter1() {
+	return (
+		<AsideContentFooter>
+			Learn more about reputation and privileges
+		</AsideContentFooter>
+	);
+}
+
+function AsideContentFooter2() {
+	return (
+		<AsideContentFooterButton>
+			Take the Tour and earn your first badge
+		</AsideContentFooterButton>
+	);
+}
 
 const Container = styled.div`
 	grid-column-end: 3;
@@ -38,41 +71,6 @@ const Container = styled.div`
 
 const FlexBox = styled.div`
 	display: flex;
-	margin: 16px;
-`;
-
-const SummaryAside = styled.aside`
-	flex-basis: 25% - 16px;
-	flex-grow: 1;
-	margin: 16px;
-	padding: 12px;
-	border-radius: 5px;
-	border: 1px solid #d7d9dc;
-`;
-
-const ContentBox = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	text-align: center;
-	padding: 24px 0;
-	gap: 8px;
-`;
-
-const AsideTitle = styled.h2`
-	font-size: 1.1rem;
-	margin-bottom: 2px;
-	flex: 0 auto;
-	font-weight: 500;
-`;
-
-const AsideContent = styled.p`
-	line-height: 20px;
-	color: #6a737c;
-	font-size: 0.9rem;
-	padding: 0 8px;
-	margin-bottom: 12px;
-	font-weight: 500;
 `;
 
 const AsideContentFooter = styled.p`
@@ -82,4 +80,20 @@ const AsideContentFooter = styled.p`
 	padding: 0 8px;
 	margin-top: 12px;
 	font-weight: 500;
+`;
+
+const AsideContentFooterButton = styled.button`
+	color: white;
+	background-color: #0a95ff;
+	box-shadow: inset 0 1px 0 0 hsl(0deg 0% 100% / 40%);
+	padding: 0.8rem;
+	border: 1px solid transparent;
+	border-radius: 3px;
+	font-weight: 600;
+	text-align: center;
+	cursor: pointer;
+	font-size: 13px;
+	:hover {
+		background-color: #0074cc;
+	}
 `;

@@ -70,6 +70,12 @@ const Box = styled.div`
 	margin: 8px 0;
 `;
 
+const SideBarBox = styled.div`
+	display: flex;
+	margin: 8px 0;
+	flex-wrap: nowrap;
+`;
+
 const GridBox = styled.div`
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -91,11 +97,4 @@ const ProfileBtnArea = styled.div`
 	right: 24px;
 	top: 65px;
 	display: flex;
-`;
-
-const SideBarBox = styled.div`
-	display: flex;
-	/* flex-direction: column; */
-	margin: 8px 0;
-	flex-wrap: nowrap;
 `;

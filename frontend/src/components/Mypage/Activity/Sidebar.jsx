@@ -41,7 +41,7 @@ const Box = styled.div`
 const Tab = styled.a`
 	display: flex;
 	align-items: center;
-	padding: 6px 48px 6px 12px;
+	padding: 8px 48px 8px 12px;
 	border: none;
 	box-shadow: none;
 	cursor: pointer;
