@@ -5,7 +5,7 @@ const ButtonStyle = styled.button`
 	display: inline-block;
 	padding: 0.8em;
 	border: 1px solid ${(props) => props.borderColor || 'transparent'};
-	border-radius: 3px;
+	border-radius: ${(props) => props.radius || '3px'};
 	font-family: inherit;
 	font-size: 13px;
 	font-weight: bold;
@@ -26,9 +26,10 @@ const ButtonStyle = styled.button`
 `;
 //기본은 Ask Question (푸른색)색깔
 //버튼 색상 변경 필요 시 props 로 borderColor,background,color,shadowPersent 받아서 필요한것만 바꾸면됨
-const Button = ({ text, callback, ...props }) => {
+const Button = ({ text, callback, icon, ...props }) => {
 	return (
 		<ButtonStyle {...props} onClick={callback}>
+			{icon}&nbsp;
 			{text}
 		</ButtonStyle>
 	);
