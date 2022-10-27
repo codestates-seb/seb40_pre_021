@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { logo } from '../../assets/images/logo';
 import RightMenu from './RightMenu';
@@ -37,7 +38,9 @@ const Header = () => {
 		<HeaderStyle>
 			<ul>
 				<LogoStyle>
-					<img src={logo} alt="logo" />
+					<Link to="/">
+						<img src={logo} alt="logo" />
+					</Link>
 				</LogoStyle>
 				<Search />
 				<RightMenu />

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Button from '../common/Button';
 
@@ -24,14 +25,17 @@ const RightMenu = () => {
 				`프로필`
 			) : (
 				<NoneLogin>
-					<Button
-						text="Log in"
-						color={`hsl(205,47%,42%)`}
-						background={`hsl(205,46%,92%)`}
-						borderColor={`hsl(205,41%,63%)`}
-						shadowPersent={'70%'}
-						height={'33px'}
-					/>
+					<Link to="/login">
+						<Button
+							text="Log in"
+							color={`hsl(205,47%,42%)`}
+							background={`hsl(205,46%,92%)`}
+							borderColor={`hsl(205,41%,63%)`}
+							shadowPersent={'70%'}
+							height={'33px'}
+						/>
+					</Link>
+
 					<Button text="Sign up" height={'33px'} />
 				</NoneLogin>
 			)}
