@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 import timeForToday from '../utils/timeForToday';
 
-function useDate(value) {
+function useDate(value, type) {
 	const [date, setDate] = useState(value);
 
 	useEffect(() => {
-		setDate(timeForToday(value));
+		if (type) {
+			setDate(timeForToday(value, type));
+		} else {
+			setDate(timeForToday(value));
+		}
 	}, [value]);
 
 	return [date];
