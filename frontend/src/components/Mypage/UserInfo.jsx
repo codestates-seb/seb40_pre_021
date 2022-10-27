@@ -55,4 +55,6 @@ const CalendarIcon = styled(FaRegCalendarAlt)`
 const InfoText = styled.span`
 	color: #6a737c;
 	margin: 2px 4px;
+	font-size: 14px;
+	font-weight: 600;
 `;

@@ -9,6 +9,8 @@ import useDate from '../hooks/useDate';
 import { RiPencilFill } from 'react-icons/ri';
 import { BiMessageDetail } from 'react-icons/bi';
 import Navigation from '../components/Mypage/Navigation';
+import Summary from '../components/Mypage/Activity/Summary';
+import Sidebar from '../components/Mypage/Activity/Sidebar';
 
 const Mypage = () => {
 	const [info, setInfo] = useState({ nickname: '', createdAt: '' });
@@ -30,13 +32,25 @@ const Mypage = () => {
 					<UserInfo date={date} />
 				</UserInfoBox>
 				<ProfileBtnArea>
-					<ProfileButton text="Edit profile" icon={<RiPencilFill />} />
-					<ProfileButton text="Newwork profile" icon={<BiMessageDetail />} />
+					<ProfileButton
+						text="Edit profile"
+						icon={<RiPencilFill size={18} />}
+					/>
+					<ProfileButton
+						text="Newwork profile"
+						icon={<BiMessageDetail size={18} />}
+					/>
 				</ProfileBtnArea>
 			</Box>
 			<Box>
 				<Navigation />
 			</Box>
+			<SideBarBox>
+				<Sidebar />
+				<GridBox>
+					<Summary />
+				</GridBox>
+			</SideBarBox>
 		</Container>
 	);
 };
@@ -50,9 +64,23 @@ const Container = styled.div`
 `;
 
 const Box = styled.div`
+	width: 100%;
 	display: flex;
 	flex-wrap: wrap;
-	margin: 16px 0;
+	margin: 8px 0;
+`;
+
+const SideBarBox = styled.div`
+	display: flex;
+	margin: 8px 0;
+	flex-wrap: nowrap;
+`;
+
+const GridBox = styled.div`
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 24px;
+	margin: 8px 0;
 `;
 
 const UserInfoBox = styled.div`
@@ -67,6 +95,6 @@ const UserInfoBox = styled.div`
 const ProfileBtnArea = styled.div`
 	position: absolute;
 	right: 24px;
-	top: 24px;
+	top: 65px;
 	display: flex;
 `;
