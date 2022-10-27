@@ -42,9 +42,8 @@ public class Questions extends Auditable {
     @Column(name = "IMAGE_URL")
     private String imageUrl;
 
-    // TODO : Tags 자바가 기입되면 추가
-//    @OneToMany(mappedBy = "questions", cascade = CascadeType.PERSIST)
-//    private List<Tags> tags = new ArrayList<>();
+    @OneToMany(mappedBy = "questions", cascade = CascadeType.PERSIST)
+    private List<QuestionsTags> questionsTags = new ArrayList<>();
 
     @OneToMany(mappedBy = "questions", cascade = CascadeType.PERSIST)
     private List<QuestionComments> comments = new ArrayList<>();
@@ -55,12 +54,17 @@ public class Questions extends Auditable {
         this.answerYn = false;
     }
 
+    public void addQuestionsTags(QuestionsTags questionsTags) {
+        this.questionsTags.add(questionsTags); // question 에 questionsTags 지정
+        if (questionsTags.getQuestions() != this) {
+            questionsTags.setQuestions(this); //(owner)questionsTags 에 question 지정
+        }
+    }
+
     public void addQuestionComments(QuestionComments questionComments) {
         this.comments.add(questionComments);
         if (questionComments.getQuestions() != this) {
             questionComments.addQuestion(this);
         }
     }
-
-    // TODO : 태그 리스트 태그 추가 메서드 구현 요
 }

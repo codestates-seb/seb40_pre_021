@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +19,11 @@ import java.util.List;
 @Setter
 @Entity(name = "USERS")
 public class User extends Auditable {
+
     @Id
     @Column(name = "USER_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long id;
 
     @Column(nullable = false)
     private String email;
@@ -37,9 +37,15 @@ public class User extends Auditable {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "user")
-//    private List<Answers> answers = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<UserTags> userTags = new ArrayList<>();
 
+    public void addUserTags(UserTags userTags) {
+        this.userTags.add(userTags);
+        if(userTags.getUser() != this) {
+            userTags.setUser(this);
+        }
+    }
 
     public User(String nickname, String email, String password) {
         this.nickname = nickname;

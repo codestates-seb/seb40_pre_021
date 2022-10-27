@@ -27,9 +27,9 @@ public class QuestionComments extends Auditable {
     private Questions questions;
 
     // TODO : User.java 구현 시 추가
-//    @ManyToOne
-//    @JoinColumn(name = "USER_ID")
-//    private User user;
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private User user;
 
     public void addQuestion(Questions questions) {
         this.questions = questions;
