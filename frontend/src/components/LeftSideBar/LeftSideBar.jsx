@@ -61,10 +61,10 @@ const LeftMenu = () => {
 				}
 				if (ele.name === 'Home') {
 					return (
-						<>
-							<Menu key={ele.id} {...props} />
+						<div key={ele.id}>
+							<Menu {...props} />
 							<div className="public">&nbsp;PUBLIC</div>
-						</>
+						</div>
 					);
 				}
 				return <Menu key={ele.id} {...props} />;
