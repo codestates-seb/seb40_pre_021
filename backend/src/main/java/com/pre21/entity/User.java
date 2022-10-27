@@ -37,9 +37,15 @@ public class User extends Auditable {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
-//    @OneToMany(mappedBy = "user")
-//    private List<Answers> answers = new ArrayList<>();
+    @OneToMany(mappedBy = "user")
+    private List<UserTags> userTags = new ArrayList<>();
 
+    public void addUserTags(UserTags userTags) {
+        this.userTags.add(userTags);
+        if(userTags.getUser() != this) {
+            userTags.setUser(this);
+        }
+    }
 
     public User(String nickname, String email, String password) {
         this.nickname = nickname;
