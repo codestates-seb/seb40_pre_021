@@ -6,12 +6,15 @@ import lombok.Setter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
 public class AnswerLikes {
+
+    @Id
     @Column(nullable = false)
     private Long question_id;
 

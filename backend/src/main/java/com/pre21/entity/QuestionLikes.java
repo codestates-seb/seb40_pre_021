@@ -15,6 +15,7 @@ import javax.persistence.Id;
 @Entity
 public class QuestionLikes {
 
+    @Id
     @Column(nullable = false)
     private Long question_id;
 
