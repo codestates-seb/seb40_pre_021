@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Home from '../components/Home/Home';
 import Questions from '../components/Questions/Questions';
 import Layout from '../pages/Layout';
+import Mypage from '../pages/Mypage';
 
 const AppRouter = () => {
 	return (
@@ -13,6 +14,7 @@ const AppRouter = () => {
           */}
 					<Route path="/" element={<Home />} />
 					<Route path="/questions" element={<Questions />} />
+					<Route path="/users" element={<Mypage />} />
 				</Route>
 			</Routes>
 		</BrowserRouter>
