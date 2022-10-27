@@ -35,8 +35,9 @@ const RightMenu = () => {
 							height={'33px'}
 						/>
 					</Link>
-
-					<Button text="Sign up" height={'33px'} />
+					<Link to="/signup">
+						<Button text="Sign up" height={'33px'} />
+					</Link>
 				</NoneLogin>
 			)}
 		</RightMenuStlye>

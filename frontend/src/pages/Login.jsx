@@ -45,7 +45,7 @@ const Login = () => {
 				<LoginForm />
 				<div className="singup">
 					<div>
-						Don’t have an account? <Link to="/">Sign up</Link>
+						Don’t have an account? <Link to="/signup">Sign up</Link>
 					</div>
 					<div>
 						Are you an employer? <Link to="/">Sign up on Talent</Link>
