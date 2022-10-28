@@ -7,7 +7,7 @@ const ListContainer = ({ data, type }) => {
 	return (
 		<Container>
 			{data &&
-				data.map((ele, idx) => {
+				data.map((ele) => {
 					return <List key={ele.questionId} data={ele} type={type} />;
 				})}
 		</Container>

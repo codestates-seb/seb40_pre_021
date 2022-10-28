@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import Button from '../common/Button';
 
 const ListStyle = styled.div`
 	padding: 15px 15px 30px 15px;
@@ -40,6 +41,8 @@ const RightSection = styled.div`
 	}
 	.title {
 		a {
+			font-size: 1.2em;
+			font-weight: 600;
 			text-decoration: none;
 			color: hsl(209, 100%, 37.5%);
 		}
@@ -69,9 +72,15 @@ const List = ({ data, type }) => {
 					<Link to="/">{data.title}</Link>
 				</div>
 				{type === 'Questions' && <div className="body">{data.body}</div>}
-				<div className="tags">{data.tags}</div>
+				<div className="tags">
+					{console.log(data.tags)}
+					{/* {data.tags &&
+						data.tags.map((ele) => {
+							<Button text={ele} />;
+						})} */}
+				</div>
 				<div className="createdAt">
-					{data.createId}
+					{createId}
 					{data.createdAt}
 				</div>
 			</RightSection>
