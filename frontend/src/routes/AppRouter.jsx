@@ -5,6 +5,7 @@ import Layout from '../pages/Layout';
 import Login from '../pages/Login';
 import Mypage from '../pages/Mypage';
 import MypageActivityPage from '../pages/MypageActivityPage';
+import MypageSavesPage from '../pages/MypageSavesPage';
 import Signup from '../pages/Signup';
 
 const AppRouter = () => {
@@ -19,7 +20,7 @@ const AppRouter = () => {
 					<Route path="/questions" element={<Questions />} />
 					<Route path="/users" element={<Mypage />}>
 						<Route path="activity" element={<MypageActivityPage />} />
-						<Route path="saves" />
+						<Route path="saves" element={<MypageSavesPage />} />
 					</Route>
 				</Route>
 				<Route path="/login" element={<Login />} />
