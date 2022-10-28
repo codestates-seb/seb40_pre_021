@@ -44,14 +44,17 @@ const Pagination = ({ questionCount }) => {
 	};
 	useEffect(() => {
 		console.log('questionCount', questionCount);
-	}, []);
+		console.log('pageSize', pageSize);
+		let totalPage = questionCount / pageSize;
+		setPage(totalPage);
+	}, [pageSize]);
 
 	const onClickPageSize = (size) => {
 		setPageSize(size);
 	};
 	return (
 		<PaginationStyle>
-			<div className="pages">questionCount = {questionCount}</div>
+			<div className="pages">{page}</div>
 			<div className="pagesize">
 				{pagesizeList.map((size, idx) => {
 					return (
