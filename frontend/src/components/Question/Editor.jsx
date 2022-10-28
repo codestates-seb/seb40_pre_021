@@ -5,17 +5,18 @@ import textCharacterCheck from '../../utils/textCharacterCheck';
 const Container = styled.div``;
 const Header = styled.div``;
 const Textarea = styled.textarea``;
-
+const Result = styled.div``;
 const Editor = () => {
-	const [text, setText] = useState('');
+	const [mdText, setMdText] = useState('');
 	const handleChange = (e) => {
-		setText(e.target.value);
+		setMdText(parsedHTML(e.target.value));
 	};
 	return (
 		<>
 			<Container>
 				<Header />
-				<Textarea></Textarea>
+				<Textarea onChange={handleChange}></Textarea>
+				<Result mdText={mdText}>{mdText}</Result>
 			</Container>
 		</>
 	);
