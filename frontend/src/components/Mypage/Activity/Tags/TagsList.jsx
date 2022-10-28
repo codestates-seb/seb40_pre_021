@@ -67,6 +67,7 @@ const ContentBox = styled.div`
 
 const FlexBox = styled.div`
 	display: flex;
+	align-items: center;
 	margin: 0 8px;
 `;
 
