@@ -1,20 +1,24 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { getMypageInfo } from '../api/mypageApi';
-import Avatar from '../components/Mypage/Avatar';
+import Avatar from '../components/Mypage//UserProfile/Avatar';
 import ProfileButton from '../components/Mypage/ProfileButton';
-import UserNickname from '../components/Mypage/UserNickname';
-import UserInfo from '../components/Mypage/UserInfo';
+import UserNickname from '../components/Mypage/UserProfile/UserNickname';
+import UserInfo from '../components/Mypage/UserProfile/UserInfo';
 import useDate from '../hooks/useDate';
 import { RiPencilFill } from 'react-icons/ri';
 import { BiMessageDetail } from 'react-icons/bi';
 import Navigation from '../components/Mypage/Navigation';
 import Summary from '../components/Mypage/Activity/Summary';
 import Sidebar from '../components/Mypage/Activity/Sidebar';
+import Answers from '../components/Mypage/Activity/Answers/Answers';
+import Questions from '../components/Mypage/Activity/Questions/Questions';
+import Tags from '../components/Mypage/Activity/Tags/Tags';
+import Reputation from '../components/Mypage/Activity/Reputation/Reputation';
 
 const Mypage = () => {
 	const [info, setInfo] = useState({ nickname: '', createdAt: '' });
-	const { nickname, createdAt } = info;
+	const { nickname, createdAt, answers, tags, questions } = info;
 	const [date] = useDate(createdAt);
 
 	useEffect(() => {
@@ -49,6 +53,10 @@ const Mypage = () => {
 				<Sidebar />
 				<GridBox>
 					<Summary />
+					<Answers lists={answers} />
+					<Questions lists={questions} />
+					<Tags lists={tags} />
+					<Reputation />
 				</GridBox>
 			</SideBarBox>
 		</Container>
@@ -61,6 +69,8 @@ const Container = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	padding: 24px;
+	max-width: 1100px;
+	width: calc(100% - 164px);
 `;
 
 const Box = styled.div`
@@ -80,7 +90,7 @@ const GridBox = styled.div`
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: 24px;
-	margin: 8px 0;
+	margin: 8px 0 8px 8px;
 `;
 
 const UserInfoBox = styled.div`
