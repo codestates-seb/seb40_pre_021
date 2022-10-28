@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import parsedHTML from '../utils/parsedHTML';
-import textCharacterCheck from '../utils/textCharacterCheck';
+import parsedHTML from '../../utils/parsedHTML';
+import textCharacterCheck from '../../utils/textCharacterCheck';
 const Container = styled.div``;
 const Header = styled.div``;
 const Textarea = styled.textarea``;
