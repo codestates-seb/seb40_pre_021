@@ -6,9 +6,9 @@ const parsedHTML = (str) => {
 	const olEnd = /^(\d\..+)\s*\n([^\d.])/gm;
 	const olLi = /^\d\.(.+)/gm;
 
-	const H1 = /[#]{1}\s(.+)/g; // # text
-	const H2 = /[#]{2}\s(.+)/g; /// ## text
 	const H3 = /[#]{3}\s(.+)/g; // ### text
+	const H2 = /[#]{2}\s(.+)/g; /// ## text
+	const H1 = /[#]{1}\s(.+)/g; // # text
 
 	const Strong = /[*_]{2}(.+)[*_]{2}/gm; // **text** 혹은 __text__ (굵게)
 	const Em = /[*_]{1}(.+)[*_]{1}/gm; // *text* _text_(이탤릭)
@@ -27,9 +27,9 @@ const parsedHTML = (str) => {
 	text = text.replace(olEnd, '$1\n</ol>\n\n$2');
 	text = text.replace(olLi, '<li>$1</li>');
 
-	text = text.replace(H1, '<h1>$1</h1>'); //제목을 파싱합니다.
-	text = text.replace(H2, '<h2>$1</h2>');
 	text = text.replace(H3, '<h3>$1</h3>');
+	text = text.replace(H2, '<h2>$1</h2>');
+	text = text.replace(H1, '<h1>$1</h1>'); //제목을 파싱합니다.
 
 	text = text.replace(Strong, '<strong>$1</strong>');
 	text = text.replace(Em, '<em>$1</em>');
