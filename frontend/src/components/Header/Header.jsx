@@ -28,8 +28,8 @@ const LogoStyle = styled.li`
 		background-color: rgb(224, 226, 228);
 	}
 	img {
-		width: 90%;
-		height: 80%;
+		width: 160px;
+		height: 36px;
 	}
 `;
 
