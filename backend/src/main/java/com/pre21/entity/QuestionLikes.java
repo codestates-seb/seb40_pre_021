@@ -24,5 +24,4 @@ public class QuestionLikes {
 
     @Column(nullable = false)
     private boolean Unlike_Yn = false;
-
 }
