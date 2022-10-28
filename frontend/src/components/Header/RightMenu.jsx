@@ -7,11 +7,8 @@ const RightMenuStlye = styled.li`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	flex: 0.7;
 `;
 const NoneLogin = styled.div`
-	width: 100%;
-
 	button {
 		margin-right: 5px;
 	}
