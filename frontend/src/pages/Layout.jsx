@@ -6,8 +6,10 @@ import Footer from '../components/Footer/Footer';
 
 const Body = styled.div`
 	display: flex;
-	padding: 0;
 	justify-content: center;
+`;
+const OutletSize = styled.div`
+	width: 1100px;
 `;
 const Layout = () => {
 	return (
@@ -15,7 +17,9 @@ const Layout = () => {
 			<Header />
 			<Body>
 				<LeftSideBar />
-				<Outlet />
+				<OutletSize>
+					<Outlet />
+				</OutletSize>
 			</Body>
 			<Footer />
 		</>
