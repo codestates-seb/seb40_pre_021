@@ -1,5 +1,7 @@
 package com.pre21.security.jwt;
 
+import com.pre21.entity.RefreshToken;
+import com.pre21.repository.RefreshTokenRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -7,6 +9,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +20,7 @@ import java.util.Date;
 import java.util.Map;
 
 @Component
+@RequiredArgsConstructor
 public class JwtTokenizer {
 
     @Getter
@@ -30,6 +34,9 @@ public class JwtTokenizer {
     @Getter
     @Value("${jwt.refresh-token-expiration-minutes}")
     private int refreshTokenExpirationMinutes;
+
+    private final RefreshTokenRepository refreshTokenRepository;
+
 
     public String encodeBase64SecretKey(String secretKey) {
         return Encoders.BASE64.encode(secretKey.getBytes(StandardCharsets.UTF_8));
@@ -98,5 +105,13 @@ public class JwtTokenizer {
         Key key = Keys.hmacShaKeyFor(keyBytes);
 
         return key;
+    }
+
+    public void verifiedExistRefresh(String refreshToken) throws Exception {
+        refreshTokenRepository.findRefreshTokenByTokenValue(refreshToken).orElseThrow(() -> new Exception("토큰 ㄴㄴ"));
+    }
+
+    public void savedRefreshToken(String refreshToken, String subject) throws Exception {
+        refreshTokenRepository.save(new RefreshToken(refreshToken, subject));
     }
 }

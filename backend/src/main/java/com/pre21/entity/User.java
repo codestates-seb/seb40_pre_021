@@ -52,6 +52,9 @@ public class User {
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Questions> questions = new ArrayList<>();
 
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<QuestionLikes> questionsLikes = new ArrayList<>();
+
 
     public User(String nickname, String email, String password) {
         this.nickname = nickname;
@@ -68,5 +71,14 @@ public class User {
         this.id = id;
         this.email = email;
         this.roles = roles;
+
+
     }
+    public void addQuestionsLikes(QuestionLikes questionLikes) {
+        this.questionsLikes.add(questionLikes); // question 에 questionsTags 지정
+        if (questionLikes.getUsers() != this) {
+            questionLikes.setUsers(this); //(owner)questionsTags 에 question 지정
+        }
+    }
+
 }
