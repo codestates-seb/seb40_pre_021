@@ -18,7 +18,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/signup")
     public void joinUser(@RequestBody UserDto.Join requestBody) {
-        User user = mapper.joinToUserEntity(requestBody);
+        User user = new User(requestBody.getNickname(), requestBody.getEmail(), requestBody.getPassword());
         userService.createUser(user);
     }
 }

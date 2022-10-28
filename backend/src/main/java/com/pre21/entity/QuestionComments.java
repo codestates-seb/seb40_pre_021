@@ -30,13 +30,13 @@ public class QuestionComments extends Auditable {
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
-
+/*
     public void addQuestion(Questions questions) {
         this.questions = questions;
         if (!this.questions.getComments().contains(this)) {
             this.questions.getComments().add(this);
         }
-    }
+    }*/
 
     // TODO : User 클래스 주입 메서드 구현 요
 }
