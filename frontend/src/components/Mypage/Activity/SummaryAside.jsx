@@ -18,7 +18,7 @@ export default SummaryAside;
 const Aside = styled.aside`
 	flex-basis: ${(props) => props.basis && `calc(${props.basis}% - 16px)`};
 	flex-grow: 1;
-	margin: 8px 8px 8px 0px;
+	margin: 8px;
 	padding: 12px;
 	border-radius: 5px;
 	border: 1px solid #d7d9dc;
@@ -38,6 +38,7 @@ const AsideTitle = styled.h2`
 	margin-bottom: 2px;
 	flex: 0 auto;
 	font-weight: 500;
+	line-height: 16px;
 `;
 
 const AsideContent = styled.p`
@@ -47,4 +48,5 @@ const AsideContent = styled.p`
 	padding: 0 8px;
 	margin-bottom: 12px;
 	font-weight: 600;
+	line-height: 16px;
 `;
