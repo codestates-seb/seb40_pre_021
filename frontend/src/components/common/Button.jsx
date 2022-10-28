@@ -24,13 +24,17 @@ const ButtonStyle = styled.button`
 		filter: brightness(90%);
 		color: white;
 	}
+
+	.icon {
+		margin-right: 3px;
+	}
 `;
 //기본은 Ask Question (푸른색)색깔
 //버튼 색상 변경 필요 시 props 로 borderColor,background,color,shadowPersent 받아서 필요한것만 바꾸면됨
-const Button = ({ text, callback, icon, ...props }) => {
+const Button = ({ text, callback, icon, className, ...props }) => {
 	return (
-		<ButtonStyle {...props} onClick={callback}>
-			{icon}&nbsp;
+		<ButtonStyle {...props} onClick={callback} className={className}>
+			{icon && <div className="icon">{icon}</div>}
 			{text}
 		</ButtonStyle>
 	);

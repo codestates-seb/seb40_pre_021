@@ -31,6 +31,8 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
         try {
             Map<String, Object> claims = verifyJws(req);
             setAuthenticationToContext(claims);
+            String refreshToken = req.getHeader("Refresh");
+            jwtTokenizer.verifiedExistRefresh(refreshToken);
         } catch (SignatureException se) {
             req.setAttribute("exception", se);
         } catch (ExpiredJwtException ee) {

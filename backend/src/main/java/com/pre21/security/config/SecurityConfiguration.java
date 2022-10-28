@@ -1,3 +1,4 @@
+
 package com.pre21.security.config;
 
 import com.pre21.security.filter.JwtAuthenticationFilter;
@@ -59,7 +60,7 @@ public class SecurityConfiguration {
             .logoutSuccessUrl("/")
             .and()
             .authorizeHttpRequests(authorize -> authorize
-                    .antMatchers(HttpMethod.POST, "/users/login").permitAll()
+//                    .antMatchers(HttpMethod.POST, "/**/questions/ask").hasRole("USER")
                     .antMatchers(HttpMethod.GET, "/docs/**").hasRole("ADMIN")
                     .anyRequest().permitAll()
             );
@@ -75,7 +76,7 @@ public class SecurityConfiguration {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("GET","POST", "PATCH", "DELETE"));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 
         return source;

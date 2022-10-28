@@ -1,11 +1,12 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from '../components/Home/Home';
-import Questions from '../components/Questions/Questions';
+import Home from '../pages/Home';
+import Ask from '../pages/Ask';
 import Layout from '../pages/Layout';
 import Login from '../pages/Login';
 import Mypage from '../pages/Mypage';
 import MypageActivityPage from '../pages/MypageActivityPage';
 import MypageSavesPage from '../pages/MypageSavesPage';
+import Questions from '../pages/Questions';
 import Signup from '../pages/Signup';
 
 const AppRouter = () => {
@@ -22,6 +23,7 @@ const AppRouter = () => {
 						<Route path="activity" element={<MypageActivityPage />} />
 						<Route path="saves" element={<MypageSavesPage />} />
 					</Route>
+					<Route path="/ask" element={<Ask />} />
 				</Route>
 				<Route path="/login" element={<Login />} />
 				<Route path="/signup" element={<Signup />} />

@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 // Questions 테이블과 Tags 테이블 N:N 관계를 1:N:1로 만들기 위한 Entity
 @Entity
@@ -23,6 +26,10 @@ public class QuestionsTags {
     @JoinColumn(name = "TAG_ID")
     private Tags tags;
 
+    public QuestionsTags(Questions questions, Tags tags) {
+        this.questions = questions;
+        this.tags = tags;
+    }
 
     public void setQuestions(Questions questions) {
         // 기존에 getQuestionsTags 와 연관관계가 있다면
