@@ -22,6 +22,11 @@ const Section = styled.section`
 `;
 const BottomSection = styled.section`
 	justify-content: ${(props) => (props.filter ? 'space-between' : 'flex-end')};
+
+	.questions {
+		font-size: 1.30769231rem;
+		font-weight: 500;
+	}
 `;
 
 const TabContainer = styled.div`
@@ -37,7 +42,9 @@ const ListHeader = ({ title, Detail, filter, tabList, questionCount }) => {
 			</Section>
 			<Section>{Detail}</Section>
 			<BottomSection filter={filter}>
-				<div>{filter && questionCount}</div>
+				<div className="questions">
+					{filter && `${questionCount} questions`}
+				</div>
 				<TabContainer>
 					<Tab tabList={tabList} />
 					&nbsp;

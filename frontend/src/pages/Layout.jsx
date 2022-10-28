@@ -6,7 +6,7 @@ import Footer from '../components/Footer/Footer';
 
 const Body = styled.div`
 	display: flex;
-	padding: 0;
+	justify-content: center;
 `;
 const Layout = () => {
 	return (
