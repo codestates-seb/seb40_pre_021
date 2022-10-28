@@ -44,28 +44,3 @@ const parsedHTML = (str) => {
 }; //실제로 상세페이지에서 보일 HTML을 리턴합니다.
 
 export default parsedHTML;
-// export const writingHTML = (str) => {
-// 	let text = '<p>' + String(str) + '</p>';
-
-// 	text = text.replace(ulStart, '<ul>\n-');
-// 	text = text.replace(ulEnd, '$1\n</ul>\n\n$2');
-// 	text = text.replace(ulLi, '<li>$1</li>');
-// 	text = text.replace(olStart, '<ol>\n1.');
-// 	text = text.replace(olEnd, '$1\n</ol>\n\n$2');
-// 	text = text.replace(olLi, '<li>$1</li>');
-
-// 	text = text.replace(H1, '<h1>$1</h1>'); //제목을 파싱합니다.
-// 	text = text.replace(H2, '<h2>$1</h2>');
-// 	text = text.replace(H3, '<h3>$1</h3>');
-
-// 	text = text.replace(Strong, '<strong>$1</strong>');
-// 	text = text.replace(Em, '<em>$1</em>');
-// 	text = text.replace(Hr, '<hr />');
-// 	text = text.replace(Pre, '<pre>$1</pre>');
-// 	text = text.replace(Code, '<code>$1</code>');
-
-// 	text = text.replace(Pgh, '</p><p>');
-
-// 	return text;
-// };
-// 작성 중에 보이는 화면을 리턴합니다.
