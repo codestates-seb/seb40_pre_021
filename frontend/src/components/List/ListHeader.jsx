@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import Button from '../common/Button';
-import ListTab from './ListTab';
+import Tab from '../common/Tab';
 
 const ListHeaderStyle = styled.div`
 	padding: 24px;
@@ -24,7 +24,11 @@ const BottomSection = styled.section`
 	justify-content: ${(props) => (props.filter ? 'space-between' : 'flex-end')};
 `;
 
-const ListHeader = ({ title, Detail, filter, tabList }) => {
+const TabContainer = styled.div`
+	display: flex;
+`;
+
+const ListHeader = ({ title, Detail, filter, tabList, questionCount }) => {
 	return (
 		<ListHeaderStyle>
 			<Section>
@@ -33,7 +37,20 @@ const ListHeader = ({ title, Detail, filter, tabList }) => {
 			</Section>
 			<Section>{Detail}</Section>
 			<BottomSection filter={filter}>
-				<ListTab tabList={tabList} filter={filter} />
+				<div>{filter && questionCount}</div>
+				<TabContainer>
+					<Tab tabList={tabList} />
+					&nbsp;
+					{filter && (
+						<Button
+							text="filter"
+							color={`hsl(205,47%,42%)`}
+							background={`hsl(205,46%,92%)`}
+							borderColor={`hsl(205,41%,63%)`}
+							shadowPersent={'70%'}
+						/>
+					)}
+				</TabContainer>
 			</BottomSection>
 		</ListHeaderStyle>
 	);
