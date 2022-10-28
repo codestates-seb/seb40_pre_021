@@ -9,20 +9,20 @@ const HeaderStyle = styled.header`
 	border-top: 3px solid rgb(223, 126, 44);
 	background-color: rgb(248, 248, 248);
 	box-shadow: 0 0 3px 0 rgb(202, 197, 197);
-	padding: 0;
 
 	ul {
 		display: flex;
+		justify-content: center;
 		height: 100%;
 		width: 100%;
 	}
 `;
 
 const LogoStyle = styled.li`
+	width: 170px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	flex: 0.7;
 
 	&:hover {
 		background-color: rgb(224, 226, 228);

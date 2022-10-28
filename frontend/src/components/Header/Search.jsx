@@ -2,10 +2,10 @@ import styled from 'styled-components';
 import { AiOutlineSearch } from 'react-icons/ai';
 
 const SearchStyle = styled.li`
+	width: 1000px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	flex: 4;
 `;
 const SearchBox = styled.div`
 	border: 1px solid rgb(179, 183, 188);
