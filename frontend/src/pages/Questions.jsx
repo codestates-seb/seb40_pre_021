@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ListHeader from '../components/List/ListHeader';
 import { getList } from '../api/ListApi';
-import ListContainer from '../components/List/ListContainer';
 import Pagination from '../components/List/Pagination';
+import List from '../components/List/List';
 
 const QuestionsStyle = styled.div`
 	width: 100%;
@@ -12,7 +12,7 @@ const QuestionsStyle = styled.div`
 `;
 
 const Questions = () => {
-	const [data, setData] = useState([]);
+	const [data, setData] = useState();
 	const [questionCount, setQuestionCount] = useState();
 
 	useEffect(() => {
@@ -30,8 +30,11 @@ const Questions = () => {
 				filter={'true'}
 				questionCount={questionCount}
 			/>
-			<ListContainer data={data} type={'Questions'} />
-			<Pagination questionCount={questionCount} />
+			{data &&
+				data.map((ele) => {
+					return <List key={ele.questionId} data={ele} type={'Questions'} />;
+				})}
+			{questionCount && <Pagination questionCount={questionCount} />}
 		</QuestionsStyle>
 	);
 };
