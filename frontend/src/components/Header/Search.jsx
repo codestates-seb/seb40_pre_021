@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { AiOutlineSearch } from 'react-icons/ai';
 
 const SearchStyle = styled.li`
-	width: 800px;
+	width: 1000px;
 	display: flex;
 	justify-content: center;
 	align-items: center;

@@ -9,6 +9,7 @@ const HeaderStyle = styled.header`
 	border-top: 3px solid rgb(223, 126, 44);
 	background-color: rgb(248, 248, 248);
 	box-shadow: 0 0 3px 0 rgb(202, 197, 197);
+
 	ul {
 		display: flex;
 		justify-content: center;
