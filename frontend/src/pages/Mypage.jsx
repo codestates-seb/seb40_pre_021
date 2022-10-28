@@ -15,6 +15,7 @@ import Answers from '../components/Mypage/Activity/Answers/Answers';
 import Questions from '../components/Mypage/Activity/Questions/Questions';
 import Tags from '../components/Mypage/Activity/Tags/Tags';
 import Reputation from '../components/Mypage/Activity/Reputation/Reputation';
+import { Outlet } from 'react-router-dom';
 
 const Mypage = () => {
 	const [info, setInfo] = useState({ nickname: '', createdAt: '' });
@@ -49,16 +50,7 @@ const Mypage = () => {
 			<Box>
 				<Navigation />
 			</Box>
-			<SideBarBox>
-				<Sidebar />
-				<GridBox>
-					<Summary />
-					<Answers lists={answers} />
-					<Questions lists={questions} />
-					<Tags lists={tags} />
-					<Reputation />
-				</GridBox>
-			</SideBarBox>
+			<Outlet />
 		</Container>
 	);
 };
