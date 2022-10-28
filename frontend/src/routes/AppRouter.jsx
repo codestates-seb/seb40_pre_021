@@ -4,6 +4,7 @@ import Questions from '../components/Questions/Questions';
 import Layout from '../pages/Layout';
 import Login from '../pages/Login';
 import Mypage from '../pages/Mypage';
+import MypageActivityPage from '../pages/MypageActivityPage';
 import Signup from '../pages/Signup';
 
 const AppRouter = () => {
@@ -16,7 +17,10 @@ const AppRouter = () => {
           */}
 					<Route path="/" element={<Home />} />
 					<Route path="/questions" element={<Questions />} />
-					<Route path="/users" element={<Mypage />} />
+					<Route path="/users" element={<Mypage />}>
+						<Route path="activity" element={<MypageActivityPage />} />
+						<Route path="saves" />
+					</Route>
 				</Route>
 				<Route path="/login" element={<Login />} />
 				<Route path="/signup" element={<Signup />} />
