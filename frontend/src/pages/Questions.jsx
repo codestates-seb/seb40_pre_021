@@ -13,7 +13,7 @@ const QuestionsStyle = styled.div`
 
 const Questions = () => {
 	const [data, setData] = useState([]);
-	const [questionCount, setQuestionCount] = useState([]);
+	const [questionCount, setQuestionCount] = useState();
 
 	useEffect(() => {
 		getList().then((res) => {
@@ -31,7 +31,7 @@ const Questions = () => {
 				questionCount={questionCount}
 			/>
 			<ListContainer data={data} type={'Questions'} />
-			<Pagination />
+			<Pagination questionCount={questionCount} />
 		</QuestionsStyle>
 	);
 };

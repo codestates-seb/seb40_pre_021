@@ -8,7 +8,7 @@ const instance = axios.create(axiosConfig);
 
 export const getList = async () => {
 	try {
-		const result = await instance.get(`/top
+		const result = await instance.get(`/questions
 		`);
 		return result.data;
 	} catch (err) {

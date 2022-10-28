@@ -8,13 +8,18 @@ const Body = styled.div`
 	display: flex;
 	justify-content: center;
 `;
+const OutletSize = styled.div`
+	width: 1100px;
+`;
 const Layout = () => {
 	return (
 		<>
 			<Header />
 			<Body>
 				<LeftSideBar />
-				<Outlet />
+				<OutletSize>
+					<Outlet />
+				</OutletSize>
 			</Body>
 			<Footer />
 		</>

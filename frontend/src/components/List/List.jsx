@@ -31,6 +31,7 @@ const LeftSection = styled.div`
 	}
 `;
 const RightSection = styled.div`
+	padding-right: 10%;
 	flex: 8;
 	display: flex;
 	flex-direction: column;
@@ -39,19 +40,26 @@ const RightSection = styled.div`
 	div {
 		margin: 3px;
 	}
+	a {
+		text-decoration: none;
+		color: hsl(209, 100%, 37.5%);
+	}
 	.title {
 		a {
 			font-size: 1.2em;
 			font-weight: 600;
-			text-decoration: none;
-			color: hsl(209, 100%, 37.5%);
 		}
 	}
 	.body {
-		height: 34px;
-		overflow: hidden;
 		color: hsl(210, 8%, 25%);
+		overflow: hidden;
 		text-overflow: ellipsis;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		word-wrap: break-word;
+		line-height: 1.2em;
+		height: 2.4em;
 	}
 	.bottomBox {
 		width: 100%;
@@ -69,7 +77,6 @@ const RightSection = styled.div`
 		}
 	}
 	.create {
-		padding-right: 10px;
 		display: flex;
 		align-items: flex-end;
 		color: hsl(210, 8%, 45%);
@@ -109,7 +116,7 @@ const List = ({ data, type }) => {
 						)}
 					</div>
 					<div className="create">
-						{createId}
+						<Link to="">{createId}</Link>
 						{data.createdAt}
 					</div>
 				</div>

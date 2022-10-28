@@ -29,7 +29,6 @@ const Home = () => {
 				questionCount={questionCount}
 			/>
 			<ListContainer data={data} type={'Home'} />
-			<Pagination />
 		</HomeStyle>
 	);
 };
