@@ -62,6 +62,9 @@ public class Questions {
     @JoinColumn(name = "USER_ID")
     private User users = new User();
 
+    @OneToMany(mappedBy = "questions", cascade = CascadeType.ALL)
+    private List<QuestionLikes> questionsLikes = new ArrayList<>();
+
 
 
     public Questions(String title, String contents) {
@@ -80,6 +83,13 @@ public class Questions {
         this.questionsTags.add(questionsTags); // question 에 questionsTags 지정
         if (questionsTags.getQuestions() != this) {
             questionsTags.setQuestions(this); //(owner)questionsTags 에 question 지정
+        }
+    }
+
+    public void addQuestionsLikes(QuestionLikes questionLikes) {
+        this.questionsLikes.add(questionLikes); // question 에 questionsTags 지정
+        if (questionLikes.getQuestions() != this) {
+            questionLikes.setQuestions(this); //(owner)questionsTags 에 question 지정
         }
     }
 }
