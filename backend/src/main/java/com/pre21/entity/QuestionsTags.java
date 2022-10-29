@@ -16,7 +16,8 @@ public class QuestionsTags {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long questionsTagsId;
+    @Column(name = "QUESTIONS_TAGS_ID")
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
@@ -26,10 +27,6 @@ public class QuestionsTags {
     @JoinColumn(name = "TAG_ID")
     private Tags tags;
 
-    public QuestionsTags(Questions questions, Tags tags) {
-        this.questions = questions;
-        this.tags = tags;
-    }
 
     public void setQuestions(Questions questions) {
         // 기존에 getQuestionsTags 와 연관관계가 있다면
@@ -52,5 +49,10 @@ public class QuestionsTags {
         if(tags.getQuestionsTags() != this) {
             tags.addQuestionTags(this);
         }
+    }
+
+    public QuestionsTags(Questions questions, Tags tags) {
+        this.questions = questions;
+        this.tags = tags;
     }
 }

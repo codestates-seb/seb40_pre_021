@@ -25,38 +25,32 @@ public class Questions {
     @Column
     private String title;
 
-    private String url;
-
     @Column
     private String contents;
 
-    @Column(name = "ANSWER_YN")
-    private boolean choosed;
+    @Column(name = "CHOOSE_YN")
+    private boolean chooseYn = false;
 
     @Column
     private int views;
 
-    @Column(name = "VOTE")
+    @Column
     private int vote;
 
     @Column(name = "IMAGE_URL")
     private String imageUrl;
 
     @Column
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column
-    private LocalDateTime modifiedAt;
-
-    private Long qesId;
+    private LocalDateTime modifiedAt = LocalDateTime.now();
 
     @OneToMany(mappedBy = "questions", cascade = CascadeType.ALL)
     private List<QuestionsTags> questionsTags = new ArrayList<>();
 
-
     @OneToMany(mappedBy = "questions", cascade = CascadeType.ALL)
     private List<QuestionComments> comments = new ArrayList<>();
-
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
@@ -65,14 +59,9 @@ public class Questions {
     @OneToMany(mappedBy = "questions", cascade = CascadeType.ALL)
     private List<QuestionLikes> questionsLikes = new ArrayList<>();
 
-
-
     public Questions(String title, String contents) {
         this.title = title;
         this.contents = contents;
-        this.choosed = false;
-        this.createdAt = LocalDateTime.now();
-        this.modifiedAt = LocalDateTime.now();
     }
 
     public void addUser(User user) {
@@ -89,7 +78,7 @@ public class Questions {
     public void addQuestionsLikes(QuestionLikes questionLikes) {
         this.questionsLikes.add(questionLikes); // question 에 questionsTags 지정
         if (questionLikes.getQuestions() != this) {
-            questionLikes.setQuestions(this); //(owner)questionsTags 에 question 지정
+            questionLikes.addQuestions(this); //(owner)questionsTags 에 question 지정
         }
     }
 }

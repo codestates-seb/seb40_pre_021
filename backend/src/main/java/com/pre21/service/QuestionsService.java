@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +26,7 @@ public class QuestionsService {
     private final QuestionsTagsRepository questionsTagsRepository;
     private final TagsRepository tagsRepository;
     private final UserRepository userRepository;
+    private final TagsService tagsService;
 
 
     // 질문 생성
@@ -43,7 +45,15 @@ public class QuestionsService {
                         QuestionsTags questionsTags = new QuestionsTags(questions, tags1);
                         questionsTagsRepository.save(questionsTags);
                         questions.addQuestionsTags(questionsTags);
-                        questionsRepository.save(questions);
+                        //questionsRepository.save(questions);
+                        findUser.addQuestion(questions);
+                        questions.addUser(findUser);
+                    } else {
+                        Tags tags1 = tagsRepository.findByTitle(e).orElseThrow(IllegalArgumentException::new);
+                        updateTagCount(tags1);
+                        QuestionsTags questionsTags = new QuestionsTags(questions,tags1);
+                        questionsTagsRepository.save(questionsTags);
+                        questions.addQuestionsTags(questionsTags);
                         findUser.addQuestion(questions);
                         questions.addUser(findUser);
                     }
@@ -68,16 +78,14 @@ public class QuestionsService {
 
         return findQuestion;
     }
-/*
-    public Tags findVerifiedTags(Questions questions) throws Exception {
-        String tagTitle =
-                questions.getQuestionsTags().stream()
-                        .map(questionsTags -> questionsTags.getTags().getTitle())
-                        .toString();
 
-        Tags tags = new Tags();
-        tags.setTitle(tagTitle);
+    // 태그 수 업데이트
+    private void updateTagCount(Tags tags) {
 
-        //return tagsService.verifiedExistsTagTitle(tags);
-    }*/
+        int earnedTagCount = tags.getCount() + 1;
+        tags.setCount(earnedTagCount);
+        tags.setLatest(LocalDateTime.now());
+
+        tagsRepository.save(tags);
+    }
 }
