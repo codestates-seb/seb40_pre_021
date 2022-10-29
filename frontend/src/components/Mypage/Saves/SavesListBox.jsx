@@ -17,6 +17,9 @@ const SavesListBox = ({ bookmarks }) => {
 					vote,
 					answer,
 				} = bookmark;
+
+				let splitDate = createdAt.split(' ');
+				let date = `${splitDate[1]} ${splitDate[2]}, ${splitDate[3]} at ${splitDate[4]}`;
 				return (
 					<ListBox key={i}>
 						<ListDetailInfoWrapper>
@@ -52,10 +55,29 @@ const SavesListBox = ({ bookmarks }) => {
 								<UserInfoBox>
 									<a href="1">{questionUser}</a>
 									<time>asked</time>
-									<span>{createdAt}</span>
+									<span>{date}</span>
 								</UserInfoBox>
 							</TagAndUserInfoBox>
 						</ContentBox>
+						{answer ? (
+							<AnswerListBox>
+								<VotesBox>
+									<span>0</span>
+									<span>votes</span>
+								</VotesBox>
+								<AnswerContent>
+									BIND(concat(?lastName,firstName) AS ?fullName)
+								</AnswerContent>
+								<AnswerAndUserInfoBox>
+									<a href="123">View answer</a>
+									<UserInfoBox>
+										<a href="1">{questionUser}</a>
+										<time>asked</time>
+										<span>Sep 28 at 12:24</span>
+									</UserInfoBox>
+								</AnswerAndUserInfoBox>
+							</AnswerListBox>
+						) : null}
 					</ListBox>
 				);
 			})}
@@ -234,7 +256,7 @@ const UserInfoBox = styled.div`
 		color: #0074cc;
 		text-decoration: none;
 		cursor: pointer;
-		font-size: 14px;
+		font-size: 13px;
 		font-weight: 600;
 		:hover {
 			color: #0a95ff;
@@ -242,12 +264,50 @@ const UserInfoBox = styled.div`
 	}
 	time {
 		color: #6a737c;
-		font-size: 14px;
+		font-size: 13px;
 		font-weight: 600;
 	}
 	span {
 		color: #6a737c;
-		font-size: 14px;
+		font-size: 13px;
 		font-weight: 600;
+	}
+`;
+
+const AnswerListBox = styled.div`
+	position: relative;
+	margin: 16px 1rem 0 1rem;
+	padding: 0.5rem 0 0.5rem 1rem;
+	::before {
+		content: '';
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		width: 4px;
+		height: 100%;
+		border-radius: 8px;
+		background-color: #c8ccd0;
+	}
+`;
+
+const AnswerContent = styled.p`
+	color: #525960;
+	display: -webkit-box;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	margin-bottom: 8px;
+`;
+
+const AnswerAndUserInfoBox = styled(TagAndUserInfoBox)`
+	a {
+		text-decoration: none;
+		cursor: pointer;
+		color: #0074cc;
+		:hover {
+			color: #0a95ff;
+		}
 	}
 `;
