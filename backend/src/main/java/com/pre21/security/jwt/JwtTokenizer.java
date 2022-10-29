@@ -18,6 +18,7 @@ import java.security.Key;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -82,6 +83,16 @@ public class JwtTokenizer {
         return claims;
     }
 
+    // Cleaims 리턴
+    public Claims parsingToken(String token, String base64EncodedSecretKey) {
+        Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
     // 단순히 검증만 하는 용도
     public void verifySignature(String jws, String base64EncodedSecretKey) {
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
@@ -107,11 +118,15 @@ public class JwtTokenizer {
         return key;
     }
 
+
     public void verifiedExistRefresh(String refreshToken) throws Exception {
-        refreshTokenRepository.findRefreshTokenByTokenValue(refreshToken).orElseThrow(() -> new Exception("토큰 ㄴㄴ"));
+        Optional<RefreshToken> findRefreshToken = refreshTokenRepository.findRefreshTokenByTokenValue(refreshToken);
+        if (!refreshToken.equals(findRefreshToken.get().getTokenValue())) throw new Exception("토큰 ㄴㄴ");
     }
 
-    public void savedRefreshToken(String refreshToken, String subject) throws Exception {
-        refreshTokenRepository.save(new RefreshToken(refreshToken, subject));
+
+    public void savedRefreshToken(String refreshToken, String email) throws Exception {
+        Optional<RefreshToken> findRefreshToken = refreshTokenRepository.findRefreshTokenByTokenEmail(email);
+        findRefreshToken.orElse(refreshTokenRepository.save(new RefreshToken(refreshToken, email)));
     }
 }

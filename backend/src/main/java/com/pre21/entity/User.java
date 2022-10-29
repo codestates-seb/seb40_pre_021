@@ -43,12 +43,6 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.roles.stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
-    }
-
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Questions> questions = new ArrayList<>();
 
@@ -60,6 +54,7 @@ public class User {
         this.nickname = nickname;
         this.email = email;
         this.password = password;
+        this.roles.add("USER");
     }
 
     public void addQuestion(Questions question) {
@@ -71,9 +66,8 @@ public class User {
         this.id = id;
         this.email = email;
         this.roles = roles;
-
-
     }
+
     public void addQuestionsLikes(QuestionLikes questionLikes) {
         this.questionsLikes.add(questionLikes); // question 에 questionsTags 지정
         if (questionLikes.getUsers() != this) {
