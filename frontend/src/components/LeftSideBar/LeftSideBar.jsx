@@ -42,7 +42,7 @@ const LeftMenu = () => {
 		{
 			id: 3,
 			name: 'Users',
-			path: '/users',
+			path: '/users/activity',
 		},
 	];
 

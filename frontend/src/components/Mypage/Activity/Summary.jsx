@@ -100,7 +100,7 @@ const AsideContentFooterButton = styled.button`
 	font-weight: 600;
 	text-align: center;
 	cursor: pointer;
-	font-size: 13px;
+	font-size: 14px;
 	:hover {
 		background-color: #0074cc;
 	}

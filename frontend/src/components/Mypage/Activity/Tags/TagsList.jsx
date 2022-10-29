@@ -67,6 +67,7 @@ const ContentBox = styled.div`
 
 const FlexBox = styled.div`
 	display: flex;
+	align-items: center;
 	margin: 0 8px;
 `;
 
@@ -100,6 +101,7 @@ const Tag = styled.span`
 	border: 1px solid transparent;
 	border-radius: 3px;
 	font-weight: 600;
+	cursor: pointer;
 	:hover {
 		color: #2c5877;
 		background-color: #d1e3f0;
