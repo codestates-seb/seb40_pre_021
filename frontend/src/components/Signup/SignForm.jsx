@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import { Signup } from '../../api/SignupApi';
 import Button from '../common/Button';
 import InputForm from '../common/InputForm';
+import { useNavigate } from 'react-router-dom';
 
 const SignupFormStyle = styled.div`
 	margin-top: 5px;
@@ -36,18 +39,37 @@ const Guide = styled.div`
 	}
 `;
 const SignupForm = () => {
+	const [displayNmae, setDisplayName] = useState('');
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [result, setResult] = useState();
+
+	const navigate = useNavigate();
+
+	const onClickSignup = () => {
+		//data에 회원가입정보 담아서 통신
+		const data = { displayNmae, email, password };
+
+		//api
+		Signup(data).then((res) => {
+			setResult(res); //결과 상태 result에 저장 후 200 = 회원가입 완료 , 400,500 = 오류가 발생했습니다 보여줄 예정
+			//200 일경우 login page로 redirect
+			navigate('/login');
+		});
+		// .then(alert(result));
+	};
 	return (
 		<SignupFormStyle>
-			<InputForm text="Display name" />
-			<InputForm text="Email" />
-			<InputForm text="Password" />
+			<InputForm text="Display name" callback={setDisplayName} />
+			<InputForm text="Email" callback={setEmail} />
+			<InputForm text="Password" type="password" callback={setPassword} />
 			<Guide>
 				<p>
 					Passwords must contain at least eight characters, including at least
 					1letter and 1 number.
 				</p>
 			</Guide>
-			<Button text="Sign up" />
+			<Button text="Sign up" callback={onClickSignup} />
 			<Guide>
 				<p className="bottom">
 					By clicking “Sign up”, you agree to our
