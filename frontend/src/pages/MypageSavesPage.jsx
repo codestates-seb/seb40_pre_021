@@ -9,8 +9,6 @@ const MypageSavesPage = () => {
 	const [info, setInfo] = useState({ nickname: '', createdAt: '' });
 	const { bookmarks } = info;
 
-	console.log(bookmarks);
-
 	useEffect(() => {
 		getMypageInfo(1).then((res) => {
 			setInfo(res);
