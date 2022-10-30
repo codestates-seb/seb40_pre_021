@@ -60,13 +60,7 @@ const SavesListBox = ({ bookmarks }) => {
 								</UserInfoBox>
 							</TagAndUserInfoBox>
 						</ContentBox>
-						{answer ? (
-							<AnswerList
-								answer={answer}
-								choosed={choosed}
-								answerCount={answerCount}
-							/>
-						) : null}
+						{answer ? <AnswerList answer={answer} /> : null}
 					</ListBox>
 				);
 			})}
