@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import defaultImage from '../../../assets/images/userDefaultImage.png';
+import { GoCheck } from 'react-icons/go';
 
 const SavesListBox = ({ bookmarks }) => {
 	return (
@@ -28,7 +29,8 @@ const SavesListBox = ({ bookmarks }) => {
 								<span>{vote}</span>
 								<span>votes</span>
 							</VotesBox>
-							<AnswerBox>
+							<AnswerBox choosed={choosed}>
+								{choosed ? <GoCheck style={{ color: 'white' }} /> : null}
 								<span>{answerCount}</span>
 								<span>answer</span>
 							</AnswerBox>
@@ -141,7 +143,8 @@ const VotesBox = styled.div`
 `;
 
 const AnswerBox = styled.div`
-	color: #2e6f44;
+	color: ${(props) => (props.choosed ? '#2E6F44' : 'white')};
+	background-color: ${(props) => (props.choosed ? '#2E6F44' : 'white')};
 	border: 1px solid #2e6f44;
 	border-radius: 3px;
 	padding: 4px;
@@ -152,7 +155,7 @@ const AnswerBox = styled.div`
 	white-space: nowrap;
 
 	span {
-		color: #2e6f44;
+		color: ${(props) => (props.choosed ? 'white' : '#2E6F44')};
 		font-weight: 600;
 		&:first-child {
 			font-weight: 700;
