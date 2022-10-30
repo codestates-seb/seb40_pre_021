@@ -1,4 +1,7 @@
+import axios from 'axios';
+import { useState } from 'react';
 import styled from 'styled-components';
+import { Login } from '../../api/LoginApi';
 import Button from '../common/Button';
 import InputForm from '../common/InputForm';
 
@@ -19,12 +22,40 @@ const LoginFormStyle = styled.div`
 		width: 243px;
 	}
 `;
-const LoginForm = () => {
+const LoginForm = ({ setUserInfo, setIsLogin }) => {
+	const [loginInfo, setLoginInfo] = useState({
+		email: '',
+		password: '',
+	});
+	const [errorMessage, setErrorMessage] = useState('');
+	const handleInputValue = (key) => (e) => {
+		setLoginInfo({ ...loginInfo, [key]: e.target.value });
+	};
+	const loginRequestHandler = () => {
+		const { email, password } = loginInfo;
+		if (!email || !password) {
+			setErrorMessage('아이디와 비밀번호를 입력하세요');
+			return;
+		} else {
+			setErrorMessage('');
+		}
+		//api
+		Login(loginInfo).then((res) => {
+			setIsLogin(true);
+			setUserInfo(res.data);
+			navigator('/');
+		});
+	};
 	return (
 		<LoginFormStyle>
-			<InputForm text="Email" />
-			<InputForm text="Password" blueText="Forgot password?" />
-			<Button text="Log in" />
+			<InputForm text="Email" callback={() => handleInputValue('email')} />
+			<InputForm
+				text="Password"
+				blueText="Forgot password?"
+				type="password"
+				callback={() => handleInputValue('password')}
+			/>
+			<Button text="Log in" callback={loginRequestHandler} />
 		</LoginFormStyle>
 	);
 };

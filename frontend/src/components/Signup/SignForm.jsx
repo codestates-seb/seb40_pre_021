@@ -4,6 +4,8 @@ import { Signup } from '../../api/SignupApi';
 import Button from '../common/Button';
 import InputForm from '../common/InputForm';
 import { useNavigate } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
+import Confirm from '../common/Confirm';
 
 const SignupFormStyle = styled.div`
 	margin-top: 5px;
@@ -42,7 +44,6 @@ const SignupForm = () => {
 	const [displayNmae, setDisplayName] = useState('');
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [result, setResult] = useState();
 
 	const navigate = useNavigate();
 
@@ -52,9 +53,24 @@ const SignupForm = () => {
 
 		//api
 		Signup(data).then((res) => {
-			setResult(res); //결과 상태 result에 저장 후 200 = 회원가입 완료 , 400,500 = 오류가 발생했습니다 보여줄 예정
+			//결과 상태 result에 저장 후 200 = 회원가입 완료 , 400,500 = 오류가 발생했습니다 보여줄 예정
 			//200 일경우 login page로 redirect
-			navigate('/login');
+			if (res.state === 200) {
+				const title = '회원가입 완료';
+				const contents = `로그인 화면으로 이동하시겠습니까?`;
+				confirmAlert({
+					customUI: ({ onClose }) => {
+						return (
+							<Confirm
+								onClose={onClose}
+								title={title}
+								content={contents}
+								callback={() => navigate('/login')}
+							/>
+						);
+					},
+				});
+			}
 		});
 		// .then(alert(result));
 	};
