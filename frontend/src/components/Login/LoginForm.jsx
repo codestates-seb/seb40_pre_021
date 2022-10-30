@@ -48,6 +48,7 @@ const LoginForm = () => {
 			// 값 꺼낼때는
 			// const isLogin = useSelector(selectIsLogin);
 			// const userInfo = useSelector(selectUserInfo);
+			// ../Header/RightMenu.jsx 에 예시있음
 
 			//store에 저장완료 후 메인페이지로 이동
 			return navigate('/', { replace: true });

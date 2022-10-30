@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { logo } from '../../assets/images/logo';
 import RightMenu from './RightMenu';
 import Search from './Search';
-
 const HeaderStyle = styled.header`
 	height: 48px;
 	border-top: 3px solid rgb(223, 126, 44);
