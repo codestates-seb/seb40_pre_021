@@ -41,51 +41,72 @@ const Guide = styled.div`
 	}
 `;
 const SignupForm = () => {
-	const [displayNmae, setDisplayName] = useState('');
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+	const [signupInfo, setSignupInfo] = useState({
+		displayName: '',
+		email: '',
+		password: '',
+	});
 
 	const navigate = useNavigate();
 
-	const onClickSignup = () => {
-		//data에 회원가입정보 담아서 통신
-		const data = { displayNmae, email, password };
-
+	const handleInputValue = (key) => (e) => {
+		setSignupInfo({ ...signupInfo, [key]: e.target.value });
+	};
+	const signupRequestHandler = () => {
+		const { displayName, email, password } = signupInfo;
+		if (!displayName) {
+			alert('Display Name을 입력하세요');
+			return;
+		} else if (!email) {
+			alert('Email을 입력하세요');
+			return;
+		} else if (!password) {
+			alert('Password를 입력하세요');
+			return;
+		}
 		//api
-		Signup(data).then((res) => {
+
+		Signup(signupInfo).then((res) => {
 			//결과 상태 result에 저장 후 200 = 회원가입 완료 , 400,500 = 오류가 발생했습니다 보여줄 예정
 			//200 일경우 login page로 redirect
-			if (res.state === 200) {
-				const title = '회원가입 완료';
-				const contents = `로그인 화면으로 이동하시겠습니까?`;
-				confirmAlert({
-					customUI: ({ onClose }) => {
-						return (
-							<Confirm
-								onClose={onClose}
-								title={title}
-								content={contents}
-								callback={() => navigate('/login')}
-							/>
-						);
-					},
-				});
-			}
+			// if (res.state === 200) {
+			const title = '회원가입 완료';
+			const contents = `로그인 화면으로 이동하시겠습니까?`;
+			confirmAlert({
+				customUI: ({ onClose }) => {
+					return (
+						<Confirm
+							onClose={onClose}
+							title={title}
+							content={contents}
+							callback={() => navigate('/login')}
+						/>
+					);
+				},
+			});
+			// }
 		});
-		// .then(alert(result));
 	};
+
 	return (
 		<SignupFormStyle>
-			<InputForm text="Display name" callback={setDisplayName} />
-			<InputForm text="Email" callback={setEmail} />
-			<InputForm text="Password" type="password" callback={setPassword} />
+			<InputForm
+				text="Display name"
+				callback={handleInputValue('displayName')}
+			/>
+			<InputForm text="Email" callback={handleInputValue('email')} />
+			<InputForm
+				text="Password"
+				type="password"
+				callback={handleInputValue('password')}
+			/>
 			<Guide>
 				<p>
 					Passwords must contain at least eight characters, including at least
 					1letter and 1 number.
 				</p>
 			</Guide>
-			<Button text="Sign up" callback={onClickSignup} />
+			<Button text="Sign up" callback={signupRequestHandler} />
 			<Guide>
 				<p className="bottom">
 					By clicking “Sign up”, you agree to our

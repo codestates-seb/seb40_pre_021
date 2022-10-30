@@ -50,7 +50,7 @@ const InputForm = ({ text, blueText, type, callback }) => {
 				<div className="blueText">{blueText}</div>
 			</div>
 			<div className="inputBox">
-				<input type={type} onChange={() => callback(event.target.value)} />
+				<input type={type} onChange={callback} />
 			</div>
 		</InputFormStyle>
 	);

@@ -4,8 +4,6 @@ import { ReactComponent as Icon } from '../assets/images/icon.svg';
 import OAuths from '../components/OAuths/OAuths';
 import LoginForm from '../components/Login/LoginForm';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
 const LoginStyle = styled.div`
 	height: 100vh;
 	display: flex;
@@ -38,34 +36,14 @@ const LoginBody = styled.div`
 `;
 
 const Login = () => {
-	const [isLogin, setIsLogin] = useState(false);
-	const [userInfo, setUserInfo] = useState(null);
-
-	const authHandler = () => {
-		axios
-			.get('https://localhost:4000/userinfo')
-			.then((res) => {
-				setIsLogin(true);
-				setUserInfo(res.data);
-			})
-			.catch((err) => {
-				if (err.response.status === 401) {
-					console.log(err.response.data);
-				}
-			});
-	};
-
-	useEffect(() => {
-		authHandler();
-	}, []);
-
 	return (
 		<LoginStyle>
 			<Header />
 			<LoginBody>
 				<Icon width="40" heigth="40" />
 				<OAuths />
-				<LoginForm setIsLogin={setIsLogin} setUserInfo={setUserInfo} />
+				{/* 로그인 API 통신 LoginForm안에 있음 */}
+				<LoginForm />
 				<div className="singup">
 					<div>
 						Don’t have an account? <Link to="/signup">Sign up</Link>

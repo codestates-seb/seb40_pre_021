@@ -1,9 +1,11 @@
-import axios from 'axios';
 import { useState } from 'react';
 import styled from 'styled-components';
 import { Login } from '../../api/LoginApi';
 import Button from '../common/Button';
 import InputForm from '../common/InputForm';
+import { useDispatch } from 'react-redux'; // 1, 2.
+import { loginSuccess } from '../../modules/userReducer';
+import { useNavigate } from 'react-router-dom';
 
 const LoginFormStyle = styled.div`
 	margin-top: 5px;
@@ -22,38 +24,43 @@ const LoginFormStyle = styled.div`
 		width: 243px;
 	}
 `;
-const LoginForm = ({ setUserInfo, setIsLogin }) => {
+const LoginForm = () => {
 	const [loginInfo, setLoginInfo] = useState({
 		email: '',
 		password: '',
 	});
-	const [errorMessage, setErrorMessage] = useState('');
+
+	const dispatch = useDispatch();
+	const navigate = useNavigate();
 	const handleInputValue = (key) => (e) => {
 		setLoginInfo({ ...loginInfo, [key]: e.target.value });
 	};
 	const loginRequestHandler = () => {
 		const { email, password } = loginInfo;
 		if (!email || !password) {
-			setErrorMessage('아이디와 비밀번호를 입력하세요');
+			alert('Email과 Password를 입력하세요');
 			return;
-		} else {
-			setErrorMessage('');
 		}
 		//api
 		Login(loginInfo).then((res) => {
-			setIsLogin(true);
-			setUserInfo(res.data);
-			navigator('/');
+			//redux-toolkit
+			dispatch(loginSuccess(res));
+			// 값 꺼낼때는
+			// const isLogin = useSelector(selectIsLogin);
+			// const userInfo = useSelector(selectUserInfo);
+
+			//store에 저장완료 후 메인페이지로 이동
+			return navigate('/', { replace: true });
 		});
 	};
 	return (
 		<LoginFormStyle>
-			<InputForm text="Email" callback={() => handleInputValue('email')} />
+			<InputForm text="Email" callback={handleInputValue('email')} />
 			<InputForm
 				text="Password"
 				blueText="Forgot password?"
 				type="password"
-				callback={() => handleInputValue('password')}
+				callback={handleInputValue('password')}
 			/>
 			<Button text="Log in" callback={loginRequestHandler} />
 		</LoginFormStyle>

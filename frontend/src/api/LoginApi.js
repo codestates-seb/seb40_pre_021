@@ -6,17 +6,27 @@ const axiosConfig = {
 
 const instance = axios.create(axiosConfig);
 
-//dev : login
-//real : users/login
+//test
+//test를 위해 회원가입 데이터를 get 하여 들고옴
 export const Login = async (data) => {
 	try {
-		const result = await instance.post(
-			`/login
-		`,
-			data,
-		);
+		const result = await instance.get(`/signup`);
 		return result.data;
 	} catch (err) {
 		console.log(err);
 	}
 };
+
+//real
+// export const Login = async (data) => {
+// 	try {
+// 		const result = await instance.post(
+// 			`/users/login
+// 		`,
+// 			data,
+// 		);
+// 		return result.data;
+// 	} catch (err) {
+// 		console.log(err);
+// 	}
+// };
