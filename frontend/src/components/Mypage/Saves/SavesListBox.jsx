@@ -1,6 +1,8 @@
 import styled from 'styled-components';
-import defaultImage from '../../../assets/images/userDefaultImage.png';
 import { GoCheck } from 'react-icons/go';
+import TagList from './TagList';
+import AnswerList from './AnswerList';
+import defaultImage from '../../../assets/images/userDefaultImage.png';
 
 const SavesListBox = ({ bookmarks }) => {
 	return (
@@ -19,6 +21,7 @@ const SavesListBox = ({ bookmarks }) => {
 					vote,
 					answer,
 				} = bookmark;
+				console.log(answer);
 
 				let splitDate = createdAt.split(' ');
 				let date = `${splitDate[1]} ${splitDate[2]}, ${splitDate[3]} at ${splitDate[4]}`;
@@ -46,13 +49,7 @@ const SavesListBox = ({ bookmarks }) => {
 							<TagAndUserInfoBox>
 								<TagBox>
 									<ul>
-										{tag.map((item) => {
-											return (
-												<TagList key={item}>
-													<a href="123">{item}</a>
-												</TagList>
-											);
-										})}
+										<TagList tag={tag} />
 									</ul>
 								</TagBox>
 								<UserInfoBox>
@@ -64,26 +61,11 @@ const SavesListBox = ({ bookmarks }) => {
 							</TagAndUserInfoBox>
 						</ContentBox>
 						{answer ? (
-							<AnswerListBox>
-								<AnswerVoteAnswerBox>
-									<VotesBox>
-										<span>0</span>
-										<span>votes</span>
-									</VotesBox>
-									<AnswerContent>
-										BIND(concat(?lastName,firstName) AS ?fullName)
-									</AnswerContent>
-								</AnswerVoteAnswerBox>
-								<AnswerAndUserInfoBox>
-									<a href="123">View answer</a>
-									<UserInfoBox>
-										<UserImage src={defaultImage} alt="user-image" />
-										<a href="1">{questionUser}</a>
-										<time>asked</time>
-										<span>Sep 28 at 12:24</span>
-									</UserInfoBox>
-								</AnswerAndUserInfoBox>
-							</AnswerListBox>
+							<AnswerList
+								answer={answer}
+								choosed={choosed}
+								answerCount={answerCount}
+							/>
 						) : null}
 					</ListBox>
 				);
@@ -226,31 +208,6 @@ const TagBox = styled.div`
 	}
 `;
 
-const TagList = styled.li`
-	display: inline;
-	margin: 4px 4px 4px 0;
-
-	a {
-		display: inline-block;
-		font-size: 12px;
-		color: #39739d;
-		background-color: #e1ecf4;
-		padding: 0.4rem 0.5rem;
-		margin: 2px 2px 2px 0;
-		line-height: 1;
-		white-space: nowrap;
-		text-decoration: none;
-		text-align: center;
-		border: 1px solid transparent;
-		border-radius: 3px;
-		font-weight: 600;
-		:hover {
-			background-color: #d1e3f0;
-			color: #2c5877;
-		}
-	}
-`;
-
 const UserInfoBox = styled.div`
 	display: flex;
 	justify-content: flex-end;
@@ -283,53 +240,53 @@ const UserInfoBox = styled.div`
 	}
 `;
 
-const AnswerListBox = styled.div`
-	position: relative;
-	margin: 16px 1rem 0 1rem;
-	padding: 0.5rem 0 0.5rem 1rem;
-	::before {
-		content: '';
-		display: block;
-		position: absolute;
-		top: 0;
-		left: 0;
-		right: 0;
-		width: 4px;
-		height: 100%;
-		border-radius: 8px;
-		background-color: #c8ccd0;
-	}
-`;
+// const AnswerListBox = styled.div`
+// 	position: relative;
+// 	margin: 16px 1rem 0 1rem;
+// 	padding: 0.5rem 0 0.5rem 1rem;
+// 	::before {
+// 		content: '';
+// 		display: block;
+// 		position: absolute;
+// 		top: 0;
+// 		left: 0;
+// 		right: 0;
+// 		width: 4px;
+// 		height: 100%;
+// 		border-radius: 8px;
+// 		background-color: #c8ccd0;
+// 	}
+// `;
 
-const AnswerVoteAnswerBox = styled.div`
-	display: flex;
-`;
+// const AnswerVoteAnswerBox = styled.div`
+// 	display: flex;
+// `;
 
-const AnswerContent = styled.p`
-	color: #525960;
-	display: -webkit-box;
-	-webkit-line-clamp: 4;
-	-webkit-box-orient: vertical;
-	overflow: hidden;
-	margin-bottom: 8px;
-	font-size: 15px;
-	font-weight: 500;
-	margin-left: 8px;
-`;
+// const AnswerContent = styled.p`
+// 	color: #525960;
+// 	display: -webkit-box;
+// 	-webkit-line-clamp: 4;
+// 	-webkit-box-orient: vertical;
+// 	overflow: hidden;
+// 	margin-bottom: 8px;
+// 	font-size: 15px;
+// 	font-weight: 500;
+// 	margin-left: 8px;
+// `;
 
-const AnswerAndUserInfoBox = styled(TagAndUserInfoBox)`
-	margin-top: 8px;
-	a {
-		text-decoration: none;
-		cursor: pointer;
-		color: #0074cc;
-		font-size: 14px;
-		font-weight: 500;
-		:hover {
-			color: #0a95ff;
-		}
-	}
-`;
+// const AnswerAndUserInfoBox = styled(TagAndUserInfoBox)`
+// 	margin-top: 8px;
+// 	a {
+// 		text-decoration: none;
+// 		cursor: pointer;
+// 		color: #0074cc;
+// 		font-size: 14px;
+// 		font-weight: 500;
+// 		:hover {
+// 			color: #0a95ff;
+// 		}
+// 	}
+// `;
 
 const UserImage = styled.img`
 	border-radius: 3px;
