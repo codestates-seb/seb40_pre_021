@@ -2,22 +2,25 @@ import styled from 'styled-components';
 import defaultImage from '../../../assets/images/userDefaultImage.png';
 import { GoCheck } from 'react-icons/go';
 
-const AnswerList = ({ answer, choosed, answerCount }) => {
+const AnswerList = ({ answer }) => {
 	console.log(answer);
-	const { answerUser, answerBody, answerCreatedAt } = answer;
+	const { answerUser, answerBody, answerCreatedAt, vote, choosed } = answer;
+	let splitDate = answerCreatedAt.split(' ');
+	let date = `${splitDate[1]} ${splitDate[2]}, ${splitDate[3]} at ${splitDate[4]}`;
 	return (
 		<AnswerListBox>
 			<AnswerVoteAnswerBox>
 				<VotesBox>
-					<span>0</span>
+					<span>{vote}</span>
 					<span>votes</span>
 				</VotesBox>
-				<AnswerBox choosed={choosed}>
-					{choosed ? <GoCheck style={{ color: 'white' }} /> : null}
-					<span>{answerCount}</span>
-					<span>answer</span>
-				</AnswerBox>
-				<AnswerContent>{answerBody}</AnswerContent>
+				{choosed ? (
+					<AnswerBox choosed={choosed}>
+						<GoCheck style={{ color: 'white' }} />
+						<span>Accepted</span>
+					</AnswerBox>
+				) : null}
+				<AnswerContent choosed={choosed}>{answerBody}</AnswerContent>
 			</AnswerVoteAnswerBox>
 			<AnswerAndUserInfoBox>
 				<a href="123">View answer</a>
@@ -25,7 +28,7 @@ const AnswerList = ({ answer, choosed, answerCount }) => {
 					<UserImage src={defaultImage} alt="user-image" />
 					<a href="1">{answerUser}</a>
 					<time>asked</time>
-					<span>{answerCreatedAt}</span>
+					<span>{date}</span>
 				</UserInfoBox>
 			</AnswerAndUserInfoBox>
 		</AnswerListBox>
@@ -54,9 +57,14 @@ const AnswerListBox = styled.div`
 
 const AnswerVoteAnswerBox = styled.div`
 	display: flex;
+	flex-direction: row;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 6px;
 `;
 
 const AnswerContent = styled.p`
+	width: ${(props) => props.choosed && '100%'};
 	color: #525960;
 	display: -webkit-box;
 	-webkit-line-clamp: 4;
@@ -65,7 +73,6 @@ const AnswerContent = styled.p`
 	margin-bottom: 8px;
 	font-size: 15px;
 	font-weight: 500;
-	margin-left: 8px;
 `;
 
 const AnswerAndUserInfoBox = styled.div`
@@ -150,6 +157,7 @@ const AnswerBox = styled.div`
 	border: 1px solid #2e6f44;
 	border-radius: 3px;
 	padding: 4px;
+	font-size: 14px;
 	display: inline-flex;
 	gap: 0.3rem;
 	align-items: center;
