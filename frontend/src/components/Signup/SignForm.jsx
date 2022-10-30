@@ -42,7 +42,7 @@ const Guide = styled.div`
 `;
 const SignupForm = () => {
 	const [signupInfo, setSignupInfo] = useState({
-		displayName: '',
+		nickname: '',
 		email: '',
 		password: '',
 	});
@@ -53,8 +53,8 @@ const SignupForm = () => {
 		setSignupInfo({ ...signupInfo, [key]: e.target.value });
 	};
 	const signupRequestHandler = () => {
-		const { displayName, email, password } = signupInfo;
-		if (!displayName) {
+		const { nickname, email, password } = signupInfo;
+		if (!nickname) {
 			alert('Display Name을 입력하세요');
 			return;
 		} else if (!email) {
@@ -90,10 +90,7 @@ const SignupForm = () => {
 
 	return (
 		<SignupFormStyle>
-			<InputForm
-				text="Display name"
-				callback={handleInputValue('displayName')}
-			/>
+			<InputForm text="Display name" callback={handleInputValue('nickname')} />
 			<InputForm text="Email" callback={handleInputValue('email')} />
 			<InputForm
 				text="Password"

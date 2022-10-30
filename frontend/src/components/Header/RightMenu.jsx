@@ -40,7 +40,7 @@ const RightMenu = () => {
 		<RightMenuStlye>
 			{isLogin ? (
 				<>
-					displayName :{userInfo.displayName}
+					nickname :{userInfo.nickname}
 					<Button text="Log out" callback={logoutRequestHandler} />
 				</>
 			) : (
