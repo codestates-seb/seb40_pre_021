@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import defaultImage from '../../../assets/images/userDefaultImage.png';
 
 const SavesListBox = ({ bookmarks }) => {
 	return (
@@ -53,6 +54,7 @@ const SavesListBox = ({ bookmarks }) => {
 									</ul>
 								</TagBox>
 								<UserInfoBox>
+									<UserImage src={defaultImage} alt="user-image" />
 									<a href="1">{questionUser}</a>
 									<time>asked</time>
 									<span>{date}</span>
@@ -61,16 +63,19 @@ const SavesListBox = ({ bookmarks }) => {
 						</ContentBox>
 						{answer ? (
 							<AnswerListBox>
-								<VotesBox>
-									<span>0</span>
-									<span>votes</span>
-								</VotesBox>
-								<AnswerContent>
-									BIND(concat(?lastName,firstName) AS ?fullName)
-								</AnswerContent>
+								<AnswerVoteAnswerBox>
+									<VotesBox>
+										<span>0</span>
+										<span>votes</span>
+									</VotesBox>
+									<AnswerContent>
+										BIND(concat(?lastName,firstName) AS ?fullName)
+									</AnswerContent>
+								</AnswerVoteAnswerBox>
 								<AnswerAndUserInfoBox>
 									<a href="123">View answer</a>
 									<UserInfoBox>
+										<UserImage src={defaultImage} alt="user-image" />
 										<a href="1">{questionUser}</a>
 										<time>asked</time>
 										<span>Sep 28 at 12:24</span>
@@ -128,6 +133,7 @@ const VotesBox = styled.div`
 
 	span {
 		font-weight: 600;
+		font-size: 14px;
 		&:first-child {
 			font-weight: 700;
 		}
@@ -292,6 +298,10 @@ const AnswerListBox = styled.div`
 	}
 `;
 
+const AnswerVoteAnswerBox = styled.div`
+	display: flex;
+`;
+
 const AnswerContent = styled.p`
 	color: #525960;
 	display: -webkit-box;
@@ -299,15 +309,27 @@ const AnswerContent = styled.p`
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 	margin-bottom: 8px;
+	font-size: 15px;
+	font-weight: 500;
+	margin-left: 8px;
 `;
 
 const AnswerAndUserInfoBox = styled(TagAndUserInfoBox)`
+	margin-top: 8px;
 	a {
 		text-decoration: none;
 		cursor: pointer;
 		color: #0074cc;
+		font-size: 14px;
+		font-weight: 500;
 		:hover {
 			color: #0a95ff;
 		}
 	}
+`;
+
+const UserImage = styled.img`
+	border-radius: 3px;
+	width: 16px;
+	height: 16px;
 `;
