@@ -4,6 +4,10 @@ import { logo } from '../../assets/images/logo';
 import RightMenu from './RightMenu';
 import Search from './Search';
 const HeaderStyle = styled.header`
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	height: 48px;
 	height: 48px;
 	border-top: 3px solid rgb(223, 126, 44);
 	background-color: rgb(248, 248, 248);
