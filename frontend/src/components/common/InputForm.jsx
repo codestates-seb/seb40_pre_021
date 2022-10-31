@@ -43,6 +43,19 @@ const InputFormStyle = styled.div`
 `;
 
 const InputForm = ({ text, blueText, type, callback }) => {
+	const chkCharCode = (e) => {
+		console.log('key up', e.key, e.code);
+
+		const notEngExp = /[^A-Za-z]/g;
+		const isNotEng = notEngExp.test(e.key);
+		const koreanExp = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;
+
+		if (isNotEng) {
+			e.preventDefault();
+			e.target.value = e.target.value.replace(koreanExp, '');
+			return;
+		}
+	};
 	return (
 		<InputFormStyle>
 			<div className="textBox">
@@ -50,7 +63,12 @@ const InputForm = ({ text, blueText, type, callback }) => {
 				<div className="blueText">{blueText}</div>
 			</div>
 			<div className="inputBox">
-				<input type={type} onChange={callback} />
+				<input
+					type={type}
+					onChange={callback}
+					maxLength="50"
+					onKeyUp={chkCharCode}
+				/>
 			</div>
 		</InputFormStyle>
 	);
