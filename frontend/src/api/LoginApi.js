@@ -20,7 +20,6 @@ export const Login = async (data) => {
 		return result.data;
 	} catch (err) {
 		console.log(err);
-		throw Error(err);
 	}
 };
 

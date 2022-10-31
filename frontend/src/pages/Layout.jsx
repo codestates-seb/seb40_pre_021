@@ -20,7 +20,10 @@ const Layout = () => {
 	const dispatch = useDispatch();
 	useEffect(() => {
 		AccessTokenRefresh().then((res) => {
-			dispatch(loginSuccess(res));
+			//응답이 정상일 경우
+			if (res.nickname) {
+				dispatch(loginSuccess(res));
+			}
 		});
 	}, []);
 	return (

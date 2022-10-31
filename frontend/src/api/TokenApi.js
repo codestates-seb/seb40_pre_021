@@ -18,13 +18,10 @@ export const AccessTokenRefresh = async () => {
 		console.log('AccessTokenRefresh');
 		if (result.data.accessToken) {
 			TokenExpireSetting(result);
-		} else {
-			throw Error('accessToken is not defined');
 		}
 		return result.data;
 	} catch (err) {
 		console.log(err);
-		throw Error(err);
 	}
 };
 
