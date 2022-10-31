@@ -36,6 +36,7 @@ const GroupContainer = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	margin-bottom: 1px;
+	margin-right: 1px;
 	border-radius: 3px;
 `;
 

@@ -32,6 +32,6 @@ const StyledTitle = styled.h2`
 
 const Text = styled.span`
 	color: #6f757d;
-	font-size: 12px;
+	font-size: 14px;
 	font-weight: 600;
 `;
