@@ -6,6 +6,9 @@ const LeftMenuStyle = styled.div`
 	min-width: 164px;
 	border-right: 1px solid rgb(209, 211, 215);
 	padding-top: 25px;
+	position: sticky;
+	top: 52px;
+	max-height: calc(100vh - 52px);
 
 	.public {
 		color: gray;
