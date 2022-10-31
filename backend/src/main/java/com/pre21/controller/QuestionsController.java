@@ -1,5 +1,6 @@
 package com.pre21.controller;
 
+import com.pre21.dto.QuestionDto;
 import com.pre21.dto.QuestionsPostDto;
 import com.pre21.dto.QuestionsResponseDto;
 import com.pre21.entity.Questions;

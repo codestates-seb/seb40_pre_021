@@ -3,7 +3,6 @@ package com.pre21.controller;
 import com.pre21.dto.AuthDto;
 import com.pre21.dto.UserDto;
 import com.pre21.entity.User;
-import com.pre21.mapper.UserMapper;
 import com.pre21.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,13 +25,13 @@ public class UserController {
     }
 
     @ResponseStatus(HttpStatus.OK)
-    @DeleteMapping("/logout/{email}")
-    public void logoutUser(@PathVariable("email") String email) {
-        userService.logoutUser(email);
+    @DeleteMapping("/logout")
+    public void logoutUser(@RequestHeader(REFRESH_TOKEN) String refreshToken) {
+        userService.logoutUser(refreshToken);
     }
 
 
-    @PostMapping("/token/refresh")
+    @PostMapping("/refresh")
     public ResponseEntity<AuthDto.Token> reIssueAccessToken(@RequestHeader(REFRESH_TOKEN) String refreshToken) {
         AuthDto.Token response = userService.reIssueAccessToken(refreshToken);
         return new ResponseEntity<>(response, HttpStatus.OK);
@@ -40,7 +39,7 @@ public class UserController {
 
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/token/expire")
+    @DeleteMapping("/expire")
     public void expiredRefreshToken(@RequestHeader(REFRESH_TOKEN) String refreshToken) {
         userService.deleteDatabaseRefreshToken(refreshToken);
     }

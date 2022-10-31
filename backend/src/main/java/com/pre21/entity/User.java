@@ -49,7 +49,6 @@ public class User {
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<QuestionLikes> questionsLikes = new ArrayList<>();
 
-
     public User(String nickname, String email, String password) {
         this.nickname = nickname;
         this.email = email;

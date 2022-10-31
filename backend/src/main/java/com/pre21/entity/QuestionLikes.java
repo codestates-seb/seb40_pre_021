@@ -21,6 +21,17 @@ public class QuestionLikes {
     @JoinColumn (name = "QUESTION_ID")
     private Questions questions = new Questions();
 
+    @ManyToOne (fetch =  FetchType.LAZY)
+    @JoinColumn (name = "USER_ID")
+    private User users = new User();
+
+    @Column
+    private boolean likeYn = false;
+
+    @Column
+    private boolean unlikeYn = false;
+
+
     public void setQuestions(Questions questions) {
         // 기존에 getQuestionsTags 와 연관관계가 있다면
         // getQuestionsTags 에서 해당 questions 을 삭제
@@ -46,23 +57,9 @@ public class QuestionLikes {
         }
     }
 
-    @ManyToOne (fetch =  FetchType.LAZY)
-    @JoinColumn (name = "USER_ID")
-    private User users = new User();
-
-    @Column
-    private boolean likeYn = false;
-
-    @Column
-    private boolean unlikeYn = false;
-
-    @Column
-    private int count;
-
     @Builder
-    public QuestionLikes(boolean likeYn, boolean unlikeYn, int count) {
+    public QuestionLikes(boolean likeYn, boolean unlikeYn) {
         this.likeYn = likeYn;
         this.unlikeYn = unlikeYn;
-        this.count = count;
     }
 }

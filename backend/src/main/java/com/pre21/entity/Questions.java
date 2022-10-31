@@ -48,8 +48,6 @@ public class Questions {
     @Column
     private LocalDateTime modifiedAt;
 
-    private Long qesId;
-
     @OneToMany(mappedBy = "questions", cascade = CascadeType.ALL)
     private List<QuestionsTags> questionsTags = new ArrayList<>();
 
@@ -62,9 +60,9 @@ public class Questions {
     @JoinColumn(name = "USER_ID")
     private User users = new User();
 
+
     @OneToMany(mappedBy = "questions", cascade = CascadeType.ALL)
     private List<QuestionLikes> questionsLikes = new ArrayList<>();
-
 
 
     public Questions(String title, String contents) {
@@ -74,6 +72,7 @@ public class Questions {
         this.createdAt = LocalDateTime.now();
         this.modifiedAt = LocalDateTime.now();
     }
+
 
     public void addUser(User user) {
         this.users = user;
