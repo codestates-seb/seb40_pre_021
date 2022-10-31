@@ -5,9 +5,11 @@ import Button from '../components/common/Button';
 
 const Container = styled.section`
 	background-color: #f8f9f9;
-	padding: 3rem 0 4.5rem 4.5rem;
+	padding: 3rem 4.5rem 4.5rem 4.5rem;
 `;
-const Formarea = styled.form``;
+const Formarea = styled.form`
+	max-width: 850px;
+`;
 const AskQuestion = styled.h1`
 	font-weight: 700;
 	font-size: 1.75rem;
