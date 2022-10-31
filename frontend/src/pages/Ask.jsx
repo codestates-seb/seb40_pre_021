@@ -150,7 +150,7 @@ const Ask = () => {
 						Add up to 5 tags to describe what your question is about. Start
 						typing to see suggestions.
 					</Caption>
-					<TagsForm></TagsForm>
+					<Form text="tags input (beta)"></Form>
 				</Group>
 				<Button text="Review your question" />
 			</Formarea>
