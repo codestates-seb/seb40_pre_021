@@ -55,12 +55,8 @@ public class SecurityConfiguration {
             .and()
             .apply(new CustomFilterConfigurer())
             .and()
-            .logout()
-            .logoutUrl("/users/logout")
-            .logoutSuccessUrl("/")
-            .and()
             .authorizeHttpRequests(authorize -> authorize
-//                    .antMatchers(HttpMethod.POST, "/**/questions/ask").hasRole("USER")
+                    .antMatchers(HttpMethod.POST, "/**/questions/ask").hasRole("USER")
                     .antMatchers(HttpMethod.GET, "/docs/**").hasRole("ADMIN")
                     .anyRequest().permitAll()
             );
