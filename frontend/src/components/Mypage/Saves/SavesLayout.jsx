@@ -32,6 +32,7 @@ let data = [
 ];
 
 const SavesLayout = ({ bookmarks }) => {
+	const total = bookmarks?.length;
 	return (
 		<Container>
 			<TopWrapper>
@@ -39,7 +40,7 @@ const SavesLayout = ({ bookmarks }) => {
 				<Button text="Create new list" />
 			</TopWrapper>
 			<InfoArea>
-				<CountText>3 Saved items</CountText>
+				<CountText>{total} Saved items</CountText>
 				<SortButtonGroup data={data} />
 			</InfoArea>
 			<SavesListBox bookmarks={bookmarks} />
