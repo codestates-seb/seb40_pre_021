@@ -17,6 +17,11 @@ export const Login = async (data) => {
 		} else {
 			throw Error('accessToken is not defined');
 		}
+		const result2 = await instance.post(
+			`/login
+		`,
+			result.data,
+		);
 		return result.data;
 	} catch (err) {
 		console.log(err);

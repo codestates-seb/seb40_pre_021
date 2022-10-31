@@ -14,9 +14,9 @@ const instance = axios.create(axiosConfig);
 //test /signup
 export const AccessTokenRefresh = async () => {
 	try {
-		const result = await instance.get(`/signup`);
-		console.log('AccessTokenRefresh');
+		const result = await instance.get(`/login`);
 		if (result.data.accessToken) {
+			console.log('AccessTokenRefresh');
 			TokenExpireSetting(result);
 		}
 		return result.data;
