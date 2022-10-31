@@ -22,7 +22,6 @@ const LeftMenuStyle = styled.div`
 `;
 
 const LeftMenu = () => {
-	const [active, setActive] = useState('Home');
 	const menus = [
 		{
 			id: 0,
@@ -37,7 +36,7 @@ const LeftMenu = () => {
 		{
 			id: 2,
 			name: 'Tags',
-			path: '/',
+			path: '',
 		},
 		{
 			id: 3,
@@ -46,10 +45,7 @@ const LeftMenu = () => {
 		},
 	];
 
-	const props = {
-		active,
-		onClickMenu: (name) => setActive(name),
-	};
+	const props = {};
 
 	return (
 		<LeftMenuStyle>
