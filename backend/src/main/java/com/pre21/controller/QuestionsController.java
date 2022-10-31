@@ -6,20 +6,16 @@ import com.pre21.dto.QuestionsResponseDto;
 import com.pre21.entity.Questions;
 import com.pre21.mapper.QuestionsMapper;
 import com.pre21.service.QuestionsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/questions")
+@RequiredArgsConstructor
 public class QuestionsController {
     private final QuestionsService questionsService;
-    private final QuestionsMapper mapper;
-
-    public QuestionsController(QuestionsService questionsService, QuestionsMapper mapper) {
-        this.questionsService = questionsService;
-        this.mapper = mapper;
-    }
 
     // 질문 생성
     @PostMapping("/ask")
