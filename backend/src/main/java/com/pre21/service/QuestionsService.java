@@ -2,6 +2,8 @@ package com.pre21.service;
 
 import com.pre21.dto.QuestionsPostDto;
 import com.pre21.entity.*;
+import com.pre21.exception.BusinessLogicException;
+import com.pre21.exception.ExceptionCode;
 import com.pre21.repository.QuestionsRepository;
 import com.pre21.repository.QuestionsTagsRepository;
 import com.pre21.repository.TagsRepository;
@@ -59,7 +61,14 @@ public class QuestionsService {
         );
     }
 
-    //질문 삭제
+    // 질문 조회
+    public Questions findQuestion(Long questionId) {
+        Questions findQuestion = findVerifiedQuestion(questionId);
+
+        return findQuestion;
+    }
+
+    // 질문 삭제
     public void deleteQuestion(long questionId) throws Exception {
         Questions findQuestion = findVerifiedQuestion(questionId);
 
@@ -67,12 +76,12 @@ public class QuestionsService {
 
     }
 
-    public Questions findVerifiedQuestion(long questionId) throws Exception {
+    public Questions findVerifiedQuestion(long questionId) {
         Optional<Questions> optionalQuestion =
                 questionsRepository.findById(questionId);
 
         Questions findQuestion =
-                optionalQuestion.orElseThrow(() -> new Exception("Question Not Found"));
+                optionalQuestion.orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
 
         return findQuestion;
     }
