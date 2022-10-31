@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class QuestionsController {
     private final QuestionsService questionsService;
+    private final QuestionsMapper mapper;
 
     // 질문 생성
     @PostMapping("/ask")
@@ -30,11 +31,20 @@ public class QuestionsController {
                 HttpStatus.CREATED);*/
     }
 
+
+    // 질문 조회
+    @GetMapping("/{question-id}")
+    private ResponseEntity getQuestion(@PathVariable("question-id") Long questionId) {
+        Questions questions = questionsService.findQuestion(questionId);
+
+        return new ResponseEntity<>(mapper.questionsToQuestionResponse(questions),
+                HttpStatus.OK);
+    }
+
+
     // 질문 삭제
     @DeleteMapping("/delete/{question-id}")
-    public ResponseEntity deleteQuestions(@PathVariable("question-id") long questionId) throws Exception {
+    public void deleteQuestions(@PathVariable("question-id") Long questionId) throws Exception {
         questionsService.deleteQuestion(questionId);
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

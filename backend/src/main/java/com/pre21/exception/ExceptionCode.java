@@ -8,7 +8,6 @@ public enum ExceptionCode {
     QUESTION_NOT_FOUND(404, "Question not found"),
     TOKEN_NOT_FOUND(404, "Token not found"),
 
-
     USER_EXISTS(409, "User already exists"),
 
 
