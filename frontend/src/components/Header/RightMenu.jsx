@@ -11,14 +11,14 @@ import { Logout } from '../../api/LogoutApi';
 import Avatar from '../Mypage/UserProfile/Avatar';
 
 const RightMenuStlye = styled.li`
+	width: 150px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 `;
 const Box = styled.div`
 	display: flex;
-	justify-content: center;
-	align-items: center;
+
 	button {
 		margin-left: 5px;
 	}
