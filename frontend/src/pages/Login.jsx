@@ -42,13 +42,14 @@ const Login = () => {
 			<LoginBody>
 				<Icon width="40" heigth="40" />
 				<OAuths />
+				{/* 로그인 API 통신 LoginForm안에 있음 */}
 				<LoginForm />
 				<div className="singup">
 					<div>
 						Don’t have an account? <Link to="/signup">Sign up</Link>
 					</div>
 					<div>
-						Are you an employer? <Link to="/">Sign up on Talent</Link>
+						Are you an employer? <Link to="">Sign up on Talent</Link>
 					</div>
 				</div>
 			</LoginBody>
