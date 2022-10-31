@@ -35,7 +35,11 @@ export default Sidebar;
 const Box = styled.div`
 	display: flex;
 	flex-direction: column;
+	flex-wrap: wrap;
 	margin: 8px 0;
+	position: sticky;
+	top: 64px;
+	height: 500px;
 `;
 
 const Tab = styled.a`
