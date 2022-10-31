@@ -1,10 +1,7 @@
 package com.pre21.service;
 
 import com.pre21.dto.QuestionsPostDto;
-import com.pre21.entity.Questions;
-import com.pre21.entity.QuestionsTags;
-import com.pre21.entity.Tags;
-import com.pre21.entity.User;
+import com.pre21.entity.*;
 import com.pre21.repository.QuestionsRepository;
 import com.pre21.repository.QuestionsTagsRepository;
 import com.pre21.repository.TagsRepository;
@@ -48,6 +45,7 @@ public class QuestionsService {
                         //questionsRepository.save(questions);
                         findUser.addQuestion(questions);
                         questions.addUser(findUser);
+
                     } else {
                         Tags tags1 = tagsRepository.findByTitle(e).orElseThrow(IllegalArgumentException::new);
                         updateTagCount(tags1);

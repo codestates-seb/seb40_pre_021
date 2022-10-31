@@ -41,9 +41,9 @@ public class Tags {
     }
 
     public void addQuestionTags(QuestionsTags questionsTags) {
-        this.questionsTags.add(questionsTags); // question 에 questionsTags 지정
+        this.questionsTags.add(questionsTags);
         if (questionsTags.getTags() != this) {
-            questionsTags.setTags(this); //(owner)questionsTags 에 question 지정
+            questionsTags.setTags(this);
         }
     }
 

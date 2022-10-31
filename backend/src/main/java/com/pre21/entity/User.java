@@ -85,9 +85,8 @@ public class User {
 
     public void addUserTags(UserTags userTags) {
         this.userTags.add(userTags);
-        if(userTags.getUser() != this) {
+        if(userTags.getUsers() != this) {
             userTags.setUser(this);
         }
     }
-
 }
