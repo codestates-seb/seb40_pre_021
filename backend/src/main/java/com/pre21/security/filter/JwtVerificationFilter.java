@@ -33,6 +33,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest req,
                                     HttpServletResponse res,
                                     FilterChain filterChain) throws ServletException, IOException {
+
         try {
             String refreshToken = req.getHeader("RefreshToken");
             jwtTokenizer.verifiedExistRefresh(refreshToken);

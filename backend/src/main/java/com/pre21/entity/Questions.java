@@ -56,6 +56,7 @@ public class Questions {
     @JoinColumn(name = "USER_ID")
     private User users = new User();
 
+
     @OneToMany(mappedBy = "questions", cascade = CascadeType.ALL)
     private List<QuestionLikes> questionsLikes = new ArrayList<>();
 
@@ -63,6 +64,7 @@ public class Questions {
         this.title = title;
         this.contents = contents;
     }
+
 
     public void addUser(User user) {
         this.users = user;

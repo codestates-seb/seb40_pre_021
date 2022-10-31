@@ -17,14 +17,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
+@Service
 @Transactional
 @RequiredArgsConstructor
-@Service
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtTokenizer jwtTokenizer;
+
 
     public void createUser(User user) {
         verifyExistsEmail(user.getEmail());
@@ -35,6 +36,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+
     private void verifyExistsEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
         if (user.isPresent()) {
@@ -42,9 +44,12 @@ public class UserService {
         }
     }
 
-    public void logoutUser(String email) {
-        refreshTokenRepository.deleteRefreshTokenByTokenEmail(email);
+
+    public void logoutUser(String refreshToken) {
+        RefreshToken findToken = checkExistToken(refreshToken);
+        refreshTokenRepository.delete(findToken);
     }
+
 
     public AuthDto.Token reIssueAccessToken(String refreshToken) {
         RefreshToken findRefreshToken = checkExistToken(refreshToken);
@@ -65,7 +70,8 @@ public class UserService {
 
 
     public void deleteDatabaseRefreshToken(String refreshToken) {
-        refreshTokenRepository.deleteRefreshTokenByTokenValue(refreshToken);
+        RefreshToken findToken = checkExistToken(refreshToken);
+        refreshTokenRepository.delete(findToken);
     }
 
 

@@ -1,8 +1,10 @@
 package com.pre21.advice;
 
+import com.pre21.exception.BusinessLogicException;
 import com.pre21.response.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -35,7 +37,6 @@ public class GlobalExceptionAdvice {
     }
 
     // TODO : BusinessException 구현 예정
-/*
     @ExceptionHandler
     public ResponseEntity handleBusinessLogicException(BusinessLogicException e) {
         final ErrorResponse response = ErrorResponse.of(e.getExceptionCode());
@@ -43,7 +44,6 @@ public class GlobalExceptionAdvice {
         return new ResponseEntity<>(response, HttpStatus.valueOf(e.getExceptionCode()
                 .getStatus()));
     }
-*/
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
