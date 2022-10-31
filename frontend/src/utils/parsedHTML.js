@@ -1,10 +1,10 @@
 const parsedHTML = (str) => {
 	const UlStart = /^\s*\n-\s/gm; // 엔터를 입력하고, - 문자열 후 엔터를 다시 한 번 입력하면 리스트 시작
 	const UlEnd = /^(-.+)\s*\n([^-])/gm; //리스트 클로징
-	const UlLi = /^-(.+)/gm; //리스트의 각 항목
-	const OlStart = /^\d\.\s(.*?)\n/gm; // 숫자를 입력하고, '.'을 입력한 뒤 스페이스 바를 누르면 리스트 시작
+	const UlLi = /^-(.+)\s/gm; //리스트의 각 항목
+	const OlStart = /^\d\.(.*?)\n/gm; // 숫자를 입력하고, '.'을 입력한 뒤 스페이스 바를 누르면 리스트 시작
 	const OlEnd = /^(\d\..+)\s*\n([^\d.])/gm; //리스트 클로징
-	const OlLi = /^\d\.(.+)/gm; //리스트의 각 항목
+	const OlLi = /^\d\.\s(.+)/gm; //리스트의 각 항목
 
 	const H3 = /[#]{3}\s(.+)/g; // ### text
 	const H2 = /[#]{2}\s(.+)/g; /// ## text

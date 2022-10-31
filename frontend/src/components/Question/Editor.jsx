@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import parsedHTML from '../../utils/parsedHTML';
-import textCharacterCheck from '../../utils/textCharacterCheck';
 const Container = styled.div``;
 const Header = styled.div``;
 const Textarea = styled.textarea`
 	font-size: 0.85rem;
+	font-family: IBM Plex Mono, monospace;
 	border: 1px solid rgb(179, 183, 188);
 	padding: 0.5rem;
 	height: 14rem;
@@ -28,9 +28,14 @@ const Textarea = styled.textarea`
 const Result = styled.div`
 	margin-top: 1rem;
 	font-size: 1rem;
+	line-height: 130%;
 	ul {
+		list-style-type: disc;
+		margin-left: 1rem;
 	}
 	ol {
+		list-style-type: decimal;
+		margin-left: 1rem;
 	}
 
 	h1 {
@@ -49,19 +54,19 @@ const Result = styled.div`
 		font-weight: 700;
 	}
 	em {
+		font-style: italic;
 	}
 	hr {
 		1px;
 	}
-
 	pre {
+		font-size: 0.9rem;
 		background-color: #f6f6f6;
 		padding: 0.5rem;
 		overflow-x: auto;
 	}
 	code {
-		font-family: monospace;
-		font-size: 0.8rem;
+		font-size: 0.9rem;
 		background-color: #f6f6f6;
 		padding: 0.1rem 0.3rem 0.1rem 0.3rem;
 	}
