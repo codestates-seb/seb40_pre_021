@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -22,6 +23,8 @@ public class UserDetailService implements UserDetailsService {
     public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<User> optionalUser = userRepository.findByEmail(email);
         User findUser = optionalUser.orElseThrow(() -> new RuntimeException("USER NOT FOUND"));
+        List<String> authorities = authorityUtils.createRoles(email);
+        findUser.setRoles(authorities);
 
         return new UserDetails(findUser);
     }

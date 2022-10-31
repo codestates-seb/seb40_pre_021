@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,44 +15,59 @@ import java.util.List;
 @Setter
 @Table(name = "QUESTIONS")
 @NoArgsConstructor
-public class Questions extends Auditable {
+public class Questions {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "QUESTION_ID")
     private Long id;
 
-    @Column(nullable = false)
+    @Column
     private String title;
 
-    @Column(nullable = false)
+    @Column
     private String contents;
 
-    @Column(nullable = false, name = "ANSWER_YN")
-    private boolean answerYn;
+    @Column(name = "CHOOSE_YN")
+    private boolean chooseYn = false;
 
     @Column
     private int views;
 
-    @Column(name = "LIKES_COUNT")
-    private int like;
-
-    @Column(name = "UNLIKES_COUNT")
-    private int unlike;
+    @Column
+    private int vote;
 
     @Column(name = "IMAGE_URL")
     private String imageUrl;
 
-    @OneToMany(mappedBy = "questions", cascade = CascadeType.PERSIST)
+    @Column
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Column
+    private LocalDateTime modifiedAt = LocalDateTime.now();
+
+    @OneToMany(mappedBy = "questions", cascade = CascadeType.ALL)
     private List<QuestionsTags> questionsTags = new ArrayList<>();
 
-    @OneToMany(mappedBy = "questions", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "questions", cascade = CascadeType.ALL)
     private List<QuestionComments> comments = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID")
+    private User users = new User();
+
+
+    @OneToMany(mappedBy = "questions", cascade = CascadeType.ALL)
+    private List<QuestionLikes> questionsLikes = new ArrayList<>();
 
     public Questions(String title, String contents) {
         this.title = title;
         this.contents = contents;
-        this.answerYn = false;
+    }
+
+
+    public void addUser(User user) {
+        this.users = user;
     }
 
     public void addQuestionsTags(QuestionsTags questionsTags) {
@@ -61,10 +77,10 @@ public class Questions extends Auditable {
         }
     }
 
-    public void addQuestionComments(QuestionComments questionComments) {
-        this.comments.add(questionComments);
-        if (questionComments.getQuestions() != this) {
-            questionComments.addQuestion(this);
+    public void addQuestionsLikes(QuestionLikes questionLikes) {
+        this.questionsLikes.add(questionLikes); // question 에 questionsTags 지정
+        if (questionLikes.getQuestions() != this) {
+            questionLikes.addQuestions(this); //(owner)questionsTags 에 question 지정
         }
     }
 }

@@ -16,38 +16,41 @@ import java.util.List;
 @Entity
 public class Tags {
     @Id
+    @Column(name = "TAG_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tag_id;
+    private Long id;
 
-    @Column(length = 255, nullable = false)
+    @Column(nullable = false, name = "TAG_TITLE")
     private String title;
 
-    @Column(length = 500, nullable = false)
-    private String comments;
+    @Column(nullable = false, name = "TAG_COUNT")
+    private int count;
 
-    @Column(nullable = false)
-    private Integer tag_count;
-
-    @Column(nullable = false)
+    @Column
     private LocalDateTime latest = LocalDateTime.now();
 
-    @OneToMany(mappedBy = "tags", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "tags")
     private List<QuestionsTags> questionsTags = new ArrayList<>();
 
-    @OneToMany(mappedBy = "tags", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "tags")
     private List<UserTags> userTags = new ArrayList<>();
 
+    public Tags(String title) {
+        this.title = title;
+        this.count = 1; //질문 생성 시 같이 생성되는 태그는 초기값 1 세팅
+    }
+
     public void addQuestionTags(QuestionsTags questionsTags) {
-        this.questionsTags.add(questionsTags); // question 에 questionsTags 지정
+        this.questionsTags.add(questionsTags);
         if (questionsTags.getTags() != this) {
-            questionsTags.setTags(this); //(owner)questionsTags 에 question 지정
+            questionsTags.setTags(this);
         }
     }
 
     public void addUserTags(UserTags userTags) {
-        this.userTags.add(userTags); // tag 에 userTags 지정
+        this.userTags.add(userTags);
         if(userTags.getTags() != this) {
-            userTags.setTags(this); //(owner) userTags 에 tag 지정
+            userTags.setTags(this);
         }
     }
 }

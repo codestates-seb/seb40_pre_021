@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import Button from '../common/Button';
 
 const ListStyle = styled.div`
+	border-top: 1px solid rgb(209, 211, 215);
 	padding: 15px 15px 30px 15px;
-	border-bottom: 1px solid rgb(209, 211, 215);
 	display: flex;
 `;
 const LeftSection = styled.div`

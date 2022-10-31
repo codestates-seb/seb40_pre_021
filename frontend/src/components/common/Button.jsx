@@ -22,6 +22,7 @@ const ButtonStyle = styled.button`
 
 	&:hover {
 		filter: brightness(90%);
+		/* color: white; */
 	}
 
 	.icon {

@@ -52,7 +52,7 @@ const Tab = styled.a`
 	font-weight: 500;
 	font-size: 0.9rem;
 	color: ${(props) => (props.clicked ? '#242629' : '#525960')};
-	background-color: ${(props) => (props.clicked ? '#E4E6E8' : 'white')};
+	background-color: ${(props) => (props.clicked ? '#F1F2F3' : 'white')};
 	:hover {
 		background-color: ${(props) => (props.clicked ? '#E4E6E8' : '#e4e6e8')};
 	}

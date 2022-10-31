@@ -1,8 +1,8 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const ListBox = ({ lists, text, component }) => {
 	return (
-		<Container>
+		<Container lists={lists}>
 			<Box lists={lists}>
 				{lists ? component : <EmptyText>{text}</EmptyText>}
 			</Box>
@@ -17,6 +17,13 @@ const Container = styled.div`
 	border: 1px solid #d7d9dc;
 	border-radius: 5px;
 	overflow: hidden;
+	${(props) =>
+		!props.lists &&
+		css`
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		`}
 `;
 
 const Box = styled.div`

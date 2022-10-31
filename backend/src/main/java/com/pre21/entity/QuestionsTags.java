@@ -4,6 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 
 // Questions 테이블과 Tags 테이블 N:N 관계를 1:N:1로 만들기 위한 Entity
 @Entity
@@ -13,7 +16,8 @@ public class QuestionsTags {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long questionsTagsId;
+    @Column(name = "QUESTIONS_TAGS_ID")
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
@@ -45,5 +49,10 @@ public class QuestionsTags {
         if(tags.getQuestionsTags() != this) {
             tags.addQuestionTags(this);
         }
+    }
+
+    public QuestionsTags(Questions questions, Tags tags) {
+        this.questions = questions;
+        this.tags = tags;
     }
 }

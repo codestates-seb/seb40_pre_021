@@ -1,6 +1,11 @@
+import { useState } from 'react';
 import styled from 'styled-components';
+import { Signup } from '../../api/SignupApi';
 import Button from '../common/Button';
 import InputForm from '../common/InputForm';
+import { useNavigate } from 'react-router-dom';
+import { confirmAlert } from 'react-confirm-alert';
+import Confirm from '../common/Confirm';
 
 const SignupFormStyle = styled.div`
 	margin-top: 5px;
@@ -36,18 +41,69 @@ const Guide = styled.div`
 	}
 `;
 const SignupForm = () => {
+	const [signupInfo, setSignupInfo] = useState({
+		nickname: '',
+		email: '',
+		password: '',
+	});
+
+	const navigate = useNavigate();
+
+	const handleInputValue = (key) => (e) => {
+		setSignupInfo({ ...signupInfo, [key]: e.target.value });
+	};
+	const signupRequestHandler = () => {
+		const { nickname, email, password } = signupInfo;
+		if (!nickname) {
+			alert('Display Name을 입력하세요');
+			return;
+		} else if (!email) {
+			alert('Email을 입력하세요');
+			return;
+		} else if (!password) {
+			alert('Password를 입력하세요');
+			return;
+		}
+		//api
+
+		Signup(signupInfo).then((res) => {
+			//결과 상태 result에 저장 후 200 = 회원가입 완료 , 400,500 = 오류가 발생했습니다 보여줄 예정
+			//200 일경우 login page로 redirect
+			// if (res.state === 200) {
+			const title = '회원가입 완료';
+			const contents = `로그인 화면으로 이동하시겠습니까?`;
+			confirmAlert({
+				customUI: ({ onClose }) => {
+					return (
+						<Confirm
+							onClose={onClose}
+							title={title}
+							content={contents}
+							callback={() => navigate('/login')}
+						/>
+					);
+				},
+			});
+			// }
+		});
+	};
+
 	return (
 		<SignupFormStyle>
-			<InputForm text="Display name" />
-			<InputForm text="Email" />
-			<InputForm text="Password" />
+			<InputForm text="Display name" callback={handleInputValue('nickname')} />
+			<InputForm text="Email" callback={handleInputValue('email')} />
+			<InputForm
+				text="Password"
+				type="password"
+				callback={handleInputValue('password')}
+			/>
 			<Guide>
 				<p>
 					Passwords must contain at least eight characters, including at least
 					1letter and 1 number.
 				</p>
 			</Guide>
-			<Button text="Sign up" />
+			<Button text="Sign up" callback={signupRequestHandler} />
 			<Guide>
 				<p className="bottom">
 					By clicking “Sign up”, you agree to our

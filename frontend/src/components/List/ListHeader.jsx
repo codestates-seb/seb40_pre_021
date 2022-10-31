@@ -43,7 +43,7 @@ const ListHeader = ({ title, Detail, filter, tabList, questionCount }) => {
 			<Section>{Detail}</Section>
 			<BottomSection filter={filter}>
 				<div className="questions">
-					{filter && `${questionCount} questions`}
+					{questionCount && `${questionCount} questions`}
 				</div>
 				<TabContainer>
 					<Tab tabList={tabList} />

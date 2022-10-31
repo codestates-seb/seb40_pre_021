@@ -20,9 +20,14 @@ public class RefreshToken {
     @Column(name = "REFRESH_TOKEN_ID", nullable = false)
     private Long id;
 
-    @Column(name = "REFRESH_TOKEN", nullable = false)
-    private String refreshToken;
+    @Column(name = "TOKEN_VALUE", nullable = false)
+    private String tokenValue;
 
     @Column(name = "TOKEN_EMAIL", nullable = false)
     private String tokenEmail;
+
+    public RefreshToken(String refreshToken, String tokenEmail) {
+        this.tokenValue = refreshToken;
+        this.tokenEmail = tokenEmail;
+    }
 }
