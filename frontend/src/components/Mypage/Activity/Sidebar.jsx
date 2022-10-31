@@ -85,42 +85,42 @@ let data = [
 	},
 	{
 		id: 4,
-		name: 'Articles',
-		clicked: false,
-	},
-	{
-		id: 5,
-		name: 'Badges',
-		clicked: false,
-	},
-	{
-		id: 6,
-		name: 'Following',
-		clicked: false,
-	},
-	{
-		id: 7,
-		name: 'Bounties',
-		clicked: false,
-	},
-	{
-		id: 8,
 		name: 'Reputation',
 		clicked: false,
 	},
-	{
-		id: 9,
-		name: 'All actions',
-		clicked: false,
-	},
-	{
-		id: 10,
-		name: 'Responses',
-		clicked: false,
-	},
-	{
-		id: 11,
-		name: 'Votes',
-		clicked: false,
-	},
+	// {
+	// 	id: 5,
+	// 	name: 'Badges',
+	// 	clicked: false,
+	// },
+	// {
+	// 	id: 6,
+	// 	name: 'Following',
+	// 	clicked: false,
+	// },
+	// {
+	// 	id: 7,
+	// 	name: 'Bounties',
+	// 	clicked: false,
+	// },
+	// {
+	// 	id: 8,
+	// 	name: 'Reputation',
+	// 	clicked: false,
+	// },
+	// {
+	// 	id: 9,
+	// 	name: 'All actions',
+	// 	clicked: false,
+	// },
+	// {
+	// 	id: 10,
+	// 	name: 'Responses',
+	// 	clicked: false,
+	// },
+	// {
+	// 	id: 11,
+	// 	name: 'Votes',
+	// 	clicked: false,
+	// },
 ];
