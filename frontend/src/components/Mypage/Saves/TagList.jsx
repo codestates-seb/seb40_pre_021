@@ -2,21 +2,36 @@ import styled from 'styled-components';
 
 const TagList = ({ tag }) => {
 	return (
-		<>
-			{tag.map((item) => {
-				return (
-					<Container key={item}>
-						<a href="123">{item}</a>
-					</Container>
-				);
-			})}
-		</>
+		<Container>
+			<ul>
+				{tag.map((item) => {
+					return (
+						<List key={item}>
+							<a href="123">{item}</a>
+						</List>
+					);
+				})}
+			</ul>
+		</Container>
 	);
 };
 
 export default TagList;
 
-const Container = styled.li`
+const Container = styled.div`
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+
+	ul {
+		display: inline;
+		list-style: none;
+		margin-left: 0;
+		margin-bottom: 0.8rem;
+	}
+`;
+
+const List = styled.li`
 	display: inline;
 	margin: 4px 4px 4px 0;
 
@@ -26,7 +41,7 @@ const Container = styled.li`
 		color: #39739d;
 		background-color: #e1ecf4;
 		padding: 0.4rem 0.5rem;
-		margin: 2px 2px 2px 0;
+		margin: 0 2px 2px 0;
 		line-height: 1;
 		white-space: nowrap;
 		text-decoration: none;
