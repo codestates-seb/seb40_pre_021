@@ -4,8 +4,30 @@ import parsedHTML from '../../utils/parsedHTML';
 import textCharacterCheck from '../../utils/textCharacterCheck';
 const Container = styled.div``;
 const Header = styled.div``;
-const Textarea = styled.textarea``;
+const Textarea = styled.textarea`
+	font-size: 0.85rem;
+	border: 1px solid rgb(179, 183, 188);
+	padding: 0.5rem;
+	height: 14rem;
+	width: 99%;
+	border-radius: 3px;
+	background-color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	&:focus-within {
+		outline: none;
+		border-color: #9ecaed;
+		box-shadow: 0 0 10px #9ecaed;
+	}
+	&:focus {
+		outline: none;
+	}
+`;
 const Result = styled.div`
+	margin-top: 1rem;
+	font-size: 1rem;
 	ul {
 	}
 	ol {
@@ -33,6 +55,7 @@ const Result = styled.div`
 	}
 
 	p {
+		margin-bottom: 1rem;
 	}
 `;
 const Editor = () => {
