@@ -1,9 +1,10 @@
 import styled from 'styled-components';
 
-const Avatar = ({ nickname }) => {
+const Avatar = ({ nickname, ...props }) => {
+	console.log(props);
 	return (
-		<AvatarBox>
-			<AvatarText>
+		<AvatarBox {...props}>
+			<AvatarText {...props}>
 				{nickname.length > 4 ? nickname.slice(0, 4) : nickname}
 			</AvatarText>
 		</AvatarBox>
@@ -14,8 +15,8 @@ export default Avatar;
 
 const AvatarBox = styled.div`
 	background-color: #5c6bc0;
-	width: 128px;
-	height: 128px;
+	width: ${(props) => props.width || `128px`};
+	height: ${(props) => props.heigth || `128px`};
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -26,5 +27,6 @@ const AvatarBox = styled.div`
 
 const AvatarText = styled.span`
 	color: white;
-	font-size: 3rem;
+	font-size: ${(props) => props.fontSize || `3rem`};
+	padding: ${(props) => props.padding || ``};
 `;
