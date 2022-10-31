@@ -12,9 +12,9 @@ const parsedHTML = (str) => {
 
 	const Strong = /[*_]{2}(.+)[*_]{2}/gm; // **text** 혹은 __text__ (굵게)
 	const Em = /[*_]{1}(.+)[*_]{1}/gm; // *text* _text_(이탤릭)
-	const Hr = /\n[*\-_]{3}\n/gm; // 엔터 사이에 ***, ---, ___를 입력하면 수평선을 그어줌
+	//const Hr = /\n[*\-_]{3}\n/gm; // 엔터 사이에 ***, ---, ___를 입력하면 수평선을 그어줌
 
-	const Pre = /[`]{3}(.+)[`]{3}/gm; //```로 텍스트를 감싸면 pre
+	const Pre = /[`]{3}\s(.+)\s[`]{3}/gm; //```로 텍스트를 감싸면 pre
 	const Code = /[`]{1}(.+)[`]{1}/gm; // `로 텍스트를 감싸면 인라인 코드
 
 	const Pgh = /\n\n/gm; // 엔터 두 번 치면 문단이 분리됨
@@ -34,7 +34,7 @@ const parsedHTML = (str) => {
 
 	text = text.replace(Strong, '<strong>$1</strong>');
 	text = text.replace(Em, '<em>$1</em>');
-	text = text.replace(Hr, '<hr />');
+	//text = text.replace(Hr, '<hr />');
 	text = text.replace(Pre, '<pre>$1</pre>');
 	text = text.replace(Code, '<code>$1</code>');
 

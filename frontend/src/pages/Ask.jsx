@@ -77,7 +77,6 @@ const Form = styled.input`
 		outline: none;
 	}
 `;
-const TagsForm = styled.input``;
 // const DiscardDraft = styled.button``;
 
 const Ask = () => {
