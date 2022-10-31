@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { RiEarthFill } from 'react-icons/ri';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 const MenuStyle = styled.div`
 	a {
 		text-decoration: none;
@@ -23,14 +23,14 @@ const Content = styled.div`
 		color: black;
 	}
 `;
-const Menu = ({ active, name, onClickMenu, padding, path }) => {
+const Menu = ({ name, padding, path }) => {
+	const location = useLocation();
 	return (
 		<MenuStyle>
 			<Link to={path}>
 				<Content
 					padding={padding}
-					className={active === name && 'active'}
-					onClick={() => onClickMenu(name)}>
+					className={location.pathname === path && 'active'}>
 					{name === 'Questions' && <RiEarthFill size="17px" maring="5px" />}
 					&nbsp;
 					{name}

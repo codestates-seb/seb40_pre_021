@@ -11,11 +11,15 @@ const instance = axios.create(axiosConfig);
 //test : data.json 에 "signup": {} 추가
 export const Signup = async (data) => {
 	try {
+		//test용
+		data.accessToken = 'dd';
+		/**************** */
 		const result = await instance.post(
 			`/signup
 		`,
 			data,
 		);
+
 		return result.data;
 	} catch (err) {
 		console.log(err);
