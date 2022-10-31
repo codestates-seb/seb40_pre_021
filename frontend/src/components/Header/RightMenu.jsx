@@ -11,14 +11,14 @@ import { Logout } from '../../api/LogoutApi';
 import Avatar from '../Mypage/UserProfile/Avatar';
 
 const RightMenuStlye = styled.li`
+	width: 150px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 `;
 const Box = styled.div`
 	display: flex;
-	justify-content: center;
-	align-items: center;
+
 	button {
 		margin-left: 5px;
 	}
@@ -27,7 +27,7 @@ const Box = styled.div`
 		text-decoration: none;
 	}
 `;
-const AavatarBox = styled.div``;
+
 const RightMenu = () => {
 	//임시 state 로그인 했는지 확인
 	const isLogin = useSelector(selectIsLogin);

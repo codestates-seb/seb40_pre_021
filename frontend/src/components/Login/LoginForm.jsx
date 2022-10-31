@@ -43,15 +43,19 @@ const LoginForm = () => {
 		}
 		//api
 		Login(loginInfo).then((res) => {
-			//redux-toolkit
-			dispatch(loginSuccess(res));
-			// 값 꺼낼때는
-			// const isLogin = useSelector(selectIsLogin);
-			// const userInfo = useSelector(selectUserInfo);
-			// ../Header/RightMenu.jsx 에 예시있음
+			//응답이 정상일 경우
+			if (res.nickname) {
+				//redux-toolkit
+				dispatch(loginSuccess(res));
 
-			//store에 저장완료 후 메인페이지로 이동
-			return navigate('/', { replace: true });
+				// 값 꺼낼때는
+				// const isLogin = useSelector(selectIsLogin);
+				// const userInfo = useSelector(selectUserInfo);
+				// ../Header/RightMenu.jsx 에 예시있음
+
+				//store에 저장완료 후 메인페이지로 이동
+				return navigate('/', { replace: true });
+			}
 		});
 	};
 	return (
