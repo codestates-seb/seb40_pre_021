@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { getMypageInfo } from '../api/mypageApi';
 import SavesLayout from '../components/Mypage/Saves/SavesLayout';
