@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { TokenExpireSetting } from './TokenApi';
 
 const axiosConfig = {
 	baseURL: 'http://localhost:3001',
@@ -11,6 +12,11 @@ const instance = axios.create(axiosConfig);
 export const Login = async (data) => {
 	try {
 		const result = await instance.get(`/signup`);
+		if (result.data.accessToken) {
+			TokenExpireSetting(result);
+		} else {
+			throw Error('accessToken is not defined');
+		}
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -20,13 +26,15 @@ export const Login = async (data) => {
 //real
 // export const Login = async (data) => {
 // 	try {
-// 		const result = await instance.post(
-// 			`/users/login
-// 		`,
-// 			data,
-// 		);
-// 		return result.data;
-// 	} catch (err) {
-// 		console.log(err);
-// 	}
+// 		const result = await instance.post(`/users/login`, data);
+// if (result.data.accessToken) {
+// 	TokenExpireSetting(result);
+// } else {
+// 	throw Error('accessToken is not defined');
+// }
+// return result.data;
+// } catch (err) {
+// console.log(err);
+// throw Error(err);
+// }
 // };

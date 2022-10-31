@@ -56,15 +56,17 @@ public class Questions {
     @JoinColumn(name = "USER_ID")
     private User users = new User();
 
-
     @OneToMany(mappedBy = "questions", cascade = CascadeType.ALL)
     private List<QuestionLikes> questionsLikes = new ArrayList<>();
+
+    // 질문 - 답변 매핑
+    @OneToMany(mappedBy = "questions", cascade = CascadeType.ALL)
+    private List<Answers> answers = new ArrayList<>();
 
     public Questions(String title, String contents) {
         this.title = title;
         this.contents = contents;
     }
-
 
     public void addUser(User user) {
         this.users = user;
@@ -82,5 +84,10 @@ public class Questions {
         if (questionLikes.getQuestions() != this) {
             questionLikes.addQuestions(this); //(owner)questionsTags 에 question 지정
         }
+    }
+
+    //질문 - 답변 매핑 메소드
+    public void addAnswer(Answers answers) {
+        this.answers.add(answers);
     }
 }

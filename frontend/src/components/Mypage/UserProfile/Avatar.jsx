@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 const Avatar = ({ nickname, ...props }) => {
-	console.log(props);
 	return (
 		<AvatarBox {...props}>
 			<AvatarText {...props}>
