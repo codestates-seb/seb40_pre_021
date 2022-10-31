@@ -32,7 +32,7 @@ public class QuestionLikes {
     private boolean unlikeYn = false;
 
 
-    public void setQuestions(Questions questions) {
+    public void addQuestions(Questions questions) {
         // 기존에 getQuestionsTags 와 연관관계가 있다면
         // getQuestionsTags 에서 해당 questions 을 삭제
         if(this.questions != null) {

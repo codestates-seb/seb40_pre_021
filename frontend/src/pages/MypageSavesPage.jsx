@@ -1,5 +1,4 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { getMypageInfo } from '../api/mypageApi';
 import SavesLayout from '../components/Mypage/Saves/SavesLayout';
@@ -8,8 +7,6 @@ import Sidebar from '../components/Mypage/Saves/Sidebar';
 const MypageSavesPage = () => {
 	const [info, setInfo] = useState({ nickname: '', createdAt: '' });
 	const { bookmarks } = info;
-
-	console.log(bookmarks);
 
 	useEffect(() => {
 		getMypageInfo(1).then((res) => {

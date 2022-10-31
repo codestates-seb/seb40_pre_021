@@ -40,8 +40,8 @@ const GroupContainer = styled.div`
 `;
 
 const Menu = styled.a`
-	padding: 0.5rem;
-	font-size: 11px;
+	padding: 0.6em;
+	font-size: 12px;
 	font-weight: 600;
 	box-shadow: none;
 	border: 1px solid #838c95;

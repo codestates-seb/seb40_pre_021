@@ -1,9 +1,13 @@
 import styled from 'styled-components';
+import TagList from './TagList';
+import AnswerList from './AnswerList';
+import UserInfo from './UserInfo';
+import ListAdditionalInfo from './ListAdditionalInfo';
 
 const SavesListBox = ({ bookmarks }) => {
 	return (
 		<Container>
-			{bookmarks?.map((bookmark, i) => {
+			{bookmarks?.map((bookmark) => {
 				const {
 					answerCount,
 					choosed,
@@ -17,45 +21,29 @@ const SavesListBox = ({ bookmarks }) => {
 					vote,
 					answer,
 				} = bookmark;
+				console.log(answer);
+
+				let splitDate = createdAt.split(' ');
+				let date = `${splitDate[1]} ${splitDate[2]}, ${splitDate[3]} at ${splitDate[4]}`;
 				return (
-					<ListBox key={i}>
-						<ListDetailInfoWrapper>
-							<VotesBox>
-								<span>{vote}</span>
-								<span>votes</span>
-							</VotesBox>
-							<AnswerBox>
-								<span>{answerCount}</span>
-								<span>answer</span>
-							</AnswerBox>
-							<ViewsBox>
-								<span>{views}</span>
-								<span>views</span>
-							</ViewsBox>
-						</ListDetailInfoWrapper>
+					<ListBox key={questionId}>
+						<ListAdditionalInfo
+							vote={vote}
+							choosed={choosed}
+							answerCount={answerCount}
+							views={views}
+						/>
 						<ContentBox>
 							<h3>
 								<a href={url}>{title}</a>
 							</h3>
 							<TagAndUserInfoBox>
-								<TagBox>
-									<ul>
-										{tag.map((item) => {
-											return (
-												<TagList key={item}>
-													<a href="123">{item}</a>
-												</TagList>
-											);
-										})}
-									</ul>
-								</TagBox>
-								<UserInfoBox>
-									<a href="1">{questionUser}</a>
-									<time>asked</time>
-									<span>{createdAt}</span>
-								</UserInfoBox>
+								<TagList tag={tag} />
+
+								<UserInfo questionUser={questionUser} date={date} />
 							</TagAndUserInfoBox>
 						</ContentBox>
+						{answer ? <AnswerList answer={answer} /> : null}
 					</ListBox>
 				);
 			})}
@@ -78,73 +66,6 @@ const ListBox = styled.div`
 
 	&:last-child {
 		border: none;
-	}
-`;
-
-const ListDetailInfoWrapper = styled.div`
-	width: auto;
-	flex-direction: row;
-	align-items: center;
-	gap: 6px;
-	margin-right: 16px;
-	margin: 4px 4px 8px 0;
-	display: flex;
-	flex-shrink: 0;
-	flex-wrap: wrap;
-	font-size: 14px;
-	color: #6a737c;
-`;
-
-const VotesBox = styled.div`
-	color: #0c0d0e;
-	display: inline-flex;
-	gap: 0.3rem;
-	align-items: center;
-	justify-content: center;
-	white-space: nowrap;
-	border: 1px solid transparent;
-
-	span {
-		font-weight: 600;
-		&:first-child {
-			font-weight: 700;
-		}
-	}
-`;
-
-const AnswerBox = styled.div`
-	color: #2e6f44;
-	border: 1px solid #2e6f44;
-	border-radius: 3px;
-	padding: 4px;
-	display: inline-flex;
-	gap: 0.3rem;
-	align-items: center;
-	justify-content: center;
-	white-space: nowrap;
-
-	span {
-		color: #2e6f44;
-		font-weight: 600;
-		&:first-child {
-			font-weight: 700;
-		}
-	}
-`;
-
-const ViewsBox = styled.div`
-	display: inline-flex;
-	gap: 0.3rem;
-	align-items: center;
-	justify-content: center;
-	white-space: nowrap;
-	border: 1px solid transparent;
-
-	span {
-		font-weight: 600;
-		&:first-child {
-			font-weight: 700;
-		}
 	}
 `;
 
@@ -180,74 +101,4 @@ const TagAndUserInfoBox = styled.div`
 	flex-wrap: wrap;
 	column-gap: 6px;
 	row-gap: 8px;
-`;
-
-const TagBox = styled.div`
-	display: flex;
-	flex-wrap: wrap;
-	gap: 4px;
-
-	ul {
-		display: inline;
-		list-style: none;
-		margin-left: 0;
-		margin-bottom: 0.8rem;
-	}
-`;
-
-const TagList = styled.li`
-	display: inline;
-	margin: 4px 4px 4px 0;
-
-	a {
-		display: inline-block;
-		font-size: 12px;
-		color: #39739d;
-		background-color: #e1ecf4;
-		padding: 0.4rem 0.5rem;
-		margin: 2px 2px 2px 0;
-		line-height: 1;
-		white-space: nowrap;
-		text-decoration: none;
-		text-align: center;
-		border: 1px solid transparent;
-		border-radius: 3px;
-		font-weight: 600;
-		:hover {
-			background-color: #d1e3f0;
-			color: #2c5877;
-		}
-	}
-`;
-
-const UserInfoBox = styled.div`
-	display: flex;
-	justify-content: flex-end;
-	align-items: center;
-	gap: 4px;
-	flex-wrap: wrap;
-	margin-left: auto;
-	grid-template-columns: auto 1fr;
-	line-height: 1;
-	a {
-		margin: 2px;
-		color: #0074cc;
-		text-decoration: none;
-		cursor: pointer;
-		font-size: 14px;
-		font-weight: 600;
-		:hover {
-			color: #0a95ff;
-		}
-	}
-	time {
-		color: #6a737c;
-		font-size: 14px;
-		font-weight: 600;
-	}
-	span {
-		color: #6a737c;
-		font-size: 14px;
-		font-weight: 600;
-	}
 `;

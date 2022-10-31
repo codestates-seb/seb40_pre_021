@@ -47,13 +47,14 @@ const Signup = () => {
 				<SignupGuide />
 				<div className="signup_form">
 					<OAuths />
+					{/*SignupForm 안에 회원가입 통신 기능 있음*/}
 					<SignupForm />
 					<div className="singup">
 						<div>
 							Already have an account? <Link to="/login">Log in</Link>
 						</div>
 						<div>
-							Are you an employer? <Link to="/">Sign up on Talent</Link>
+							Are you an employer? <Link to="">Sign up on Talent</Link>
 						</div>
 					</div>
 				</div>

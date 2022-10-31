@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 let data = [
@@ -7,7 +7,7 @@ let data = [
 		id: 0,
 		name: 'Profile',
 		clicked: false,
-		path: 'activity',
+		path: 'progile',
 	},
 	{
 		id: 1,
@@ -25,13 +25,14 @@ let data = [
 		id: 3,
 		name: 'Settings',
 		clicked: false,
-		path: 'activity',
+		path: 'settings',
 	},
 ];
 
 const Navigation = () => {
 	const [tabs, setTabs] = useState(data);
 	const navigate = useNavigate();
+	const location = useLocation();
 
 	const handleTabChange = (id, path) => {
 		let newTabs = tabs.map((tab) =>
@@ -40,6 +41,16 @@ const Navigation = () => {
 		setTabs(newTabs);
 		navigate(path);
 	};
+	// 랜더링 될때마다 현재 주소 가져와서 path 같은걸 true로 하면됨
+	useEffect(() => {
+		let curLocation = location.pathname.split('/')[2];
+		let curTab = tabs.map((tab) =>
+			tab.path === curLocation
+				? { ...tab, clicked: true }
+				: { ...tab, clicked: false },
+		);
+		setTabs(curTab);
+	}, [location]);
 
 	return (
 		<>
