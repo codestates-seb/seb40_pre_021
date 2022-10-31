@@ -27,7 +27,7 @@ const Box = styled.div`
 		text-decoration: none;
 	}
 `;
-const AavatarBox = styled.div``;
+
 const RightMenu = () => {
 	//임시 state 로그인 했는지 확인
 	const isLogin = useSelector(selectIsLogin);
