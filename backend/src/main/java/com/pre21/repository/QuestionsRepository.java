@@ -9,4 +9,6 @@ import java.util.Optional;
 public interface QuestionsRepository extends JpaRepository<Questions, Long> {
     Optional<Questions> findQuestionsByUsers(User user);
 
+    Optional<Questions> findQuestionsById(Long questionId);
+
 }
