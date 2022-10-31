@@ -35,10 +35,14 @@ const Result = styled.div`
 
 	h1 {
 		font-weight: 700;
+		font-size: 1.25rem;
 	}
 	h2 {
+		font-weight: 700;
+		font-size: 1.1rem;
 	}
 	h3 {
+		font-weight: 700;
 	}
 
 	strong {
@@ -47,11 +51,19 @@ const Result = styled.div`
 	em {
 	}
 	hr {
+		1px;
 	}
 
 	pre {
+		background-color: #f6f6f6;
+		padding: 0.5rem;
+		overflow-x: auto;
 	}
 	code {
+		font-family: monospace;
+		font-size: 0.8rem;
+		background-color: #f6f6f6;
+		padding: 0.1rem 0.3rem 0.1rem 0.3rem;
 	}
 
 	p {
