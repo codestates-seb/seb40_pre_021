@@ -29,17 +29,14 @@ public class TagsService {
         return null;
     }
 
-/*
-    // 테그명 존재 여부 확인
-    public void verifiedExistsTagTitle(Tags tags) throws Exception {
-        Optional<Tags> tag = tagsRepository.findByTitle(tags.getTitle());
-        if(tag.isPresent()) {
-            updateTag(tags);
-        } else {
-            createTag(tags);
-        }
-        //Optional<Tags> findTags = tagsRepository.findByTitle(tags.getTitle());
 
-        //return findTags.orElseThrow(() -> new Exception("Tag Not Found"));
-    }*/
+    // 테그명 존재 여부 확인
+    public Tags verifiedExistsTagTitle(String title) throws Exception {
+        Optional<Tags> optionalTags = tagsRepository.findByTitle(title);
+
+        Tags findTags =
+                optionalTags.orElseThrow(() -> new Exception("Tag Not Found"));
+
+        return findTags;
+    }
 }
