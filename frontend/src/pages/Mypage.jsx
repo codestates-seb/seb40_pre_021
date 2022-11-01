@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { getMypageInfo, getMypageUserInfo } from '../api/mypageApi';
+import { getMypageUserInfo } from '../api/mypageApi';
 import Avatar from '../components/Mypage//UserProfile/Avatar';
 import ProfileButton from '../components/Mypage/ProfileButton';
 import UserNickname from '../components/Mypage/UserProfile/UserNickname';
