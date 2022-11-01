@@ -33,7 +33,7 @@ const Container = styled.div`
 	display: flex;
 	flex-shrink: 0;
 	flex-wrap: wrap;
-	font-size: 14px;
+	font-size: 13px;
 	color: #6a737c;
 `;
 
@@ -47,10 +47,10 @@ const VotesBox = styled.div`
 	border: 1px solid transparent;
 
 	span {
-		font-weight: 600;
-		font-size: 14px;
+		font-weight: 500;
+		font-size: 13px;
 		&:first-child {
-			font-weight: 700;
+			font-weight: 600;
 		}
 	}
 `;
@@ -62,7 +62,7 @@ const AnswerBox = styled.div`
 	border-radius: 3px;
 	padding: 4px;
 	display: inline-flex;
-	gap: 0.3rem;
+	gap: 0.2rem;
 	align-items: center;
 	justify-content: center;
 	white-space: nowrap;
@@ -70,8 +70,8 @@ const AnswerBox = styled.div`
 	span {
 		color: ${(props) => (props.choosed ? 'white' : '#2E6F44')};
 		font-weight: 600;
-		&:first-child {
-			font-weight: 700;
+		&:last-child {
+			font-weight: 500;
 		}
 	}
 `;
@@ -85,9 +85,9 @@ const ViewsBox = styled.div`
 	border: 1px solid transparent;
 
 	span {
-		font-weight: 600;
+		font-weight: 500;
 		&:first-child {
-			font-weight: 700;
+			font-weight: 600;
 		}
 	}
 `;

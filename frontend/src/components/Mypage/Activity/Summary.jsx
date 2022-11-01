@@ -84,7 +84,7 @@ const FlexBox = styled.div`
 const AsideContentFooter = styled.p`
 	line-height: 20px;
 	color: #232629;
-	font-size: 0.9rem;
+	font-size: 13px;
 	padding: 0 8px;
 	margin-top: 12px;
 	font-weight: 500;
@@ -97,10 +97,10 @@ const AsideContentFooterButton = styled.button`
 	padding: 0.8rem;
 	border: 1px solid transparent;
 	border-radius: 3px;
-	font-weight: 600;
+	font-weight: 500;
 	text-align: center;
 	cursor: pointer;
-	font-size: 14px;
+	font-size: 13px;
 	:hover {
 		background-color: #0074cc;
 	}

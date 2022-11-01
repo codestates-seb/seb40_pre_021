@@ -5,16 +5,21 @@ import Reputation from '../components/Mypage/Activity/Reputation/Reputation';
 import Sidebar from '../components/Mypage/Activity/Sidebar';
 import Summary from '../components/Mypage/Activity/Summary';
 import Tags from '../components/Mypage/Activity/Tags/Tags';
+import useMypageData from '../hooks/useMypageData';
 
 const MypageActivityPage = () => {
+	const [answer, setAnswer] = useMypageData('answer');
+	const [question, setQuestion] = useMypageData('question');
+	const [tag, setTag] = useMypageData('tag');
+
 	return (
 		<SideBarBox>
 			<Sidebar />
 			<GridBox>
 				<Summary />
-				<Answers />
-				<Questions />
-				<Tags />
+				<Answers answer={answer} />
+				<Questions question={question} />
+				<Tags tag={tag} />
 				<Reputation />
 			</GridBox>
 		</SideBarBox>

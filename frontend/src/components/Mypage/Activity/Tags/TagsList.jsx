@@ -100,7 +100,7 @@ const Tag = styled.span`
 	text-align: center;
 	border: 1px solid transparent;
 	border-radius: 3px;
-	font-weight: 600;
+	font-weight: 500;
 	cursor: pointer;
 	:hover {
 		color: #2c5877;
@@ -129,12 +129,12 @@ const RightView = styled.div`
 const ScoreView = styled.div`
 	font-size: 17px;
 	margin-right: 4px;
-	font-weight: 600;
+	font-weight: 500;
 `;
 
 const Text = styled.div`
 	text-transform: lowercase;
 	color: #6a737c;
-	font-weight: 600;
+	font-weight: 500;
 	font-size: 14px;
 `;

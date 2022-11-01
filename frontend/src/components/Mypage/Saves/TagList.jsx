@@ -48,7 +48,7 @@ const List = styled.li`
 		text-align: center;
 		border: 1px solid transparent;
 		border-radius: 3px;
-		font-weight: 600;
+		font-weight: 500;
 		:hover {
 			background-color: #d1e3f0;
 			color: #2c5877;
