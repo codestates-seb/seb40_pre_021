@@ -40,9 +40,11 @@ public class User {
     @Column
     private String nickname;
 
+    // Security 유저 권한
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
 
+    //
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Questions> questions = new ArrayList<>();
 
@@ -58,6 +60,10 @@ public class User {
 
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<AnswerLikes> answerLikes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Adoption> adoptions = new ArrayList<>();
+
 
 
     public User(String nickname, String email, String password) {
@@ -100,6 +106,15 @@ public class User {
         this.answerLikes.add(answerLikes);
         if (answerLikes.getUsers() != this) {
             answerLikes.setUsers(this);
+        }
+    }
+
+
+    // Adoption 리스트 추가 메서드
+    public void addAdoption(Adoption adoption) {
+        this.adoptions.add(adoption);
+        if (adoption.getUsers() != this) {
+            adoption.setUsers(this);
         }
     }
 }

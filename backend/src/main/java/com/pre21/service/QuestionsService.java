@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -24,6 +25,8 @@ public class QuestionsService {
     private final QuestionsTagsRepository questionsTagsRepository;
     private final TagsRepository tagsRepository;
     private final UserRepository userRepository;
+    private final AnswersRepository answersRepository;
+    private final AdoptionRepository adoptionRepository;
 
 
     // 질문 생성
@@ -110,5 +113,69 @@ public class QuestionsService {
         tags.setLatest(LocalDateTime.now());
 
         tagsRepository.save(tags);
+    }
+
+
+    /**
+     * @method : 질문 채택 여부 반영
+     * @param questionId : 질문식별자
+     * @param answerId : 유저식별자
+     * @param userId : 유저식별자
+     * @author mozzi327
+     */
+    public void adoptingQuestion(Long questionId,
+                                 Long answerId,
+                                 Long userId) {
+        Questions findQuestion = verfiedQuestion(questionId);
+        if (!Objects.equals(findQuestion.getUsers().getId(), userId))
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
+        if (findQuestion.isChooseYn()) throw new BusinessLogicException(ExceptionCode.ALREADY_ADOPTED);
+        findQuestion.setChooseYn(true);
+        questionsRepository.save(findQuestion);
+        Answers findAnswer = verfiedAnswer(answerId);
+        User findUser = verifiedUser(userId);
+        Adoption adoption = new Adoption();
+        adoption.setQuestions(findQuestion);
+        adoption.setAnswers(findAnswer);
+        adoption.setUsers(findUser);
+        adoptionRepository.save(adoption);
+
+    }
+
+
+    /**
+     * @method : question 정보 조회
+     * @param questionId : 질문식별자
+     * @return : Questions
+     * @author : mozzi327
+     */
+    private Questions verfiedQuestion(Long questionId) {
+        return questionsRepository
+                .findById(questionId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+    }
+
+    /**
+     * @method : answer 정보 조회
+     * @param answerId : 답변식별자
+     * @return : Answers
+     * @author : mozzi327
+     */
+    private Answers verfiedAnswer(Long answerId) {
+        return answersRepository
+                .findById(answerId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
+    }
+
+    /**
+     * @method : user 정보 조회
+     * @param userId : 유저식별자
+     * @return : User
+     * @author : mozzi327
+     */
+    private User verifiedUser(Long userId) {
+        return userRepository
+                .findById(userId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
     }
 }
