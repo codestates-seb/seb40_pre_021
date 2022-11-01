@@ -2,7 +2,9 @@ import styled from 'styled-components';
 
 const ButtonStyle = styled.button`
 	position: relative;
-	display: inline-block;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	padding: 0.8em;
 	border: 1px solid ${(props) => props.borderColor || 'transparent'};
 	border-radius: ${(props) => props.radius || '3px'};
