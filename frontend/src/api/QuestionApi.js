@@ -6,9 +6,9 @@ const axiosConfig = {
 
 const instance = axios.create(axiosConfig);
 
-export const getQuestion = async (questionid) => {
+export const getQuestion = async () => {
 	try {
-		const result = await instance.get(`/question`);
+		const result = await instance.get(`/thread`);
 		return result.data;
 	} catch (err) {
 		console.log(err);

@@ -128,119 +128,124 @@ const YourAnswer = styled.h2`
 	line-height: 140%;
 	margin-bottom: 1rem;
 `;
-const { questionId } = useParams();
-const Question = () => {
-	const [thread, setThread] = useEffect({});
-	useEffect(() => {
-		getQuestion(questionId).then((res) => setThread(res));
-	}, []);
-	return (
-		<>
-			<Wrapper>
-				<QuestionGroup>
-					<Header>
-						<Title>{thread.question[0].title}</Title>
-						<Btn>
-							<Button text="Ask Question" />
-						</Btn>
 
-						<Info>Asked {thread.question[0].createdAt}</Info>
-						<hr />
-					</Header>
-					<QuestionContainer>
-						<Left>
-							<Controller></Controller>
-						</Left>
-						<Right>
-							<Body
-								dangerouslySetInnerHTML={{
-									__html: thread.question[0].body,
-								}}></Body>
-							<Tags>{thread.question[0].tags}</Tags>
-							<Footer>
-								<Options>
-									<span>Share</span>
-									<span>Edit</span>
-								</Options>
-								<History>
-									Edited {thread.question[0].createdAt} Hours ago
-								</History>
-								<Profile>
-									<div></div>
-									<span>{thread.question[0].nickname}</span>
-								</Profile>
-							</Footer>
-							{thread.question[0].comments && <hr />}
-							{thread.question[0].comments &&
-								thread.question[0].comments.map((c) => (
-									<>
-										<Comments key={c.commentId}>
-											<span>{c.commentBody} – </span>
-											<span className="nickname">{c.nickname}</span>
-											<span className="createdAt">
-												{' '}
-												{c.createdAt} hours ago
-											</span>
-											<span className="delete"> × </span>
-										</Comments>
-										<hr />
-									</>
-								))}
-							<CommentCreate>Add a comment</CommentCreate>
-						</Right>
-					</QuestionContainer>
-				</QuestionGroup>
-				<hr />
-				<AnswerGroup>
-					<Header>
-						<AnswerCount>{thread.answer[0].answers.length} Answers</AnswerCount>
-					</Header>
-					{thread.answer[0].answers.map((el) => (
-						<>
-							<AnswerContainer>
-								<Left>
-									<Controller kind="answer" choosed={el.choosed}></Controller>
-								</Left>
-								<Right>
-									<Body
-										dangerouslySetInnerHTML={{
-											__html: el.body,
-										}}></Body>
-									<Footer>
-										<Options>
-											<span>Share</span>
-											<span>Edit</span>
-										</Options>
-										<History>Edited {el.createdAt} Hours ago</History>
-										<Profile>
-											<div></div>
-											<span>{el.nickname}</span>
-										</Profile>
-									</Footer>
-									{el.comments && <hr />}
-									{el.comments &&
-										el.comments.map((c) => (
-											<>
-												<Comments key={c.commentId}>
-													{c.commentBody} - {c.nickname}
-												</Comments>
-												<hr />
-											</>
-										))}
-									<CommentCreate>Add a comment</CommentCreate>
-								</Right>
-							</AnswerContainer>
+const Question = () => {
+	const [thread, setThread] = useState('');
+	useEffect(() => {
+		getQuestion().then((res) => setThread(res));
+	}, []);
+	console.log(thread);
+	return (
+		thread && (
+			<>
+				<Wrapper>
+					<QuestionGroup>
+						<Header>
+							<Title>{thread.question[0].title}</Title>
+							<Btn>
+								<Button text="Ask Question" />
+							</Btn>
+
+							<Info>Asked {thread.question[0].createdAt}</Info>
 							<hr />
-						</>
-					))}
-				</AnswerGroup>
-				<EditGroup>
-					<YourAnswer>Your Answer</YourAnswer>
-					<Editor />
-					<Button text="Post Your Answer" />
-				</EditGroup>
-			</Wrapper>
-		</>
+						</Header>
+						<QuestionContainer>
+							<Left>
+								<Controller></Controller>
+							</Left>
+							<Right>
+								<Body
+									dangerouslySetInnerHTML={{
+										__html: thread.question[0].body,
+									}}></Body>
+								<Tags>{thread.question[0].tags}</Tags>
+								<Footer>
+									<Options>
+										<span>Share</span>
+										<span>Edit</span>
+									</Options>
+									<History>
+										Edited {thread.question[0].createdAt} Hours ago
+									</History>
+									<Profile>
+										<div></div>
+										<span>{thread.question[0].nickname}</span>
+									</Profile>
+								</Footer>
+								{thread.question[0].comments && <hr />}
+								{thread.question[0].comments &&
+									thread.question[0].comments.map((c) => (
+										<>
+											<Comments key={c.commentId}>
+												<span>{c.commentBody} – </span>
+												<span className="nickname">{c.nickname}</span>
+												<span className="createdAt">
+													{' '}
+													{c.createdAt} hours ago
+												</span>
+												<span className="delete"> × </span>
+											</Comments>
+											<hr />
+										</>
+									))}
+								<CommentCreate>Add a comment</CommentCreate>
+							</Right>
+						</QuestionContainer>
+					</QuestionGroup>
+					<hr />
+					<AnswerGroup>
+						<Header>
+							<AnswerCount>
+								{thread.answer[0].answers.length} Answers
+							</AnswerCount>
+						</Header>
+						{thread.answer[0].answers.map((el) => (
+							<>
+								<AnswerContainer>
+									<Left>
+										<Controller kind="answer" choosed={el.choosed}></Controller>
+									</Left>
+									<Right>
+										<Body
+											dangerouslySetInnerHTML={{
+												__html: el.body,
+											}}></Body>
+										<Footer>
+											<Options>
+												<span>Share</span>
+												<span>Edit</span>
+											</Options>
+											<History>Edited {el.createdAt} Hours ago</History>
+											<Profile>
+												<div></div>
+												<span>{el.nickname}</span>
+											</Profile>
+										</Footer>
+										{el.comments && <hr />}
+										{el.comments &&
+											el.comments.map((c) => (
+												<>
+													<Comments key={c.commentId}>
+														{c.commentBody} - {c.nickname}
+													</Comments>
+													<hr />
+												</>
+											))}
+										<CommentCreate>Add a comment</CommentCreate>
+									</Right>
+								</AnswerContainer>
+								<hr />
+							</>
+						))}
+					</AnswerGroup>
+					<EditGroup>
+						<YourAnswer>Your Answer</YourAnswer>
+						<Editor />
+						<Button text="Post Your Answer" />
+					</EditGroup>
+				</Wrapper>
+			</>
+		)
 	);
 };
 
