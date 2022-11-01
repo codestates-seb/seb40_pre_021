@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Table
 @Entity
@@ -15,21 +17,19 @@ import java.time.LocalDateTime;
 public class Answers {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long answerId;
+    @Column(name = "ANSWER_ID")
+    private long id;
 
     @Column
     private String contents;
 
     @Column
-    private int likesCount;
+    private int vote;
 
     @Column
-    private int unlikesCount;
+    private boolean chooseYn = false;
 
-    @Column
-    private boolean chooseYN;
-
-    @Column
+    @Column(name = "IMAGE_URL")
     private String imageUrl;
 
     @Column
@@ -48,6 +48,12 @@ public class Answers {
     @JoinColumn(name = "USER_ID")
     private User users = new User();
 
+
+    // 답변 - 추천수 매핑
+    @OneToMany(mappedBy = "answers", cascade = CascadeType.ALL)
+    private List<AnswerLikes> answersLike = new ArrayList<>();
+
+
     // 답변 생성 시 필요 생성자
     public Answers(String contents) {
         this.contents = contents;
@@ -61,5 +67,12 @@ public class Answers {
     // 답변 - 유저 매핑 메소드
     public void addUser(User users) {
         this.users = users;
+    }
+
+    public void addAnswerLike(AnswerLikes answerLike) {
+        this.answersLike.add(answerLike); // question 에 questionsTags 지정
+        if (answerLike.getAnswers() != this) {
+            answerLike.addAnswer(this); //(owner)questionsTags 에 question 지정
+        }
     }
 }

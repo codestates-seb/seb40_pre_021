@@ -56,6 +56,10 @@ public class User {
     @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
     private List<Answers> answers = new ArrayList<>();
 
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<AnswerLikes> answerLikes = new ArrayList<>();
+
+
     public User(String nickname, String email, String password) {
         this.nickname = nickname;
         this.email = email;
@@ -90,5 +94,12 @@ public class User {
 
     public void addAnswers(Answers answers) {
         this.answers.add(answers);
+    }
+
+    public void addAnswerLike(AnswerLikes answerLikes) {
+        this.answerLikes.add(answerLikes);
+        if (answerLikes.getUsers() != this) {
+            answerLikes.setUsers(this);
+        }
     }
 }
