@@ -42,8 +42,8 @@ public class SecurityConfiguration {
     @SneakyThrows
     public SecurityFilterChain filterChain(HttpSecurity http) {
         http
-//            .headers().frameOptions().sameOrigin()
-//            .and()
+            .headers().frameOptions().sameOrigin()
+            .and()
             .httpBasic().disable()
             .cors().configurationSource(corsConfigurationSource())
             .and()
@@ -59,6 +59,7 @@ public class SecurityConfiguration {
             .apply(new CustomFilterConfigurer())
             .and()
             .authorizeHttpRequests(authorize -> authorize
+                    .antMatchers(HttpMethod.GET, "/h2/**").permitAll()
 //                    .antMatchers(HttpMethod.POST, "/**/questions/ask").hasRole("USER")
                     .antMatchers(HttpMethod.GET, "/docs/**").hasRole("ADMIN")
                     .anyRequest().permitAll()
