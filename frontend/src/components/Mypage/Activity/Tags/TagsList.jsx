@@ -16,7 +16,7 @@ const TagsList = ({ lists }) => {
 							<LeftCotent>
 								<TagView>
 									<Tag>{title}</Tag>
-									<Badge />
+									<Badge tagCount={tagCount} />
 								</TagView>
 							</LeftCotent>
 							<RightContent>
@@ -109,7 +109,18 @@ const Tag = styled.span`
 `;
 
 const Badge = styled.span`
-	background-position: -102px -398px;
+	background-position: ${(props) => {
+		const { tagCount } = props;
+		if (tagCount >= 1000) {
+			return '-102px -398px';
+		} else if (tagCount <= 100) {
+			return '';
+		} else if (tagCount <= 300) {
+			return '-62px -398px;';
+		} else {
+			return '-82px -398px';
+		}
+	}};
 	margin-right: 3px;
 	margin-left: 10px;
 	width: 6px;
