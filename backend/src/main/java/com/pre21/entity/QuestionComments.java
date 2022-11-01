@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -22,6 +23,9 @@ public class QuestionComments extends Auditable {
     @Column
     private String comments;
 
+    @Column
+    private final LocalDateTime createdAt = LocalDateTime.now();
+
     @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
     private Questions questions;
@@ -30,13 +34,10 @@ public class QuestionComments extends Auditable {
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;
-/*
-    public void addQuestion(Questions questions) {
-        this.questions = questions;
-        if (!this.questions.getComments().contains(this)) {
-            this.questions.getComments().add(this);
-        }
-    }*/
+
+    public QuestionComments(String comments) {
+        this.comments = comments;
+    }
 
     // TODO : User 클래스 주입 메서드 구현 요
 }

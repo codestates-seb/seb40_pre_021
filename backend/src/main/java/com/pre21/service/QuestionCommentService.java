@@ -28,6 +28,6 @@ public class QuestionCommentService {
                 .findById(userId)
                 .orElseThrow(() -> new RuntimeException("d"));
 
-        QuestionComments questionComments = new QuestionComments(questionCommentPostDto.getComments(), );
+        QuestionComments questionComments = new QuestionComments(questionCommentPostDto.getComments());
     }
 }
