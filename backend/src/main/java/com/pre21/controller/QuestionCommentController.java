@@ -15,7 +15,7 @@ public class QuestionCommentController {
 
     /**
      * 질문에 대한 댓글 생성
-     * POST "/questions/{question-id}/comment"
+     * POST "/{question-id}/comment"
      * <p>
      * requestBody :
      * {"body":"string"}
@@ -23,7 +23,7 @@ public class QuestionCommentController {
      * responseBody :
      * NULL
      */
-    @PostMapping("/questions/{question-id}/comment")
+    @PostMapping("/{question-id}/comment")
     public void createQuestionComment(
             @PathVariable("question-id") Long questionId,
             @RequestBody QuestionCommentPostDto QuestioncommentPostDto) throws Exception {

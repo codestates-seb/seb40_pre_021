@@ -1,7 +1,5 @@
 package com.pre21.mapper;
 
-import com.pre21.dto.QuestionCommentPostDto;
-import com.pre21.entity.QuestionComments;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 

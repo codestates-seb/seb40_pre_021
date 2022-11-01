@@ -15,10 +15,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuestionCommentPostDto {
-    private User user;
-    private Long commentId;
-    private Questions question;
+    private Long userId;
     private String comments;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
 }
