@@ -16,9 +16,12 @@ public class LikesController {
 
     // 추천-비추천 버튼 눌렀을 때 요청
     @ResponseStatus(HttpStatus.OK)
-    @PostMapping("/{question-id}/like")
+    @PostMapping("/question/{question-id}/like")
     public void clickQuestionLike (@PathVariable("question-id") Long questionId
             ,@RequestBody QuestionDto.Like request) {
-        likeService.saveUserLike(questionId, request);
+        likeService.saveQuestionLike(questionId, request);
     }
+
+
+
 }
