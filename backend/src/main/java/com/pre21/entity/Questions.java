@@ -29,7 +29,10 @@ public class Questions {
     @Column
     private String contents;
 
-    @Column(name = "CHOOSE_YN")
+    @OneToOne(mappedBy = "questions", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private Adoption adoption;
+
+    @Column
     private boolean chooseYn = false;
 
     @Column
@@ -93,5 +96,13 @@ public class Questions {
     //질문 - 답변 매핑 메소드
     public void addAnswer(Answers answers) {
         this.answers.add(answers);
+    }
+
+    // Adoption 추가 메서드
+    public void setAdopted(Adoption adoption) {
+        this.adoption = adoption;
+        if (adoption.getQuestions() != this) {
+            adoption.setQuestions(this);
+        }
     }
 }

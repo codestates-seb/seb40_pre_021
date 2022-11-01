@@ -65,4 +65,20 @@ public class QuestionsController {
     public void deleteQuestions(@PathVariable("question-id") Long questionId) throws Exception {
         questionsService.deleteQuestion(questionId);
     }
+
+
+    /**
+     *
+     * @param questionId : 질문식별자
+     * @param answerId : 답변식별자
+     * @param userId : 로그인 유저식별자
+     * @author mozzi327
+     */
+    @GetMapping("/question/{question-id}/adopt/{answer-id}")
+    public void adoptQuestion(@PathVariable("question-id") Long questionId,
+                                 @PathVariable("answer-id") Long answerId,
+                                 @CookieValue(name = "userId", required = true) Long userId) {
+        questionsService.adoptingQuestion(questionId, answerId, userId);
+
+    }
 }
