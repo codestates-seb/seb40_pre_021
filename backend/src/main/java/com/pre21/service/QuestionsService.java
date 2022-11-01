@@ -6,6 +6,9 @@ import com.pre21.exception.BusinessLogicException;
 import com.pre21.exception.ExceptionCode;
 import com.pre21.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -66,23 +69,13 @@ public class QuestionsService {
     // 질문 전체 조회
     public List<Questions> findQuestions() {
 
-        List<Questions> findQuestions = questionsRepository.findAll();
-/*
-
-
-        findQuestions.stream()
-                .map(question -> {
-                    Long id = question.getId();
-                    questionsTagsRepository.findById(id);
-
-
-
-                });
-*/
-
-
-
         return (List<Questions>) questionsRepository.findAll();
+    }
+
+    public Page<Questions> findPageQuestions(int page, int size) {
+
+        return questionsRepository.findAll(PageRequest.of(page, size,
+                Sort.by("id").descending()));
     }
 
     // 질문 전체 개수
