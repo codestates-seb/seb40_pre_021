@@ -12,10 +12,8 @@ public class AuthDto {
     public static class Join {
         @NotBlank
         private String nickname;
-
         @NotBlank
         private String email;
-
         @NotBlank
         private String password;
     }
@@ -26,5 +24,14 @@ public class AuthDto {
     public static class Token {
         private String accessToken;
         private String refreshToken;
+    }
+
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    public static class Response {
+        private String accessToken;
+        private String nickname;
+        private String email;
     }
 }

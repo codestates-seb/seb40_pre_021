@@ -42,7 +42,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         value = {
                 "jwt.access-token-expiration-minutes=15",
                 "jwt.refresh-token-expiration-minutes=30",
-                "JWT_SECRET_KEY=ewqiopasdasdhjqwjkdqwdjkashdjkashdasjdhqweqeqweqwdasjxasxqweu123dhasd3423hasjdk",
                 "mail.address.admin=2ne1admin@gmail.com"
         }
 )
