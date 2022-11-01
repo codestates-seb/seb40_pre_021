@@ -8,7 +8,7 @@ import SummaryAside from './SummaryAside';
 const Summary = () => {
 	return (
 		<Container>
-			<Title text="Summary" />
+			<Title title="Summary" />
 			<div>
 				<FlexBox>
 					<SummaryAside
