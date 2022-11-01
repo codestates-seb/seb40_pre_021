@@ -49,7 +49,7 @@ const Questions = () => {
 		);
 	};
 	const getListData = (now) => {
-		const data = { page: now.toString(), pageSize };
+		const data = { page: now.toString(), pagesize: pageSize };
 		getList(data).then((res) => {
 			setData(res.data);
 			setQuestionCount(res.questionCount);
@@ -77,7 +77,7 @@ const Questions = () => {
 		title: 'All Questions',
 		tabList,
 		filter: 'true',
-		questionCount: questionCount,
+		questionCount,
 	};
 
 	const paginationProps = {
