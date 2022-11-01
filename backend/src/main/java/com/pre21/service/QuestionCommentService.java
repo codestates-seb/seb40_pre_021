@@ -12,8 +12,9 @@ import com.pre21.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
+/**
+ * @author dev32user
+ */
 @Service
 @RequiredArgsConstructor
 public class QuestionCommentService {
@@ -22,7 +23,11 @@ public class QuestionCommentService {
     private final QuestionCommentRepository questionCommentRepository;
 
     /**
-     * Comment를 생성하는 메서드
+     * 질문에 대한 댓글을 생성하는 메서드입니다. QuestionCommentRepository에 입력받은 questionCommentPostDto를 저장합니다.
+     *
+     * @param questionCommentPostDto 댓글을 생성하는 요청의 RequestBody에 해당합니다.
+     * @param questionId             댓글을 생성하는 질문의 Id입니다.
+     * @author dev32user
      */
     public void createQuestionComment(QuestionCommentPostDto questionCommentPostDto, Long questionId) throws Exception {
         Long userId = questionCommentPostDto.getUserId();

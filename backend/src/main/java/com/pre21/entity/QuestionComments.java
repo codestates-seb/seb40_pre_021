@@ -9,6 +9,11 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+/**
+ * 질문에 대한 댓글 Entity입니다.
+ *
+ * @author dev32user
+ */
 @Entity
 @Getter
 @Setter
