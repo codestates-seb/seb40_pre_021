@@ -6,6 +6,8 @@ import com.pre21.entity.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,7 +34,7 @@ public interface QuestionsMapper {
     }
 
     default List<QuestionsTagsResponseDto> questionsTagsToQuestionsTagsResponseDto(List<QuestionsTags> questionsTags) {
-        // 추출한 태그 정보를 추출하여 리스트로 저장
+        // 추출한 태그 정보를 리스트로 저장
         return questionsTags.stream()
                 .map(questionsTags1 -> QuestionsTagsResponseDto
                         .builder()
@@ -43,7 +45,7 @@ public interface QuestionsMapper {
     }
 
     default List<AnswersDto.ResponseDto> answersToAnswersResponseDto(List<Answers> answers) {
-        // 추출한 답글 정보를 추출하여 리스트로 저장
+        // 추출한 답글 정보를 리스트로 저장
         return answers.stream()
                 .map(answers1 -> AnswersDto.ResponseDto
                         .builder()
@@ -52,5 +54,19 @@ public interface QuestionsMapper {
                         .build())
                 .collect(Collectors.toList());
 
+    }
+
+    default List<QuestionDto.GetResponseDtos> questionsToQuestionResponses(List<Questions> questions) {
+        return questions.stream()
+                .map(questions1 -> QuestionDto.GetResponseDtos
+                        .builder()
+                        .questionId(questions1.getId())
+                        .title(questions1.getTitle())
+                        .contents(questions1.getContents())
+                        //.questionsTags(questions1.getQuestionsTags()) //ID만 나옴
+                        .chooseYn(questions1.isChooseYn())
+                        .createdAt(questions1.getCreatedAt())
+                        .build()
+                ).collect(Collectors.toList());
     }
 }
