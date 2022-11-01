@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import useMypageData from '../../../hooks/useMypageData';
 import Button from '../../common/Button';
 import SortButtonGroup from '../Activity/SortButtonGroup';
 import SavesListBox from './SavesListBox';
@@ -32,9 +31,8 @@ let sortData = [
 	},
 ];
 
-const SavesLayout = () => {
-	const [data] = useMypageData('bookmark');
-	const total = data?.length;
+const SavesLayout = ({ bookmark }) => {
+	const total = bookmark?.length;
 	return (
 		<Container>
 			<TopWrapper>
@@ -45,7 +43,7 @@ const SavesLayout = () => {
 				<CountText>{total} Saved items</CountText>
 				<SortButtonGroup data={sortData} />
 			</InfoArea>
-			<SavesListBox bookmarks={data} />
+			<SavesListBox bookmarks={bookmark} />
 		</Container>
 	);
 };
