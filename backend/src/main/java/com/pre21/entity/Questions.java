@@ -47,9 +47,8 @@ public class Questions {
     @Column
     private LocalDateTime modifiedAt = LocalDateTime.now();
 
-
-    //private List<String> strTags = new ArrayList<>();
-
+    @Column
+    int answerCount = 0;
     @JsonIgnore
     @OneToMany(mappedBy = "questions", cascade = CascadeType.ALL)
     private List<QuestionsTags> questionsTags = new ArrayList<>();
