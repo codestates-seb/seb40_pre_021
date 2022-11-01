@@ -130,21 +130,21 @@ const YourAnswer = styled.h2`
 `;
 const { questionId } = useParams();
 const Question = () => {
-	const [article, setArticle] = useEffect({});
+	const [thread, setThread] = useEffect({});
 	useEffect(() => {
-		getQuestion(questionId).then((res) => setArticle(res));
+		getQuestion(questionId).then((res) => setThread(res));
 	}, []);
 	return (
 		<>
 			<Wrapper>
 				<QuestionGroup>
 					<Header>
-						<Title>{QuestionEx.question[0].title}</Title>
+						<Title>{thread.question[0].title}</Title>
 						<Btn>
 							<Button text="Ask Question" />
 						</Btn>
 
-						<Info>Asked {QuestionEx.question[0].createdAt}</Info>
+						<Info>Asked {thread.question[0].createdAt}</Info>
 						<hr />
 					</Header>
 					<QuestionContainer>
@@ -154,25 +154,25 @@ const Question = () => {
 						<Right>
 							<Body
 								dangerouslySetInnerHTML={{
-									__html: QuestionEx.question[0].body,
+									__html: thread.question[0].body,
 								}}></Body>
-							<Tags>{QuestionEx.question[0].tags}</Tags>
+							<Tags>{thread.question[0].tags}</Tags>
 							<Footer>
 								<Options>
 									<span>Share</span>
 									<span>Edit</span>
 								</Options>
 								<History>
-									Edited {QuestionEx.question[0].createdAt} Hours ago
+									Edited {thread.question[0].createdAt} Hours ago
 								</History>
 								<Profile>
 									<div></div>
-									<span>{QuestionEx.question[0].nickname}</span>
+									<span>{thread.question[0].nickname}</span>
 								</Profile>
 							</Footer>
-							{QuestionEx.question[0].comments && <hr />}
-							{QuestionEx.question[0].comments &&
-								QuestionEx.question[0].comments.map((c) => (
+							{thread.question[0].comments && <hr />}
+							{thread.question[0].comments &&
+								thread.question[0].comments.map((c) => (
 									<>
 										<Comments key={c.commentId}>
 											<span>{c.commentBody} – </span>
@@ -193,11 +193,9 @@ const Question = () => {
 				<hr />
 				<AnswerGroup>
 					<Header>
-						<AnswerCount>
-							{QuestionEx.answer[0].answers.length} Answers
-						</AnswerCount>
+						<AnswerCount>{thread.answer[0].answers.length} Answers</AnswerCount>
 					</Header>
-					{QuestionEx.answer[0].answers.map((el) => (
+					{thread.answer[0].answers.map((el) => (
 						<>
 							<AnswerContainer>
 								<Left>
