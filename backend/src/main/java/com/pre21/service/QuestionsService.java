@@ -192,7 +192,7 @@ public class QuestionsService {
      * @author dev32user
      */
     public Questions patchQuestion(Long userId, Long questionId, QuestionPatchDto questionPatchDto) {
-        if (!Objects.equals(userId, verifiedQuestion(questionId).getUsers().getId())) {
+        if (!Objects.equals(userId, verfiedQuestion(questionId).getUsers().getId())) {
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         }
 
@@ -239,7 +239,7 @@ public class QuestionsService {
 
     public void addQuestionBookmark(Long questionId, Long userId) {
         User findUser = verifiedExistUser(userId);
-        Questions findQuestion = verifiedQuestion(questionId);
+        Questions findQuestion = verifiedExistQuestion(questionId);
         Optional<Bookmark> findBookmark = bookmarkRepository.findBookmarksByUsers(findUser);
 
         if (findBookmark.isPresent()) {
