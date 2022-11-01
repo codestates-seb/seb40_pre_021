@@ -102,6 +102,12 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                               String email, HttpServletResponse res) throws IOException {
         Gson gson = new Gson();
         User findUser = jwtTokenizer.findUserByEmail(email);
+        Cookie cookie = new Cookie("userId", findUser.getId().toString());
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+
+        res.addCookie(cookie);
+
         AuthDto.Response response = AuthDto.Response.builder()
                 .accessToken(accessToken)
                 .nickname(findUser.getNickname())
