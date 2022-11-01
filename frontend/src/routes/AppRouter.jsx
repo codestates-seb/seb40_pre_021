@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Suspense, lazy } from 'react';
 import Loading from '../components/common/Loading';
 
@@ -31,6 +31,7 @@ const AppRouter = () => {
 					</Route>
 					<Route path="/login" element={<Login />} />
 					<Route path="/signup" element={<Signup />} />
+					<Route path="*" element={<Navigate to="/" replace />} />
 				</Routes>
 			</Suspense>
 		</BrowserRouter>
