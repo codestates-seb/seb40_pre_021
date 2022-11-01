@@ -23,7 +23,8 @@ public class QuestionCommentService {
     private final QuestionCommentRepository questionCommentRepository;
 
     /**
-     * 질문에 대한 댓글을 생성하는 메서드입니다. QuestionCommentRepository에 입력받은 questionCommentPostDto를 저장합니다.
+     * 질문에 대한 댓글을 생성하는 메서드입니다.
+     * QuestionCommentRepository에 입력받은 questionCommentPostDto를 저장합니다.
      *
      * @param questionCommentPostDto 댓글을 생성하는 요청의 RequestBody에 해당합니다.
      * @param questionId             댓글을 생성하는 질문의 Id입니다.
@@ -33,7 +34,7 @@ public class QuestionCommentService {
         Long userId = questionCommentPostDto.getUserId();
         User findUser = userRepository
                 .findById(userId)
-                .orElseThrow(() -> new RuntimeException("d"));
+                .orElseThrow(() -> new RuntimeException("findUser.findById 실패"));
         Questions questions = questionsRepository.findQuestionsById(questionId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
         QuestionComments questionComments = new QuestionComments(questionCommentPostDto.getComments());
         questionComments.setQuestions(questions);
