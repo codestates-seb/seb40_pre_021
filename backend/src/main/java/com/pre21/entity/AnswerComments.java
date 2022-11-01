@@ -26,14 +26,23 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class AnswerComments extends Auditable {
     @Id
+    @Column(name = "COMMENT_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long commentId;
+    private long id;
 
     @Column(nullable = false)
     private String comments;
 
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @ManyToOne
+    @JoinColumn(name = "ANSWER_ID")
+    private Answers answers;
+
+    @ManyToOne
+    @JoinColumn(name = "USER_ID")
+    private User user;
 
     /**
      * 댓글의 내용을 받아서 AnswerComments 엔티티에 저장합니다.
