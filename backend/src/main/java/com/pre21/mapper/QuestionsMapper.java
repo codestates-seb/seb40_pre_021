@@ -49,7 +49,7 @@ public interface QuestionsMapper {
         return answers.stream()
                 .map(answers1 -> AnswersDto.ResponseDto
                         .builder()
-                        .answerId(answers1.getAnswerId())
+                        .answerId(answers1.getId())
                         .contents(answers1.getContents())
                         .build())
                 .collect(Collectors.toList());

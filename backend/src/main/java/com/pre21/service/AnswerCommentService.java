@@ -1,7 +1,11 @@
 package com.pre21.service;
 
 import com.pre21.dto.AnswerCommentPostDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
+@Service
+@RequiredArgsConstructor
 public class AnswerCommentService {
     public void createAnswerComment(AnswerCommentPostDto answerCommentPostDto, Long answerId) {
     }
