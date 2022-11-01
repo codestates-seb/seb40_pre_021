@@ -47,6 +47,8 @@ public class QuestionsController {
     }
 
     /**
+     * 질문 patch 요청에 대한 컨트롤러 메서드입니다.
+     *
      * @param userId           쿠키에서 값을 받아옵니다.
      * @param questionPatchDto 질문 수정 요청입니다.
      * @param questionId       수정한 질문의 Id입니다.
@@ -54,13 +56,9 @@ public class QuestionsController {
      */
     @PatchMapping("/{question-id}/edit")
     public ResponseEntity patchQuestion(
-            @CookieValue(name = "userId") String userId,
+            @CookieValue(name = "userId") Long userId,
             @PathVariable("question-id") Long questionId,
             @RequestBody QuestionPatchDto questionPatchDto) {
-        if (Long.parseLong(userId) != questionsService.findQuestion(questionId).getUsers().getId()) {
-            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
-        }
-
         Questions questions = questionsService.patchQuestion(userId,questionId, questionPatchDto);
         return new ResponseEntity(mapper.questionsToQuestionResponse(questions), HttpStatus.OK);
     }
