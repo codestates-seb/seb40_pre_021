@@ -73,23 +73,22 @@ const VoteDisplay = styled.div`
 	line-height: 2;
 	text-decoration: none;
 	white-space: nowrap;
-	margin-right: 10px;
 `;
 
 const Title = styled.a`
 	text-decoration: none;
+	display: -webkit-box;
 	color: #0063bf;
 	font-size: 14px;
-	width: 250px;
-	white-space: nowrap;
 	overflow: hidden;
-	text-overflow: ellipsis;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 1;
+	line-height: 1.3;
 	word-break: break-all;
 	overflow-wrap: break-word;
 	hyphens: auto;
 	font-weight: 600;
+	margin: 0 12px;
 `;
 
 const DateText = styled.span`

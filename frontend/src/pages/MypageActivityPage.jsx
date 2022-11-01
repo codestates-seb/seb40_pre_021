@@ -1,6 +1,4 @@
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { getMypageInfo } from '../api/mypageApi';
 import Answers from '../components/Mypage/Activity/Answers/Answers';
 import Questions from '../components/Mypage/Activity/Questions/Questions';
 import Reputation from '../components/Mypage/Activity/Reputation/Reputation';
@@ -9,22 +7,14 @@ import Summary from '../components/Mypage/Activity/Summary';
 import Tags from '../components/Mypage/Activity/Tags/Tags';
 
 const MypageActivityPage = () => {
-	const [info, setInfo] = useState({ nickname: '', createdAt: '' });
-	const { answers, tags, questions } = info;
-
-	useEffect(() => {
-		getMypageInfo(1).then((res) => {
-			setInfo(res);
-		});
-	}, []);
 	return (
 		<SideBarBox>
 			<Sidebar />
 			<GridBox>
 				<Summary />
-				<Answers lists={answers} />
-				<Questions lists={questions} />
-				<Tags lists={tags} />
+				<Answers />
+				<Questions />
+				<Tags />
 				<Reputation />
 			</GridBox>
 		</SideBarBox>

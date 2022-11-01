@@ -6,6 +6,9 @@ const LeftMenuStyle = styled.div`
 	min-width: 164px;
 	border-right: 1px solid rgb(209, 211, 215);
 	padding-top: 25px;
+	position: sticky;
+	top: 52px;
+	max-height: calc(100vh - 52px);
 
 	.public {
 		color: gray;
@@ -22,7 +25,6 @@ const LeftMenuStyle = styled.div`
 `;
 
 const LeftMenu = () => {
-	const [active, setActive] = useState('Home');
 	const menus = [
 		{
 			id: 0,
@@ -37,7 +39,7 @@ const LeftMenu = () => {
 		{
 			id: 2,
 			name: 'Tags',
-			path: '/',
+			path: '',
 		},
 		{
 			id: 3,
@@ -46,10 +48,7 @@ const LeftMenu = () => {
 		},
 	];
 
-	const props = {
-		active,
-		onClickMenu: (name) => setActive(name),
-	};
+	const props = {};
 
 	return (
 		<LeftMenuStyle>

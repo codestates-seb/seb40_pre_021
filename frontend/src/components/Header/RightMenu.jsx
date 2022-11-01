@@ -11,14 +11,15 @@ import { Logout } from '../../api/LogoutApi';
 import Avatar from '../Mypage/UserProfile/Avatar';
 
 const RightMenuStlye = styled.li`
+	width: 150px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 `;
 const Box = styled.div`
 	display: flex;
-	justify-content: center;
 	align-items: center;
+
 	button {
 		margin-left: 5px;
 	}
@@ -27,7 +28,7 @@ const Box = styled.div`
 		text-decoration: none;
 	}
 `;
-const AavatarBox = styled.div``;
+
 const RightMenu = () => {
 	//임시 state 로그인 했는지 확인
 	const isLogin = useSelector(selectIsLogin);
@@ -53,9 +54,9 @@ const RightMenu = () => {
 						<Avatar
 							nickname={userInfo.nickname}
 							padding="10px"
-							width="auto"
-							heigth="33px"
-							fontSize="1.3rem"
+							width="30px"
+							heigth="30px"
+							fontSize={`${20 - 2 * userInfo.nickname.length}px`}
 						/>
 					</Link>
 
