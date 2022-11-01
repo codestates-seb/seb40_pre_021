@@ -4,6 +4,7 @@ import ListHeader from '../components/List/ListHeader';
 import { getList } from '../api/ListApi';
 import Pagination from '../components/List/Pagination';
 import List from '../components/List/List';
+import useDynamicTitle from '../hooks/useDynamicTitle';
 
 const QuestionsStyle = styled.div`
 	width: 100%;
@@ -14,6 +15,8 @@ const QuestionsStyle = styled.div`
 const Questions = () => {
 	const [data, setData] = useState();
 	const [questionCount, setQuestionCount] = useState();
+
+	useDynamicTitle('Questions - Stack Overflow');
 
 	useEffect(() => {
 		getList().then((res) => {
