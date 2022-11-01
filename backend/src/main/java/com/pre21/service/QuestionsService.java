@@ -30,6 +30,7 @@ public class QuestionsService {
     private final UserRepository userRepository;
     private final AnswersRepository answersRepository;
     private final AdoptionRepository adoptionRepository;
+    private final BookmarkRepository bookmarkRepository;
 
 
     // 질문 생성
@@ -193,7 +194,7 @@ public class QuestionsService {
      * @author dev32user
      */
     public Questions patchQuestion(Long userId, Long questionId, QuestionPatchDto questionPatchDto) {
-        if (!Objects.equals(userId, verfiedQuestion(questionId).getUsers().getId())) {
+        if (!Objects.equals(userId, verifiedQuestion(questionId).getUsers().getId())) {
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         }
 
@@ -234,5 +235,59 @@ public class QuestionsService {
         );
 
         return questionsRepository.save(updatedQuestion);
+    }
+
+    public void addQuestionBookmark(Long questionId, Long userId) {
+        User findUser = verifiedExistUser(userId);
+        Questions findQuestion = verifiedQuestion(questionId);
+        Optional<Bookmark> findBookmark = bookmarkRepository.findBookmarksByUsers(findUser);
+
+        if (findBookmark.isPresent()) {
+            bookmarkRepository.delete(findBookmark.get());
+        } else {
+            Bookmark bookmark = new Bookmark(questionId);
+            bookmark.setQuestions(findQuestion);
+//            bookmark.
+        }
+
+    }
+
+
+    /**
+     * @method 유저 조회
+     * @param userId 유저식별자
+     * @return User
+     * @author mozzi327
+     */
+    private User verifiedExistUser(Long userId) {
+        return userRepository.findById(userId).orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.USER_NOT_FOUND)
+        );
+    }
+
+
+    /**
+     * @method 질문 조회
+     * @param questionId 질문식별자
+     * @return Questions
+     * @author mozzi327
+     */
+    private Questions verifiedExistQuestion(Long questionId) {
+        return questionsRepository.findById(questionId).orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.TOKEN_NOT_FOUND)
+        );
+    }
+
+
+    /**
+     * @method 답변 조회
+     * @param answerId 답변식별자
+     * @return Answers
+     * @author mozzi327
+     */
+    private Answers verifiedExistAnswer(Long answerId) {
+        return answersRepository.findById(answerId).orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND)
+        );
     }
 }

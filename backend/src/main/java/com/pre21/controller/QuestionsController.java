@@ -89,6 +89,7 @@ public class QuestionsController {
 
 
     /**
+     * @method 질문 작성자 채택 기능
      * @param questionId : 질문식별자
      * @param answerId   : 답변식별자
      * @param userId     : 로그인 유저식별자
@@ -99,6 +100,19 @@ public class QuestionsController {
                               @PathVariable("answer-id") Long answerId,
                               @CookieValue(name = "userId", required = true) Long userId) {
         questionsService.adoptingQuestion(questionId, answerId, userId);
+
+    }
+
+    /**
+     * @method 질문 북마크 추가
+     * @param questionId
+     * @param userId
+     * @author mozzi327
+     */
+    @PostMapping("/bookmark/{question-id}")
+    public void clickQuestionBookmark(@PathVariable("question-id") Long questionId,
+                                      @CookieValue(name = "userId", required = true) Long userId) {
+        questionsService.addQuestionBookmark(questionId, userId);
 
     }
 }
