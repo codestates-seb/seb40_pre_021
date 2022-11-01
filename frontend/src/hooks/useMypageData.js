@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import {
 	getMypageUserAnswer,
 	getMypageUserBookmark,
+	getMypageUserInfo,
 	getMypageUserQuestion,
 	getMypageUserTag,
 } from '../api/mypageApi';
@@ -28,6 +29,11 @@ function useMypageData(category, value = []) {
 				break;
 			case 'bookmark':
 				getMypageUserBookmark().then((res) => {
+					setData({ ...data, [category]: res });
+				});
+				break;
+			case 'userInfo':
+				getMypageUserInfo().then((res) => {
 					setData({ ...data, [category]: res });
 				});
 				break;
