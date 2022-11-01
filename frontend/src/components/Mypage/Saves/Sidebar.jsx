@@ -76,8 +76,8 @@ const ListText = styled.span`
 	box-shadow: none;
 	cursor: pointer;
 	border-radius: 1000px;
-	font-weight: 600;
-	font-size: 14px;
+	font-weight: 500;
+	font-size: 13px;
 	:hover {
 		background-color: ${(props) => (props.clicked ? '#DA680C' : '#e4e6e8')};
 	}

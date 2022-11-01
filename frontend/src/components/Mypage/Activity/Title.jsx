@@ -25,13 +25,12 @@ const Container = styled.div`
 `;
 
 const StyledTitle = styled.h2`
-	font-size: 23px;
-	font-weight: 600;
-	font-size: 22px;
+	font-size: 21px;
+	font-weight: 500;
 `;
 
 const Text = styled.span`
 	color: #6f757d;
-	font-size: 14px;
-	font-weight: 600;
+	font-size: 13px;
+	font-weight: 500;
 `;

@@ -35,26 +35,26 @@ const Box = styled.div`
 `;
 
 const SignupIcon = styled(MdCake)`
-	width: 16px;
-	height: 16px;
+	width: 18px;
+	height: 18px;
 	color: #9099a1;
 `;
 
 const ClockIcon = styled(AiOutlineClockCircle)`
-	width: 16px;
-	height: 16px;
+	width: 18px;
+	height: 18px;
 	color: #9099a1;
 `;
 
 const CalendarIcon = styled(FaRegCalendarAlt)`
-	width: 16px;
-	height: 16px;
+	width: 18px;
+	height: 18px;
 	color: #9099a1;
 `;
 
 const InfoText = styled.span`
 	color: #6a737c;
 	margin: 2px 4px;
-	font-size: 14px;
-	font-weight: 600;
+	font-size: 13px;
+	font-weight: 500;
 `;

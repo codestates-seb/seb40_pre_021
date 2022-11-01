@@ -84,8 +84,8 @@ const Tab = styled.a`
 	white-space: nowrap;
 	margin: 2px;
 	text-decoration: none;
-	font-weight: 600;
-	font-size: 14px;
+	font-weight: 500;
+	font-size: 13px;
 	color: ${(props) => (props.clicked ? 'white' : '#525960')};
 	background-color: ${(props) => (props.clicked ? '#F48225' : 'white')};
 	:hover {

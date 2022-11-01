@@ -62,7 +62,7 @@ const TopWrapper = styled.div`
 `;
 
 const ListHeader = styled.h1`
-	font-size: 22px;
+	font-size: 21px;
 	line-height: 1.3;
 	font-weight: 500;
 `;
@@ -74,6 +74,7 @@ const InfoArea = styled(TopWrapper)`
 `;
 
 const CountText = styled.h2`
-	font-size: 20px;
+	font-size: 19px;
 	margin: 0 0 1rem;
+	font-weight: 500;
 `;
