@@ -7,7 +7,7 @@ let data = [
 		id: 0,
 		name: 'Profile',
 		clicked: false,
-		path: 'progile',
+		path: 'profile',
 	},
 	{
 		id: 1,
