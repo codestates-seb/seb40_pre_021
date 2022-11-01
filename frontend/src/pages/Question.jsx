@@ -4,7 +4,6 @@ import Editor from '../components/common/Editor';
 import Controller from '../components/Question/Controller';
 import Button from '../components/common/Button';
 import { getQuestion } from '../api/QuestionApi';
-import { useParams } from 'react-router-dom';
 
 const Wrapper = styled.section`
 	position: relative;
