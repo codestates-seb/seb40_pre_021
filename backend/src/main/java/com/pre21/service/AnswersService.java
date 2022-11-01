@@ -13,7 +13,6 @@ import com.pre21.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
 
@@ -92,6 +91,7 @@ public class AnswersService {
                 optionalAnswer
                         .orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
 
-        updatedAnswer.setTitle(answerPatchDto.getTitle());
+        updatedAnswer.setContents(answerPatchDto.getConents());
+        return answersRepository.save(updatedAnswer);
     }
 }

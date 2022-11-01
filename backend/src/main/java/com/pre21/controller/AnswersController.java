@@ -35,11 +35,19 @@ public class AnswersController {
         likeService.saveAnswerLike(answerId, request);
     }
 
+    /**
+     * 답변 patch 요청에 대한 컨트롤러 메서드입니다.
+     *
+     * @param userId         쿠키에서 값을 받아옵니다.
+     * @param answerPatchDto 답변 수정 요청입니다.
+     * @param answerId       수정한 답변의 Id입니다.
+     * @author dev32user
+     */
     @PatchMapping("/answer/{answer-id}/edit")
     public ResponseEntity patchAnswer(
             @CookieValue(name = "userId") Long userId,
             @PathVariable("answer-id") Long answerId,
-            @RequestBody AnswerPatchDto answerPatchDto){
+            @RequestBody AnswerPatchDto answerPatchDto) {
         Answers answers = answersService.patchAnswer(userId, answerId, answerPatchDto);
         return new ResponseEntity(mapper.answerToAnswerResponse(answers), HttpStatus.OK);
     }
