@@ -1,5 +1,6 @@
 package com.pre21.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,6 +30,7 @@ public class Tags {
     @Column
     private LocalDateTime latest = LocalDateTime.now();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "tags")
     private List<QuestionsTags> questionsTags = new ArrayList<>();
 

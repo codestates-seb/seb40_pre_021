@@ -5,11 +5,16 @@ import com.pre21.dto.QuestionsPostDto;
 import com.pre21.dto.QuestionsResponseDto;
 import com.pre21.entity.Questions;
 import com.pre21.mapper.QuestionsMapper;
+import com.pre21.repository.AnswersRepository;
 import com.pre21.service.QuestionsService;
+import com.pre21.util.dto.MultiResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/questions")
@@ -23,7 +28,7 @@ public class QuestionsController {
     public void createQuestion(@RequestBody QuestionsPostDto questionsPostDto) throws Exception {
         //Questions questions = mapper.questionsPostToQuestion(questionsPostDto);
 
-      questionsService.createQuestion(questionsPostDto);
+        questionsService.createQuestion(questionsPostDto);
 
         //return new ResponseEntity(questions, HttpStatus.CREATED);
 
@@ -34,10 +39,21 @@ public class QuestionsController {
 
     // 질문 조회
     @GetMapping("/{question-id}")
-    private ResponseEntity getQuestion(@PathVariable("question-id") Long questionId) {
+    public ResponseEntity getQuestion(@PathVariable("question-id") Long questionId) {
         Questions questions = questionsService.findQuestion(questionId);
 
         return new ResponseEntity<>(mapper.questionsToQuestionResponse(questions),
+                HttpStatus.OK);
+    }
+
+    // 질문 전체 조회
+    @GetMapping
+    public ResponseEntity getQuestions() {
+
+        List<Questions> questions = questionsService.findQuestions();
+        long questionCount = questionsService.findQuestionCount();
+
+        return new ResponseEntity<>(mapper.questionsToQuestionResponses(questions),
                 HttpStatus.OK);
     }
 

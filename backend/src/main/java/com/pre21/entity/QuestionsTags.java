@@ -1,5 +1,6 @@
 package com.pre21.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,11 +21,12 @@ public class QuestionsTags {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "QUESTIONS_TAGS_ID")
     private Long id;
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
     private Questions questions;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "TAG_ID")
     private Tags tags;

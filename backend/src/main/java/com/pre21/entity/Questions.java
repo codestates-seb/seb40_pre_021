@@ -1,5 +1,6 @@
 package com.pre21.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pre21.util.auditable.Auditable;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,6 +47,10 @@ public class Questions {
     @Column
     private LocalDateTime modifiedAt = LocalDateTime.now();
 
+
+    //private List<String> strTags = new ArrayList<>();
+
+    @JsonIgnore
     @OneToMany(mappedBy = "questions", cascade = CascadeType.ALL)
     private List<QuestionsTags> questionsTags = new ArrayList<>();
 
