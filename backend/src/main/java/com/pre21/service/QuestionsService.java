@@ -7,13 +7,15 @@ import com.pre21.exception.BusinessLogicException;
 import com.pre21.exception.ExceptionCode;
 import com.pre21.repository.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -24,6 +26,8 @@ public class QuestionsService {
     private final QuestionsTagsRepository questionsTagsRepository;
     private final TagsRepository tagsRepository;
     private final UserRepository userRepository;
+    private final AnswersRepository answersRepository;
+    private final AdoptionRepository adoptionRepository;
 
 
     // 질문 생성
@@ -69,22 +73,13 @@ public class QuestionsService {
     // 질문 전체 조회
     public List<Questions> findQuestions() {
 
-        List<Questions> findQuestions = questionsRepository.findAll();
-/*
-
-
-        findQuestions.stream()
-                .map(question -> {
-                    Long id = question.getId();
-                    questionsTagsRepository.findById(id);
-
-
-
-                });
-*/
-
-
         return (List<Questions>) questionsRepository.findAll();
+    }
+
+    public Page<Questions> findPageQuestions(int page, int size) {
+
+        return questionsRepository.findAll(PageRequest.of(page, size,
+                Sort.by("id").descending()));
     }
 
     // 질문 전체 개수
@@ -121,23 +116,67 @@ public class QuestionsService {
         tagsRepository.save(tags);
     }
 
+
     /**
-     * @param userId           String 타입 사용자 Id 값입니다.
-     * @param questionId       Long 타입 Question Id 값입니다.
-     * @param questionPatchDto QuestionPatchDto 요청입니다.
-     * @author dev32user
+     * @method : 질문 채택 여부 반영
+     * @param questionId : 질문식별자
+     * @param answerId : 유저식별자
+     * @param userId : 유저식별자
+     * @author mozzi327
      */
-    public Questions patchQuestion(String userId, Long questionId, QuestionPatchDto questionPatchDto) {
-        Optional<Questions> optionalQuestion = questionsRepository.findById(questionId);
+    public void adoptingQuestion(Long questionId,
+                                 Long answerId,
+                                 Long userId) {
+        Questions findQuestion = verfiedQuestion(questionId);
+        if (!Objects.equals(findQuestion.getUsers().getId(), userId))
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
+        if (findQuestion.isChooseYn()) throw new BusinessLogicException(ExceptionCode.ALREADY_ADOPTED);
+        findQuestion.setChooseYn(true);
+        questionsRepository.save(findQuestion);
+        Answers findAnswer = verfiedAnswer(answerId);
+        User findUser = verifiedUser(userId);
+        Adoption adoption = new Adoption();
+        adoption.setQuestions(findQuestion);
+        adoption.setAnswers(findAnswer);
+        adoption.setUsers(findUser);
+        adoptionRepository.save(adoption);
 
-        Questions updatedQuestion =
-                optionalQuestion
-                        .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+    }
 
 
-        updatedQuestion.setTitle(questionPatchDto.getTitle());
-        updatedQuestion.setContents(questionPatchDto.getContents());
-        updatedQuestion.setQuestionsTags(questionPatchDto.getTags());
-        return questionsRepository.save(updatedQuestion);
+    /**
+     * @method : question 정보 조회
+     * @param questionId : 질문식별자
+     * @return : Questions
+     * @author : mozzi327
+     */
+    private Questions verfiedQuestion(Long questionId) {
+        return questionsRepository
+                .findById(questionId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+    }
+
+    /**
+     * @method : answer 정보 조회
+     * @param answerId : 답변식별자
+     * @return : Answers
+     * @author : mozzi327
+     */
+    private Answers verfiedAnswer(Long answerId) {
+        return answersRepository
+                .findById(answerId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
+    }
+
+    /**
+     * @method : user 정보 조회
+     * @param userId : 유저식별자
+     * @return : User
+     * @author : mozzi327
+     */
+    private User verifiedUser(Long userId) {
+        return userRepository
+                .findById(userId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
     }
 }

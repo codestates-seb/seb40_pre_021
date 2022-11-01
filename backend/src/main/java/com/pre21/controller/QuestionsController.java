@@ -7,6 +7,7 @@ import com.pre21.mapper.QuestionsMapper;
 import com.pre21.service.QuestionsService;
 import com.pre21.util.dto.MultiResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -78,10 +79,37 @@ public class QuestionsController {
                 HttpStatus.OK);
     }
 
+    // Pagination + 질문 전체 조회
+    @GetMapping("/questions")
+    public ResponseEntity getPagingQuestions(@RequestParam int page,
+                                             @RequestParam int size) {
+        Page<Questions> questionsPage = questionsService.findPageQuestions(page - 1, size);
+        List<Questions> questions = questionsPage.getContent();
+
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(mapper.questionsToQuestionResponses(questions), questionsPage),
+                HttpStatus.OK);
+    }
 
     // 질문 삭제
     @DeleteMapping("/delete/{question-id}")
     public void deleteQuestions(@PathVariable("question-id") Long questionId) throws Exception {
         questionsService.deleteQuestion(questionId);
+    }
+
+
+    /**
+     *
+     * @param questionId : 질문식별자
+     * @param answerId : 답변식별자
+     * @param userId : 로그인 유저식별자
+     * @author mozzi327
+     */
+    @GetMapping("/question/{question-id}/adopt/{answer-id}")
+    public void adoptQuestion(@PathVariable("question-id") Long questionId,
+                                 @PathVariable("answer-id") Long answerId,
+                                 @CookieValue(name = "userId", required = true) Long userId) {
+        questionsService.adoptingQuestion(questionId, answerId, userId);
+
     }
 }

@@ -26,8 +26,8 @@ public class Answers {
     @Column
     private int vote;
 
-    @Column
-    private boolean chooseYn = false;
+    @OneToOne(mappedBy = "answers", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private Adoption adoption;
 
     @Column(name = "IMAGE_URL")
     private String imageUrl;
@@ -73,6 +73,14 @@ public class Answers {
         this.answersLike.add(answerLike); // question 에 questionsTags 지정
         if (answerLike.getAnswers() != this) {
             answerLike.addAnswer(this); //(owner)questionsTags 에 question 지정
+        }
+    }
+
+    // Adopted 추가 메서드
+    public void setAdopted(Adoption adoption) {
+        this.adoption = adoption;
+        if (adoption.getAnswers() != this) {
+            adoption.setAnswers(this);
         }
     }
 }
