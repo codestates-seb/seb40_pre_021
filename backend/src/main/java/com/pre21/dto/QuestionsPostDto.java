@@ -13,6 +13,7 @@ import java.util.Optional;
 @AllArgsConstructor
 @NoArgsConstructor
 public class QuestionsPostDto {
+    private User user;
     private String title;
     private String contents;
     private List<String> tags;
