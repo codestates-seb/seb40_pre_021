@@ -34,10 +34,10 @@ public class QuestionsService {
 
 
     // 질문 생성
-    public void createQuestion(QuestionsPostDto questionsPostDto) throws Exception {
-        Long userId = questionsPostDto.getUser().getId();
-        User findUser = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("d"));
-
+    public void createQuestion(QuestionsPostDto questionsPostDto,
+                               Long userId) {
+        User findUser = userRepository.findById(userId).orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
 
         Questions questions = new Questions(questionsPostDto.getTitle(), questionsPostDto.getContents());
         List<String> tags = questionsPostDto.getTags();
