@@ -4,16 +4,12 @@ import com.pre21.dto.QuestionsPostDto;
 import com.pre21.entity.*;
 import com.pre21.exception.BusinessLogicException;
 import com.pre21.exception.ExceptionCode;
-import com.pre21.repository.QuestionsRepository;
-import com.pre21.repository.QuestionsTagsRepository;
-import com.pre21.repository.TagsRepository;
-import com.pre21.repository.UserRepository;
+import com.pre21.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +21,6 @@ public class QuestionsService {
     private final QuestionsTagsRepository questionsTagsRepository;
     private final TagsRepository tagsRepository;
     private final UserRepository userRepository;
-    private final TagsService tagsService;
 
 
     // 질문 생성
@@ -66,6 +61,34 @@ public class QuestionsService {
         Questions findQuestion = findVerifiedQuestion(questionId);
 
         return findQuestion;
+    }
+
+    // 질문 전체 조회
+    public List<Questions> findQuestions() {
+
+        List<Questions> findQuestions = questionsRepository.findAll();
+/*
+
+
+        findQuestions.stream()
+                .map(question -> {
+                    Long id = question.getId();
+                    questionsTagsRepository.findById(id);
+
+
+
+                });
+*/
+
+
+
+        return (List<Questions>) questionsRepository.findAll();
+    }
+
+    // 질문 전체 개수
+    public long findQuestionCount() {
+
+        return questionsRepository.count();
     }
 
     // 질문 삭제

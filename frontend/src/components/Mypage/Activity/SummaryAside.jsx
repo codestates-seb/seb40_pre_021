@@ -34,7 +34,7 @@ const ContentBox = styled.div`
 `;
 
 const AsideTitle = styled.h2`
-	font-size: 1rem;
+	font-size: 15px;
 	margin-bottom: 2px;
 	flex: 0 auto;
 	font-weight: 500;
@@ -44,9 +44,9 @@ const AsideTitle = styled.h2`
 const AsideContent = styled.p`
 	line-height: 20px;
 	color: #6a737c;
-	font-size: 0.8rem;
+	font-size: 12px;
 	padding: 0 8px;
 	margin-bottom: 12px;
-	font-weight: 600;
+	font-weight: 500;
 	line-height: 16px;
 `;

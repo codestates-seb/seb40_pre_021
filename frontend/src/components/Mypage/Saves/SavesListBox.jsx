@@ -74,11 +74,11 @@ const ContentBox = styled.div`
 	min-width: 100%;
 
 	h3 {
-		font-size: 1.15rem;
+		font-size: 1.05rem;
 		margin-top: -0.15rem;
 		margin-bottom: 0.38rem;
 		padding-right: 24px;
-		font-weight: 600;
+		font-weight: 500;
 		word-break: break-word;
 		overflow-wrap: break-word;
 		hyphens: auto;

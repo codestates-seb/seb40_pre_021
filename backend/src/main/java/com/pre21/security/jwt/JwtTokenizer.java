@@ -1,7 +1,12 @@
 package com.pre21.security.jwt;
 
+import com.pre21.dto.AuthDto;
 import com.pre21.entity.RefreshToken;
+import com.pre21.entity.User;
+import com.pre21.exception.BusinessLogicException;
+import com.pre21.exception.ExceptionCode;
 import com.pre21.repository.RefreshTokenRepository;
+import com.pre21.repository.UserRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -13,12 +18,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import javax.servlet.http.Cookie;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Component
 @RequiredArgsConstructor
@@ -37,6 +40,7 @@ public class JwtTokenizer {
     private int refreshTokenExpirationMinutes;
 
     private final RefreshTokenRepository refreshTokenRepository;
+    private final UserRepository userRepository;
 
 
     public String encodeBase64SecretKey(String secretKey) {
@@ -53,7 +57,7 @@ public class JwtTokenizer {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(subject)
-                .setIssuedAt(Calendar.getInstance().getTime())
+                .setIssuedAt(Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA).getTime())
                 .setExpiration(expiration)
                 .signWith(key)
                 .compact();
@@ -66,7 +70,7 @@ public class JwtTokenizer {
 
         return Jwts.builder()
                 .setSubject(subject)
-                .setIssuedAt(Calendar.getInstance().getTime())
+                .setIssuedAt(Calendar.getInstance(TimeZone.getTimeZone("Asia/Seoul"), Locale.KOREA).getTime())
                 .setExpiration(expiration)
                 .signWith(key)
                 .compact();
@@ -99,14 +103,32 @@ public class JwtTokenizer {
     }
 
 
-    public void verifiedExistRefresh(String refreshToken) throws Exception {
+    // 리프레시 토큰 유무 확인
+    public void verifiedExistRefresh(String refreshToken) {
         Optional<RefreshToken> findRefreshToken = refreshTokenRepository.findRefreshTokenByTokenValue(refreshToken);
-        if (!refreshToken.equals(findRefreshToken.get().getTokenValue())) throw new Exception("토큰 ㄴㄴ");
+        if (!refreshToken.equals(findRefreshToken.get().getTokenValue()))
+            throw new BusinessLogicException(ExceptionCode.TOKEN_NOT_FOUND);
     }
 
 
-    public void savedRefreshToken(String refreshToken, String email) throws Exception {
+    // 리프레시 토큰 저장
+    public void savedRefreshToken(String refreshToken, String email) {
         Optional<RefreshToken> findRefreshToken = refreshTokenRepository.findRefreshTokenByTokenEmail(email);
-        findRefreshToken.orElse(refreshTokenRepository.save(new RefreshToken(refreshToken, email)));
+        findRefreshToken.ifPresent(refreshTokenRepository::delete);
+        refreshTokenRepository.save(new RefreshToken(refreshToken, email));
+    }
+
+    public User findUserByEmail(String email) {
+        return userRepository
+                .findUserByEmail(email)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+    }
+
+
+    public String isExistRefresh(Cookie[] cookies) {
+        for (int i = 0; i < cookies.length; i++) {
+            if (cookies[i].getName().equals("RefreshToken")) return cookies[i].getValue();
+        }
+        throw new BusinessLogicException(ExceptionCode.COOKIE_NOT_FOUND);
     }
 }

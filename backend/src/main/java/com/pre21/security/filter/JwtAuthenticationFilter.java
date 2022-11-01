@@ -1,19 +1,29 @@
 package com.pre21.security.filter;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.pre21.dto.AuthDto;
 import com.pre21.entity.User;
+import com.pre21.response.ErrorResponse;
 import com.pre21.security.dto.LoginDto;
 import com.pre21.security.jwt.JwtTokenizer;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.servlet.FilterChain;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,12 +53,23 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             FilterChain chain,
                                             Authentication authResult) {
         User user = (User) authResult.getPrincipal();
+        String email = user.getEmail();
 
         String accessToken = delegateAccessToken(user);
         String refreshToken = delegateRefreshToken(user);
 
-        res.setHeader("Authenthorization", "Bearer " + accessToken);
-        res.setHeader("RefreshToken", refreshToken);
+        jwtTokenizer.savedRefreshToken(refreshToken, email);
+        sendResponse(accessToken, email, res);
+
+        String encodedRefresh = URLEncoder.encode(refreshToken, "UTF-8");
+
+        Cookie cookie = new Cookie("RefreshToken", encodedRefresh);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+//        cookie.setSecure(true);
+
+
+        res.addCookie(cookie);
 
         this.getSuccessHandler().onAuthenticationSuccess(req, res, authResult);
     }
@@ -61,23 +82,34 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String subject = user.getEmail();
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getAccessTokenExpirationMinutes());
-
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
-
         String accessToken = jwtTokenizer.generateAccessToken(claims, subject, expiration, base64EncodedSecretKey);
 
         return accessToken;
     }
 
 
-    private String delegateRefreshToken(User user) throws Exception {
+    private String delegateRefreshToken(User user) {
         String subject = user.getEmail();
         Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
         String refreshToken = jwtTokenizer.generateRefreshToken(subject, expiration, base64EncodedSecretKey);
 
-        jwtTokenizer.savedRefreshToken(refreshToken, subject);
-
         return refreshToken;
+    }
+
+    private void sendResponse(String accessToken,
+                              String email, HttpServletResponse res) throws IOException {
+        Gson gson = new Gson();
+        User findUser = jwtTokenizer.findUserByEmail(email);
+        AuthDto.Response response = AuthDto.Response.builder()
+                .accessToken(accessToken)
+                .nickname(findUser.getNickname())
+                .email(email)
+                .build();
+
+        res.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        res.setStatus(HttpStatus.UNAUTHORIZED.value());
+        res.getWriter().write(gson.toJson(response, AuthDto.Response.class));
     }
 }

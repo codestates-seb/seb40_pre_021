@@ -27,7 +27,7 @@ const AnswerList = ({ answer }) => {
 				<UserInfoBox>
 					<UserImage src={defaultImage} alt="user-image" />
 					<a href="1">{answerUser}</a>
-					<time>asked</time>
+					<time>answered</time>
 					<span>{date}</span>
 				</UserInfoBox>
 			</AnswerAndUserInfoBox>
@@ -71,7 +71,7 @@ const AnswerContent = styled.p`
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 	margin-bottom: 8px;
-	font-size: 15px;
+	font-size: 13px;
 	font-weight: 500;
 `;
 
@@ -87,7 +87,7 @@ const AnswerAndUserInfoBox = styled.div`
 		text-decoration: none;
 		cursor: pointer;
 		color: #0074cc;
-		font-size: 14px;
+		font-size: 13px;
 		font-weight: 500;
 		:hover {
 			color: #0a95ff;
@@ -111,10 +111,10 @@ const VotesBox = styled.div`
 	border: 1px solid transparent;
 
 	span {
-		font-weight: 600;
-		font-size: 14px;
+		font-weight: 500;
+		font-size: 13px;
 		&:first-child {
-			font-weight: 700;
+			font-weight: 600;
 		}
 	}
 `;
@@ -133,21 +133,21 @@ const UserInfoBox = styled.div`
 		color: #0074cc;
 		text-decoration: none;
 		cursor: pointer;
-		font-size: 13px;
-		font-weight: 600;
+		font-size: 12px;
+		font-weight: 500;
 		:hover {
 			color: #0a95ff;
 		}
 	}
 	time {
 		color: #6a737c;
-		font-size: 13px;
-		font-weight: 600;
+		font-size: 12px;
+		font-weight: 500;
 	}
 	span {
 		color: #6a737c;
-		font-size: 13px;
-		font-weight: 600;
+		font-size: 12px;
+		font-weight: 500;
 	}
 `;
 
@@ -157,7 +157,7 @@ const AnswerBox = styled.div`
 	border: 1px solid #2e6f44;
 	border-radius: 3px;
 	padding: 4px;
-	font-size: 14px;
+	font-size: 13px;
 	display: inline-flex;
 	gap: 0.3rem;
 	align-items: center;
@@ -166,9 +166,9 @@ const AnswerBox = styled.div`
 
 	span {
 		color: ${(props) => (props.choosed ? 'white' : '#2E6F44')};
-		font-weight: 600;
+		font-weight: 500;
 		&:first-child {
-			font-weight: 700;
+			font-weight: 600;
 		}
 	}
 `;
