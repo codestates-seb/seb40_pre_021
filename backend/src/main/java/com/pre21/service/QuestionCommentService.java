@@ -20,12 +20,7 @@ public class QuestionCommentService {
     /**
      * Comment를 생성하는 메서드
      */
-    public void createQuestionComment(QuestionCommentPostDto questionCommentPostDto, Long questionId){
-
-        Questions findQuestion = questionsRepository
-                .findQuestionsById(questionId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
-
-        
+    public void createQuestionComment(QuestionCommentPostDto questionCommentPostDto, Long questionId) throws Exception{
+        Long userId = questionCommentPostDto.getQuestions().
     }
 }
