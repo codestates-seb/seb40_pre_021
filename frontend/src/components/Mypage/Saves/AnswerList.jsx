@@ -3,7 +3,7 @@ import defaultImage from '../../../assets/images/userDefaultImage.png';
 import { GoCheck } from 'react-icons/go';
 
 const AnswerList = ({ answer }) => {
-	console.log(answer);
+	// console.log(answer);
 	const { answerUser, answerBody, answerCreatedAt, vote, choosed } = answer;
 	let splitDate = answerCreatedAt.split(' ');
 	let date = `${splitDate[1]} ${splitDate[2]}, ${splitDate[3]} at ${splitDate[4]}`;

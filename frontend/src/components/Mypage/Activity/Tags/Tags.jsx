@@ -1,18 +1,20 @@
 import styled from 'styled-components';
+import useMypageData from '../../../../hooks/useMypageData';
 import ListBox from '../ListBox';
 import Title from '../Title';
 import TagsList from './TagsList';
 
-const Tags = ({ lists }) => {
+const Tags = () => {
+	const [data] = useMypageData('tag');
 	return (
 		<Container>
 			<TitleBox>
-				<Title title="Tags" number={13642} flex={true} />
+				<Title title="Tags" number={data?.length} flex={true} />
 			</TitleBox>
 			<ListBox
 				text="You have not participated in any tags"
-				lists={lists}
-				component={<TagsList lists={lists} />}
+				lists={data}
+				component={<TagsList lists={data} />}
 			/>
 		</Container>
 	);

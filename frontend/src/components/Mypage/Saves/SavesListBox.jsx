@@ -21,7 +21,6 @@ const SavesListBox = ({ bookmarks }) => {
 					vote,
 					answer,
 				} = bookmark;
-				console.log(answer);
 
 				let splitDate = createdAt.split(' ');
 				let date = `${splitDate[1]} ${splitDate[2]}, ${splitDate[3]} at ${splitDate[4]}`;

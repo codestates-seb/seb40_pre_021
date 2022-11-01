@@ -1,10 +1,11 @@
 import styled from 'styled-components';
+import useMypageData from '../../../../hooks/useMypageData';
 import AnswerOrQuestionList from '../AnswerOrQuestionList';
 import ListBox from '../ListBox';
 import SortButtonGroup from '../SortButtonGroup';
 import Title from '../Title';
 
-let data = [
+let sortData = [
 	{
 		id: 0,
 		name: 'Score',
@@ -22,17 +23,19 @@ let data = [
 	},
 ];
 
-const Answers = ({ lists }) => {
+const Answers = () => {
+	const [data] = useMypageData('answer');
+
 	return (
 		<Container>
 			<TitleBox>
-				<Title title="Answers" number={29262} />
-				<SortButtonGroup data={data} />
+				<Title title="Answers" number={data?.length} />
+				<SortButtonGroup data={sortData} />
 			</TitleBox>
 			<ListBox
 				text="You have not answered any questions"
-				lists={lists}
-				component={<AnswerOrQuestionList lists={lists} />}
+				lists={data}
+				component={<AnswerOrQuestionList lists={data} />}
 			/>
 		</Container>
 	);

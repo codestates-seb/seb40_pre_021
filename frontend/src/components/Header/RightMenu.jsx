@@ -18,6 +18,7 @@ const RightMenuStlye = styled.li`
 `;
 const Box = styled.div`
 	display: flex;
+	align-items: center;
 
 	button {
 		margin-left: 5px;
@@ -53,9 +54,9 @@ const RightMenu = () => {
 						<Avatar
 							nickname={userInfo.nickname}
 							padding="10px"
-							width="auto"
-							heigth="33px"
-							fontSize="1.3rem"
+							width="30px"
+							heigth="30px"
+							fontSize={`${20 - 2 * userInfo.nickname.length}px`}
 						/>
 					</Link>
 
