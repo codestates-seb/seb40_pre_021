@@ -33,9 +33,11 @@ public class QuestionsService {
 
 
     // 질문 생성
-    public void createQuestion(QuestionsPostDto questionsPostDto) throws Exception {
-        Long userId = questionsPostDto.getUser().getId();
-        User findUser = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("d"));
+    public void createQuestion(QuestionsPostDto questionsPostDto,
+                               Long userId) {
+        //Long userId = questionsPostDto.getUser().getId();
+        User findUser = userRepository.findById(userId).orElseThrow(() ->
+                new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
 
 
         Questions questions = new Questions(questionsPostDto.getTitle(), questionsPostDto.getContents());
@@ -129,13 +131,13 @@ public class QuestionsService {
     public void adoptingQuestion(Long questionId,
                                  Long answerId,
                                  Long userId) {
-        Questions findQuestion = verfiedQuestion(questionId);
+        Questions findQuestion = verifiedQuestion(questionId);
         if (!Objects.equals(findQuestion.getUsers().getId(), userId))
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         if (findQuestion.isChooseYn()) throw new BusinessLogicException(ExceptionCode.ALREADY_ADOPTED);
         findQuestion.setChooseYn(true);
         questionsRepository.save(findQuestion);
-        Answers findAnswer = verfiedAnswer(answerId);
+        Answers findAnswer = verifiedAnswer(answerId);
         User findUser = verifiedUser(userId);
         Adoption adoption = new Adoption();
         adoption.setQuestions(findQuestion);
@@ -152,7 +154,7 @@ public class QuestionsService {
      * @method : question 정보 조회
      * @author : mozzi327
      */
-    private Questions verfiedQuestion(Long questionId) {
+    private Questions verifiedQuestion(Long questionId) {
         return questionsRepository
                 .findById(questionId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
@@ -164,7 +166,7 @@ public class QuestionsService {
      * @method : answer 정보 조회
      * @author : mozzi327
      */
-    private Answers verfiedAnswer(Long answerId) {
+    private Answers verifiedAnswer(Long answerId) {
         return answersRepository
                 .findById(answerId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));

@@ -23,17 +23,11 @@ public class QuestionsController {
 
     // 질문 생성
     @PostMapping("/ask")
-    public void createQuestion(@RequestBody QuestionsPostDto questionsPostDto) throws Exception {
-        // Questions questions = mapper.questionsPostToQuestion(questionsPostDto);
+    public void createQuestion(@RequestBody QuestionsPostDto questionsPostDto,
+                               @CookieValue(name = "userId", required = true) Long userId) {
 
-        questionsService.createQuestion(questionsPostDto);
-
-        // return new ResponseEntity(questions, HttpStatus.CREATED);
-
-       /* return new ResponseEntity<>(mapper.questionsToQuestionResponse(createdQuestion, null),
-                HttpStatus.CREATED);*/
+        questionsService.createQuestion(questionsPostDto, userId);
     }
-
 
     // 질문 조회
     @GetMapping("/{question-id}")
