@@ -21,6 +21,7 @@ public class QuestionCommentService {
      * Comment를 생성하는 메서드
      */
     public void createQuestionComment(QuestionCommentPostDto questionCommentPostDto, Long questionId) throws Exception{
-        Long userId = questionCommentPostDto.getQuestions().
+        Long userId = questionCommentPostDto.getQuestion().getId();
+
     }
 }
