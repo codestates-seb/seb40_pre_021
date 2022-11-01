@@ -12,6 +12,8 @@ import com.pre21.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class AnswersService {
@@ -37,8 +39,18 @@ public class AnswersService {
 
         Answers savedAnswer = answersRepository.save(answers);
 
+        updateAnswerCount(findQuestion);
+
         // 유저, 질문에 답변 정보 매핑 저장
         findUser.addAnswers(savedAnswer);
         findQuestion.addAnswer(savedAnswer);
+
+    }
+
+    public void updateAnswerCount(Questions questions) {
+        int earnedAnswerCount = questions.getAnswerCount() + 1;
+        questions.setAnswerCount(earnedAnswerCount);
+
+        questionsRepository.save(questions);
     }
 }

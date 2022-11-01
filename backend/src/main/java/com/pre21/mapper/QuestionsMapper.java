@@ -14,6 +14,8 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface QuestionsMapper {
 
+    List<QuestionDto.GetResponseDtos> questionsToQuestionResponses(List<Questions> questions);
+
     default QuestionDto.GetResponseDto questionsToQuestionResponse(Questions questions) {
         QuestionDto.GetResponseDto responseDto = new QuestionDto.GetResponseDto();
 
@@ -56,17 +58,17 @@ public interface QuestionsMapper {
 
     }
 
-    default List<QuestionDto.GetResponseDtos> questionsToQuestionResponses(List<Questions> questions) {
+/*    default List<QuestionDto.GetResponseDtos> questionsToQuestionResponses(List<Questions> questions) {
         return questions.stream()
                 .map(questions1 -> QuestionDto.GetResponseDtos
                         .builder()
                         .questionId(questions1.getId())
                         .title(questions1.getTitle())
                         .contents(questions1.getContents())
-                        //.questionsTags(questions1.getQuestionsTags()) //ID만 나옴
+                        .questionsTags(questions1.getQuestionsTags()) //ID만 나옴
                         .chooseYn(questions1.isChooseYn())
                         .createdAt(questions1.getCreatedAt())
                         .build()
                 ).collect(Collectors.toList());
-    }
+    } */
 }

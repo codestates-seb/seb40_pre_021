@@ -65,19 +65,21 @@ public class QuestionsService {
 
     // 질문 전체 조회
     public List<Questions> findQuestions() {
-/* 2022.11.01
+
         List<Questions> findQuestions = questionsRepository.findAll();
+/*
 
 
         findQuestions.stream()
                 .map(question -> {
                     Long id = question.getId();
-                    questionsTagsRepository.findById()
+                    questionsTagsRepository.findById(id);
 
 
 
-                })
+                });
 */
+
 
 
         return (List<Questions>) questionsRepository.findAll();
