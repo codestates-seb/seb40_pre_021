@@ -1,5 +1,7 @@
 package com.pre21.security.filter;
 
+import com.pre21.exception.BusinessLogicException;
+import com.pre21.exception.ExceptionCode;
 import com.pre21.security.jwt.JwtTokenizer;
 import com.pre21.security.utils.CustomAuthorityUtils;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -14,6 +16,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -35,7 +38,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         try {
-            String refreshToken = req.getHeader("RefreshToken");
+            String refreshToken = jwtTokenizer.isExistRefresh(req.getCookies());
             jwtTokenizer.verifiedExistRefresh(refreshToken);
             Map<String, Object> claims = verifyJws(req);
             setAuthenticationToContext(claims);
@@ -58,7 +61,7 @@ public class JwtVerificationFilter extends OncePerRequestFilter {
     }
 
 
-    private Map<String, Object> verifyJws(HttpServletRequest req) throws Exception {
+    private Map<String, Object> verifyJws(HttpServletRequest req) {
         String jws = req.getHeader(AUTHORIZATION).replace(BEARER, "");
         String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
         Map<String, Object> claims = jwtTokenizer.getClaims(jws, base64EncodedSecretKey).getBody();
