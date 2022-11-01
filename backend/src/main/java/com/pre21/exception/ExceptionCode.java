@@ -8,7 +8,7 @@ public enum ExceptionCode {
     QUESTION_NOT_FOUND(404, "Question not found"),
     TOKEN_NOT_FOUND(404, "Token not found"),
     COOKIE_NOT_FOUND(404, "Cookie not found"),
-
+    ANSWER_NOT_FOUND(404, "Answer not found"),
     USER_EXISTS(409, "User already exists"),
 
 

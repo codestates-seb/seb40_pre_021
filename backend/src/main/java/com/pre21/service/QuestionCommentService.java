@@ -35,7 +35,9 @@ public class QuestionCommentService {
         User findUser = userRepository
                 .findById(userId)
                 .orElseThrow(() -> new RuntimeException("findUser.findById 실패"));
-        Questions questions = questionsRepository.findQuestionsById(questionId).orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+        Questions questions = questionsRepository
+                .findQuestionsById(questionId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
         QuestionComments questionComments = new QuestionComments(questionCommentPostDto.getComments());
         questionComments.setQuestions(questions);
         questionComments.setUser(findUser);

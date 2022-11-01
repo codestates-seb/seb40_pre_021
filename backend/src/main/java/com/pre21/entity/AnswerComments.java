@@ -19,10 +19,10 @@ import java.time.LocalDateTime;
  *
  * @author dev32user
  */
-@Table
 @Entity
 @Getter
 @Setter
+@Table(name = "ANSWER_COMMENTS")
 @NoArgsConstructor
 public class AnswerComments extends Auditable {
     @Id
