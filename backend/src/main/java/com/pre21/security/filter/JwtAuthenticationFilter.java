@@ -63,12 +63,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         sendResponse(accessToken, email, res);
 
         String encodedRefresh = URLEncoder.encode(refreshToken, "UTF-8");
-
         Cookie cookie = new Cookie("RefreshToken", encodedRefresh);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
 //        cookie.setSecure(true);
-
 
         res.addCookie(cookie);
 
@@ -106,6 +104,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Cookie cookie = new Cookie("userId", findUser.getId().toString());
         cookie.setPath("/");
         cookie.setHttpOnly(true);
+//        cookie.setSecure(true);
 
         res.addCookie(cookie);
 

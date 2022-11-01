@@ -65,6 +65,10 @@ public class User {
     private List<Adoption> adoptions = new ArrayList<>();
 
 
+    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL)
+    private List<Bookmark> bookmarks = new ArrayList<>();
+
+
 
     public User(String nickname, String email, String password) {
         this.nickname = nickname;
@@ -115,6 +119,17 @@ public class User {
         this.adoptions.add(adoption);
         if (adoption.getUsers() != this) {
             adoption.setUsers(this);
+        }
+    }
+
+    /**
+     * @method
+     * @param bookmark
+     */
+    public void addAdoption(Bookmark bookmark) {
+        this.bookmarks.add(bookmark);
+        if (bookmark.getUsers() != this) {
+            bookmark.setUsers(this);
         }
     }
 }

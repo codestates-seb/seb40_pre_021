@@ -29,6 +29,7 @@ public class RefreshToken {
     @Column
     private Long userId;
 
+
     public RefreshToken(String refreshToken, String tokenEmail, Long userId) {
         this.tokenValue = refreshToken;
         this.tokenEmail = tokenEmail;
