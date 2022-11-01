@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import Editor from '../components/Question/Editor';
 import Button from '../components/common/Button';
+import TagForm from '../components/Ask/TagForm';
 
 const Container = styled.section`
 	background-color: #f8f9f9;
@@ -11,7 +12,7 @@ const Formarea = styled.form`
 	max-width: 850px;
 `;
 const AskQuestion = styled.h1`
-	font-weight: 700;
+	font-weight: 600;
 	font-size: 1.75rem;
 	margin-bottom: 4rem;
 `;
@@ -19,25 +20,31 @@ const WritingTip = styled.div`
 	background-color: #edf4fa;
 	border: 1px solid #aecdea;
 	border-radius: 2px;
-	line-height: 115%;
+	line-height: 125%;
 	padding: 1.75rem;
 	margin-bottom: 1.5rem;
 	h2 {
+		font-weight: 400;
 		font-size: 1.3rem;
 		margin-bottom: 1rem;
 	}
 	.writingtip {
+		font-size: 0.9rem;
 		margin-bottom: 1rem;
 	}
 	.steps {
-		font-size: 0.9rem;
+		font-size: 0.85rem;
 		margin-bottom: 0.9rem;
-		font-weight: 700;
+		font-weight: 600;
 	}
 	ul li {
-		font-size: 0.85rem;
+		font-size: 0.8rem;
 		list-style-type: disc;
-		margin-left: 1rem;
+		margin-left: 2rem;
+	}
+	a {
+		text-decoration: none;
+		color: rgb(41, 95, 166);
 	}
 `;
 const Group = styled.div`
@@ -47,23 +54,23 @@ const Group = styled.div`
 	margin-bottom: 1.5rem;
 `;
 const SectionTitle = styled.h3`
-	font-size: 1rem;
-	font-weight: 700;
+	font-size: 0.95rem;
+	font-weight: 600;
 	line-height: 115%;
 	margin-bottom: 0.3rem;
 `;
 const Caption = styled.div`
-	font-size: 0.85rem;
-	margin-bottom: 0.3rem;
+	font-size: 0.75rem;
+	margin-bottom: 0.6rem;
 `;
 const Tip = styled.div``;
 const Form = styled.input`
 	font-size: 0.85rem;
-	font-weight: 700;
+	font-weight: 500;
 	border: 1px solid rgb(179, 183, 188);
 	padding-left: 0.5rem;
 	height: 30px;
-	width: 99%;
+	width: 100%;
 	border-radius: 3px;
 	background-color: white;
 	display: flex;
@@ -78,6 +85,9 @@ const Form = styled.input`
 	&:focus {
 		outline: none;
 	}
+	::placeholder {
+		color: #bbbbbb;
+	}
 `;
 // const DiscardDraft = styled.button``;
 
@@ -91,8 +101,11 @@ const Ask = () => {
 					<p className="writingtip">
 						You’re ready to ask a programming-related question and this form
 						will help guide you through the process. <br />
-						Looking to ask a non-programming question? See the topics here to
-						find a relevant site.
+						Looking to ask a non-programming question? See{' '}
+						<a href="https://stackexchange.com/sites#technology">
+							the topics here
+						</a>{' '}
+						to find a relevant site.
 					</p>
 					<p className="steps">Steps</p>
 					<ul>
@@ -151,7 +164,7 @@ const Ask = () => {
 						Add up to 5 tags to describe what your question is about. Start
 						typing to see suggestions.
 					</Caption>
-					<Form text="tags input (beta)"></Form>
+					<TagForm name="tagform" separators={[' ', 'Enter']}></TagForm>
 				</Group>
 				<Button text="Review your question" />
 			</Formarea>
