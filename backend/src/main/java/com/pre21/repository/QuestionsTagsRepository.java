@@ -8,5 +8,6 @@ import java.util.Optional;
 
 public interface QuestionsTagsRepository extends JpaRepository<QuestionsTags, Long> {
 
+    void deleteAllByQuestions(Questions questions);
     //Optional<QuestionsTags> findTagsByQuestion(Questions questions);
 }
