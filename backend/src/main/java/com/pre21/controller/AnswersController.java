@@ -1,12 +1,15 @@
 package com.pre21.controller;
 
+import com.pre21.dto.AnswerPatchDto;
 import com.pre21.dto.AnswersDto;
 import com.pre21.dto.QuestionDto;
 import com.pre21.entity.Answers;
-import com.pre21.entity.Questions;
+import com.pre21.mapper.AnswersMapper;
 import com.pre21.service.AnswersService;
 import com.pre21.service.LikeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class AnswersController {
     private final AnswersService answersService;
     private final LikeService likeService;
+    private final AnswersMapper mapper;
 
 
     @PostMapping("/{question-id}/answer")
@@ -30,4 +34,14 @@ public class AnswersController {
 
         likeService.saveAnswerLike(answerId, request);
     }
+
+    @PatchMapping("/answer/{answer-id}/edit")
+    public ResponseEntity patchAnswer(
+            @CookieValue(name = "userId") Long userId,
+            @PathVariable("answer-id") Long answerId,
+            @RequestBody AnswerPatchDto answerPatchDto){
+        Answers answers = answersService.patchAnswer(userId, answerId, answerPatchDto);
+        return new ResponseEntity(mapper.answerToAnswerResponse(answers), HttpStatus.OK);
+    }
+
 }

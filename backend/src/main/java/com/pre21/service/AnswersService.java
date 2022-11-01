@@ -1,5 +1,6 @@
 package com.pre21.service;
 
+import com.pre21.dto.AnswerPatchDto;
 import com.pre21.dto.AnswersDto;
 import com.pre21.entity.Answers;
 import com.pre21.entity.Questions;
@@ -13,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -52,5 +55,43 @@ public class AnswersService {
         questions.setAnswerCount(earnedAnswerCount);
 
         questionsRepository.save(questions);
+    }
+
+    /**
+     * answerId를 받아서 저장소에서 Answers 객체를 찾아 반환하는 private 메서드입니다.
+     *
+     * @param answerId Long 타입 answerId를 받습니다.
+     * @return Answers
+     * @author dev32user
+     */
+    private Answers verfiedAnswer(Long answerId) {
+        return answersRepository
+                .findById(answerId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
+    }
+
+    /**
+     * 답변 patch 요청에 대한 서비스 메서드입니다.
+     *
+     * @param userId         Long 타입 사용자 Id 값입니다.
+     * @param answerId       Long 타입 answer Id 값입니다.
+     * @param answerPatchDto AnswerPatchDto 요청입니다.
+     * @author dev32user
+     */
+    public Answers patchAnswer(Long userId, Long answerId, AnswerPatchDto answerPatchDto) {
+        if (!Objects.equals(userId, verfiedAnswer(answerId).getUsers().getId())){
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
+        }
+
+        Optional<Answers> optionalAnswer = answersRepository.findById(answerId);
+        User findUser = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+
+        Answers updatedAnswer =
+                optionalAnswer
+                        .orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
+
+        updatedAnswer.setTitle(answerPatchDto.getTitle());
     }
 }
