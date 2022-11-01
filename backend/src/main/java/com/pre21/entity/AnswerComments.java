@@ -35,6 +35,12 @@ public class AnswerComments extends Auditable {
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    /**
+     * 댓글의 내용을 받아서 AnswerComments 엔티티에 저장합니다.
+     *
+     * @param comments 댓글의 내용을 String 타입으로 받습니다.
+     * @author dev32user
+     */
     public AnswerComments(String comments) {
         this.comments = comments;
     }

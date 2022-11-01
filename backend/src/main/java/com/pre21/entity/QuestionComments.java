@@ -40,6 +40,12 @@ public class QuestionComments extends Auditable {
     @JoinColumn(name = "USER_ID")
     private User user;
 
+    /**
+     * 댓글의 내용을 받아서 QuestionComments 엔티티에 저장합니다.
+     *
+     * @param comments 댓글의 내용을 String 타입으로 받습니다.
+     * @author dev32user
+     */
     public QuestionComments(String comments) {
         this.comments = comments;
     }
