@@ -51,9 +51,11 @@ public class QuestionsController {
     public ResponseEntity getQuestions() {
 
         List<Questions> questions = questionsService.findQuestions();
-        long questionCount = questionsService.findQuestionCount();
+        long questionsCount = questionsService.findQuestionCount();
 
-        return new ResponseEntity<>(mapper.questionsToQuestionResponses(questions),
+
+        return new ResponseEntity<>(
+                new MultiResponseDto.MultiResponseDtos<>(mapper.questionsToQuestionResponses(questions), questionsCount),
                 HttpStatus.OK);
     }
 

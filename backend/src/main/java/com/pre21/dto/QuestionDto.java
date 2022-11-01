@@ -45,15 +45,14 @@ public class QuestionDto {
     @NoArgsConstructor
     @Builder
     public static class GetResponseDtos {
-        private Long questionId;
+        private Long id;
         private String title;
         private String contents;
-        //private List<String> strTags;
-        //private List<QuestionsTags> questionsTags;
+        private List<QuestionsTagsResponseDto> questionsTags;
         private int vote;
         private boolean chooseYn;
         private int views;
         private LocalDateTime createdAt;
-        private int AnswersCount;   // 질문에 달린 답변 개수
+        private int answerCount;
     }
 }
