@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.pre21.security.utils.JwtConstants.REFRESH_TOKEN;
-
 @RestController
 @RequestMapping("/questions")
 @RequiredArgsConstructor
@@ -59,7 +57,7 @@ public class QuestionsController {
             @CookieValue(name = "userId") Long userId,
             @PathVariable("question-id") Long questionId,
             @RequestBody QuestionPatchDto questionPatchDto) {
-        Questions questions = questionsService.patchQuestion(userId,questionId, questionPatchDto);
+        Questions questions = questionsService.patchQuestion(userId, questionId, questionPatchDto);
         return new ResponseEntity(mapper.questionsToQuestionResponse(questions), HttpStatus.OK);
     }
 
@@ -97,16 +95,15 @@ public class QuestionsController {
 
 
     /**
-     *
      * @param questionId : 질문식별자
-     * @param answerId : 답변식별자
-     * @param userId : 로그인 유저식별자
+     * @param answerId   : 답변식별자
+     * @param userId     : 로그인 유저식별자
      * @author mozzi327
      */
     @GetMapping("/question/{question-id}/adopt/{answer-id}")
     public void adoptQuestion(@PathVariable("question-id") Long questionId,
-                                 @PathVariable("answer-id") Long answerId,
-                                 @CookieValue(name = "userId", required = true) Long userId) {
+                              @PathVariable("answer-id") Long answerId,
+                              @CookieValue(name = "userId", required = true) Long userId) {
         questionsService.adoptingQuestion(questionId, answerId, userId);
 
     }

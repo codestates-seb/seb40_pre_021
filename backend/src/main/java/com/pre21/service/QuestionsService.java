@@ -191,7 +191,7 @@ public class QuestionsService {
      * @author dev32user
      */
     public Questions patchQuestion(Long userId, Long questionId, QuestionPatchDto questionPatchDto) {
-        if (userId != verfiedQuestion(questionId).getUsers().getId()) {
+        if (!Objects.equals(userId, verfiedQuestion(questionId).getUsers().getId())) {
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         }
 
