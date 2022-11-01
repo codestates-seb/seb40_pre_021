@@ -1,11 +1,14 @@
 package com.pre21.service;
 
+import com.pre21.dto.QuestionPatchDto;
 import com.pre21.dto.QuestionsPostDto;
 import com.pre21.entity.*;
 import com.pre21.exception.BusinessLogicException;
 import com.pre21.exception.ExceptionCode;
 import com.pre21.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -39,14 +42,14 @@ public class QuestionsService {
                         QuestionsTags questionsTags = new QuestionsTags(questions, tags1);
                         questionsTagsRepository.save(questionsTags);
                         questions.addQuestionsTags(questionsTags);
-                        //questionsRepository.save(questions);
+                        // questionsRepository.save(questions);
                         findUser.addQuestion(questions);
                         questions.addUser(findUser);
 
                     } else {
                         Tags tags1 = tagsRepository.findByTitle(e).orElseThrow(IllegalArgumentException::new);
                         updateTagCount(tags1);
-                        QuestionsTags questionsTags = new QuestionsTags(questions,tags1);
+                        QuestionsTags questionsTags = new QuestionsTags(questions, tags1);
                         questionsTagsRepository.save(questionsTags);
                         questions.addQuestionsTags(questionsTags);
                         findUser.addQuestion(questions);
@@ -79,7 +82,6 @@ public class QuestionsService {
 
                 });
 */
-
 
 
         return (List<Questions>) questionsRepository.findAll();
@@ -117,5 +119,25 @@ public class QuestionsService {
         tags.setLatest(LocalDateTime.now());
 
         tagsRepository.save(tags);
+    }
+
+    /**
+     * @param userId           String 타입 사용자 Id 값입니다.
+     * @param questionId       Long 타입 Question Id 값입니다.
+     * @param questionPatchDto QuestionPatchDto 요청입니다.
+     * @author dev32user
+     */
+    public Questions patchQuestion(String userId, Long questionId, QuestionPatchDto questionPatchDto) {
+        Optional<Questions> optionalQuestion = questionsRepository.findById(questionId);
+
+        Questions updatedQuestion =
+                optionalQuestion
+                        .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+
+
+        updatedQuestion.setTitle(questionPatchDto.getTitle());
+        updatedQuestion.setContents(questionPatchDto.getContents());
+        updatedQuestion.setQuestionsTags(questionPatchDto.getTags());
+        return questionsRepository.save(updatedQuestion);
     }
 }

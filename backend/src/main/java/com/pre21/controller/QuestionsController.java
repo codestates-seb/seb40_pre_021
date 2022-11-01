@@ -1,11 +1,9 @@
 package com.pre21.controller;
 
-import com.pre21.dto.QuestionDto;
+import com.pre21.dto.QuestionPatchDto;
 import com.pre21.dto.QuestionsPostDto;
-import com.pre21.dto.QuestionsResponseDto;
 import com.pre21.entity.Questions;
 import com.pre21.mapper.QuestionsMapper;
-import com.pre21.repository.AnswersRepository;
 import com.pre21.service.QuestionsService;
 import com.pre21.util.dto.MultiResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
+
+import static com.pre21.security.utils.JwtConstants.REFRESH_TOKEN;
 
 @RestController
 @RequestMapping("/questions")
@@ -26,11 +25,11 @@ public class QuestionsController {
     // 질문 생성
     @PostMapping("/ask")
     public void createQuestion(@RequestBody QuestionsPostDto questionsPostDto) throws Exception {
-        //Questions questions = mapper.questionsPostToQuestion(questionsPostDto);
+        // Questions questions = mapper.questionsPostToQuestion(questionsPostDto);
 
         questionsService.createQuestion(questionsPostDto);
 
-        //return new ResponseEntity(questions, HttpStatus.CREATED);
+        // return new ResponseEntity(questions, HttpStatus.CREATED);
 
        /* return new ResponseEntity<>(mapper.questionsToQuestionResponse(createdQuestion, null),
                 HttpStatus.CREATED);*/
@@ -45,6 +44,26 @@ public class QuestionsController {
         return new ResponseEntity<>(mapper.questionsToQuestionResponse(questions),
                 HttpStatus.OK);
     }
+
+    /**
+     * @param userId           쿠키에서 값을 받아옵니다.
+     * @param questionPatchDto 질문 수정 요청입니다.
+     * @param questionId       수정한 질문의 Id입니다.
+     * @author dev32user
+     */
+    @PatchMapping("/{question-id}/edit")
+    public ResponseEntity patchQuestion(
+            @CookieValue(name = "userId") String userId,
+            @PathVariable("question-id") Long questionId,
+            @RequestBody QuestionPatchDto questionPatchDto) {
+        if (Long.parseLong(userId) != questionsService.findQuestion(questionId).getUsers().getId()) {
+            return new ResponseEntity(HttpStatus.UNAUTHORIZED);
+        }
+
+        Questions questions = questionsService.patchQuestion(userId,questionId, questionPatchDto);
+        return new ResponseEntity(mapper.questionsToQuestionResponse(questions), HttpStatus.OK);
+    }
+
 
     // 질문 전체 조회
     @GetMapping
