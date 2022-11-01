@@ -16,7 +16,7 @@ import javax.persistence.*;
 public class RefreshToken {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "REFRESH_TOKEN_ID", nullable = false)
     private Long id;
 
@@ -26,8 +26,12 @@ public class RefreshToken {
     @Column(name = "TOKEN_EMAIL", nullable = false)
     private String tokenEmail;
 
-    public RefreshToken(String refreshToken, String tokenEmail) {
+    @Column
+    private Long userId;
+
+    public RefreshToken(String refreshToken, String tokenEmail, Long userId) {
         this.tokenValue = refreshToken;
         this.tokenEmail = tokenEmail;
+        this.userId = userId;
     }
 }

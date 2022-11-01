@@ -51,18 +51,15 @@ public class UserService {
 
 
     // 토큰 생성 메서드를 호출하여 리스폰즈를 생성 후 리턴
-    public AuthDto.Response reIssueAccessToken(String refreshToken) {
+    public AuthDto.Response reIssueAccessToken(String refreshToken, Long userId) {
         RefreshToken findRefreshToken = checkExistToken(refreshToken);
 
-        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());
-        Map<String, Object> claims = jwtTokenizer.getClaims(refreshToken, base64EncodedSecretKey).getBody();
-
-        String email = (String) claims.get("sub");
-        List<String> roles = userRepository.findByEmail(email).get().getRoles();
-
         User findUser = userRepository
-                .findByEmail(email)
+                .findById(userId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+
+        String email = findUser.getEmail();
+        List<String> roles = findUser.getRoles();
 
         AuthDto.Token reIssueToken = createReIssueToken(email, roles, findRefreshToken.getTokenValue());
 
@@ -72,8 +69,8 @@ public class UserService {
                 .email(findUser.getEmail())
                 .build();
 
-        refreshTokenRepository.deleteRefreshTokenByTokenEmail(email);
-        refreshTokenRepository.save(new RefreshToken(reIssueToken.getRefreshToken(), email));
+        refreshTokenRepository.deleteRefreshTokenByUserId(userId);
+        refreshTokenRepository.save(new RefreshToken(reIssueToken.getRefreshToken(), email, userId));
 
         return response;
     }

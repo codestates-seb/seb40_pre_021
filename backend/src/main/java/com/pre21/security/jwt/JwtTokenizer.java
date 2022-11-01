@@ -112,10 +112,10 @@ public class JwtTokenizer {
 
 
     // 리프레시 토큰 저장
-    public void savedRefreshToken(String refreshToken, String email) {
+    public void savedRefreshToken(String refreshToken, String email, Long userId) {
         Optional<RefreshToken> findRefreshToken = refreshTokenRepository.findRefreshTokenByTokenEmail(email);
         findRefreshToken.ifPresent(refreshTokenRepository::delete);
-        refreshTokenRepository.save(new RefreshToken(refreshToken, email));
+        refreshTokenRepository.save(new RefreshToken(refreshToken, email, userId));
     }
 
     public User findUserByEmail(String email) {
