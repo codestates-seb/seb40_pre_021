@@ -9,6 +9,4 @@ import java.util.Optional;
 
 public interface AnswerLikeRepository extends JpaRepository<AnswerLikes, Long> {
     Optional<AnswerLikes> findAnswerLikesByUsers(User user);
-
-    
 }

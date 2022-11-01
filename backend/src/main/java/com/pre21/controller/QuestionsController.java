@@ -9,6 +9,7 @@ import com.pre21.repository.AnswersRepository;
 import com.pre21.service.QuestionsService;
 import com.pre21.util.dto.MultiResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -59,6 +60,17 @@ public class QuestionsController {
                 HttpStatus.OK);
     }
 
+    // Pagination + 질문 전체 조회
+    @GetMapping("/questions")
+    public ResponseEntity getPagingQuestions(@RequestParam int page,
+                                             @RequestParam int size) {
+        Page<Questions> questionsPage = questionsService.findPageQuestions(page - 1, size);
+        List<Questions> questions = questionsPage.getContent();
+
+        return new ResponseEntity<>(
+                new MultiResponseDto<>(mapper.questionsToQuestionResponses(questions), questionsPage),
+                HttpStatus.OK);
+    }
 
     // 질문 삭제
     @DeleteMapping("/delete/{question-id}")
