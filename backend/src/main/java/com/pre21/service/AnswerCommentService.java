@@ -41,6 +41,7 @@ public class AnswerCommentService {
         AnswerComments answerComments = new AnswerComments(answerCommentPostDto.getComments());
         answerComments.setAnswers(answers);
         answerComments.setUser(findUser);
+        answerComments.setNickname(findUser.getNickname()); // 2022.11.02 댓글 작성 유저 닉네임 추가
         answerCommentRepository.save(answerComments);
     }
 }

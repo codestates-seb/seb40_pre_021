@@ -6,6 +6,7 @@ import com.pre21.entity.Questions;
 import com.pre21.entity.User;
 import lombok.*;
 
+import javax.persistence.Column;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -27,6 +28,12 @@ public class AnswersDto {
     public static class ResponseDto {
         private Long answerId;
         private String contents;
+        private int vote;
+        private boolean chooseYn;
+        private LocalDateTime createdAt;
+        private LocalDateTime modifiedAt;
+        private String nickname;
+        private List<AnswerCommentResponseDto> comments; // 답변에 달린 댓글 정보
     }
     @Getter
     @Setter

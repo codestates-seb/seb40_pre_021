@@ -1,7 +1,5 @@
 package com.pre21.security.filter;
 
-import com.pre21.exception.BusinessLogicException;
-import com.pre21.exception.ExceptionCode;
 import com.pre21.security.jwt.JwtTokenizer;
 import com.pre21.security.utils.CustomAuthorityUtils;
 import io.jsonwebtoken.ExpiredJwtException;

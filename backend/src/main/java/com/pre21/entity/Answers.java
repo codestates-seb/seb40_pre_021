@@ -1,5 +1,6 @@
 package com.pre21.entity;
 
+import com.pre21.dto.AnswerCommentResponseDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,6 +34,9 @@ public class Answers {
     private String imageUrl;
 
     @Column
+    private boolean chooseYn = false;
+
+    @Column
     private LocalDateTime createdAt = LocalDateTime.now();
 
     @Column(name = "MODIFIED_AT")
@@ -52,6 +56,9 @@ public class Answers {
     // 답변 - 추천수 매핑
     @OneToMany(mappedBy = "answers", cascade = CascadeType.ALL)
     private List<AnswerLikes> answersLike = new ArrayList<>();
+
+    @OneToMany(mappedBy = "answers", cascade = CascadeType.ALL)
+    private List<AnswerComments> comments = new ArrayList<>();
 
 
     // 답변 생성 시 필요 생성자

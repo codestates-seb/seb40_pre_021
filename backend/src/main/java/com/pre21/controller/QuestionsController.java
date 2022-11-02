@@ -21,16 +21,29 @@ public class QuestionsController {
     private final QuestionsService questionsService;
     private final QuestionsMapper mapper;
 
-    // 질문 생성
+    /**
+     * 질문 생성 메서드
+     *
+     * @param questionsPostDto  : 질문 생성 Dto
+     * @param userId            : 쿠키에 담긴 유저 Id
+     */
     @PostMapping("/ask")
     public void createQuestion(@RequestBody QuestionsPostDto questionsPostDto,
                                @CookieValue(name = "userId", required = true) Long userId) {
+//        questionsService.createQuestion(questionsPostDto);
 
-        questionsService.createQuestion(questionsPostDto, userId);
+        // return new ResponseEntity(questions, HttpStatus.CREATED);
+
+       /* return new ResponseEntity<>(mapper.questionsToQuestionResponse(createdQuestion, null),
+                HttpStatus.CREATED);*/
     }
 
 
-    // 질문 조회
+    /**
+     * 질문 상세 조회 메서드
+     *
+     * @param questionId : 질문 식별자
+     */
     @GetMapping("/{question-id}")
     public ResponseEntity getQuestion(@PathVariable("question-id") Long questionId) {
         Questions questions = questionsService.findQuestion(questionId);

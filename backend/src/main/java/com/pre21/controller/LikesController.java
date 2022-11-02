@@ -22,6 +22,4 @@ public class LikesController {
         likeService.saveQuestionLike(questionId, request);
     }
 
-
-
 }
