@@ -8,7 +8,7 @@ const instance = axios.create(axiosConfig);
 
 export const getQuestion = async () => {
 	try {
-		const result = await instance.get(`/thread`);
+		const result = await instance.get(`/data`);
 		return result.data;
 	} catch (err) {
 		console.log(err);
