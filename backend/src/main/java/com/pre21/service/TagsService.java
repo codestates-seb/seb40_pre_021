@@ -3,6 +3,9 @@ package com.pre21.service;
 import com.pre21.entity.Questions;
 import com.pre21.entity.Tags;
 import com.pre21.repository.TagsRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -39,4 +42,17 @@ public class TagsService {
 
         return findTags;
     }
+/*
+
+    public Page<Tags> findPageTags(int page, int size) {
+        return tagsRepository
+                .findAll(PageRequest
+                        .of(page, size, Sort.by("id").descending()));
+    }
+
+    public Page<Tags> findMyTags(Long userId, int page, int size) {
+        return tagsRepository.findAllByUsersId(
+                userId,
+                PageRequest.of(page, size, Sort.by("id").descending()));
+    }*/
 }
