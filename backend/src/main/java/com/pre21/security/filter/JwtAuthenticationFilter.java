@@ -54,20 +54,19 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                                             Authentication authResult) {
         User user = (User) authResult.getPrincipal();
         String email = user.getEmail();
+        User findUser = jwtTokenizer.findUserByEmail(email);
 
         String accessToken = delegateAccessToken(user);
-        String refreshToken = delegateRefreshToken(user);
+        String refreshToken = delegateRefreshToken(findUser);
 
-        jwtTokenizer.savedRefreshToken(refreshToken, email);
+        jwtTokenizer.savedRefreshToken(refreshToken, email, findUser.getId());
         sendResponse(accessToken, email, res);
 
         String encodedRefresh = URLEncoder.encode(refreshToken, "UTF-8");
-
         Cookie cookie = new Cookie("RefreshToken", encodedRefresh);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
 //        cookie.setSecure(true);
-
 
         res.addCookie(cookie);
 
@@ -102,6 +101,13 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                               String email, HttpServletResponse res) throws IOException {
         Gson gson = new Gson();
         User findUser = jwtTokenizer.findUserByEmail(email);
+        Cookie cookie = new Cookie("userId", findUser.getId().toString());
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+//        cookie.setSecure(true);
+
+        res.addCookie(cookie);
+
         AuthDto.Response response = AuthDto.Response.builder()
                 .accessToken(accessToken)
                 .nickname(findUser.getNickname())

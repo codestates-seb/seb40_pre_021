@@ -9,6 +9,8 @@ public enum ExceptionCode {
     TOKEN_NOT_FOUND(404, "Token not found"),
     COOKIE_NOT_FOUND(404, "Cookie not found"),
     ANSWER_NOT_FOUND(404, "Answer not found"),
+    UNAUTHORIZED_USER(404, "Unauthorized user"),
+    ALREADY_ADOPTED(404, "Already adopted"),
 
     USER_EXISTS(409, "User already exists"),
 

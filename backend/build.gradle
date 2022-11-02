@@ -47,8 +47,8 @@ dependencies {
 }
 
 tasks.named('test') {
-    outputs.dir snippetsDir
     useJUnitPlatform()
+    outputs.dir snippetsDir
 }
 
 tasks.named('asciidoctor') {

@@ -12,13 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-
-import static com.pre21.security.utils.JwtConstants.AUTHORIZATION_TOKEN;
+import static com.pre21.security.utils.ControllerConstants.USER_ID;
 import static com.pre21.security.utils.JwtConstants.REFRESH_TOKEN;
 
 @RestController
@@ -52,9 +48,10 @@ public class UserController {
 
     @GetMapping("/refresh")
     public ResponseEntity reIssueAccessToken (
-            @CookieValue(name = REFRESH_TOKEN, required = true) String refreshToken) {
+            @CookieValue(name = REFRESH_TOKEN, required = true) String refreshToken,
+            @CookieValue(name = USER_ID, required = true) Long userId) {
 
-        AuthDto.Response resultToken = userService.reIssueAccessToken(refreshToken);
+        AuthDto.Response resultToken = userService.reIssueAccessToken(refreshToken, userId);
 
         return ResponseEntity.ok(resultToken);
     }

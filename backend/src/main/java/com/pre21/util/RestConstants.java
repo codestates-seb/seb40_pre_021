@@ -15,4 +15,6 @@ public class RestConstants {
 
 
     public static final String SECURED_API_URL = "/api/v1/**";
+
+    public static final String BOOKMARK_BASIC_PAGE = "";
 }

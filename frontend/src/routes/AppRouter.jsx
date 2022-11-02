@@ -4,6 +4,7 @@ import Loading from '../components/common/Loading';
 
 const Home = lazy(() => import('../pages/Home'));
 const Ask = lazy(() => import('../pages/Ask'));
+const Question = lazy(() => import('../pages/Question'));
 const Layout = lazy(() => import('../pages/Layout'));
 const Login = lazy(() => import('../pages/Login'));
 const Mypage = lazy(() => import('../pages/Mypage'));
@@ -28,6 +29,8 @@ const AppRouter = () => {
 							<Route path="saves" element={<MypageSavesPage />} />
 						</Route>
 						<Route path="/ask" element={<Ask />} />
+						<Route path="/question" element={<Question />} />
+						{/* ask와 question은 테스트 후 삭제해야 합니다 (메인 화면에서 직접 연결되는 것이 아님)*/}
 					</Route>
 					<Route path="/login" element={<Login />} />
 					<Route path="/signup" element={<Signup />} />
