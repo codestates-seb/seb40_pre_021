@@ -81,40 +81,68 @@ public class AnswersService {
      * @author dev32user
      */
     public Answers patchAnswer(Long userId, Long answerId, AnswerPatchDto answerPatchDto) {
-        if (!Objects.equals(userId, verfiedAnswer(answerId).getUsers().getId())) {
-            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
-        }
+        userIdAnswerIdCheck(userId, answerId);
 
-        Optional<Answers> optionalAnswer = answersRepository.findById(answerId);
+
+        /*
         User findUser = userRepository
                 .findById(userId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+        */
 
-        Answers updatedAnswer =
-                optionalAnswer
-                        .orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
+        Answers updatedAnswer = findVerifiedAnswer(answerId);
 
         updatedAnswer.setContents(answerPatchDto.getConents());
         return answersRepository.save(updatedAnswer);
     }
 
     /**
-     * 페이지네이션을 위해 Answer 객체들을 정해진 페이지, 크기에 따라 전부 찾아서 Page 형태로 반환합니다.
+     * 답변 delete 요청에 대한 서비스 메서드입니다.
      *
-     * @param page  int 타입의 페이지 값입니다.
-     * @param size  int 타입의 크기 값입니다.
-     * @return Page
+     * @param userId   Long 타입 사용자 Id 값입니다.
+     * @param answerId Long 타입 삭제 할 답변의 Id 값입니다.
      * @author dev32user
      */
-    public Page<Answers> findPageAnswers(int page, int size) {
-        return answersRepository
-                .findAll(PageRequest
-                        .of(page, size, Sort.by("id").descending()));
+    public void deleteAnswer(Long userId, Long answerId) {
+        userIdAnswerIdCheck(userId, answerId);
+        Answers findAnswer = findVerifiedAnswer(answerId);
+
+        answersRepository.delete(findAnswer);
     }
+
+    /**
+     * userId와 answer 객체에 저장된 사용자의 Id 값이 일치하는지 확인하는 메서드입니다.
+     * 일치하지 않으면 ExceptionCode.UNAUTHORIZED_USER 코드를 반환합니다.
+     *
+     * @param userId   검사에 사용될 사용자의 Id 값입니다.
+     * @param answerId 검사에 사용될 답변의 Id 값입니다. 해당 값을 바탕으로 답변을 작성한 사용자의 ID를 조회합니다.
+     * @author dev32user
+     */
+    private void userIdAnswerIdCheck(Long userId, Long answerId) {
+        if (!Objects.equals(userId, verfiedAnswer(answerId).getUsers().getId())) {
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
+        }
+    }
+
+    /**
+     * Id를 입력 받아서 answersRepository에서 Answers 객체를 찾아 반환하는 메서드입니다.
+     * 객체를 찾지 못하면 ExceptionCode.ANSWER_NOT_FOUND 코드를 반환합니다.
+     *
+     * @param answerId Long 타입 찾을 답변의 Id 값입니다.
+     * @return Answers
+     * @author dev32user
+     */
+    public Answers findVerifiedAnswer(Long answerId) {
+        Optional<Answers> optionalAnswer = answersRepository.findById(answerId);
+
+        return optionalAnswer.orElseThrow(
+                () -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
+    }
+
 
     public Page<Answers> findMyAnswers(Long userId, int page, int size) {
         return answersRepository.findAllByUsersId(
-                        userId,
+                userId,
                 PageRequest.of(page, size, Sort.by("id").descending()));
     }
 }
