@@ -3,7 +3,7 @@ import ListBox from '../ListBox';
 import Title from '../Title';
 import TagsList from './TagsList';
 
-const Tags = ({ tag }) => {
+const Tags = ({ tag, limit }) => {
 	return (
 		<Container>
 			<TitleBox>
@@ -12,7 +12,7 @@ const Tags = ({ tag }) => {
 			<ListBox
 				text="You have not participated in any tags"
 				lists={tag}
-				component={<TagsList lists={tag} />}
+				component={<TagsList lists={tag} limit={limit} />}
 			/>
 		</Container>
 	);
@@ -25,6 +25,7 @@ const Container = styled.div`
 		height: 100%;
 		display: flex;
 		flex-direction: column;
+		width: 100%;
 	}
 `;
 

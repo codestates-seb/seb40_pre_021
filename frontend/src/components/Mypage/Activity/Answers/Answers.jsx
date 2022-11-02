@@ -22,7 +22,7 @@ let sortData = [
 	},
 ];
 
-const Answers = ({ answer }) => {
+const Answers = ({ answer, limit }) => {
 	return (
 		<Container>
 			<TitleBox>
@@ -32,7 +32,7 @@ const Answers = ({ answer }) => {
 			<ListBox
 				text="You have not answered any questions"
 				lists={answer}
-				component={<AnswerOrQuestionList lists={answer} />}
+				component={<AnswerOrQuestionList lists={answer} limit={limit} />}
 			/>
 		</Container>
 	);

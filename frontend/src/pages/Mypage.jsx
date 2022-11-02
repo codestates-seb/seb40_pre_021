@@ -18,7 +18,7 @@ const Mypage = () => {
 	return (
 		<Container>
 			<Box>
-				<Avatar nickname={nickname} />
+				<Avatar nickname={nickname} shadow={true} />
 				<UserInfoBox>
 					<UserNickname nickname={nickname} />
 					<UserInfo date={date} />
@@ -37,7 +37,9 @@ const Mypage = () => {
 			<Box>
 				<Navigation />
 			</Box>
-			<Outlet />
+			<Box>
+				<Outlet />
+			</Box>
 		</Container>
 	);
 };
@@ -48,7 +50,7 @@ const Container = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	padding: 24px;
-	max-width: 1100px;
+	max-width: 100%;
 `;
 
 const Box = styled.div`
