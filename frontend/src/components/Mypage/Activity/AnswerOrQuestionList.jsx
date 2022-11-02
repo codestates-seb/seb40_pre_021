@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const AnswerOrQuestionList = ({ lists }) => {
+const AnswerOrQuestionList = ({ lists, limit }) => {
 	return (
 		<Container>
 			{lists.map((list, i) => {
@@ -8,12 +8,12 @@ const AnswerOrQuestionList = ({ lists }) => {
 				const days = createdAt.split(' ');
 				let date = `${days[1]} ${days[2]}, ${days[3]}`;
 
-				if (i >= 5) {
+				if (limit && i >= limit) {
 					return;
 				}
 
 				return (
-					<Box key={questionId}>
+					<Box key={questionId} limit={limit}>
 						<ContentBox>
 							<LeftContent>
 								<VoteDisplay choosed={choosed}>{vote}</VoteDisplay>
@@ -39,8 +39,11 @@ const Container = styled.div`
 const Box = styled.div`
 	border-bottom: 1px solid #d7d9dc;
 	padding: 12px;
-	&:nth-child(5) {
+	&:nth-child(props.limit) {
 		border-bottom: none;
+	}
+	&:last-child {
+		border-bottom: ${(props) => (props.limit ? 'none' : '')};
 	}
 `;
 
