@@ -10,8 +10,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -68,7 +66,7 @@ public class QuestionsService {
 
     // 질문 조회
     public Questions findQuestion(Long questionId) {
-        Questions findQuestion = findVerifiedQuestion(questionId);
+        Questions findQuestion = verifiedExistQuestion(questionId);
 
         return findQuestion;
     }
@@ -85,7 +83,7 @@ public class QuestionsService {
                 Sort.by("id").descending()));
     }
 
-    // 질문 전체 개수
+    // 질문 전체 개수 출력
     public long findQuestionCount() {
 
         return questionsRepository.count();
@@ -93,20 +91,10 @@ public class QuestionsService {
 
     // 질문 삭제
     public void deleteQuestion(long questionId) throws Exception {
-        Questions findQuestion = findVerifiedQuestion(questionId);
+        Questions findQuestion = verifiedExistQuestion(questionId);
 
         questionsRepository.delete(findQuestion);
 
-    }
-
-    public Questions findVerifiedQuestion(long questionId) {
-        Optional<Questions> optionalQuestion =
-                questionsRepository.findById(questionId);
-
-        Questions findQuestion =
-                optionalQuestion.orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
-
-        return findQuestion;
     }
 
     // 태그 수 업데이트
@@ -130,14 +118,16 @@ public class QuestionsService {
     public void adoptingQuestion(Long questionId,
                                  Long answerId,
                                  Long userId) {
-        Questions findQuestion = verfiedQuestion(questionId);
+        Questions findQuestion = verifiedExistQuestion(questionId);
         if (!Objects.equals(findQuestion.getUsers().getId(), userId))
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         if (findQuestion.isChooseYn()) throw new BusinessLogicException(ExceptionCode.ALREADY_ADOPTED);
         findQuestion.setChooseYn(true);
         questionsRepository.save(findQuestion);
-        Answers findAnswer = verfiedAnswer(answerId);
-        User findUser = verifiedUser(userId);
+        Answers findAnswer = verifiedExistAnswer(answerId);
+        findAnswer.setChooseYn(true);
+        //answersRepository.save(findAnswer);
+        User findUser = verifiedExistUser(userId);
         Adoption adoption = new Adoption();
         adoption.setQuestions(findQuestion);
         adoption.setAnswers(findAnswer);
@@ -148,42 +138,6 @@ public class QuestionsService {
 
 
     /**
-     * @param questionId : 질문식별자
-     * @return : Questions
-     * @method : question 정보 조회
-     * @author : mozzi327
-     */
-    private Questions verfiedQuestion(Long questionId) {
-        return questionsRepository
-                .findById(questionId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
-    }
-
-    /**
-     * @param answerId : 답변식별자
-     * @return : Answers
-     * @method : answer 정보 조회
-     * @author : mozzi327
-     */
-    private Answers verfiedAnswer(Long answerId) {
-        return answersRepository
-                .findById(answerId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
-    }
-
-    /**
-     * @param userId : 유저식별자
-     * @return : User
-     * @method : user 정보 조회
-     * @author : mozzi327
-     */
-    private User verifiedUser(Long userId) {
-        return userRepository
-                .findById(userId)
-                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
-    }
-
-    /**
      * 질문 patch 요청에 대한 서비스 메서드입니다.
      *
      * @param userId           Long 타입 사용자 Id 값입니다.
@@ -192,7 +146,7 @@ public class QuestionsService {
      * @author dev32user
      */
     public Questions patchQuestion(Long userId, Long questionId, QuestionPatchDto questionPatchDto) {
-        if (!Objects.equals(userId, verfiedQuestion(questionId).getUsers().getId())) {
+        if (!Objects.equals(userId, verifiedExistQuestion(questionId).getUsers().getId())) {
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         }
 
@@ -240,16 +194,16 @@ public class QuestionsService {
     public void addQuestionBookmark(Long questionId, Long userId) {
         User findUser = verifiedExistUser(userId);
         Questions findQuestion = verifiedExistQuestion(questionId);
-        Optional<Bookmark> findBookmark = bookmarkRepository.findBookmarksByUsers(findUser);
+        Optional<Bookmark> findBookmark = bookmarkRepository.findBookmarksByUsersAndQuestions(findUser, findQuestion);
 
         if (findBookmark.isPresent()) {
             bookmarkRepository.delete(findBookmark.get());
         } else {
             Bookmark bookmark = new Bookmark(questionId);
             bookmark.setQuestions(findQuestion);
-//            bookmark.
+            bookmark.setUsers(findUser);
+            bookmarkRepository.save(bookmark);
         }
-
     }
 
 
@@ -274,7 +228,7 @@ public class QuestionsService {
      */
     private Questions verifiedExistQuestion(Long questionId) {
         return questionsRepository.findById(questionId).orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.TOKEN_NOT_FOUND)
+                new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND)
         );
     }
 
