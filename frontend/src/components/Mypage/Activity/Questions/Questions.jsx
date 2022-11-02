@@ -27,7 +27,7 @@ let sortData = [
 	},
 ];
 
-const Questions = ({ question }) => {
+const Questions = ({ question, limit }) => {
 	return (
 		<Container>
 			<TitleBox>
@@ -37,7 +37,7 @@ const Questions = ({ question }) => {
 			<ListBox
 				text="You have not asked any questions"
 				lists={question}
-				component={<AnswerOrQuestionList lists={question} />}
+				component={<AnswerOrQuestionList lists={question} limit={limit} />}
 			/>
 		</Container>
 	);
