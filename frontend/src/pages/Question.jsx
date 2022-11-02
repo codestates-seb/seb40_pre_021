@@ -1,23 +1,32 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Editor from '../components/common/Editor';
 import Controller from '../components/Question/Controller';
 import Button from '../components/common/Button';
-import { getQuestion, getUserInfo } from '../api/QuestionApi';
-import useDate from '../hooks/useDate';
-
-const { nickname, createdAt } = getUserInfo();
+import { answer, getQuestion, getUserInfo } from '../api/QuestionApi';
+import timeForToday from '../utils/timeForToday';
 
 const Question = () => {
 	const [thread, setThread] = useState('');
+	const [nickname, setNickname] = useState('');
+	const [answerData, setAnswerData] = useState('');
+
+	useEffect(() => {
+		getUserInfo().then((res) => setNickname(res.nickname));
+	}, []);
 	useEffect(() => {
 		getQuestion().then((res) => setThread(res));
 	}, []);
 
-	const [Qdate] = useDate(thread.createdAt);
-
-	const Qcreator = nickname === thread.nickname ? true : false;
-	const Acreator = nickname === thread.nickname ? true : false;
+	const handleAnswer = (e) => {
+		setAnswerData({
+			body: e.target.value,
+		});
+	};
+	const handleSubmitAnswer = () => {
+		answer(answerData.stringify());
+	};
 
 	return (
 		thread && (
@@ -27,15 +36,20 @@ const Question = () => {
 						<Header>
 							<Title>{thread.title}</Title>
 							<Btn>
-								<Button text="Ask Question" />
+								<Link to="/questions/ask">Ask Question</Link>
 							</Btn>
-
-							<Info>Asked {Qdate}</Info>
+							<Info>
+								Asked{' '}
+								<span>{' ' + timeForToday(thread.createdAt) + ' ago'}</span>
+								Viewed<span>{' ' + thread.views + ' times'}</span>
+							</Info>
 							<hr />
 						</Header>
 						<QuestionContainer>
 							<Left>
 								<Controller
+									votecount={thread.vote}
+									/*bookmark={thread.bookmark}*/
 									QcreatorNickname={thread.nickname}
 									loginNickname={nickname}></Controller>
 							</Left>
@@ -44,13 +58,21 @@ const Question = () => {
 									dangerouslySetInnerHTML={{
 										__html: thread.contents,
 									}}></Body>
-								<Tags>{thread.questionTags[0].title}</Tags>
+								<Tags>
+									{thread.questionsTags.map((el) => (
+										<span key={el.tagId}>{el.title}</span>
+									))}
+								</Tags>
+
 								<Footer>
 									<Options>
 										<span>Share</span>
 										{nickname === thread.nickname && <span>Edit</span>}
 									</Options>
-									<History>Edited {thread.createdAt} Hours ago</History>
+									<History>
+										{!isNaN(timeForToday(thread.midifiedAt)) &&
+											'Edited ' + timeForToday(thread.midifiedAt) + ' ago'}
+									</History>
 									<Profile>
 										<div></div>
 										<span>{thread.nickname}</span>
@@ -59,20 +81,19 @@ const Question = () => {
 								{thread.comments && <hr />}
 								{thread.comments &&
 									thread.comments.map((c) => (
-										<>
-											<Comments key={c.commentId}>
-												<span>{c.commentBody} – </span>
+										<Grouper key={c.id}>
+											<Comments>
+												<span>{c.comments} – </span>
 												<span className="nickname">{c.nickname}</span>
 												<span className="createdAt">
-													{' '}
-													{c.createdAt} hours ago
+													{' ' + timeForToday(c.createdAt) + ' ago'}
 												</span>
 												{nickname === c.nickname && (
 													<span className="delete"> × </span>
 												)}
 											</Comments>
 											<hr />
-										</>
+										</Grouper>
 									))}
 								<CommentCreate>Add a comment</CommentCreate>
 							</Right>
@@ -85,26 +106,33 @@ const Question = () => {
 						</Header>
 						{thread.answers &&
 							thread.answers.map((el) => (
-								<>
+								<Grouper key={el.answerId}>
 									<AnswerContainer>
 										<Left>
 											<Controller
 												kind="answer"
-												choosed={el.choosed}
+												votecount={el.vote}
+												/*bookmark={thread.bookmark}*/
+												chose={el.choosed}
 												QcreatorNickname={thread.nickname}
 												loginNickname={nickname}></Controller>
 										</Left>
 										<Right>
 											<Body
 												dangerouslySetInnerHTML={{
-													__html: el.body,
+													__html: el.contents,
 												}}></Body>
 											<Footer>
 												<Options>
 													<span>Share</span>
 													{nickname === el.nickname && <span>Edit</span>}
 												</Options>
-												<History>Edited {el.createdAt} Hours ago</History>
+												<History>
+													{!isNaN(timeForToday(thread.midifiedAt)) &&
+														'Edited ' +
+															timeForToday(thread.midifiedAt) +
+															' ago'}
+												</History>
 												<Profile>
 													<div></div>
 													<span>{el.nickname}</span>
@@ -113,25 +141,32 @@ const Question = () => {
 											{el.comments && <hr />}
 											{el.comments &&
 												el.comments.map((c) => (
-													<>
-														<Comments key={c.commentId}>
-															{c.commentBody} - {c.nickname}
+													<Grouper key={c.id}>
+														<Comments>
+															<span>{c.comments} – </span>
+															<span className="nickname">{c.nickname}</span>
+															<span className="createdAt">
+																{' ' + timeForToday(c.createdAt) + ' ago'}
+															</span>
+															{nickname === c.nickname && (
+																<span className="delete"> × </span>
+															)}
 														</Comments>
 														<hr />
-													</>
+													</Grouper>
 												))}
 											<CommentCreate>Add a comment</CommentCreate>
 										</Right>
 									</AnswerContainer>
 									<hr />
-								</>
+								</Grouper>
 							))}
 					</AnswerGroup>
 
 					<EditGroup>
 						<YourAnswer>Your Answer</YourAnswer>
-						<Editor />
-						<Button text="Post Your Answer" />
+						<Editor callback={handleAnswer} />
+						<Button text="Post Your Answer" callback={handleSubmitAnswer} />
 					</EditGroup>
 				</Wrapper>
 			</>
@@ -141,7 +176,7 @@ const Question = () => {
 const Wrapper = styled.section`
 	position: relative;
 	max-width: 1080px;
-	padding: 1.5rem 1rem 1.5rem 1rem;
+	padding: 1.5rem 0 1.5rem 1.5rem;
 	hr {
 		margin: 1rem 0 1rem;
 		height: 1px;
@@ -149,7 +184,7 @@ const Wrapper = styled.section`
 		border: none;
 	}
 `;
-
+const Grouper = styled.div``;
 const QuestionGroup = styled.article``;
 
 const Header = styled.div``;
@@ -158,15 +193,21 @@ const Title = styled.h1`
 	font-size: 1.75rem;
 	font-weight: 400;
 	line-height: 140%;
-	margin-bottom: 1rem;
+	margin-bottom: 0.25rem;
 `;
 const Btn = styled.div`
 	position: absolute;
-	right: 1rem;
+	right: 0;
 	top: 2rem;
 `;
 const Info = styled.div`
-	font-size: 0.85rem;
+	font-size: 0.8rem;
+	margin-right: 1rem;
+	color: rgb(108, 115, 123);
+	span {
+		color: black;
+		margin-right: 1rem;
+	}
 `;
 
 const QuestionContainer = styled.div`
@@ -186,14 +227,60 @@ const Body = styled.div`
 	max-width: 62.25rem;
 	line-height: 180%;
 	margin-bottom: 1rem;
+	/* 이하 Editor의 Result 컴포넌트와 같음*/
+	ul {
+		list-style-type: disc;
+		margin-left: 1rem;
+	}
+	ol {
+		list-style-type: decimal;
+		margin-left: 1rem;
+	}
+
+	h1 {
+		font-weight: 700;
+		font-size: 1.25rem;
+	}
+	h2 {
+		font-weight: 700;
+		font-size: 1.1rem;
+	}
+	h3 {
+		font-weight: 700;
+	}
+
+	strong {
+		font-weight: 700;
+	}
+	em {
+		font-style: italic;
+	}
+	hr {
+		1px;
+	}
+	pre {
+		font-size: 0.9rem;
+		background-color: #f6f6f6;
+		padding: 0.5rem;
+		overflow-x: auto;
+	}
+	code {
+		font-size: 0.9rem;
+		background-color: #f6f6f6;
+		padding: 0.1rem 0.3rem 0.1rem 0.3rem;
+	}
+
+	p {
+		margin-bottom: 1rem;
+	}
 `;
 
 const Tags = styled.div`
-	width: auto;
 	font-size: 0.85rem;
 	margin-bottom: 1rem;
 	max-width: 62.25rem;
 	span {
+		margin-right: 0.5rem;
 		color: rgb(61, 123, 201);
 		background-color: rgb(227, 236, 243);
 		padding: 0.1rem 0.3rem 0.1rem 0.3rem;
@@ -244,7 +331,7 @@ const CommentCreate = styled.div`
 const AnswerGroup = styled.div``;
 const AnswerContainer = styled.article`
 	display: grid;
-	grid-template-columns: 68px 1fr;
+	grid-template-columns: 3.25rem 1fr;
 `;
 const AnswerCount = styled.h2`
 	font-size: 1.25rem;

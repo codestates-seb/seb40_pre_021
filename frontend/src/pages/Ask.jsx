@@ -5,93 +5,6 @@ import Button from '../components/common/Button';
 import TagForm from '../components/Ask/TagForm';
 import { ask } from '../api/QuestionApi';
 
-const Container = styled.section`
-	background-color: #f8f9f9;
-	padding: 3rem 4.5rem 4.5rem 4.5rem;
-`;
-const Formarea = styled.form`
-	max-width: 850px;
-`;
-const AskQuestion = styled.h1`
-	font-weight: 600;
-	font-size: 1.75rem;
-	margin-bottom: 4rem;
-`;
-const WritingTip = styled.div`
-	background-color: #edf4fa;
-	border: 1px solid #aecdea;
-	border-radius: 2px;
-	line-height: 125%;
-	padding: 1.75rem;
-	margin-bottom: 1.5rem;
-	h2 {
-		font-weight: 400;
-		font-size: 1.3rem;
-		margin-bottom: 1rem;
-	}
-	.writingtip {
-		font-size: 0.9rem;
-		margin-bottom: 1rem;
-	}
-	.steps {
-		font-size: 0.85rem;
-		margin-bottom: 0.9rem;
-		font-weight: 600;
-	}
-	ul li {
-		font-size: 0.8rem;
-		list-style-type: disc;
-		margin-left: 2rem;
-	}
-	a {
-		text-decoration: none;
-		color: rgb(41, 95, 166);
-	}
-`;
-const Group = styled.div`
-	background-color: white;
-	border: 1px solid #dde0e1;
-	padding: 1.75rem;
-	margin-bottom: 1.5rem;
-`;
-const SectionTitle = styled.h3`
-	font-size: 0.95rem;
-	font-weight: 600;
-	line-height: 115%;
-	margin-bottom: 0.3rem;
-`;
-const Caption = styled.div`
-	font-size: 0.75rem;
-	margin-bottom: 0.6rem;
-`;
-const Tip = styled.div``;
-const Form = styled.input`
-	font-size: 0.85rem;
-	font-weight: 500;
-	border: 1px solid rgb(179, 183, 188);
-	padding-left: 0.5rem;
-	height: 30px;
-	width: 100%;
-	border-radius: 3px;
-	background-color: white;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
-	&:focus-within {
-		outline: none;
-		border-color: #9ecaed;
-		box-shadow: 0 0 10px #9ecaed;
-	}
-	&:focus {
-		outline: none;
-	}
-	::placeholder {
-		color: #bbbbbb;
-	}
-`;
-// const DiscardDraft = styled.button``;
-
 const Ask = () => {
 	const [title, setTitle] = useState('');
 	const [problem, setProblem] = useState('');
@@ -118,6 +31,7 @@ const Ask = () => {
 	};
 	const handleTags = (e) => {
 		setTags(e.target.value);
+		console.log(tags);
 	};
 
 	return (
@@ -204,4 +118,90 @@ const Ask = () => {
 	);
 };
 
+const Container = styled.section`
+	background-color: #f8f9f9;
+	padding: 3rem 4.5rem 4.5rem 4.5rem;
+`;
+const Formarea = styled.form`
+	max-width: 850px;
+`;
+const AskQuestion = styled.h1`
+	font-weight: 600;
+	font-size: 1.75rem;
+	margin-bottom: 4rem;
+`;
+const WritingTip = styled.div`
+	background-color: #edf4fa;
+	border: 1px solid #aecdea;
+	border-radius: 2px;
+	line-height: 125%;
+	padding: 1.75rem;
+	margin-bottom: 1.5rem;
+	h2 {
+		font-weight: 400;
+		font-size: 1.3rem;
+		margin-bottom: 1rem;
+	}
+	.writingtip {
+		font-size: 0.9rem;
+		margin-bottom: 1rem;
+	}
+	.steps {
+		font-size: 0.85rem;
+		margin-bottom: 0.9rem;
+		font-weight: 600;
+	}
+	ul li {
+		font-size: 0.8rem;
+		list-style-type: disc;
+		margin-left: 2rem;
+	}
+	a {
+		text-decoration: none;
+		color: rgb(41, 95, 166);
+	}
+`;
+const Group = styled.div`
+	background-color: white;
+	border: 1px solid #dde0e1;
+	padding: 1.75rem;
+	margin-bottom: 1.5rem;
+`;
+const SectionTitle = styled.h3`
+	font-size: 0.95rem;
+	font-weight: 600;
+	line-height: 115%;
+	margin-bottom: 0.3rem;
+`;
+const Caption = styled.div`
+	font-size: 0.75rem;
+	margin-bottom: 0.6rem;
+`;
+const Tip = styled.div``;
+const Form = styled.input`
+	font-size: 0.85rem;
+	font-weight: 500;
+	border: 1px solid rgb(179, 183, 188);
+	padding-left: 0.5rem;
+	height: 30px;
+	width: 100%;
+	border-radius: 3px;
+	background-color: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	&:focus-within {
+		outline: none;
+		border-color: #9ecaed;
+		box-shadow: 0 0 10px #9ecaed;
+	}
+	&:focus {
+		outline: none;
+	}
+	::placeholder {
+		color: #bbbbbb;
+	}
+`;
+// const DiscardDraft = styled.button``;
 export default Ask;
