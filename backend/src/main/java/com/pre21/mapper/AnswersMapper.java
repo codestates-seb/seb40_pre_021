@@ -5,8 +5,11 @@ import com.pre21.entity.Answers;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface AnswersMapper {
+    List<AnswerInfoDto> answerToAnswerResponse(List<Answers> answers);
     default AnswersDto.GetResponseDto answerToAnswerResponse(Answers answers){
         AnswersDto.GetResponseDto responseDto = new AnswersDto.GetResponseDto();
 

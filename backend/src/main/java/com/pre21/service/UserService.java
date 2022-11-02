@@ -40,8 +40,6 @@ public class UserService {
     }
 
 
-
-
     // 사용자 로그아웃
     public void logoutUser(String refreshToken) {
         // 토큰이 있는지 확인한 후 삭제
@@ -76,14 +74,12 @@ public class UserService {
     }
 
 
-
     // 토큰이 존재하는지 확인
     private RefreshToken checkExistToken(String refreshToken) {
         return refreshTokenRepository
                 .findRefreshTokenByTokenValue(refreshToken)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.TOKEN_NOT_FOUND));
     }
-
 
 
     // 토큰 재생성 로직
@@ -109,5 +105,21 @@ public class UserService {
         if (user.isPresent()) {
             throw new BusinessLogicException(ExceptionCode.USER_EXISTS);
         }
+    }
+
+    public User findUser(Long userId) {
+        User findUser = findVerifiedUser(userId);
+        return findUser;
+    }
+
+    /**
+     * @param userId Long 타입의 사용자 Id 값을 받아서 User 객체를 찾고 반환합니다.
+     * @return User
+     * @author dev32user
+     */
+    private User findVerifiedUser(Long userId) {
+        Optional<User> optionalUser =
+                userRepository.findById(userId);
+        return optionalUser.orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
     }
 }

@@ -51,4 +51,20 @@ public class AnswersController {
         Answers answers = answersService.patchAnswer(userId, answerId, answerPatchDto);
         return new ResponseEntity(mapper.answerToAnswerResponse(answers), HttpStatus.OK);
     }
+
+    /**
+     * 답번 delete 요청에 대한 컨트롤러 메서드입니다.
+     *
+     * @param userId   Long 타입의 삭제를 요청한 사용자의 Id 값입니다. 쿠키에서 값을 받아옵니다.
+     * @param answerId Long 타입의 삭제 할 답변의 Id 값입니다.
+     * @author dev32user
+     */
+    @DeleteMapping("/answer/{answer-id}/delete")
+    public ResponseEntity deleteAnswer(
+            @CookieValue(name = "userId") Long userId,
+            @PathVariable("answer-id") Long answerId) {
+        answersService.deleteAnswer(userId, answerId);
+        return new ResponseEntity(HttpStatus.OK);
+
+    }
 }
