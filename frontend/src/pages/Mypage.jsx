@@ -1,6 +1,4 @@
-import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { getMypageUserInfo } from '../api/mypageApi';
 import Avatar from '../components/Mypage//UserProfile/Avatar';
 import ProfileButton from '../components/Mypage/ProfileButton';
 import UserNickname from '../components/Mypage/UserProfile/UserNickname';
@@ -10,17 +8,12 @@ import { RiPencilFill } from 'react-icons/ri';
 import { BiMessageDetail } from 'react-icons/bi';
 import Navigation from '../components/Mypage/Navigation';
 import { Outlet } from 'react-router-dom';
+import useMypageData from '../hooks/useMypageData';
 
 const Mypage = () => {
-	const [info, setInfo] = useState({ nickname: '', createdAt: '' });
-	const { nickname, createdAt } = info;
+	const [userInfo] = useMypageData('userInfo');
+	const { nickname, createdAt } = userInfo;
 	const [date] = useDate(createdAt);
-
-	useEffect(() => {
-		getMypageUserInfo().then((res) => {
-			setInfo(res);
-		});
-	}, []);
 
 	return (
 		<Container>
@@ -56,7 +49,6 @@ const Container = styled.div`
 	flex-wrap: wrap;
 	padding: 24px;
 	max-width: 1100px;
-	width: calc(100% - 164px);
 `;
 
 const Box = styled.div`

@@ -30,7 +30,9 @@ const Menu = ({ name, padding, path }) => {
 			<Link to={path}>
 				<Content
 					padding={padding}
-					className={location.pathname === path && 'active'}>
+					className={
+						location.pathname.split('/')[1] === path.split('/')[1] && 'active'
+					}>
 					{name === 'Questions' && <RiEarthFill size="17px" maring="5px" />}
 					&nbsp;
 					{name}

@@ -37,7 +37,7 @@ const AsideTitle = styled.h2`
 	font-size: 15px;
 	margin-bottom: 2px;
 	flex: 0 auto;
-	font-weight: 500;
+	font-weight: 400;
 	line-height: 16px;
 `;
 
@@ -47,6 +47,6 @@ const AsideContent = styled.p`
 	font-size: 12px;
 	padding: 0 8px;
 	margin-bottom: 12px;
-	font-weight: 500;
+	font-weight: 400;
 	line-height: 16px;
 `;

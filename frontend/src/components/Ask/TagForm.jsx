@@ -2,17 +2,17 @@ import { useState } from 'react';
 import { TagsInput } from 'react-tag-input-component';
 import styled from 'styled-components';
 const InputFormStyle = styled.div`
-		input {
-			padding: 0 0.5rem 0 0.5rem;
-			width: 100%;
-			border: none;
-			font-size: 13px;
+	input {
+		padding: 0 0.5rem 0 0.5rem;
+		width: 100%;
+		border: none;
+		font-size: 13px;
 
-			&:focus {
-				outline: none;
-			}
+		&:focus {
+			outline: none;
 		}
 	}
+
 	.blueText {
 		color: hsl(206, 100%, 40%);
 		font-size: 12px;

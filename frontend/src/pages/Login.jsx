@@ -4,6 +4,7 @@ import { ReactComponent as Icon } from '../assets/images/icon.svg';
 import OAuths from '../components/OAuths/OAuths';
 import LoginForm from '../components/Login/LoginForm';
 import { Link } from 'react-router-dom';
+import useDynamicTitle from '../hooks/useDynamicTitle';
 const LoginStyle = styled.div`
 	height: 100vh;
 	display: flex;
@@ -36,6 +37,7 @@ const LoginBody = styled.div`
 `;
 
 const Login = () => {
+	useDynamicTitle('Login - Stack Overflow');
 	return (
 		<LoginStyle>
 			<Header />

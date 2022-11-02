@@ -12,9 +12,6 @@ const OAuthListStyle = styled.div`
 	button {
 		margin: 5px;
 		padding: 3% 70px;
-		display: flex;
-		justify-content: center;
-		align-items: center;
 	}
 `;
 const OAuths = () => {

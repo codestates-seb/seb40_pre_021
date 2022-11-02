@@ -16,7 +16,7 @@ const TagsList = ({ lists }) => {
 							<LeftCotent>
 								<TagView>
 									<Tag>{title}</Tag>
-									<Badge />
+									<Badge tagCount={tagCount} />
 								</TagView>
 							</LeftCotent>
 							<RightContent>
@@ -100,7 +100,7 @@ const Tag = styled.span`
 	text-align: center;
 	border: 1px solid transparent;
 	border-radius: 3px;
-	font-weight: 500;
+	font-weight: 400;
 	cursor: pointer;
 	:hover {
 		color: #2c5877;
@@ -109,7 +109,18 @@ const Tag = styled.span`
 `;
 
 const Badge = styled.span`
-	background-position: -102px -398px;
+	background-position: ${(props) => {
+		const { tagCount } = props;
+		if (tagCount >= 1000) {
+			return '-102px -398px';
+		} else if (tagCount <= 100) {
+			return '';
+		} else if (tagCount <= 300) {
+			return '-62px -398px;';
+		} else {
+			return '-82px -398px';
+		}
+	}};
 	margin-right: 3px;
 	margin-left: 10px;
 	width: 6px;
@@ -129,12 +140,12 @@ const RightView = styled.div`
 const ScoreView = styled.div`
 	font-size: 17px;
 	margin-right: 4px;
-	font-weight: 500;
+	font-weight: 400;
 `;
 
 const Text = styled.div`
 	text-transform: lowercase;
 	color: #6a737c;
-	font-weight: 500;
+	font-weight: 400;
 	font-size: 14px;
 `;

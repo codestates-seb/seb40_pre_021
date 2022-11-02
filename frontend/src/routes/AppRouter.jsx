@@ -24,13 +24,13 @@ const AppRouter = () => {
           */}
 						<Route path="/" element={<Home />} />
 						<Route path="/questions" element={<Questions />} />
+						<Route path="/questions/ask" element={<Ask />} />
+						<Route path="/questions/question" element={<Question />} />
+						{/* ask와 question은 테스트 후 삭제해야 합니다 (메인 화면에서 직접 연결되는 것이 아님)*/}
 						<Route path="/users" element={<Mypage />}>
 							<Route path="activity" element={<MypageActivityPage />} />
 							<Route path="saves" element={<MypageSavesPage />} />
 						</Route>
-						<Route path="/ask" element={<Ask />} />
-						<Route path="/question" element={<Question />} />
-						{/* ask와 question은 테스트 후 삭제해야 합니다 (메인 화면에서 직접 연결되는 것이 아님)*/}
 					</Route>
 					<Route path="/login" element={<Login />} />
 					<Route path="/signup" element={<Signup />} />

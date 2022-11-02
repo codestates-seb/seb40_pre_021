@@ -4,6 +4,7 @@ import OAuths from '../components/OAuths/OAuths';
 import SignupForm from '../components/Signup/SignForm';
 import { Link } from 'react-router-dom';
 import SignupGuide from '../components/Signup/SignupGuide';
+import useDynamicTitle from '../hooks/useDynamicTitle';
 const SignupStyle = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -40,6 +41,7 @@ const SignupBody = styled.div`
 `;
 
 const Signup = () => {
+	useDynamicTitle('Sign Up - Stack Overflow');
 	return (
 		<SignupStyle>
 			<Header />

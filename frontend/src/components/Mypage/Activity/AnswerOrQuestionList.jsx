@@ -62,7 +62,7 @@ const VoteDisplay = styled.div`
 	border: ${(props) => (props.choosed ? 'none' : '1px solid #c8ccd0')};
 	background-color: ${(props) => (props.choosed ? '#5DBA7D' : 'white')};
 	color: ${(props) => (props.choosed ? 'white' : 'black')};
-	font-weight: 500;
+	font-weight: 400;
 	min-width: 30px;
 	display: inline-flex;
 	align-items: center;
@@ -87,13 +87,16 @@ const Title = styled.a`
 	word-break: break-all;
 	overflow-wrap: break-word;
 	hyphens: auto;
-	font-weight: 500;
+	font-weight: 400;
 	margin: 0 12px;
+	:hover {
+		color: #0a95ff;
+	}
 `;
 
 const DateText = styled.span`
 	font-size: 13px;
 	color: #6a737c;
 	white-space: nowrap;
-	font-weight: 500;
+	font-weight: 400;
 `;

@@ -4,6 +4,7 @@ import ListHeader from '../components/List/ListHeader';
 import { getList } from '../api/ListApi';
 import List from '../components/List/List';
 import { Link } from 'react-router-dom';
+import useDynamicTitle from '../hooks/useDynamicTitle';
 
 const HomeStyle = styled.div`
 	width: 100%;
@@ -23,7 +24,9 @@ const More = styled.div`
 `;
 const Home = () => {
 	const [data, setData] = useState([]);
-
+	useDynamicTitle(
+		'Stack Overflow - Where Developers Learn, Share, & Build Careers',
+	);
 	useEffect(() => {
 		getList().then((res) => {
 			setData(res.data);

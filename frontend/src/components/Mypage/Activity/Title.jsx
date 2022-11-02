@@ -26,11 +26,11 @@ const Container = styled.div`
 
 const StyledTitle = styled.h2`
 	font-size: 21px;
-	font-weight: 500;
+	font-weight: 400;
 `;
 
 const Text = styled.span`
 	color: #6f757d;
 	font-size: 13px;
-	font-weight: 500;
+	font-weight: 400;
 `;

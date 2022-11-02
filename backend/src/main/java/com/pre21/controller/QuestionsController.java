@@ -23,15 +23,10 @@ public class QuestionsController {
 
     // 질문 생성
     @PostMapping("/ask")
-    public void createQuestion(@RequestBody QuestionsPostDto questionsPostDto) throws Exception {
-        // Questions questions = mapper.questionsPostToQuestion(questionsPostDto);
+    public void createQuestion(@RequestBody QuestionsPostDto questionsPostDto,
+                               @CookieValue(name = "userId", required = true) Long userId) {
 
-        questionsService.createQuestion(questionsPostDto);
-
-        // return new ResponseEntity(questions, HttpStatus.CREATED);
-
-       /* return new ResponseEntity<>(mapper.questionsToQuestionResponse(createdQuestion, null),
-                HttpStatus.CREATED);*/
+        questionsService.createQuestion(questionsPostDto, userId);
     }
 
 
@@ -95,6 +90,7 @@ public class QuestionsController {
 
 
     /**
+     * @method 질문 작성자 채택 기능
      * @param questionId : 질문식별자
      * @param answerId   : 답변식별자
      * @param userId     : 로그인 유저식별자
@@ -105,6 +101,19 @@ public class QuestionsController {
                               @PathVariable("answer-id") Long answerId,
                               @CookieValue(name = "userId", required = true) Long userId) {
         questionsService.adoptingQuestion(questionId, answerId, userId);
+
+    }
+
+    /**
+     * @method 질문 북마크 추가
+     * @param questionId
+     * @param userId
+     * @author mozzi327
+     */
+    @PostMapping("/bookmark/{question-id}")
+    public void clickQuestionBookmark(@PathVariable("question-id") Long questionId,
+                                      @CookieValue(name = "userId", required = true) Long userId) {
+        questionsService.addQuestionBookmark(questionId, userId);
 
     }
 }

@@ -44,8 +44,6 @@ const InputFormStyle = styled.div`
 
 const InputForm = ({ text, blueText, type, callback }) => {
 	const chkCharCode = (e) => {
-		console.log('key up', e.key, e.code);
-
 		const notEngExp = /[^A-Za-z]/g;
 		const isNotEng = notEngExp.test(e.key);
 		const koreanExp = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;

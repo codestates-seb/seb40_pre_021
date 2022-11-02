@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -16,6 +17,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.JUnitRestDocumentation;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.ContextConfiguration;
@@ -43,13 +45,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                 "jwt.access-token-expiration-minutes=15",
                 "jwt.refresh-token-expiration-minutes=30",
                 "mail.address.admin=2ne1admin@gmail.com"
-        }
+        },
+        classes = UserController.class
 )
 @AutoConfigureMockMvc
-@AutoConfigureRestDocs(outputDir = "build/generated-snippets")
+@AutoConfigureRestDocs
 public class jwtSecurityTest {
 
-    @Autowired
     private MockMvc mockMvc;
     private Gson gson;
     private UserDto.Join signupRequest;
@@ -68,20 +70,19 @@ public class jwtSecurityTest {
 
     @BeforeEach
     void setUp() {
-//        mockMvc = MockMvcBuilders
-//                .webAppContextSetup(context)
-//                .addFilters(springSecurityFilterChain)
-//                .addFilters(new CharacterEncodingFilter("UTF-8", true))
-//                .apply(documentationConfiguration(contextProvider))
-//                .alwaysDo(print())
-//                .build();
+        mockMvc = MockMvcBuilders
+                .webAppContextSetup(context)
+                .addFilters(springSecurityFilterChain)
+                .addFilters(new CharacterEncodingFilter("UTF-8", true))
+                .apply(documentationConfiguration(contextProvider))
+                .alwaysDo(print())
+                .build();
 
         gson = new Gson();
         signupRequest = new UserDto.Join("홍길동",
                 "hgd@gmail.com",
                 "ghdrlfehd");
     }
-
 
     @Test
     @DisplayName("[Security] 회원가입 테스팅")
