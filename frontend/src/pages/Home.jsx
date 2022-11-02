@@ -24,18 +24,27 @@ const More = styled.div`
 `;
 const Home = () => {
 	const [data, setData] = useState([]);
+	const tabList = ['Hot', 'Week', 'Month'];
+	const [tab, setTab] = useState('Hot');
 	useDynamicTitle(
 		'Stack Overflow - Where Developers Learn, Share, & Build Careers',
 	);
 	useEffect(() => {
-		getList().then((res) => {
+		const data = { tab: tab.toLowerCase() };
+		getList(data).then((res) => {
 			setData(res.data);
 		});
-	}, []);
-	const tabList = ['Hot', 'Week', 'Month'];
+	}, [tab]);
+
+	const listHeaderProps = {
+		title: 'Top Questions',
+		tabList,
+		tab,
+		setTab,
+	};
 	return (
 		<HomeStyle>
-			<ListHeader title={'Top Questions'} tabList={tabList} />
+			<ListHeader {...listHeaderProps} />
 			{data &&
 				data.map((ele) => {
 					return <List key={ele.questionId} data={ele} type={'Home'} />;
