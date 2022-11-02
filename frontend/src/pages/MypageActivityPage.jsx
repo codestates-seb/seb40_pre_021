@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import styled from 'styled-components';
 import Answers from '../components/Mypage/Activity/Answers/Answers';
 import Questions from '../components/Mypage/Activity/Questions/Questions';
@@ -9,31 +10,74 @@ import useDynamicTitle from '../hooks/useDynamicTitle';
 import useMypageData from '../hooks/useMypageData';
 
 const MypageActivityPage = () => {
-	const [answer, setAnswer] = useMypageData('answer');
-	const [question, setQuestion] = useMypageData('question');
-	const [tag, setTag] = useMypageData('tag');
+	const [tabs, setTabs] = useState(data);
+	const [curTab, setCurTab] = useState(tabs[0]);
+
 	useDynamicTitle('User', true);
 
+	const handleTabChange = (id) => {
+		let newTabs = tabs.map((tab) =>
+			tab.id === id ? { ...tab, clicked: true } : { ...tab, clicked: false },
+		);
+		setTabs(newTabs);
+	};
+
+	const ChangeCurrentTab = (id) => {
+		let newCurTab = tabs.filter((tab) => tab.id === id);
+		setCurTab(...newCurTab);
+	};
+
+	const goToTop = () => {
+		window.scrollTo({ top: 0, behavior: 'smooth' });
+	};
+
+	const TabContent = ({ curTab }) => {
+		const [answer, setAnswer] = useMypageData('answer');
+		const [question, setQuestion] = useMypageData('question');
+		const [tag, setTag] = useMypageData('tag');
+
+		switch (curTab) {
+			case 'Summary':
+				return (
+					<GridBox>
+						<Summary />
+						<Answers answer={answer} limit={5} />
+						<Questions question={question} limit={5} />
+						<Tags tag={tag} limit={5} />
+						<Reputation />
+					</GridBox>
+				);
+			case 'Answers':
+				return <Answers answer={answer} />;
+			case 'Questions':
+				return <Questions question={question} />;
+			case 'Tags':
+				return <Tags tag={tag} />;
+			case 'Reputation':
+				return <Reputation />;
+		}
+	};
+
 	return (
-		<SideBarBox>
-			<Sidebar />
-			<GridBox>
-				<Summary />
-				<Answers answer={answer} />
-				<Questions question={question} />
-				<Tags tag={tag} />
-				<Reputation />
-			</GridBox>
-		</SideBarBox>
+		<Container>
+			<Sidebar
+				tabs={tabs}
+				onChange={handleTabChange}
+				onFilter={ChangeCurrentTab}
+				onScrollTop={goToTop}
+			/>
+			<TabContent curTab={curTab.name} />
+		</Container>
 	);
 };
 
 export default MypageActivityPage;
 
-const SideBarBox = styled.div`
+const Container = styled.div`
 	display: flex;
 	margin: 8px 0;
 	flex-wrap: nowrap;
+	width: 100%;
 `;
 
 const GridBox = styled.div`
@@ -42,3 +86,31 @@ const GridBox = styled.div`
 	gap: 24px;
 	margin: 8px 0 8px 8px;
 `;
+
+let data = [
+	{
+		id: 0,
+		name: 'Summary',
+		clicked: true,
+	},
+	{
+		id: 1,
+		name: 'Answers',
+		clicked: false,
+	},
+	{
+		id: 2,
+		name: 'Questions',
+		clicked: false,
+	},
+	{
+		id: 3,
+		name: 'Tags',
+		clicked: false,
+	},
+	{
+		id: 4,
+		name: 'Reputation',
+		clicked: false,
+	},
+];
