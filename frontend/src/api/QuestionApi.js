@@ -17,9 +17,21 @@ export const ask = async (data) => {
 	}
 }; //질문 작성
 
+export const getUserInfo = async () => {
+	try {
+		//const result = await instance.get(`/user/user-info`);
+		const result = await instance.get(`/user`);
+		return result.data;
+	} catch (err) {
+		console.log(err);
+		return err;
+	}
+}; //유저 인포 가져옴
+
 export const getQuestion = async () => {
 	try {
-		const result = await instance.get(`/question/{questionId}/data`);
+		//const result = await instance.get(`/question/{questionId}/data`);
+		const result = await instance.get(`/data`); //테스트용
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -140,7 +152,7 @@ export const bookmarkDelA = async (data) => {
 	}
 }; //답변 북마크 삭제
 
-export const choosed = async (data) => {
+export const choose = async (data) => {
 	try {
 		const result = await instance.put(
 			'/questions/{questionid}/answer/{answerid}/selection',

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { useState } from 'react';
+import { choose } from '../../api/QuestionApi';
 
 const Container = styled.div`
 	width: 36px;
@@ -48,9 +48,17 @@ const Bookmark = styled.button`
 		fill: rgb(187, 191, 195);
 `;
 const Choosed = styled.div`
+	button {
+		display: ${(props) =>
+			props.QcreatorNickname === props.loginNickname ? 'block' : 'none'};
+	}
+	div {
+		display: ${(props) =>
+			props.QcreatorNickname === props.loginNickname ? 'none' : 'block'};
+	}
 	svg {
 		display: block;
-		background-color: white;
+		background-color: none;
 		fill: ${(props) =>
 			props.choosed === true ? 'rgb(64, 110, 72)' : 'rgb(187, 191, 195)'};
 	}
@@ -64,32 +72,50 @@ const History = styled.button`
 		fill: rgb(187, 191, 195);
 	}
 `;
+let votevote = 0;
+const HandleUpVote = () => {
+	votevote++;
+};
+const HandleDownVote = () => {
+	votevote--;
+};
+const HandleBookmark = () => {};
 
-const Controller = ({ kind, choosed }) => {
+const Controller = ({ kind, choosed, QcreatorNickname, loginNickname }) => {
 	return (
 		<>
 			<Container>
-				<Up>
+				<Up onClick={HandleUpVote}>
 					<svg width="36" height="36" viewBox="0 0 36 36">
 						<path d="M2 25h32L18 9 2 25Z"></path>
 					</svg>
 				</Up>
-				<Votes>0</Votes>
-				<Down>
+				<Votes>{votevote}</Votes>
+				<Down onClick={HandleDownVote}>
 					<svg width="36" height="36" viewBox="0 0 36 36">
 						<path d="M2 11h32L18 27 2 11Z"></path>
 					</svg>
 				</Down>
-				<Bookmark>
+				<Bookmark onClick={HandleBookmark}>
 					<svg width="18" height="18" viewBox="0 0 18 18">
 						<path d="m9 10.6 4 2.66V3H5v10.26l4-2.66ZM3 17V3c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v14l-6-4-6 4Z"></path>
 					</svg>
 				</Bookmark>
 				{kind === 'answer' && (
-					<Choosed choosed={choosed}>
-						<svg width="36" height="36" viewBox="0 0 36 36">
-							<path d="m6 14 8 8L30 6v8L14 30l-8-8v-8Z"></path>
-						</svg>
+					<Choosed
+						choosed={choosed}
+						QcreatorNickname={QcreatorNickname}
+						loginNickname={loginNickname}>
+						<button onClick={choose}>
+							<svg width="36" height="36" viewBox="0 0 36 36">
+								<path d="m6 14 8 8L30 6v8L14 30l-8-8v-8Z"></path>
+							</svg>
+						</button>
+						<div>
+							<svg width="36" height="36" viewBox="0 0 36 36">
+								<path d="m6 14 8 8L30 6v8L14 30l-8-8v-8Z"></path>
+							</svg>
+						</div>
 					</Choosed>
 				)}
 				<History>
