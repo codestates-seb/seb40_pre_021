@@ -10,8 +10,6 @@ const PaginationStyle = styled.div`
 
 	button {
 		margin: 2px;
-		display: flex;
-		align-items: center;
 	}
 	.active {
 		background: rgb(229, 136, 62);

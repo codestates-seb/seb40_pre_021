@@ -80,6 +80,10 @@ const RightSection = styled.div`
 		display: flex;
 		align-items: flex-end;
 		color: hsl(210, 8%, 45%);
+
+		a {
+			margin-right: 10px;
+		}
 	}
 `;
 const List = ({ data, type }) => {
