@@ -1,6 +1,12 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { choose } from '../../api/QuestionApi';
+import {
+	choose,
+	downVoteForA,
+	downVoteForQ,
+	upVoteForA,
+	upVoteForQ,
+} from '../../api/QuestionApi';
 
 const HandleBookmark = () => {};
 
@@ -21,18 +27,22 @@ const Controller = ({
 		if (voteStatus !== 'up') {
 			setVoteStatus('up');
 			setVote(votecount + 1);
+			kind === 'answer' ? upVoteForA() : upVoteForQ(); //이거 보트카운트 우리가 조정하려고 했는데 백엔드에서도 해야됨. 여러 명이 할 경우에 덮어씌워지는 문제 있음
 		} else {
 			setVoteStatus('neutral');
 			setVote(votecount);
+			kind === 'answer' ? upVoteForA() : upVoteForQ(); //한 번 더 하면 upVote 상태가 취소됨
 		}
 	};
 	const handleDownVote = () => {
 		if (voteStatus !== 'down') {
 			setVoteStatus('down');
 			setVote(votecount - 1);
+			kind === 'answer' ? downVoteForA() : downVoteForQ();
 		} else {
 			setVoteStatus('neutral');
 			setVote(votecount);
+			kind === 'answer' ? downVoteForA() : downVoteForQ();
 		}
 	};
 	const handleChose = () => {

@@ -1,22 +1,59 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-const InputFormStyle = styled.div`
-	input {
-		padding: 0 0.5rem 0 0.5rem;
-		border: none;
-		font-size: 13px;
 
-		&:focus {
-			outline: none;
+const TagForm = ({ callback }) => {
+	const [tags, setTags] = useState([]);
+
+	function handleKeyDown(e) {
+		let value;
+		e.stopPropagation();
+		if (e.key !== 'Enter' && e.key !== ' ') return;
+		else {
+			value = e.target.value;
+			e.target.value = '';
 		}
+		if (!value.trim()) return;
+		setTags([...tags, value]);
+		e.target.value = '';
 	}
 
+	function removeTag(index) {
+		setTags(tags.filter((el, idx) => idx !== index));
+	} //현재 첫 번째 태그 삭제하면 페이지가 리로드되는;;; 버그가 있음.
+
+	return (
+		<Style>
+			<div className="container">
+				{tags.map((tag, idx) => (
+					<div className="tag" key={idx}>
+						<span>{tag}</span>
+						<button onClick={() => removeTag(idx)}>&times;</button>
+					</div>
+				))}
+				<input
+					type="text"
+					placeholder="e.g. (objective-c json windows)"
+					onKeyDown={handleKeyDown}
+					onChange={(e) => callback(e)}></input>
+			</div>
+		</Style>
+	);
+};
+
+const Style = styled.div`
 	.blueText {
 		color: hsl(206, 100%, 40%);
 		font-size: 12px;
 	}
 	.container {
 		input {
+			padding: 0 0.5rem 0 0.5rem;
+			border: none;
+			font-size: 13px;
+
+			&:focus {
+				outline: none;
+			}
 			font-size: 12px;
 			font-weight: 500;
 			height: 1.6rem;
@@ -31,10 +68,12 @@ const InputFormStyle = styled.div`
 	}
 	.tag {
 		display: inline;
-		padding: 0.25rem 0.2rem 0.25rem 0.2rem;
+		background-color: rgb(227, 236, 243);
+		padding: 0.35rem 0.25rem 0.35rem 0.25rem;
 		border-radius: 4px;
 		font-weight: 400;
 		color: hsl(206, 100%, 40%);
+		margin-right: 0.25rem;
 	}
 	.tag button {
 		padding: 0 0.2rem;
@@ -45,7 +84,7 @@ const InputFormStyle = styled.div`
 	}
 	.tag button:hover {
 		background-color: hsl(206, 100%, 40%);
-		color: var(--rti-tag);
+		color: rgb(227, 236, 243);
 	}
 	.container:focus-within {
 		outline: none;
@@ -53,46 +92,5 @@ const InputFormStyle = styled.div`
 		box-shadow: 0 0 10px #9ecaed;
 	}
 `;
-
-const TagForm = () => {
-	const [tags, setTags] = useState([]);
-	function handleKeyDown(e) {
-		if (e.key !== 'Enter') return;
-		const value = e.target.value;
-		if (!value.trim()) return;
-		setTags([...tags, value]);
-		e.target.value = '';
-	}
-	function removeTag(i) {
-		setTags(tags.filter((el, idx) => idx !== i));
-	}
-	return (
-		<InputFormStyle>
-			<div className="container">
-				{tags.map((tag, idx) => (
-					<div className="tag" key={idx}>
-						<span>{tag}</span>
-						<button onClick={() => removeTag(idx)}>&times;</button>
-					</div>
-				))}
-				<input
-					type="text"
-					placeholder="e.g. (objective-c json windows)"
-					onKeyDown={handleKeyDown}></input>
-			</div>
-		</InputFormStyle>
-	);
-};
-// <InputFormStyle>
-// 	<div>
-// 		<TagsInput
-// 			value={selected}
-// 			onKeyUp={setSelected}
-// 			name="tags"
-// 			placeHolder="e.g. (c# angularjs sql)"
-// 			separators={separators}
-// 		/>
-// 	</div>
-// </InputFormStyle>
 
 export default TagForm;

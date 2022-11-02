@@ -31,7 +31,6 @@ const Ask = () => {
 	};
 	const handleTags = (e) => {
 		setTags(e.target.value);
-		console.log(tags);
 	};
 
 	return (
@@ -107,10 +106,7 @@ const Ask = () => {
 						Add up to 5 tags to describe what your question is about. Start
 						typing to see suggestions.
 					</Caption>
-					<TagForm
-						name="tagform"
-						separators={[' ', 'Enter']}
-						callback={handleTags}></TagForm>
+					<TagForm callback={handleTags} />
 				</Group>
 				<Button text="Review your question" callback={handleClick} />
 			</Formarea>
