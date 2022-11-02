@@ -40,5 +40,5 @@ const EmptyText = styled.p`
 	text-align: center;
 	margin: 0 auto;
 	font-size: 13px;
-	font-weight: 500;
+	font-weight: 400;
 `;

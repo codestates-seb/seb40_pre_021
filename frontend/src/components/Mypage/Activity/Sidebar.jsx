@@ -53,7 +53,7 @@ const Tab = styled.a`
 	white-space: nowrap;
 	margin: 0 32px 0 0;
 	text-decoration: none;
-	font-weight: 500;
+	font-weight: 400;
 	font-size: 13px;
 	color: ${(props) => (props.clicked ? '#242629' : '#525960')};
 	background-color: ${(props) => (props.clicked ? '#F1F2F3' : 'white')};

@@ -87,7 +87,7 @@ const AsideContentFooter = styled.p`
 	font-size: 13px;
 	padding: 0 8px;
 	margin-top: 12px;
-	font-weight: 500;
+	font-weight: 400;
 `;
 
 const AsideContentFooterButton = styled.button`
@@ -97,7 +97,7 @@ const AsideContentFooterButton = styled.button`
 	padding: 0.8rem;
 	border: 1px solid transparent;
 	border-radius: 3px;
-	font-weight: 500;
+	font-weight: 400;
 	text-align: center;
 	cursor: pointer;
 	font-size: 13px;

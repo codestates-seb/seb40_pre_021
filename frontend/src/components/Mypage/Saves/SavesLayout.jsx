@@ -64,17 +64,16 @@ const TopWrapper = styled.div`
 const ListHeader = styled.h1`
 	font-size: 21px;
 	line-height: 1.3;
-	font-weight: 500;
+	font-weight: 400;
 `;
 
 const InfoArea = styled(TopWrapper)`
 	margin-bottom: 0.5rem;
 	align-items: center;
-	font-weight: 500;
 `;
 
 const CountText = styled.h2`
 	font-size: 19px;
 	margin: 0 0 1rem;
-	font-weight: 500;
+	font-weight: 400;
 `;

@@ -47,10 +47,10 @@ const VotesBox = styled.div`
 	border: 1px solid transparent;
 
 	span {
-		font-weight: 500;
+		font-weight: 400;
 		font-size: 13px;
 		&:first-child {
-			font-weight: 600;
+			font-weight: 500;
 		}
 	}
 `;
@@ -69,9 +69,9 @@ const AnswerBox = styled.div`
 
 	span {
 		color: ${(props) => (props.choosed ? 'white' : '#2E6F44')};
-		font-weight: 600;
+		font-weight: 500;
 		&:last-child {
-			font-weight: 500;
+			font-weight: 400;
 		}
 	}
 `;
@@ -85,9 +85,9 @@ const ViewsBox = styled.div`
 	border: 1px solid transparent;
 
 	span {
-		font-weight: 500;
+		font-weight: 400;
 		&:first-child {
-			font-weight: 600;
+			font-weight: 500;
 		}
 	}
 `;

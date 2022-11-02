@@ -10,5 +10,5 @@ const Nickname = styled.span`
 	color: #232629;
 	margin: 4px;
 	font-size: 34px;
-	font-weight: 500;
+	font-weight: 400;
 `;
