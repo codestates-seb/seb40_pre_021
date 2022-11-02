@@ -8,7 +8,7 @@ const Title = ({ title, number, flex }) => {
 			<StyledTitle>{title}</StyledTitle>
 			{number ? (
 				<Text>
-					View all {localeNumber} {lowerTitle}
+					Total {localeNumber} {lowerTitle}
 				</Text>
 			) : null}
 		</Container>
