@@ -10,6 +10,7 @@ export const ask = async (data) => {
 	try {
 		const result = await instance.post('/question/ask', data);
 		return result.data;
+		//redirect 부분 작성해야 하는지 어떻게 해야하는지 모르겠ㄷㅏ...
 	} catch (err) {
 		console.log(err);
 		return err;
@@ -18,7 +19,7 @@ export const ask = async (data) => {
 
 export const getQuestion = async () => {
 	try {
-		const result = await instance.get(`/data`);
+		const result = await instance.get(`/question/{questionId}/data`);
 		return result.data;
 	} catch (err) {
 		console.log(err);

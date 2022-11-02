@@ -140,12 +140,12 @@ const Question = () => {
 				<Wrapper>
 					<QuestionGroup>
 						<Header>
-							<Title>{thread.question[0].title}</Title>
+							<Title>{thread.title}</Title>
 							<Btn>
 								<Button text="Ask Question" />
 							</Btn>
 
-							<Info>Asked {thread.question[0].createdAt}</Info>
+							<Info>Asked {thread.createdAt}</Info>
 							<hr />
 						</Header>
 						<QuestionContainer>
@@ -155,25 +155,23 @@ const Question = () => {
 							<Right>
 								<Body
 									dangerouslySetInnerHTML={{
-										__html: thread.question[0].body,
+										__html: thread.body,
 									}}></Body>
-								<Tags>{thread.question[0].tags}</Tags>
+								<Tags>{thread.tags}</Tags>
 								<Footer>
 									<Options>
 										<span>Share</span>
 										<span>Edit</span>
 									</Options>
-									<History>
-										Edited {thread.question[0].createdAt} Hours ago
-									</History>
+									<History>Edited {thread.createdAt} Hours ago</History>
 									<Profile>
 										<div></div>
-										<span>{thread.question[0].nickname}</span>
+										<span>{thread.nickname}</span>
 									</Profile>
 								</Footer>
-								{thread.question[0].comments && <hr />}
-								{thread.question[0].comments &&
-									thread.question[0].comments.map((c) => (
+								{thread.comments && <hr />}
+								{thread.comments &&
+									thread.comments.map((c) => (
 										<>
 											<Comments key={c.commentId}>
 												<span>{c.commentBody} – </span>
@@ -192,51 +190,53 @@ const Question = () => {
 						</QuestionContainer>
 					</QuestionGroup>
 					<hr />
-					<AnswerGroup>
-						<Header>
-							<AnswerCount>
-								{thread.answer[0].answers.length} Answers
-							</AnswerCount>
-						</Header>
-						{thread.answer[0].answers.map((el) => (
-							<>
-								<AnswerContainer>
-									<Left>
-										<Controller kind="answer" choosed={el.choosed}></Controller>
-									</Left>
-									<Right>
-										<Body
-											dangerouslySetInnerHTML={{
-												__html: el.body,
-											}}></Body>
-										<Footer>
-											<Options>
-												<span>Share</span>
-												<span>Edit</span>
-											</Options>
-											<History>Edited {el.createdAt} Hours ago</History>
-											<Profile>
-												<div></div>
-												<span>{el.nickname}</span>
-											</Profile>
-										</Footer>
-										{el.comments && <hr />}
-										{el.comments &&
-											el.comments.map((c) => (
-												<>
-													<Comments key={c.commentId}>
-														{c.commentBody} - {c.nickname}
-													</Comments>
-													<hr />
-												</>
-											))}
-										<CommentCreate>Add a comment</CommentCreate>
-									</Right>
-								</AnswerContainer>
-								<hr />
-							</>
-						))}
-					</AnswerGroup>
+					{thread.answers && (
+						<AnswerGroup>
+							<Header>
+								<AnswerCount>{thread.answers.length} Answers</AnswerCount>
+							</Header>
+							{thread.answers.map((el) => (
+								<>
+									<AnswerContainer>
+										<Left>
+											<Controller
+												kind="answer"
+												choosed={el.choosed}></Controller>
+										</Left>
+										<Right>
+											<Body
+												dangerouslySetInnerHTML={{
+													__html: el.body,
+												}}></Body>
+											<Footer>
+												<Options>
+													<span>Share</span>
+													<span>Edit</span>
+												</Options>
+												<History>Edited {el.createdAt} Hours ago</History>
+												<Profile>
+													<div></div>
+													<span>{el.nickname}</span>
+												</Profile>
+											</Footer>
+											{el.comments && <hr />}
+											{el.comments &&
+												el.comments.map((c) => (
+													<>
+														<Comments key={c.commentId}>
+															{c.commentBody} - {c.nickname}
+														</Comments>
+														<hr />
+													</>
+												))}
+											<CommentCreate>Add a comment</CommentCreate>
+										</Right>
+									</AnswerContainer>
+									<hr />
+								</>
+							))}
+						</AnswerGroup>
+					)}
 					<EditGroup>
 						<YourAnswer>Your Answer</YourAnswer>
 						<Editor />
