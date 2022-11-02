@@ -5,12 +5,14 @@ import Reputation from '../components/Mypage/Activity/Reputation/Reputation';
 import Sidebar from '../components/Mypage/Activity/Sidebar';
 import Summary from '../components/Mypage/Activity/Summary';
 import Tags from '../components/Mypage/Activity/Tags/Tags';
+import useDynamicTitle from '../hooks/useDynamicTitle';
 import useMypageData from '../hooks/useMypageData';
 
 const MypageActivityPage = () => {
 	const [answer, setAnswer] = useMypageData('answer');
 	const [question, setQuestion] = useMypageData('question');
 	const [tag, setTag] = useMypageData('tag');
+	useDynamicTitle('User', true);
 
 	return (
 		<SideBarBox>
