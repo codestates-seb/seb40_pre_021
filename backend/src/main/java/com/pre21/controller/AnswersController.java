@@ -54,6 +54,7 @@ public class AnswersController {
         return new ResponseEntity(mapper.answerToAnswerResponse(answers), HttpStatus.OK);
     }
 
+
     /**
      * 답번 delete 요청에 대한 컨트롤러 메서드입니다.
      *

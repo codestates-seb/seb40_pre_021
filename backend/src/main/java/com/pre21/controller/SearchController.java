@@ -8,6 +8,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class SearchController {
 
-
-    @GetMapping("/search/")
+/*
+    @GetMapping("/search/") */
 }
