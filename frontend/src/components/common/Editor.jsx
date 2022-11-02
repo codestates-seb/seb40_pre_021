@@ -4,7 +4,7 @@ import parsedHTML from '../../utils/parsedHTML';
 const Container = styled.div``;
 const Header = styled.div``;
 const Textarea = styled.textarea`
-	font-size: 0.85rem;
+	font-size: 0.8rem;
 	font-family: IBM Plex Mono, monospace;
 	border: 1px solid rgb(179, 183, 188);
 	padding: 0.5rem;
@@ -75,7 +75,7 @@ const Result = styled.div`
 		margin-bottom: 1rem;
 	}
 `;
-const Editor = ({ callback }) => {
+const Editor = ({ id, callback }) => {
 	const [mdText, setMdText] = useState('');
 
 	const handleChange = (e) => {
@@ -86,7 +86,7 @@ const Editor = ({ callback }) => {
 		<>
 			<Container>
 				<Header />
-				<Textarea onKeyUp={handleChange} onChange={callback}></Textarea>
+				<Textarea onKeyUp={handleChange} id={id} onChange={callback}></Textarea>
 				<Result
 					mdText={mdText}
 					dangerouslySetInnerHTML={{ __html: mdText }}></Result>
