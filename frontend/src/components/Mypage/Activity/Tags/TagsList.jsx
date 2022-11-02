@@ -1,17 +1,17 @@
 import styled from 'styled-components';
 import image from '../../../../assets/images/sprites.svg';
 
-const TagsList = ({ lists }) => {
+const TagsList = ({ lists, limit }) => {
 	return (
 		<Container>
 			{lists.map((list, i) => {
 				const { title, tagCount } = list;
 
-				if (i >= 5) {
+				if (limit && i >= limit) {
 					return;
 				}
 				return (
-					<Box key={title}>
+					<Box key={title} limit={limit}>
 						<ContentBox>
 							<LeftCotent>
 								<TagView>
@@ -45,13 +45,17 @@ const Container = styled.div`
 	flex-grow: 1;
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 `;
 
 const Box = styled.div`
 	border-bottom: 1px solid #d7d9dc;
 	padding: 12px;
-	&:nth-child(5) {
+	&:nth-child(props.limit) {
 		border-bottom: none;
+	}
+	&:last-child {
+		border-bottom: ${(props) => (props.limit ? 'none' : '')};
 	}
 `;
 
