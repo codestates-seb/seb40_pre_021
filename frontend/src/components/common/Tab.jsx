@@ -25,12 +25,7 @@ const TabStyle = styled.div`
 		background-color: rgb(228, 230, 232);
 	}
 `;
-const Tab = ({ tabList }) => {
-	const [active, setActive] = useState('');
-
-	const onClickTab = (name) => {
-		setActive(name);
-	};
+const Tab = ({ tabList, tab, setTab }) => {
 	return (
 		<TabStyle>
 			{tabList.map((ele, idx) => {
@@ -39,14 +34,14 @@ const Tab = ({ tabList }) => {
 						key={idx}
 						className={
 							tabList.length - 1 !== idx
-								? active === ele
+								? tab === ele
 									? 'active non-last'
 									: 'non-last'
-								: active === ele
+								: tab === ele
 								? 'active'
 								: ''
 						}
-						onClick={() => onClickTab(ele)}>
+						onClick={() => setTab(ele)}>
 						{ele}
 					</button>
 				);

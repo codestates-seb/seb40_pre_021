@@ -33,7 +33,15 @@ const TabContainer = styled.div`
 	display: flex;
 `;
 
-const ListHeader = ({ title, Detail, filter, tabList, questionCount }) => {
+const ListHeader = ({
+	title,
+	Detail,
+	filter,
+	tabList,
+	questionCount,
+	tab,
+	setTab,
+}) => {
 	return (
 		<ListHeaderStyle>
 			<Section>
@@ -46,7 +54,7 @@ const ListHeader = ({ title, Detail, filter, tabList, questionCount }) => {
 					{questionCount && `${questionCount} questions`}
 				</div>
 				<TabContainer>
-					<Tab tabList={tabList} />
+					<Tab tabList={tabList} tab={tab} setTab={setTab} />
 					&nbsp;
 					{filter && (
 						<Button

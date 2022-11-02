@@ -17,6 +17,7 @@ const Questions = () => {
 	const [data, setData] = useState();
 	const [questionCount, setQuestionCount] = useState();
 	const tabList = ['Newest', 'Unanswered'];
+	const [tab, setTab] = useState('Unanswered');
 
 	const [pageSize, setPageSize] = useState('15');
 	const [pages, setPages] = useState([]);
@@ -52,7 +53,7 @@ const Questions = () => {
 		);
 	};
 	const getListData = (now) => {
-		const data = { page: now.toString(), pagesize: pageSize };
+		const data = { page: now.toString(), pagesize: pageSize, tab };
 		getList(data).then((res) => {
 			setData(res.data);
 			setQuestionCount(res.questionCount);
@@ -68,6 +69,10 @@ const Questions = () => {
 		getListData(1);
 	}, [pageSize]);
 
+	useEffect(() => {
+		getListData(now);
+	}, [tab]);
+
 	const calTotalpage = () => {
 		let totalPage = Math.ceil(questionCount / pageSize);
 		setPages(
@@ -81,6 +86,8 @@ const Questions = () => {
 		tabList,
 		filter: 'true',
 		questionCount,
+		tab,
+		setTab,
 	};
 
 	const paginationProps = {
