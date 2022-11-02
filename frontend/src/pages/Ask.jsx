@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Editor from '../components/common/Editor';
 import Button from '../components/common/Button';
 import TagForm from '../components/Ask/TagForm';
+import { ask } from '../api/QuestionApi';
 
 const Container = styled.section`
 	background-color: #f8f9f9;
@@ -92,6 +93,33 @@ const Form = styled.input`
 // const DiscardDraft = styled.button``;
 
 const Ask = () => {
+	const [title, setTitle] = useState('');
+	const [problem, setProblem] = useState('');
+	const [expect, setExpect] = useState('');
+	const [tags, setTags] = useState('');
+
+	const handleClick = () => {
+		const data = {
+			title: title,
+			body: problem + expect,
+			tags: tags,
+		};
+		ask(data.stringify());
+	};
+
+	const handleTitle = (e) => {
+		setTitle(e.target.value);
+	};
+	const handleProblem = (e) => {
+		setProblem(e.target.value);
+	};
+	const handleExpect = (e) => {
+		setExpect(e.target.value);
+	};
+	const handleTags = (e) => {
+		setTags(e.target.value);
+	};
+
 	return (
 		<Container>
 			<Formarea>
@@ -135,6 +163,7 @@ const Ask = () => {
 						type="text"
 						maxlength="300"
 						placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
+						onChange={handleTitle}
 					/>
 				</Group>
 				<Tip></Tip>
@@ -144,7 +173,7 @@ const Ask = () => {
 						Introduce the problem and expand on what you put in the title.
 						Minimum 20 characters.
 					</Caption>
-					<Editor />
+					<Editor callback={handleProblem} />
 				</Group>
 				<Tip></Tip>
 				<Group>
@@ -155,7 +184,7 @@ const Ask = () => {
 						Describe what you tried, what you expected to happen, and what
 						actually resulted. Minimum 20 characters.
 					</Caption>
-					<Editor />
+					<Editor callback={handleExpect} />
 				</Group>
 				<Tip></Tip>
 				<Group>
@@ -164,9 +193,12 @@ const Ask = () => {
 						Add up to 5 tags to describe what your question is about. Start
 						typing to see suggestions.
 					</Caption>
-					<TagForm name="tagform" separators={[' ', 'Enter']}></TagForm>
+					<TagForm
+						name="tagform"
+						separators={[' ', 'Enter']}
+						callback={handleTags}></TagForm>
 				</Group>
-				<Button text="Review your question" />
+				<Button text="Review your question" callback={handleClick} />
 			</Formarea>
 		</Container>
 	);

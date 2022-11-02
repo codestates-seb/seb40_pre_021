@@ -4,7 +4,6 @@ import styled from 'styled-components';
 const InputFormStyle = styled.div`
 	input {
 		padding: 0 0.5rem 0 0.5rem;
-		width: 100%;
 		border: none;
 		font-size: 13px;
 
@@ -32,6 +31,7 @@ const InputFormStyle = styled.div`
 		padding: 0.3rem;
 	}
 	.rti--tag {
+		display: inline;
 		padding: 0.25rem 0.2rem 0.25rem 0.2rem;
 		border-radius: 4px;
 		font-weight: 400;
@@ -55,15 +55,15 @@ const InputFormStyle = styled.div`
 	}
 `;
 
-const TagForm = ({ separators }) => {
+const TagForm = ({ separators, callback }) => {
 	const [selected, setSelected] = useState([]);
-	console.log(selected);
 	return (
 		<InputFormStyle>
 			<div>
 				<TagsInput
 					value={selected}
-					onChange={setSelected}
+					onKeyUp={setSelected}
+					onChange={callback}
 					name="tags"
 					placeHolder="e.g. (c# angularjs sql)"
 					separators={separators}
