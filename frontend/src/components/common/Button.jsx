@@ -10,7 +10,7 @@ const ButtonStyle = styled.button`
 	border-radius: ${(props) => props.radius || '3px'};
 	font-family: inherit;
 	font-size: 13px;
-	font-weight: bold;
+	font-weight: medium;
 	line-height: calc(15 / 13);
 	text-align: center;
 	text-decoration: none;

@@ -43,7 +43,7 @@ const GroupContainer = styled.div`
 const Menu = styled.a`
 	padding: 0.6em;
 	font-size: 11px;
-	font-weight: 500;
+	font-weight: 400;
 	box-shadow: none;
 	border: 1px solid #838c95;
 	margin-right: -1px;
