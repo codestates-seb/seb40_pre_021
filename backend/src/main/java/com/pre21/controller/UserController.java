@@ -3,6 +3,7 @@ package com.pre21.controller;
 import com.pre21.dto.AuthDto;
 import com.pre21.dto.UserDto;
 import com.pre21.entity.User;
+import com.pre21.mapper.UserMapper;
 import com.pre21.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,14 +24,12 @@ import static com.pre21.security.utils.JwtConstants.REFRESH_TOKEN;
 @Slf4j
 public class UserController {
     private final UserService userService;
+    private final UserMapper mapper;
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/signup")
     public void joinUser(@RequestBody UserDto.Join requestBody) {
-        User user = new User(requestBody.getNickname(),
-                requestBody.getEmail(),
-                requestBody.getPassword());
-        userService.createUser(user);
+        userService.createUser(mapper.joinToUserEntity(requestBody));
     }
 
 
@@ -50,9 +49,7 @@ public class UserController {
     public ResponseEntity reIssueAccessToken (
             @CookieValue(name = REFRESH_TOKEN, required = true) String refreshToken,
             @CookieValue(name = USER_ID, required = true) Long userId) {
-
         AuthDto.Response resultToken = userService.reIssueAccessToken(refreshToken, userId);
-
         return ResponseEntity.ok(resultToken);
     }
 }

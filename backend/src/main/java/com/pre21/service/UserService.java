@@ -30,13 +30,15 @@ public class UserService {
 
 
     // 회원가입
-    public void createUser(User user) {
+    public User createUser(User user) {
         verifyExistsEmail(user.getEmail());
         // 비밀번호 암호화
         String encryptedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encryptedPassword);
 
-        userRepository.save(user);
+        User savedUser = userRepository.save(user);
+
+        return savedUser;
     }
 
 
