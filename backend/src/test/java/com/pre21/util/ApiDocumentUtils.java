@@ -1,4 +1,4 @@
-package com.pre21.controller.util;
+package com.pre21.util;
 
 import org.springframework.restdocs.operation.preprocess.OperationRequestPreprocessor;
 import org.springframework.restdocs.operation.preprocess.OperationResponsePreprocessor;

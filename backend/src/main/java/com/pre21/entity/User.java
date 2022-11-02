@@ -1,5 +1,6 @@
 package com.pre21.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.pre21.util.auditable.Auditable;
 import lombok.Builder;
 import lombok.Getter;
@@ -34,7 +35,7 @@ public class User {
     @Column
     private String email;
 
-    @Column
+    @Column(nullable = false)
     private String password;
 
     @Column
@@ -69,7 +70,6 @@ public class User {
     private List<Bookmark> bookmarks = new ArrayList<>();
 
 
-
     public User(String nickname, String email, String password) {
         this.nickname = nickname;
         this.email = email;
@@ -81,7 +81,7 @@ public class User {
         this.questions.add(question);
     }
 
-    @Builder
+
     public User(Long id, String email, List<String> roles) {
         this.id = id;
         this.email = email;
