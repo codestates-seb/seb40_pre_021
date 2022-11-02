@@ -78,7 +78,7 @@ const ContentBox = styled.div`
 		margin-top: -0.15rem;
 		margin-bottom: 0.38rem;
 		padding-right: 24px;
-		font-weight: 500;
+		font-weight: 400;
 		word-break: break-word;
 		overflow-wrap: break-word;
 		hyphens: auto;

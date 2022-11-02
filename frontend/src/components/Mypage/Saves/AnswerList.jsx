@@ -72,7 +72,7 @@ const AnswerContent = styled.p`
 	overflow: hidden;
 	margin-bottom: 8px;
 	font-size: 13px;
-	font-weight: 500;
+	font-weight: 400;
 `;
 
 const AnswerAndUserInfoBox = styled.div`
@@ -88,7 +88,7 @@ const AnswerAndUserInfoBox = styled.div`
 		cursor: pointer;
 		color: #0074cc;
 		font-size: 13px;
-		font-weight: 500;
+		font-weight: 400;
 		:hover {
 			color: #0a95ff;
 		}
@@ -111,10 +111,10 @@ const VotesBox = styled.div`
 	border: 1px solid transparent;
 
 	span {
-		font-weight: 500;
+		font-weight: 400;
 		font-size: 13px;
 		&:first-child {
-			font-weight: 600;
+			font-weight: 500;
 		}
 	}
 `;
@@ -134,7 +134,7 @@ const UserInfoBox = styled.div`
 		text-decoration: none;
 		cursor: pointer;
 		font-size: 12px;
-		font-weight: 500;
+		font-weight: 400;
 		:hover {
 			color: #0a95ff;
 		}
@@ -142,12 +142,12 @@ const UserInfoBox = styled.div`
 	time {
 		color: #6a737c;
 		font-size: 12px;
-		font-weight: 500;
+		font-weight: 400;
 	}
 	span {
 		color: #6a737c;
 		font-size: 12px;
-		font-weight: 500;
+		font-weight: 400;
 	}
 `;
 
@@ -166,9 +166,9 @@ const AnswerBox = styled.div`
 
 	span {
 		color: ${(props) => (props.choosed ? 'white' : '#2E6F44')};
-		font-weight: 500;
+		font-weight: 400;
 		&:first-child {
-			font-weight: 600;
+			font-weight: 500;
 		}
 	}
 `;

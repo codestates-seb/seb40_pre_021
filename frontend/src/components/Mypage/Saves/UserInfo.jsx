@@ -36,7 +36,7 @@ const Container = styled.div`
 		text-decoration: none;
 		cursor: pointer;
 		font-size: 12px;
-		font-weight: 500;
+		font-weight: 400;
 		:hover {
 			color: #0a95ff;
 		}
@@ -45,12 +45,12 @@ const Container = styled.div`
 	time {
 		color: #6a737c;
 		font-size: 12px;
-		font-weight: 500;
+		font-weight: 400;
 	}
 
 	span {
 		color: #6a737c;
 		font-size: 12px;
-		font-weight: 500;
+		font-weight: 400;
 	}
 `;
