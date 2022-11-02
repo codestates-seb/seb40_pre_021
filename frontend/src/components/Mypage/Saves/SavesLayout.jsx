@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import Button from '../../common/Button';
 import SortButtonGroup from '../Activity/SortButtonGroup';
+import EmptySavesBox from './EmptySavesBox';
 import SavesListBox from './SavesListBox';
 
 let sortData = [
@@ -41,9 +42,13 @@ const SavesLayout = ({ bookmark }) => {
 			</TopWrapper>
 			<InfoArea>
 				<CountText>{total} Saved items</CountText>
-				<SortButtonGroup data={sortData} />
+				{bookmark.length ? <SortButtonGroup data={sortData} /> : null}
 			</InfoArea>
-			<SavesListBox bookmarks={bookmark} />
+			{bookmark.length ? (
+				<SavesListBox bookmarks={bookmark} />
+			) : (
+				<EmptySavesBox />
+			)}
 		</Container>
 	);
 };
