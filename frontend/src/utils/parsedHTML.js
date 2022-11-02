@@ -19,7 +19,7 @@ const parsedHTML = (str) => {
 
 	const Pgh = /\n\n/gm; // 엔터 두 번 치면 문단이 분리됨
 
-	let text = '<p>' + String(str) + '</p>';
+	let text = '<article>' + String(str) + '</article>';
 
 	text = text.replace(UlStart, '<ul>\n-');
 	text = text.replace(UlEnd, '$1\n</ul>\n\n$2');
