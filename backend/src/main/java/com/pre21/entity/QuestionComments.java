@@ -31,6 +31,9 @@ public class QuestionComments extends Auditable {
     @Column
     private final LocalDateTime createdAt = LocalDateTime.now();
 
+    @Column
+    private String nickname;
+
     @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
     private Questions questions;

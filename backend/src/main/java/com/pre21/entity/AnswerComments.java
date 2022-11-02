@@ -33,6 +33,9 @@ public class AnswerComments extends Auditable {
     @Column(nullable = false)
     private String comments;
 
+    @Column
+    private String nickname;
+
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
 

@@ -51,5 +51,4 @@ public class AnswersController {
         Answers answers = answersService.patchAnswer(userId, answerId, answerPatchDto);
         return new ResponseEntity(mapper.answerToAnswerResponse(answers), HttpStatus.OK);
     }
-
 }
