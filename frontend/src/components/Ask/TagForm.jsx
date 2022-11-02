@@ -53,7 +53,7 @@ const InputFormStyle = styled.div`
 		border-color: #9ecaed;
 		box-shadow: 0 0 10px #9ecaed;
 	}
-`; // Common/InputForm.jsx
+`;
 
 const TagForm = ({ separators }) => {
 	const [selected, setSelected] = useState([]);
