@@ -4,6 +4,7 @@ import ListHeader from '../components/List/ListHeader';
 import { getList } from '../api/ListApi';
 import Pagination from '../components/List/Pagination';
 import List from '../components/List/List';
+import useDynamicTitle from '../hooks/useDynamicTitle';
 import Button from '../components/common/Button';
 
 const QuestionsStyle = styled.div`
@@ -20,6 +21,8 @@ const Questions = () => {
 	const [pageSize, setPageSize] = useState('15');
 	const [pages, setPages] = useState([]);
 	const [now, setNow] = useState(1);
+
+	useDynamicTitle('Questions - Stack Overflow');
 
 	const buttonProps = {
 		color: `hsl(210,8%,25%)`,

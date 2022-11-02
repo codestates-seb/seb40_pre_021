@@ -1,11 +1,9 @@
 package com.pre21.controller;
 
-import com.pre21.dto.QuestionDto;
+import com.pre21.dto.QuestionPatchDto;
 import com.pre21.dto.QuestionsPostDto;
-import com.pre21.dto.QuestionsResponseDto;
 import com.pre21.entity.Questions;
 import com.pre21.mapper.QuestionsMapper;
-import com.pre21.repository.AnswersRepository;
 import com.pre21.service.QuestionsService;
 import com.pre21.util.dto.MultiResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +13,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/questions")
@@ -26,15 +23,10 @@ public class QuestionsController {
 
     // 질문 생성
     @PostMapping("/ask")
-    public void createQuestion(@RequestBody QuestionsPostDto questionsPostDto) throws Exception {
-        //Questions questions = mapper.questionsPostToQuestion(questionsPostDto);
+    public void createQuestion(@RequestBody QuestionsPostDto questionsPostDto,
+                               @CookieValue(name = "userId", required = true) Long userId) {
 
-        questionsService.createQuestion(questionsPostDto);
-
-        //return new ResponseEntity(questions, HttpStatus.CREATED);
-
-       /* return new ResponseEntity<>(mapper.questionsToQuestionResponse(createdQuestion, null),
-                HttpStatus.CREATED);*/
+        questionsService.createQuestion(questionsPostDto, userId);
     }
 
 
@@ -46,6 +38,24 @@ public class QuestionsController {
         return new ResponseEntity<>(mapper.questionsToQuestionResponse(questions),
                 HttpStatus.OK);
     }
+
+    /**
+     * 질문 patch 요청에 대한 컨트롤러 메서드입니다.
+     *
+     * @param userId           쿠키에서 값을 받아옵니다.
+     * @param questionPatchDto 질문 수정 요청입니다.
+     * @param questionId       수정한 질문의 Id입니다.
+     * @author dev32user
+     */
+    @PatchMapping("/{question-id}/edit")
+    public ResponseEntity patchQuestion(
+            @CookieValue(name = "userId") Long userId,
+            @PathVariable("question-id") Long questionId,
+            @RequestBody QuestionPatchDto questionPatchDto) {
+        Questions questions = questionsService.patchQuestion(userId, questionId, questionPatchDto);
+        return new ResponseEntity(mapper.questionsToQuestionResponse(questions), HttpStatus.OK);
+    }
+
 
     // 질문 전체 조회
     @GetMapping
@@ -80,17 +90,30 @@ public class QuestionsController {
 
 
     /**
-     *
+     * @method 질문 작성자 채택 기능
      * @param questionId : 질문식별자
-     * @param answerId : 답변식별자
-     * @param userId : 로그인 유저식별자
+     * @param answerId   : 답변식별자
+     * @param userId     : 로그인 유저식별자
      * @author mozzi327
      */
     @GetMapping("/question/{question-id}/adopt/{answer-id}")
     public void adoptQuestion(@PathVariable("question-id") Long questionId,
-                                 @PathVariable("answer-id") Long answerId,
-                                 @CookieValue(name = "userId", required = true) Long userId) {
+                              @PathVariable("answer-id") Long answerId,
+                              @CookieValue(name = "userId", required = true) Long userId) {
         questionsService.adoptingQuestion(questionId, answerId, userId);
+
+    }
+
+    /**
+     * @method 질문 북마크 추가
+     * @param questionId
+     * @param userId
+     * @author mozzi327
+     */
+    @PostMapping("/bookmark/{question-id}")
+    public void clickQuestionBookmark(@PathVariable("question-id") Long questionId,
+                                      @CookieValue(name = "userId", required = true) Long userId) {
+        questionsService.addQuestionBookmark(questionId, userId);
 
     }
 }

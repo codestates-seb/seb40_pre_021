@@ -70,6 +70,10 @@ public class Questions {
     @OneToMany(mappedBy = "questions", cascade = CascadeType.ALL)
     private List<Answers> answers = new ArrayList<>();
 
+    @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @JoinColumn(name = "BOOKMARK_ID")
+    private Bookmark bookmark;
+
     public Questions(String title, String contents) {
         this.title = title;
         this.contents = contents;

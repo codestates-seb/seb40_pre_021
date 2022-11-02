@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useState } from 'react';
-import Editor from '../components/Question/Editor';
+import Editor from '../components/common/Editor';
 import Button from '../components/common/Button';
 import TagForm from '../components/Ask/TagForm';
 
