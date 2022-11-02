@@ -290,4 +290,10 @@ public class QuestionsService {
                 new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND)
         );
     }
+
+    public Page<Questions> findMyQuestions(Long userId, int page, int size) {
+        return questionsRepository.findAllByUsersId(
+                userId,
+                PageRequest.of(page, size, Sort.by("id").descending()));
+    }
 }

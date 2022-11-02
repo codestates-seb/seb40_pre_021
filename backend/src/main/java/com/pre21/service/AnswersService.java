@@ -11,6 +11,9 @@ import com.pre21.repository.AnswersRepository;
 import com.pre21.repository.QuestionsRepository;
 import com.pre21.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -78,7 +81,7 @@ public class AnswersService {
      * @author dev32user
      */
     public Answers patchAnswer(Long userId, Long answerId, AnswerPatchDto answerPatchDto) {
-        if (!Objects.equals(userId, verfiedAnswer(answerId).getUsers().getId())){
+        if (!Objects.equals(userId, verfiedAnswer(answerId).getUsers().getId())) {
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         }
 
@@ -93,5 +96,25 @@ public class AnswersService {
 
         updatedAnswer.setContents(answerPatchDto.getConents());
         return answersRepository.save(updatedAnswer);
+    }
+
+    /**
+     * 페이지네이션을 위해 Answer 객체들을 정해진 페이지, 크기에 따라 전부 찾아서 Page 형태로 반환합니다.
+     *
+     * @param page  int 타입의 페이지 값입니다.
+     * @param size  int 타입의 크기 값입니다.
+     * @return Page
+     * @author dev32user
+     */
+    public Page<Answers> findPageAnswers(int page, int size) {
+        return answersRepository
+                .findAll(PageRequest
+                        .of(page, size, Sort.by("id").descending()));
+    }
+
+    public Page<Answers> findMyAnswers(Long userId, int page, int size) {
+        return answersRepository.findAllByUsersId(
+                        userId,
+                PageRequest.of(page, size, Sort.by("id").descending()));
     }
 }
