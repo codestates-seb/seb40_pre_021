@@ -1,24 +1,59 @@
 import { useState } from 'react';
-import { TagsInput } from 'react-tag-input-component';
 import styled from 'styled-components';
-const InputFormStyle = styled.div`
-	input {
-		padding: 0 0.5rem 0 0.5rem;
-		width: 100%;
-		border: none;
-		font-size: 13px;
 
-		&:focus {
-			outline: none;
+const TagForm = ({ callback }) => {
+	const [tags, setTags] = useState([]);
+
+	function handleKeyDown(e) {
+		let value;
+		e.stopPropagation();
+		if (e.key !== 'Enter' && e.key !== ' ') return;
+		else {
+			value = e.target.value;
+			e.target.value = '';
 		}
+		if (!value.trim()) return;
+		setTags([...tags, value]);
+		e.target.value = '';
 	}
 
+	function removeTag(index) {
+		setTags(tags.filter((el, idx) => idx !== index));
+	} //현재 첫 번째 태그 삭제하면 페이지가 리로드되는;;; 버그가 있음.
+
+	return (
+		<Style>
+			<div className="container">
+				{tags.map((tag, idx) => (
+					<div className="tag" key={idx}>
+						<span>{tag}</span>
+						<button onClick={() => removeTag(idx)}>&times;</button>
+					</div>
+				))}
+				<input
+					type="text"
+					placeholder="e.g. (objective-c json windows)"
+					onKeyDown={handleKeyDown}
+					onChange={(e) => callback(e)}></input>
+			</div>
+		</Style>
+	);
+};
+
+const Style = styled.div`
 	.blueText {
 		color: hsl(206, 100%, 40%);
 		font-size: 12px;
 	}
-	.rti--container {
+	.container {
 		input {
+			padding: 0 0.5rem 0 0.5rem;
+			border: none;
+			font-size: 13px;
+
+			&:focus {
+				outline: none;
+			}
 			font-size: 12px;
 			font-weight: 500;
 			height: 1.6rem;
@@ -31,46 +66,31 @@ const InputFormStyle = styled.div`
 		border-radius: 2px;
 		padding: 0.3rem;
 	}
-	.rti--tag {
-		padding: 0.25rem 0.2rem 0.25rem 0.2rem;
+	.tag {
+		display: inline;
+		background-color: rgb(227, 236, 243);
+		padding: 0.35rem 0.25rem 0.35rem 0.25rem;
 		border-radius: 4px;
 		font-weight: 400;
 		color: hsl(206, 100%, 40%);
+		margin-right: 0.25rem;
 	}
-	.rti--tag button {
+	.tag button {
 		padding: 0 0.2rem;
 		margin-left: 0.2rem;
 		color: hsl(206, 100%, 40%);
 		font-weight: 700;
 		border-radius: 3px;
 	}
-	.rti--tag button:hover {
+	.tag button:hover {
 		background-color: hsl(206, 100%, 40%);
-		color: var(--rti-tag);
+		color: rgb(227, 236, 243);
 	}
-	.rti--container:focus-within {
+	.container:focus-within {
 		outline: none;
 		border-color: #9ecaed;
 		box-shadow: 0 0 10px #9ecaed;
 	}
-`; // Common/InputForm.jsx
-
-const TagForm = ({ separators }) => {
-	const [selected, setSelected] = useState([]);
-	console.log(selected);
-	return (
-		<InputFormStyle>
-			<div>
-				<TagsInput
-					value={selected}
-					onChange={setSelected}
-					name="tags"
-					placeHolder="e.g. (c# angularjs sql)"
-					separators={separators}
-				/>
-			</div>
-		</InputFormStyle>
-	);
-};
+`;
 
 export default TagForm;
