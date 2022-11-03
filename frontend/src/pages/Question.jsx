@@ -270,7 +270,7 @@ const Body = styled.div`
 		font-style: italic;
 	}
 	hr {
-		1px;
+		height: 1px;
 	}
 	pre {
 		font-size: 0.9rem;

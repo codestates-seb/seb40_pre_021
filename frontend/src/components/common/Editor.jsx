@@ -57,7 +57,7 @@ const Result = styled.div`
 		font-style: italic;
 	}
 	hr {
-		1px;
+		height: 1px;
 	}
 	pre {
 		font-size: 0.8rem;
@@ -71,7 +71,8 @@ const Result = styled.div`
 		padding: 0.1rem 0.3rem 0.1rem 0.3rem;
 	}
 
-	p, section {
+	p,
+	section {
 		margin-bottom: 1rem;
 	}
 `;
