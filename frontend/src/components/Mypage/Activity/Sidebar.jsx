@@ -11,7 +11,7 @@ const Sidebar = ({ tabs, onChange, onFilter, onScrollTop }) => {
 						clicked={clicked}
 						onClick={() => {
 							onChange(id);
-							onFilter(id);
+							onFilter({ id });
 							onScrollTop();
 						}}>
 						{name}

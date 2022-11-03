@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
 import Answers from '../components/Mypage/Activity/Answers/Answers';
@@ -22,14 +23,19 @@ const MypageActivityPage = () => {
 		setTabs(newTabs);
 	};
 
-	const ChangeCurrentTab = (id) => {
-		let newCurTab = tabs.filter((tab) => tab.id === id);
+	const changeCurrentTab = ({ id, name }) => {
+		let newCurTab = tabs.filter((tab) => tab.id === id || tab.name === name);
 		setCurTab(...newCurTab);
 	};
 
 	const goToTop = () => {
-		window.scrollTo({ top: 0, behavior: 'smooth' });
+		window.scrollTo({ top: 0 });
 	};
+
+	useEffect(() => {
+		goToTop();
+		handleTabChange(curTab.id);
+	}, [curTab]);
 
 	const TabContent = ({ curTab }) => {
 		const [answer, setAnswer] = useMypageData('answer');
@@ -41,10 +47,23 @@ const MypageActivityPage = () => {
 				return (
 					<GridBox>
 						<Summary />
-						<Answers answer={answer} limit={5} />
-						<Questions question={question} limit={5} />
-						<Tags tag={tag} limit={5} />
-						<Reputation />
+						<Answers
+							answer={answer}
+							limit={5}
+							handleTabChange={changeCurrentTab}
+						/>
+						<Questions
+							question={question}
+							limit={5}
+							handleTabChange={changeCurrentTab}
+						/>
+						<Tags
+							tag={tag}
+							limit={5}
+							flex={true}
+							handleTabChange={changeCurrentTab}
+						/>
+						<Reputation flex={true} />
 					</GridBox>
 				);
 			case 'Answers':
@@ -52,7 +71,7 @@ const MypageActivityPage = () => {
 			case 'Questions':
 				return <Questions question={question} />;
 			case 'Tags':
-				return <Tags tag={tag} />;
+				return <Tags tag={tag} setTag={setTag} />;
 			case 'Reputation':
 				return <Reputation />;
 		}
@@ -63,7 +82,7 @@ const MypageActivityPage = () => {
 			<Sidebar
 				tabs={tabs}
 				onChange={handleTabChange}
-				onFilter={ChangeCurrentTab}
+				onFilter={changeCurrentTab}
 				onScrollTop={goToTop}
 			/>
 			<TabContent curTab={curTab.name} />

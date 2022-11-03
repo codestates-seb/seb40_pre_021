@@ -8,39 +8,42 @@ import {
 } from '../api/mypageApi';
 
 function useMypageData(category, value = []) {
-	const [data, setData] = useState({ [category]: value });
+	const [data, setData] = useState(value);
 
 	useEffect(() => {
 		switch (category) {
 			case 'answer':
 				getMypageUserAnswer().then((res) => {
-					setData({ ...data, [category]: res });
+					let sortData = res.sort((a, b) => b.vote - a.vote);
+					setData(sortData);
 				});
 				break;
 			case 'question':
 				getMypageUserQuestion().then((res) => {
-					setData({ ...data, [category]: res });
+					let sortData = res.sort((a, b) => b.vote - a.vote);
+					setData(sortData);
 				});
 				break;
 			case 'tag':
 				getMypageUserTag().then((res) => {
-					setData({ ...data, [category]: res });
+					let sortData = res.sort((a, b) => b.tagCount - a.tagCount);
+					setData(sortData);
 				});
 				break;
 			case 'bookmark':
 				getMypageUserBookmark().then((res) => {
-					setData({ ...data, [category]: res });
+					setData(res);
 				});
 				break;
 			case 'userInfo':
 				getMypageUserInfo().then((res) => {
-					setData({ ...data, [category]: res });
+					setData(res);
 				});
 				break;
 		}
 	}, [category]);
 
-	return [data[category], setData];
+	return [data, setData];
 }
 
 export default useMypageData;

@@ -2,11 +2,11 @@ import styled from 'styled-components';
 import ListBox from '../ListBox';
 import Title from '../Title';
 
-const Reputation = () => {
+const Reputation = ({ flex }) => {
 	return (
 		<Container>
 			<TitleBox>
-				<Title title="Reputation" />
+				<Title title="Reputation" flex={flex} />
 			</TitleBox>
 			<ListBox text="You have no recent reputation changes." />
 		</Container>
