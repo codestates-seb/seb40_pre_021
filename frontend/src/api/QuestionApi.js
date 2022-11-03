@@ -10,7 +10,6 @@ export const ask = async (data) => {
 	try {
 		const result = await instance.post('/question/ask', data);
 		return result.data;
-		//redirect 부분 작성해야 하는지 어떻게 해야하는지 모르겠ㄷㅏ...
 	} catch (err) {
 		console.log(err);
 		return err;
@@ -26,7 +25,7 @@ export const getUserInfo = async () => {
 		console.log(err);
 		return err;
 	}
-}; //유저 인포 가져옴
+}; //유저 인포 가져옴, 테스트용
 
 export const getQuestion = async () => {
 	try {
@@ -41,7 +40,7 @@ export const getQuestion = async () => {
 
 export const commentQ = async (data) => {
 	try {
-		const result = await instance.post('/questions/{questionId}/comment', data);
+		const result = await instance.post('/questions/:questionId/comment', data);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -51,7 +50,7 @@ export const commentQ = async (data) => {
 
 export const answer = async (data) => {
 	try {
-		const result = await instance.post('/questions/{questionId}/answer', data);
+		const result = await instance.post('/questions/:questionId/answer', data);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -61,7 +60,7 @@ export const answer = async (data) => {
 
 export const commentA = async (data) => {
 	try {
-		const result = await instance.post('/answers/{answerId}/comment', data);
+		const result = await instance.post('/answers/:answerId/comment', data);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -71,7 +70,7 @@ export const commentA = async (data) => {
 
 export const upVoteForQ = async (data) => {
 	try {
-		const result = await instance.put('/questions/{questionId}/up', data);
+		const result = await instance.put('/questions/:questionId/up', data);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -81,7 +80,7 @@ export const upVoteForQ = async (data) => {
 
 export const downVoteForQ = async (data) => {
 	try {
-		const result = await instance.put('/questions/{questionId}/down', data);
+		const result = await instance.put('/questions/:questionId/down', data);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -91,7 +90,7 @@ export const downVoteForQ = async (data) => {
 
 export const upVoteForA = async (data) => {
 	try {
-		const result = await instance.put('/answers/{answerId}/up', data);
+		const result = await instance.put('/answers/:answerId/up', data);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -101,7 +100,7 @@ export const upVoteForA = async (data) => {
 
 export const downVoteForA = async (data) => {
 	try {
-		const result = await instance.put('/answers/{answerId}/down', data);
+		const result = await instance.put('/answers/:answerId/down', data);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -111,7 +110,7 @@ export const downVoteForA = async (data) => {
 
 export const bookmarkQ = async (data) => {
 	try {
-		const result = await instance.post('/bookmark/{questionId}', data);
+		const result = await instance.post('/bookmark/:questionId', data);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -121,7 +120,7 @@ export const bookmarkQ = async (data) => {
 
 export const bookmarkA = async (data) => {
 	try {
-		const result = await instance.post('/bookmark/{answerId}', data);
+		const result = await instance.post('/bookmark/:answerId', data);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -131,7 +130,7 @@ export const bookmarkA = async (data) => {
 
 export const bookmarkDelQ = async (data) => {
 	try {
-		const result = await instance.delete('/bookmark/{questionid}', data);
+		const result = await instance.delete('/bookmark/:questionid', data);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -142,7 +141,7 @@ export const bookmarkDelQ = async (data) => {
 export const bookmarkDelA = async (data) => {
 	try {
 		const result = await instance.delete(
-			'/bookmark/{questionid}/answer/{answerid}',
+			'/bookmark/:questionid/answer/:answerid',
 			data,
 		);
 		return result.data;
@@ -155,7 +154,7 @@ export const bookmarkDelA = async (data) => {
 export const choose = async (data) => {
 	try {
 		const result = await instance.put(
-			'/questions/{questionid}/answer/{answerid}/selection',
+			'/questions/:questionid/answer/:answerid/selection',
 			data,
 		);
 		return result.data;

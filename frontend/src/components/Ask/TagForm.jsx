@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const TagForm = ({ callback }) => {
@@ -9,17 +9,20 @@ const TagForm = ({ callback }) => {
 		e.stopPropagation();
 		if (e.key !== 'Enter' && e.key !== ' ') return;
 		else {
-			value = e.target.value;
+			value = e.target.value.trim().toLowerCase();
 			e.target.value = '';
 		}
 		if (!value.trim()) return;
 		setTags([...tags, value]);
-		e.target.value = '';
 	}
 
 	function removeTag(index) {
 		setTags(tags.filter((el, idx) => idx !== index));
 	} //현재 첫 번째 태그 삭제하면 페이지가 리로드되는;;; 버그가 있음.
+
+	useEffect(() => {
+		callback(tags);
+	}, [tags]);
 
 	return (
 		<Style>
@@ -33,8 +36,7 @@ const TagForm = ({ callback }) => {
 				<input
 					type="text"
 					placeholder="e.g. (objective-c json windows)"
-					onKeyDown={handleKeyDown}
-					onChange={(e) => callback(e)}></input>
+					onKeyDown={handleKeyDown}></input>
 			</div>
 		</Style>
 	);
