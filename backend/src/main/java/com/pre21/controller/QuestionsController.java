@@ -2,6 +2,7 @@ package com.pre21.controller;
 
 import com.pre21.dto.QuestionPatchDto;
 import com.pre21.dto.QuestionsPostDto;
+import com.pre21.dto.QuestionsResponseDto;
 import com.pre21.entity.Questions;
 import com.pre21.mapper.QuestionsMapper;
 import com.pre21.service.QuestionsService;
@@ -132,6 +133,5 @@ public class QuestionsController {
                                     @PathVariable("answer-id") Long answerId,
                                     @CookieValue(name = "userId", required = true) Long userId) {
         questionsService.addAnswerBookmark(questionId, answerId, userId);
-
     }
 }

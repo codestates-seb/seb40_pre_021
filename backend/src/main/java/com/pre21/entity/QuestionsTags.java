@@ -32,7 +32,7 @@ public class QuestionsTags {
     private Tags tags;
 
     @Column
-    String tagValue;
+    private String tagValue;
 
 
     public void setQuestions(Questions questions) {

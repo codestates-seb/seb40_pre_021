@@ -18,6 +18,7 @@ public interface QuestionsRepository extends JpaRepository<Questions, Long> {
 
     Page<Questions> findAllByUsersId(Long userId, PageRequest id);
 
+
     List<Questions> findAllByQuestionsTagsOrderByChooseYnAsc(List<QuestionsTags> questionsTags);
 
     @Query(value = "SELECT Questions FROM Questions WHERE title LIKE ?1 ORDER BY chooseYn ASC")
