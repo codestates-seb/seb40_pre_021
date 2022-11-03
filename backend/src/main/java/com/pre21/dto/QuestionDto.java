@@ -1,9 +1,5 @@
 package com.pre21.dto;
 
-import com.pre21.entity.Answers;
-import com.pre21.entity.QuestionComments;
-import com.pre21.entity.QuestionsTags;
-import com.pre21.entity.User;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -30,7 +26,7 @@ public class QuestionDto {
         private Long questionId;    // 질문 Id
         private String title;   // 질문 제목
         private String contents;    // 질문 내용
-        private List<QuestionsTagsResponseDto> questionsTags;   // 질문에 사용한 태그 정보
+        private List<QuestionsTagsResponseDto> tags;   // 질문에 사용한 태그 정보
         private int vote;   // 질문 추천수
         private List<AnswersDto.ResponseDto> answers;   // 질문에 달린 답글 정보
         private int views;  // 질문 조회수
@@ -50,7 +46,7 @@ public class QuestionDto {
         private Long id;
         private String title;
         private String contents;
-        private List<QuestionsTagsResponseDto> questionsTags;
+        private List<QuestionsTagsResponseDto> tags;
         private int vote;
         private boolean chooseYn;
         private int views;

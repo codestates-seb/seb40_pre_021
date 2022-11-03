@@ -6,8 +6,6 @@ import com.pre21.entity.*;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +22,7 @@ public interface QuestionsMapper {
         responseDto.setContents(questions.getContents());   // 질문 내용 저장
 
         List<QuestionsTags> questionsTags = questions.getQuestionsTags();   // 질문에 사용된 태그 정보 리스트
-        responseDto.setQuestionsTags(questionsTagsToQuestionsTagsResponseDto(questionsTags));   // 태그 정보 저장
+        responseDto.setTags(questionsTagsToQuestionsTagsResponseDto(questionsTags));   // 태그 정보 저장
 
         responseDto.setVote(questions.getVote());   // 질문 추천수 저장
 
