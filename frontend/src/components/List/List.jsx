@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../common/Button';
 
 const ListStyle = styled.div`
@@ -90,6 +90,7 @@ const List = ({ data, type }) => {
 	// const [questionId, setQuestionId] = useState(data.questionId);
 	const [createId, setCreateId] = useState(data.createId);
 	const [choosed, setChoosed] = useState(data.choosed);
+	const navigate = useNavigate();
 
 	const buttonProps = {
 		color: `hsl(205,47%,42%)`,
@@ -113,10 +114,21 @@ const List = ({ data, type }) => {
 					<div className="tags">
 						{Array.isArray(data.tags) ? (
 							data.tags.map((ele, idx) => {
-								return <Button key={idx} text={ele} {...buttonProps} />;
+								return (
+									<Button
+										key={idx}
+										text={ele}
+										{...buttonProps}
+										callback={() => navigate(`/questions/tagged/[${ele}]`)}
+									/>
+								);
 							})
 						) : (
-							<Button text={data.tags} {...buttonProps} />
+							<Button
+								text={data.tags}
+								{...buttonProps}
+								callback={() => navigate(`/questions/tagged/[${data.tags}]`)}
+							/>
 						)}
 					</div>
 					<div className="create">

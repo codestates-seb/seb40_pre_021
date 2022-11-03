@@ -128,11 +128,9 @@ const Search = () => {
 					) {
 						const tagName = searchWords.join('');
 						navigate(`/questions/tagged/${tagName}`);
-						location.reload;
 					} else {
 						const q = searchWords.join('+');
 						navigate(`/search/${q}`);
-						location.reload;
 					}
 				}
 			}
