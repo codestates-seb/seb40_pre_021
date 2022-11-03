@@ -27,7 +27,6 @@ const AppRouter = () => {
 						<Route path="/questions" element={<Questions />} />
 						{/* keyword 검색 */}
 						<Route path="/search/:q" element={<Questions />} />
-						<Route path="/questions/ask" element={<Ask />} />
 						<Route
 							path="/questions/question/:questionId"
 							element={<Question />}
@@ -40,6 +39,7 @@ const AppRouter = () => {
 					</Route>
 					<Route path="/login" element={<Login />} />
 					<Route path="/signup" element={<Signup />} />
+					<Route path="/questions/ask" element={<Ask />} />
 					<Route path="*" element={<Navigate to="/" replace />} />
 				</Routes>
 			</Suspense>

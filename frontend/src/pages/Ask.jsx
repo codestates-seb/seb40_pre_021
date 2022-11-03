@@ -5,6 +5,7 @@ import Button from '../components/common/Button';
 import TagForm from '../components/Ask/TagForm';
 import { ask } from '../api/QuestionApi';
 import background from '../assets/images/background.svg';
+import Header from '../components/Header/Header';
 const Ask = ({ editTitle, editBody, editTag }) => {
 	const [title, setTitle] = useState('');
 	const [problem, setProblem] = useState('');
@@ -34,87 +35,90 @@ const Ask = ({ editTitle, editBody, editTag }) => {
 	};
 
 	return (
-		<Container>
-			{/* <Formarea action="/question/ask" method="post"> */}
-			<Header>
-				<AskQuestion>Ask a public question</AskQuestion>
-			</Header>
-			<BodyConatiner>
-				<WritingTip>
-					<h2>Writing a good question</h2>
-					<p className="writingtip">
-						You’re ready to ask a programming-related question and this form
-						will help guide you through the process. <br />
-						Looking to ask a non-programming question? See{' '}
-						<a href="https://stackexchange.com/sites#technology">
-							the topics here
-						</a>{' '}
-						to find a relevant site.
-					</p>
-					<p className="steps">Steps</p>
-					<ul>
-						<li>Summarize your problem in a one-line title.</li>
-						<li>Describe your problem in more detail.</li>
-						<li>Describe what you tried and what you expected to happen.</li>
-						<li>
-							Add “tags” which help surface your question to members of the
-							community.
-						</li>
-						<li>Review your question and post it to the site.</li>
-					</ul>
-				</WritingTip>
-				<Group>
-					<SectionTitle>
-						<label htmlFor="title">Title</label>
-					</SectionTitle>
-					<Caption>
-						<label htmlFor="title">
-							Be specific and imagine you’re asking a question to another
-							person.
-						</label>
-					</Caption>
-					<Form
-						id="title"
-						name="title"
-						type="text"
-						maxlength="300"
-						placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
-						onChange={handleTitle}
-					/>
-				</Group>
-				<Tip></Tip>
-				<Group>
-					<SectionTitle>What are the details of your problem?</SectionTitle>
-					<Caption>
-						Introduce the problem and expand on what you put in the title.
-						Minimum 20 characters.
-					</Caption>
-					<Editor callback={handleProblem} />
-				</Group>
-				<Tip></Tip>
-				<Group>
-					<SectionTitle>
-						What did you try and what were you expecting?
-					</SectionTitle>
-					<Caption>
-						Describe what you tried, what you expected to happen, and what
-						actually resulted. Minimum 20 characters.
-					</Caption>
-					<Editor callback={handleExpect} />
-				</Group>
-				<Tip></Tip>
-				<Group>
-					<SectionTitle>Tags</SectionTitle>
-					<Caption>
-						Add up to 5 tags to describe what your question is about. Start
-						typing to see suggestions.
-					</Caption>
-					<TagForm callback={handleTags} />
-				</Group>
-			</BodyConatiner>
-			<Button text="Review your question" callback={handleClick} />
-			{/* </Formarea> */}
-		</Container>
+		<>
+			<Header />
+			<Container>
+				{/* <Formarea action="/question/ask" method="post"> */}
+				<AskHeader>
+					<AskQuestion>Ask a public question</AskQuestion>
+				</AskHeader>
+				<BodyConatiner>
+					<WritingTip>
+						<h2>Writing a good question</h2>
+						<p className="writingtip">
+							You’re ready to ask a programming-related question and this form
+							will help guide you through the process. <br />
+							Looking to ask a non-programming question? See{' '}
+							<a href="https://stackexchange.com/sites#technology">
+								the topics here
+							</a>{' '}
+							to find a relevant site.
+						</p>
+						<p className="steps">Steps</p>
+						<ul>
+							<li>Summarize your problem in a one-line title.</li>
+							<li>Describe your problem in more detail.</li>
+							<li>Describe what you tried and what you expected to happen.</li>
+							<li>
+								Add “tags” which help surface your question to members of the
+								community.
+							</li>
+							<li>Review your question and post it to the site.</li>
+						</ul>
+					</WritingTip>
+					<Group>
+						<SectionTitle>
+							<label htmlFor="title">Title</label>
+						</SectionTitle>
+						<Caption>
+							<label htmlFor="title">
+								Be specific and imagine you’re asking a question to another
+								person.
+							</label>
+						</Caption>
+						<Form
+							id="title"
+							name="title"
+							type="text"
+							maxlength="300"
+							placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
+							onChange={handleTitle}
+						/>
+					</Group>
+					<Tip></Tip>
+					<Group>
+						<SectionTitle>What are the details of your problem?</SectionTitle>
+						<Caption>
+							Introduce the problem and expand on what you put in the title.
+							Minimum 20 characters.
+						</Caption>
+						<Editor callback={handleProblem} />
+					</Group>
+					<Tip></Tip>
+					<Group>
+						<SectionTitle>
+							What did you try and what were you expecting?
+						</SectionTitle>
+						<Caption>
+							Describe what you tried, what you expected to happen, and what
+							actually resulted. Minimum 20 characters.
+						</Caption>
+						<Editor callback={handleExpect} />
+					</Group>
+					<Tip></Tip>
+					<Group>
+						<SectionTitle>Tags</SectionTitle>
+						<Caption>
+							Add up to 5 tags to describe what your question is about. Start
+							typing to see suggestions.
+						</Caption>
+						<TagForm callback={handleTags} />
+					</Group>
+					<Button text="Review your question" callback={handleClick} />
+				</BodyConatiner>
+				{/* </Formarea> */}
+			</Container>
+		</>
 	);
 };
 
@@ -126,7 +130,7 @@ const Container = styled.section`
 // 	max-width: 850px;
 // `;
 
-const Header = styled.div`
+const AskHeader = styled.div`
 	height: 10rem;
 	margin-right: 1.5rem;
 	background-image: url('${background}');
@@ -193,12 +197,12 @@ const Caption = styled.div`
 `;
 const Tip = styled.div``;
 const Form = styled.input`
+	width: 100%;
+	height: 30px;
 	font-size: 0.85rem;
 	font-weight: 500;
 	border: 1px solid rgb(179, 183, 188);
 	padding-left: 0.5rem;
-	height: 30px;
-	width: 100%;
 	border-radius: 3px;
 	background-color: white;
 	display: flex;

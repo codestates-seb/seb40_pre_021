@@ -18,7 +18,7 @@ const TagForm = ({ callback }) => {
 
 	function removeTag(index) {
 		setTags(tags.filter((el, idx) => idx !== index));
-	} //현재 첫 번째 태그 삭제하면 페이지가 리로드되는;;; 버그가 있음.
+	}
 
 	useEffect(() => {
 		callback(tags);
@@ -43,22 +43,17 @@ const TagForm = ({ callback }) => {
 };
 
 const Style = styled.div`
-	.blueText {
-		color: hsl(206, 100%, 40%);
-		font-size: 12px;
-	}
 	.container {
 		input {
 			padding: 0 0.5rem 0 0.5rem;
 			border: none;
-			font-size: 13px;
-
-			&:focus {
-				outline: none;
-			}
 			font-size: 12px;
 			font-weight: 500;
 			height: 1.6rem;
+			width: 50%;
+			&:focus {
+				outline: none;
+			}
 		}
 		input::placeholder {
 			color: #bbbbbb;
