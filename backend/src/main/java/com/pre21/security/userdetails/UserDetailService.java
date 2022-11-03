@@ -1,6 +1,8 @@
 package com.pre21.security.userdetails;
 
 import com.pre21.entity.User;
+import com.pre21.exception.BusinessLogicException;
+import com.pre21.exception.ExceptionCode;
 import com.pre21.security.utils.CustomAuthorityUtils;
 import com.pre21.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +24,7 @@ public class UserDetailService implements UserDetailsService {
     @Override
     public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<User> optionalUser = userRepository.findByEmail(email);
-        User findUser = optionalUser.orElseThrow(() -> new RuntimeException("USER NOT FOUND"));
-        List<String> authorities = authorityUtils.createRoles(email);
-        findUser.setRoles(authorities);
+        User findUser = optionalUser.orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
 
         return new UserDetails(findUser);
     }

@@ -115,7 +115,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .build();
 
         res.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        res.setStatus(HttpStatus.UNAUTHORIZED.value());
         res.getWriter().write(gson.toJson(response, AuthDto.Response.class));
     }
 }

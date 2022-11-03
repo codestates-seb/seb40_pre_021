@@ -10,11 +10,12 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ErrorResponder {
     @SneakyThrows
-    public static void sendErrorResponse(HttpServletResponse req, HttpStatus status) {
+    public static void sendErrorResponse(HttpServletResponse res, HttpStatus status) {
         Gson gson = new Gson();
         ErrorResponse errorResponse = ErrorResponse.of(status);
-        req.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        req.setStatus(status.value());
-        req.getWriter().write(gson.toJson(errorResponse, ErrorResponse.class));
+        res.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        res.setStatus(status.value());
+        res.getWriter().write(gson.toJson(errorResponse, ErrorResponse.class));
+        res.encodeRedirectURL("/login");
     }
 }

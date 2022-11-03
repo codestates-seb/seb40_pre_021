@@ -35,60 +35,60 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @MockBean(JpaMetamodelMappingContext.class)
 @AutoConfigureRestDocs
 public class QuestionsControllerRestDocsTest {
-//    @Autowired
-//    private MockMvc mockMvc;
-//
-//    @MockBean
-//    private QuestionsService questionsService;
-//
-//    @MockBean
-//    private QuestionsMapper mapper;
-//
-//    @Autowired
-//    private Gson gson;
-//
-//    @Test
-//    public void createQuestion() throws Exception {
-//        //given
-//        QuestionsPostDto postDto = new QuestionsPostDto("제목", "내용", List.of("태그1","태그2"));
-//        String content = gson.toJson(postDto);
-//
-//        //given(questionsService.createQuestion(Mockito.any(QuestionsPostDto.class), Mockito.anyLong()));
-//
-//        //when
-//        ResultActions actions =
-//                mockMvc.perform(
-//                        post("/questions/ask")
-//                                .accept(MediaType.APPLICATION_JSON)
-//                                .contentType(MediaType.APPLICATION_JSON)
-//                                .content(content)
-//                );
-//
-//        //then
-//        actions
-//                .andExpect(status().isCreated())
-//                .andExpect(jsonPath("$.data.title").value(postDto.getTitle()))
-//                .andExpect(jsonPath("$.data.contents").value(postDto.getContents()))
-//                .andExpect(jsonPath("$.data.tags").value(postDto.getTags()))
-//                .andDo(document(
-//                        "post-question",
-//                        requestFields(
-//                                List.of(
-//                                        fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
-//                                        fieldWithPath("contents").type(JsonFieldType.STRING).description("내용"),
-//                                        fieldWithPath("tags").type(JsonFieldType.ARRAY).description("태그")
-//                                )
-//                        ),
-//                        /*responseFields(
-//                                List.of(
-//                                        fieldWithPath("data").type(JsonFieldType.OBJECT).description("결과 데이터"),
-//                                        fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("질문 식별자"),
-//                                        fieldWithPath("data.title").type(JsonFieldType.STRING).description("제목"),
-//                                        fieldWithPath("data.contents").type(JsonFieldType.STRING).description("내용"),
-//                                        fieldWithPath("data.tags").type(JsonFieldType.ARRAY).description("태그")
-//                                )
-//                        )*/
-//                        responseBody()
-//                ));
-//    }
+    @Autowired
+    private MockMvc mockMvc;
+
+    @MockBean
+    private QuestionsService questionsService;
+
+    @MockBean
+    private QuestionsMapper mapper;
+
+    @Autowired
+    private Gson gson;
+
+    @Test
+    public void createQuestion() throws Exception {
+        //given
+        QuestionsPostDto postDto = new QuestionsPostDto("제목", "내용", List.of("태그1","태그2"));
+        String content = gson.toJson(postDto);
+
+        //given(questionsService.createQuestion(Mockito.any(QuestionsPostDto.class), Mockito.anyLong()));
+
+        //when
+        ResultActions actions =
+                mockMvc.perform(
+                        post("/questions/ask")
+                                .accept(MediaType.APPLICATION_JSON)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(content)
+                );
+
+        //then
+        actions
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.data.title").value(postDto.getTitle()))
+                .andExpect(jsonPath("$.data.contents").value(postDto.getContents()))
+                .andExpect(jsonPath("$.data.tags").value(postDto.getTags()))
+                .andDo(document(
+                        "post-question",
+                        requestFields(
+                                List.of(
+                                        fieldWithPath("title").type(JsonFieldType.STRING).description("제목"),
+                                        fieldWithPath("contents").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("tags").type(JsonFieldType.ARRAY).description("태그")
+                                )
+                        ),
+                        /*responseFields(
+                                List.of(
+                                        fieldWithPath("data").type(JsonFieldType.OBJECT).description("결과 데이터"),
+                                        fieldWithPath("data.id").type(JsonFieldType.NUMBER).description("질문 식별자"),
+                                        fieldWithPath("data.title").type(JsonFieldType.STRING).description("제목"),
+                                        fieldWithPath("data.contents").type(JsonFieldType.STRING).description("내용"),
+                                        fieldWithPath("data.tags").type(JsonFieldType.ARRAY).description("태그")
+                                )
+                        )*/
+                        responseBody()
+                ));
+    }
 }

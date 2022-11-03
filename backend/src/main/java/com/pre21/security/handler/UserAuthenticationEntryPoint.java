@@ -19,8 +19,8 @@ public class UserAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest req,
                          HttpServletResponse res,
                          AuthenticationException authException) throws IOException, ServletException {
-        Exception exception = (Exception) req.getAttribute("exception");
-        ErrorResponder.sendErrorResponse(res, HttpStatus.UNAUTHORIZED);
-        log.warn("Unauthorized error happened: {}", exception);
+//        Exception exception = (Exception) req.getAttribute("exception");
+//        ErrorResponder.sendErrorResponse(res, HttpStatus.UNAUTHORIZED);
+//        log.warn("Unauthorized error happened: {}", exception);
     }
 }

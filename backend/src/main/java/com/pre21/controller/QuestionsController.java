@@ -32,6 +32,7 @@ public class QuestionsController {
                                @CookieValue(name = "userId", required = true) Long userId) {
 
         questionsService.createQuestion(questionsPostDto, userId);
+
     }
 
 

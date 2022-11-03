@@ -74,7 +74,7 @@ public class User {
         this.nickname = nickname;
         this.email = email;
         this.password = password;
-        this.roles.add("USER");
+//        this.roles.add("USER");
     }
 
     public void addQuestion(Questions question) {
