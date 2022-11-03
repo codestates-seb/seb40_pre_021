@@ -114,24 +114,19 @@ const List = ({ data, type }) => {
 				{type === 'Questions' && <div className="body">{data.body}</div>}
 				<div className="bottomBox">
 					<div className="tags">
-						{Array.isArray(data.tags) ? (
-							data.tags.map((ele, idx) => {
+						{Array.isArray(data.tags) &&
+							data.tags.map((ele) => {
 								return (
 									<Button
-										key={idx}
-										text={ele}
+										key={ele.tagId}
+										text={ele.title}
 										{...buttonProps}
-										callback={() => navigate(`/questions/tagged/[${ele}]`)}
+										callback={() =>
+											navigate(`/questions/search/[${ele.title}]`)
+										}
 									/>
 								);
-							})
-						) : (
-							<Button
-								text={data.tags}
-								{...buttonProps}
-								callback={() => navigate(`/questions/tagged/[${data.tags}]`)}
-							/>
-						)}
+							})}
 					</div>
 					<div className="create">
 						<Link to="">{createId}</Link>
