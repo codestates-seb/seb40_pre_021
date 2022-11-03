@@ -55,7 +55,7 @@ const Box = styled.div`
 		border-bottom: none;
 	}
 	&:last-child {
-		border-bottom: ${(props) => (props.limit ? 'none' : '')};
+		border-bottom: none;
 	}
 `;
 
