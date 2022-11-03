@@ -29,8 +29,7 @@ public class LikeService {
         // 질문 id를 통해 질문 조회
         Questions findQuestion = verifiedExistQuestion(questionId);
 
-        // 추천수 업데이트
-        findQuestion.setVote(like.getCount());
+        int compareResult = 0;
 
         // 현재 유저의 질문 좋아요 상태를 가져온 후
         Optional<QuestionLikes> findQuestionLikes = findQuestionLike(findUser);
@@ -40,6 +39,8 @@ public class LikeService {
             QuestionLikes likes = findQuestionLikes.get();
             likes.setLikeYn(like.isLikeYn());
             likes.setUnlikeYn(like.isUnlikeYn());
+            compareResult = dtoCheck(likes, like);
+            findQuestion.setVote(compareResult);
             QuestionLikes savedLike = questionLikeRepository.save(likes);
             findQuestion.addQuestionsLikes(savedLike);
             findUser.addQuestionsLikes(savedLike);
@@ -47,6 +48,8 @@ public class LikeService {
             QuestionLikes likes = new QuestionLikes(like.isLikeYn(), like.isUnlikeYn());
             likes.setUsers(findUser);
             likes.addQuestions(findQuestion);
+            compareResult = dtoCheck(likes, like);
+            findQuestion.setVote(compareResult);
             QuestionLikes savedLike = questionLikeRepository.save(likes);
             findQuestion.addQuestionsLikes(savedLike);
             findUser.addQuestionsLikes(savedLike);
@@ -64,8 +67,7 @@ public class LikeService {
         // 답변 id를 통해 질문 조회
         Answers findAnswer = verifiedExistAnswer(answerId);
 
-        // 추천수 업데이트
-        findAnswer.setVote(like.getCount());
+        int compareResult = 0;
 
         // 현재 유저의 답변 좋아요 상태를 가져온 후
         Optional<AnswerLikes> findQuestionLikes = findAnswerLike(findUser);
@@ -74,6 +76,8 @@ public class LikeService {
             AnswerLikes likes = findQuestionLikes.get();
             likes.setLikeYn(like.isLikeYn());
             likes.setUnlikeYn(like.isUnlikeYn());
+            compareResult = dtoCheck(likes, like);
+            findAnswer.setVote(compareResult);
             AnswerLikes savedLike = answerLikeRepository.save(likes);
             findAnswer.addAnswerLike(savedLike);
             findUser.addAnswerLike(savedLike);
@@ -81,6 +85,8 @@ public class LikeService {
             AnswerLikes likes = new AnswerLikes(like.isLikeYn(), like.isUnlikeYn());
             likes.setUsers(findUser);
             likes.addAnswer(findAnswer);
+            compareResult = dtoCheck(likes, like);
+            findAnswer.setVote(compareResult);
             AnswerLikes savedLike = answerLikeRepository.save(likes);
             findAnswer.addAnswerLike(savedLike);
             findUser.addAnswerLike(savedLike);
@@ -116,5 +122,41 @@ public class LikeService {
 
     private Optional<AnswerLikes> findAnswerLike(User user) {
         return answerLikeRepository.findAnswerLikesByUsers(user);
+    }
+    private int dtoCheck(QuestionLikes likes, QuestionDto.Like like) {
+        if (likes.isLikeYn()) {
+            if (like.isLikeYn()) {
+                return -1;
+            }
+            if (like.isUnlikeYn()) {
+                return -2;
+            }
+        } else if (likes.isUnlikeYn()) {
+            if (like.isLikeYn()) {
+                return +2;
+            }
+            if (like.isUnlikeYn()) {
+                return +1;
+            }
+        }
+        return 0;
+    }
+    private int dtoCheck(AnswerLikes likes, QuestionDto.Like like) {
+        if (likes.isLikeYn()) {
+            if (like.isLikeYn()) {
+                return -1;
+            }
+            if (like.isUnlikeYn()) {
+                return -2;
+            }
+        } else if (likes.isUnlikeYn()) {
+            if (like.isLikeYn()) {
+                return +2;
+            }
+            if (like.isUnlikeYn()) {
+                return +1;
+            }
+        }
+        return 0;
     }
 }

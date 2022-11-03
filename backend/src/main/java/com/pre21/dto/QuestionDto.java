@@ -18,7 +18,6 @@ public class QuestionDto {
         private Long userId;
         private boolean likeYn;
         private boolean unlikeYn;
-        private int count;
     }
 
 
