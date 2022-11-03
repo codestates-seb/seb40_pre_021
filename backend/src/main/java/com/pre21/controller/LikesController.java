@@ -21,5 +21,4 @@ public class LikesController {
             ,@RequestBody QuestionDto.Like request) {
         likeService.saveQuestionLike(questionId, request);
     }
-
 }

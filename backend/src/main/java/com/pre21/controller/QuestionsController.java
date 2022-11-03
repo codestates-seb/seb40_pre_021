@@ -47,6 +47,7 @@ public class QuestionsController {
     public ResponseEntity getQuestion(@PathVariable("question-id") Long questionId) {
         Questions questions = questionsService.findQuestion(questionId);
 
+
         return new ResponseEntity<>(mapper.questionsToQuestionResponse(questions),
                 HttpStatus.OK);
     }

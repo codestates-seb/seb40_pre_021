@@ -43,6 +43,9 @@ public interface QuestionsMapper {
         List<Bookmark> bookmark = questions.getBookmarks(); // 질문을 북마크한 유저 정보 리스트
         responseDto.setBookmarks(questionBookmarkToQuestionBookmarkResponseDto(bookmark));  // 질문을 북마크한 유저 정보 저장
 
+        List<QuestionLikes> questionsLikes = questions.getQuestionsLikes(); // 질문 좋아요,싫어요 유저 정보 리스트
+        responseDto.setQuestionsLikes(questionLikesToQuestionLikesResponseDto(questionsLikes)); //질문 좋아요,싫어요 유저 정보 저장
+
         return responseDto;
     }
 
@@ -88,6 +91,7 @@ public interface QuestionsMapper {
                         .nickname(answers1.getUsers().getNickname())
                         .comments(answerCommentsToAnswerCommentsResponseDto(answers1.getComments()))
                         .bookmarks(answerBookmarkToAnswerBookmarkResponseDto(answers1.getBookmarks()))
+                        .answerLikes(answerLikesToAnswerLikesResponseDto(answers1.getAnswersLike()))
                         .build())
                 .collect(Collectors.toList());
     }
@@ -128,6 +132,30 @@ public interface QuestionsMapper {
                         .id(bookmark.getId())
                         .userId(bookmark.getUsers().getId())
                         .nickname(bookmark.getUsers().getNickname())
+                        .build()
+                ).collect(Collectors.toList());
+    }
+
+    default List<QuestionLikeResponseDto> questionLikesToQuestionLikesResponseDto(List<QuestionLikes> questionLikes) {
+        // 질문에 좋아요,싫어요를 체크한 유저 정보를 리스트로 저장
+        return questionLikes.stream()
+                .map(questionLikes1 -> QuestionLikeResponseDto
+                        .builder()
+                        .userId(questionLikes1.getUsers().getId())
+                        .likeYn(questionLikes1.isLikeYn())
+                        .unlikeYn(questionLikes1.isUnlikeYn())
+                        .build()
+                ).collect(Collectors.toList());
+    }
+
+    default List<AnswerLikeResponseDto> answerLikesToAnswerLikesResponseDto(List<AnswerLikes> answerLikes) {
+        // 답변에 좋아요,싫어요를 체크한 유저 정보를 리스트로 저장
+        return answerLikes.stream()
+                .map(answerLikes1 -> AnswerLikeResponseDto
+                        .builder()
+                        .userId(answerLikes1.getUsers().getId())
+                        .likeYn(answerLikes1.isLikeYn())
+                        .unlikeYn(answerLikes1.isUnlikeYn())
                         .build()
                 ).collect(Collectors.toList());
     }
