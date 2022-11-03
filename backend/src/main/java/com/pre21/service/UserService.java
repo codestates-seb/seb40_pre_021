@@ -27,6 +27,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final RefreshTokenRepository refreshTokenRepository;
     private final JwtTokenizer jwtTokenizer;
+    private final CustomAuthorityUtils authorityUtils;
 
 
     // 회원가입
@@ -35,7 +36,8 @@ public class UserService {
         // 비밀번호 암호화
         String encryptedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encryptedPassword);
-
+        List<String> createRole = authorityUtils.createRoles(user.getEmail());
+        user.setRoles(createRole);
         User savedUser = userRepository.save(user);
 
         return savedUser;

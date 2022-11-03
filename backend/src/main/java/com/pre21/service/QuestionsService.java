@@ -44,7 +44,7 @@ public class QuestionsService {
                 e -> {
                     if (tagsRepository.findByTitle(e).isEmpty()) {
                         Tags tags1 = tagsRepository.save(new Tags(e));
-                        QuestionsTags questionsTags = new QuestionsTags(questions, tags1);
+                        QuestionsTags questionsTags = new QuestionsTags(questions, e, tags1);
                         questionsTagsRepository.save(questionsTags);
                         questions.addQuestionsTags(questionsTags);
                         // questionsRepository.save(questions);
@@ -54,7 +54,7 @@ public class QuestionsService {
                     } else {
                         Tags tags1 = tagsRepository.findByTitle(e).orElseThrow(IllegalArgumentException::new);
                         updateTagCount(tags1);
-                        QuestionsTags questionsTags = new QuestionsTags(questions, tags1);
+                        QuestionsTags questionsTags = new QuestionsTags(questions, e, tags1);
                         questionsTagsRepository.save(questionsTags);
                         questions.addQuestionsTags(questionsTags);
                         findUser.addQuestion(questions);
@@ -169,7 +169,7 @@ public class QuestionsService {
                 e -> {
                     if (tagsRepository.findByTitle(e).isEmpty()) {
                         Tags tags1 = tagsRepository.save(new Tags(e));
-                        QuestionsTags questionsTags = new QuestionsTags(updatedQuestion, tags1);
+                        QuestionsTags questionsTags = new QuestionsTags(updatedQuestion, e, tags1);
                         questionsTagsRepository.save(questionsTags);
                         updatedQuestion.addQuestionsTags(questionsTags);
                         findUser.addQuestion(updatedQuestion);
@@ -178,7 +178,7 @@ public class QuestionsService {
                     } else {
                         Tags tags1 = tagsRepository.findByTitle(e).orElseThrow(IllegalArgumentException::new);
                         updateTagCount(tags1);
-                        QuestionsTags questionsTags = new QuestionsTags(updatedQuestion, tags1);
+                        QuestionsTags questionsTags = new QuestionsTags(updatedQuestion, e, tags1);
                         questionsTagsRepository.save(questionsTags);
                         updatedQuestion.addQuestionsTags(questionsTags);
                         findUser.addQuestion(updatedQuestion);

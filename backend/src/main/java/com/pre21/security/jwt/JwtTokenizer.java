@@ -29,16 +29,14 @@ import java.util.*;
 public class JwtTokenizer {
 
     @Getter
-    @Value("${JWT_SECRET_KEY}")
-    private String secretKey;
+//    @Value("${JWT_SECRET_KEY}")
+    private String secretKey = "ewqiopasdasdhjqwjkdqwdjkashdjkashdasjdhqweqeqweqwdasjxasxqweu123dhasd3423hasjdk";
 
     @Getter
-    @Value("${jwt.access-token-expiration-minutes}")
-    private int accessTokenExpirationMinutes;
+    private int accessTokenExpirationMinutes = 15;
 
     @Getter
-    @Value("${jwt.refresh-token-expiration-minutes}")
-    private int refreshTokenExpirationMinutes;
+    private int refreshTokenExpirationMinutes = 30;
 
     private final RefreshTokenRepository refreshTokenRepository;
     private final UserRepository userRepository;

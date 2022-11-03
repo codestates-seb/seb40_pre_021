@@ -31,6 +31,9 @@ public class QuestionsTags {
     @JoinColumn(name = "TAG_ID")
     private Tags tags;
 
+    @Column
+    String tagValue;
+
 
     public void setQuestions(Questions questions) {
         // 기존에 getQuestionsTags 와 연관관계가 있다면
@@ -55,8 +58,9 @@ public class QuestionsTags {
         }
     }
 
-    public QuestionsTags(Questions questions, Tags tags) {
+    public QuestionsTags(Questions questions,String tagValue ,Tags tags) {
         this.questions = questions;
+        this.tagValue = tagValue;
         this.tags = tags;
     }
 }
