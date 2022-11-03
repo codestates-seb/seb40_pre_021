@@ -7,32 +7,17 @@ import SavesListBox from './SavesListBox';
 let sortData = [
 	{
 		id: 0,
-		name: 'Score',
+		name: 'Views',
 		clicked: true,
 	},
 	{
 		id: 1,
-		name: 'Activity',
-		clicked: false,
-	},
-	{
-		id: 2,
-		name: 'Views',
-		clicked: false,
-	},
-	{
-		id: 3,
 		name: 'Newest',
-		clicked: false,
-	},
-	{
-		id: 4,
-		name: 'Added',
 		clicked: false,
 	},
 ];
 
-const SavesLayout = ({ bookmark }) => {
+const SavesLayout = ({ bookmark, setBookmark, handleSortLists }) => {
 	const total = bookmark?.length;
 	return (
 		<Container>
@@ -42,7 +27,14 @@ const SavesLayout = ({ bookmark }) => {
 			</TopWrapper>
 			<InfoArea>
 				<CountText>{total} Saved items</CountText>
-				{bookmark.length ? <SortButtonGroup data={sortData} /> : null}
+				{bookmark.length ? (
+					<SortButtonGroup
+						menus={sortData}
+						data={bookmark}
+						callback={setBookmark}
+						handleSortLists={handleSortLists}
+					/>
+				) : null}
 			</InfoArea>
 			{bookmark.length ? (
 				<SavesListBox bookmarks={bookmark} />
