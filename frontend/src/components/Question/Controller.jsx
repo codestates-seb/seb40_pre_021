@@ -83,7 +83,7 @@ const Controller = ({
 		if (chosen) setChosen(false);
 		if (!chosen) setChosen(true);
 		choose();
-	};
+	}; // 질문 선택 기능
 
 	return (
 		<>
