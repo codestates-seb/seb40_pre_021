@@ -27,12 +27,11 @@ const AppRouter = () => {
 						<Route path="/questions" element={<Questions />} />
 						{/* keyword 검색 */}
 						<Route path="/search/:q" element={<Questions />} />
-						<Route path="/questions/ask" element={<Ask />} />
 						<Route
 							path="/questions/question/:questionId"
 							element={<Question />}
 						/>
-						{/* ask와 question은 테스트 후 삭제해야 합니다 (메인 화면에서 직접 연결되는 것이 아님)*/}
+						{/* question은 테스트 후 삭제해야 합니다 (메인 화면에서 직접 연결되는 것이 아님)*/}
 						<Route path="/users" element={<Mypage />}>
 							<Route path="activity" element={<MypageActivityPage />} />
 							<Route path="saves" element={<MypageSavesPage />} />
@@ -40,6 +39,7 @@ const AppRouter = () => {
 					</Route>
 					<Route path="/login" element={<Login />} />
 					<Route path="/signup" element={<Signup />} />
+					<Route path="/questions/ask" element={<Ask />} />
 					<Route path="*" element={<Navigate to="/" replace />} />
 				</Routes>
 			</Suspense>
