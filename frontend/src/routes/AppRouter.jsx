@@ -23,7 +23,12 @@ const AppRouter = () => {
           ex) <Route path="/mypage" element={<Mypage />}>
           */}
 						<Route path="/" element={<Home />} />
+						{/* 왼쪽 Quesions 메뉴 */}
 						<Route path="/questions" element={<Questions />} />
+						{/* keyword 검색 */}
+						<Route path="/search/:q" element={<Questions />} />
+						{/* tag 검색 */}
+						<Route path="/questions/tagged/:tagName" element={<Questions />} />
 						<Route path="/questions/ask" element={<Ask />} />
 						<Route path="/questions/question" element={<Question />} />
 						{/* ask와 question은 테스트 후 삭제해야 합니다 (메인 화면에서 직접 연결되는 것이 아님)*/}

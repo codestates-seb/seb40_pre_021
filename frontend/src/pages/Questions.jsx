@@ -6,6 +6,7 @@ import Pagination from '../components/List/Pagination';
 import List from '../components/List/List';
 import useDynamicTitle from '../hooks/useDynamicTitle';
 import Button from '../components/common/Button';
+import { useParams } from 'react-router-dom';
 
 const QuestionsStyle = styled.div`
 	width: 100%;
@@ -22,7 +23,7 @@ const Questions = () => {
 	const [pageSize, setPageSize] = useState('15');
 	const [pages, setPages] = useState([]);
 	const [now, setNow] = useState(1);
-
+	const { tagName, q } = useParams();
 	useDynamicTitle('Questions - Stack Overflow');
 
 	const buttonProps = {
@@ -54,6 +55,11 @@ const Questions = () => {
 	};
 	const getListData = (now) => {
 		const data = { page: now.toString(), pagesize: pageSize, tab };
+		if (tagName !== undefined) {
+			data.tagName = tagName;
+		} else if (q !== undefined) {
+			data.q = q;
+		}
 		getList(data).then((res) => {
 			setData(res.data);
 			setQuestionCount(res.questionCount);
@@ -71,8 +77,7 @@ const Questions = () => {
 
 	useEffect(() => {
 		getListData(now);
-	}, [tab]);
-
+	}, [tab, tagName, q]);
 	const calTotalpage = () => {
 		let totalPage = Math.ceil(questionCount / pageSize);
 		setPages(
