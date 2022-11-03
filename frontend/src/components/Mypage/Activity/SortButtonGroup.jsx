@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 
-const SortButtonGroup = ({ data }) => {
+const SortButtonGroup = ({ data, handleSortTags }) => {
 	const [menu, setMenu] = useState(data);
 
 	const handleMenuChange = (id) => {
@@ -21,6 +21,7 @@ const SortButtonGroup = ({ data }) => {
 						clicked={clicked}
 						onClick={() => {
 							handleMenuChange(id);
+							handleSortTags(name);
 						}}>
 						{name}
 					</Menu>
