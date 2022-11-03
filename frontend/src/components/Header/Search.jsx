@@ -111,17 +111,8 @@ const Search = () => {
 							}
 						});
 					});
-					if (
-						searchWords.length === 1 &&
-						searchWords[0].at(0) === '[' &&
-						searchWords[0].at(-1) === ']'
-					) {
-						const tagName = searchWords.join('');
-						navigate(`/questions/tagged/${tagName}`);
-					} else {
-						const q = searchWords.join('+');
-						navigate(`/search/${q}`);
-					}
+					const q = searchWords.join(' ');
+					navigate(`/search/${q}`);
 				}
 			}
 		}

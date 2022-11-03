@@ -23,7 +23,7 @@ const Questions = () => {
 	const [pageSize, setPageSize] = useState('15');
 	const [pages, setPages] = useState([]);
 	const [now, setNow] = useState(1);
-	const { tagName, q } = useParams();
+	const { q } = useParams();
 	useDynamicTitle('Questions - Stack Overflow');
 
 	const buttonProps = {
@@ -55,9 +55,7 @@ const Questions = () => {
 	};
 	const getListData = (now) => {
 		const data = { page: now.toString(), pagesize: pageSize, tab };
-		if (tagName !== undefined) {
-			data.tagName = tagName;
-		} else if (q !== undefined) {
+		if (q !== undefined) {
 			data.q = q;
 		}
 		getList(data).then((res) => {
@@ -77,7 +75,7 @@ const Questions = () => {
 
 	useEffect(() => {
 		getListData(now);
-	}, [tab, tagName, q]);
+	}, [tab, q]);
 	const calTotalpage = () => {
 		let totalPage = Math.ceil(questionCount / pageSize);
 		setPages(
@@ -93,7 +91,6 @@ const Questions = () => {
 		questionCount,
 		tab,
 		setTab,
-		tagName,
 		q,
 	};
 

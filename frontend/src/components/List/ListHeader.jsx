@@ -41,18 +41,13 @@ const ListHeader = ({
 	questionCount,
 	tab,
 	setTab,
-	tagName,
 	q,
 }) => {
 	return (
 		<ListHeaderStyle>
 			<Section>
 				<div className="title">
-					{tagName !== undefined
-						? `Questions tagged ${tagName}`
-						: q !== undefined
-						? `Search Results`
-						: title}
+					{q !== undefined ? `Search Results` : title}
 				</div>
 				<Button text="Ask Question" />
 			</Section>

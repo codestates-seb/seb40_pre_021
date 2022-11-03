@@ -8,9 +8,7 @@ const instance = axios.create(axiosConfig);
 
 export const getList = async (data) => {
 	let url = '/questions';
-	if (data.tagName !== undefined) {
-		url = '/questions/tagged';
-	} else if (data.q !== undefined) {
+	if (data.q !== undefined) {
 		url = '/search';
 	}
 	// console.log(url, data);

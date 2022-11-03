@@ -27,8 +27,6 @@ const AppRouter = () => {
 						<Route path="/questions" element={<Questions />} />
 						{/* keyword 검색 */}
 						<Route path="/search/:q" element={<Questions />} />
-						{/* tag 검색 */}
-						<Route path="/questions/tagged/:tagName" element={<Questions />} />
 						<Route path="/questions/ask" element={<Ask />} />
 						<Route
 							path="/questions/question/:questionId"
