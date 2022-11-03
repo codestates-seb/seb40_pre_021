@@ -22,6 +22,7 @@ public interface QuestionsRepository extends JpaRepository<Questions, Long> {
 
     List<Questions> findAllByQuestionsTags(QuestionsTags questionsTags);
 
+
     @Query(value = "SELECT Q FROM Questions Q WHERE Q.title LIKE ?1 ORDER BY Q.chooseYn ASC")
     List<Questions> findByKeyword(String title);
 }
