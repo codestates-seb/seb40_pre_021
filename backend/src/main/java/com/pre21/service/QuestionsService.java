@@ -69,6 +69,7 @@ public class QuestionsService {
     public Questions findQuestion(Long questionId) {
         Questions findQuestion = verifiedExistQuestion(questionId);
 
+        findQuestion.setViews(findQuestion.getViews() + 1);
         return findQuestion;
     }
 
@@ -93,12 +94,15 @@ public class QuestionsService {
     // 질문 삭제
     public void deleteQuestion(Long questionId, Long userId) {
 
-
+        User findUser = verifiedExistUser(userId);
 
         Questions findQuestion = verifiedExistQuestion(questionId);
 
-        questionsRepository.delete(findQuestion);
-
+        if(findUser.getId() == findQuestion.getUsers().getId()) {
+            questionsRepository.delete(findQuestion);
+        } else {
+            new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND); /**권한 없는 예외 코드로 변경 필요**/
+        }
     }
 
     // 태그 수 업데이트

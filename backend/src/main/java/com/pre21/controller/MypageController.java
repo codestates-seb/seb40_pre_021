@@ -75,6 +75,7 @@ public class MypageController {
                 HttpStatus.OK);
     }
 /*
+<<<<<<< Updated upstream
    @GetMapping("/tags")
    public ResponseEntity getTagsInfo(@CookieValue(name = "userId") Long userId) {
        Page<Tags> tagsPage = tagsService.findMyTags(userId, page, size);

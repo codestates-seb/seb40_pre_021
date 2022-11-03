@@ -30,8 +30,9 @@ public class AnswersDto {
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
         private String nickname;
-        private List<AnswerCommentResponseDto> comments; // 답변에 달린 댓글 정보
+        private List<AnswerCommentResponseDto> comments;
         private List<AnswerBookmarkResponseDto> bookmarks;
+        private List<AnswerLikeResponseDto> answerLikes;
     }
     @Getter
     @Setter

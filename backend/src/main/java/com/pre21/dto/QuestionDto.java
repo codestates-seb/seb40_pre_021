@@ -34,7 +34,8 @@ public class QuestionDto {
         private String nickname;    // 질문을 생성한 유저 닉네임
         private int answerCount;    // 질문에 달린 답변 개수
         private List<QuestionCommentResponseDto> comments;  // 질문에 달린 댓글 정보
-        private List<QuestionBookmarkResponseDto> bookmarks;
+        private List<QuestionBookmarkResponseDto> bookmarks;    // 북마크 유저 정보
+        private List<QuestionLikeResponseDto> questionsLikes;   // 질문 좋아요,싫어요 유저 정보
     }
 
     // 질문 전체 조회
