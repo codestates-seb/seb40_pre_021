@@ -13,7 +13,7 @@ export const getList = async (data) => {
 	} else if (data.q !== undefined) {
 		url = '/search';
 	}
-	console.log(url, data);
+	// console.log(url, data);
 	try {
 		const result = await instance.get('/questions', { params: data });
 		return result.data;

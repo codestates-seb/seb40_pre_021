@@ -45,10 +45,9 @@ const RightSection = styled.div`
 		color: hsl(209, 100%, 37.5%);
 	}
 	.title {
-		a {
-			font-size: 1.2em;
-			font-weight: 600;
-		}
+		color: hsl(209, 100%, 37.5%);
+		font-size: 1.2em;
+		font-weight: 600;
 	}
 	.body {
 		color: hsl(210, 8%, 25%);
@@ -106,8 +105,11 @@ const List = ({ data, type }) => {
 				<div className="views">{data.views} views</div>
 			</LeftSection>
 			<RightSection>
-				<div className="title">
-					<Link to="/">{data.title}</Link>
+				<div
+					className="title"
+					role="presentation"
+					onClick={() => navigate(`/questions/question/${data.questionId}`)}>
+					{data.title}
 				</div>
 				{type === 'Questions' && <div className="body">{data.body}</div>}
 				<div className="bottomBox">
