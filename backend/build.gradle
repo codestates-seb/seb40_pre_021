@@ -7,6 +7,7 @@ plugins {
 
 group = 'com.pre21'
 version = '0.0.1-SNAPSHOT'
+compileJava.options.encoding("UTF-8")
 sourceCompatibility = '11'
 
 repositories {
@@ -20,6 +21,11 @@ ext {
 configurations {
     asciidoctorExtensions
 }
+
+tasks.withType(JavaCompile) {
+    options.encoding("UTF-8")
+}
+
 
 dependencies {
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
@@ -76,4 +82,5 @@ bootJar {
         into 'static/docs'
     }
 }
+
 

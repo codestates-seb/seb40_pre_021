@@ -5,6 +5,7 @@ import com.pre21.security.filter.JwtAuthenticationFilter;
 import com.pre21.security.filter.JwtVerificationFilter;
 import com.pre21.security.handler.UserAccessDeniedHandler;
 import com.pre21.security.handler.UserAuthenticationEntryPoint;
+import com.pre21.security.handler.UserAuthenticationFailureHandler;
 import com.pre21.security.handler.UserAuthenticationSuccessHandler;
 import com.pre21.security.jwt.JwtTokenizer;
 import com.pre21.security.utils.CustomAuthorityUtils;
@@ -21,16 +22,25 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
+import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.filter.GenericFilterBean;
 
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import java.io.IOException;
 import java.util.Arrays;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
@@ -39,7 +49,12 @@ public class SecurityConfiguration {
     @Bean
     @SneakyThrows
     public SecurityFilterChain filterChain(HttpSecurity http) {
+        CharacterEncodingFilter encodingFilter = new CharacterEncodingFilter();
+        encodingFilter.setEncoding("UTF-8");
+        encodingFilter.setForceEncoding(true);
+
         http
+                .addFilterBefore(encodingFilter, CsrfFilter.class)
                 .headers().frameOptions().sameOrigin()
                 .and()
                 .httpBasic().disable()
@@ -89,7 +104,7 @@ public class SecurityConfiguration {
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);
             jwtAuthenticationFilter.setFilterProcessesUrl("/users/login");
             jwtAuthenticationFilter.setAuthenticationSuccessHandler(new UserAuthenticationSuccessHandler(jwtTokenizer));
-//            jwtAuthenticationFilter.setAuthenticationFailureHandler(new UserAuthenticationFailureHandler());
+            jwtAuthenticationFilter.setAuthenticationFailureHandler(new UserAuthenticationFailureHandler());
 
             JwtVerificationFilter jwtVerificationFilter = new JwtVerificationFilter(jwtTokenizer, authorityUtils);
 

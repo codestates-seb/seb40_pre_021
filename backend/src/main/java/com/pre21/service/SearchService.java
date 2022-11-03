@@ -5,6 +5,7 @@ import com.pre21.entity.QuestionsTags;
 import com.pre21.repository.QuestionsRepository;
 import com.pre21.repository.QuestionsTagsRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import java.util.*;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class SearchService {
 
     private final QuestionsTagsRepository questionsTagsRepository;
@@ -39,8 +41,9 @@ public class SearchService {
      */
 
     public Set<Questions> makeQuestionListByKeyword(String keyword) {
-        // 문자를 + 로 구분하여 분리
-        StringTokenizer cutKeyword = new StringTokenizer(keyword, "+");
+
+        // 문자를 %20(+기호)으로 구분하여 분리
+        String[] keywordArr = keyword.split(" ");
 
         // tag 정보와 제목 문자열을 구분
         List<String> tags = new ArrayList<>();
@@ -50,13 +53,13 @@ public class SearchService {
         StringBuilder bufferKeyword = new StringBuilder();
 
         String word;
-        while (cutKeyword.hasMoreElements()) {
-            word = cutKeyword.nextToken();
-            if (word.startsWith("%")) { // 태그 정보 : 문자열을 추출하여 tag 리스트에 담음
-                tags.add(word
+        for (int i = 0; i < keywordArr.length; i++) {
+            word = keywordArr[i];
+            if (word.startsWith("[")) { // 태그 정보 : 문자열을 추출하여 tag 리스트에 담음
+                word = word
                         .replaceAll("\\[", "")
-                        .replaceAll("\\]", "")
-                );
+                        .replaceAll("]", "");
+                tags.add(word);
                 bufferKeyword.append(word).append(' '); // 문자열은 계속 합쳐준다
             } else { // 제목 문자열 : title 리스트에 담음
                 title.add(word);
@@ -65,6 +68,8 @@ public class SearchService {
         }
 
         String totalKeyword = bufferKeyword.toString(); // 스트링 변환
+        log.info("tags : {}", tags);
+        log.info("titles : {}", title);
 
         // 끝 공백 제거
         totalKeyword = totalKeyword.substring(0, totalKeyword.length() - 1);

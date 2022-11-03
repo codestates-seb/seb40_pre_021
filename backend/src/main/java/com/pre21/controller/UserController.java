@@ -28,20 +28,30 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/signup")
-    public void joinUser(@RequestBody UserDto.Join requestBody) {
+    public String joinUser(@RequestBody UserDto.Join requestBody) {
         userService.createUser(mapper.joinToUserEntity(requestBody));
+
+        return "redirect:/";
     }
 
 
     @ResponseStatus(HttpStatus.OK)
     @DeleteMapping("/logout")
-    public void logoutUser(@CookieValue(name = REFRESH_TOKEN, required = true) String refreshToken,
+    public String logoutUser(@CookieValue(name = REFRESH_TOKEN, required = true) String refreshToken,
                            HttpServletResponse response) {
         userService.logoutUser(refreshToken);
         Cookie deleteToken = new Cookie(REFRESH_TOKEN, null);
         deleteToken.setMaxAge(0);
         deleteToken.setPath("/");
+
+        Cookie deleteUserId = new Cookie("userId", null);
+        deleteUserId.setMaxAge(0);
+        deleteUserId.setPath("/");
+
         response.addCookie(deleteToken);
+        response.addCookie(deleteUserId);
+
+        return "redirect:/";
     }
 
 
