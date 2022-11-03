@@ -10,22 +10,36 @@ import timeForToday from '../utils/timeForToday';
 const Question = () => {
 	const [thread, setThread] = useState('');
 	const [nickname, setNickname] = useState('');
+	const [isBookmarked, setIsBookmarked] = useState(false);
+
 	const [answerData, setAnswerData] = useState('');
 
 	useEffect(() => {
 		getUserInfo().then((res) => setNickname(res.nickname));
 	}, []);
+
 	useEffect(() => {
 		getQuestion().then((res) => setThread(res));
 	}, []);
 
-	const handleAnswer = (e) => {
+	useEffect(() => {
+		if (thread) {
+			const bookmarked = thread.bookmarks.filter(
+				(el) => el.nickname === nickname,
+			);
+			if (bookmarked.length !== 0) setIsBookmarked(true);
+			else setIsBookmarked(false);
+		}
+	}, []);
+
+	const handleAnswer = (str) => {
 		setAnswerData({
-			body: e.target.value,
+			body: str,
 		});
 	};
+
 	const handleSubmitAnswer = () => {
-		answer(answerData.stringify());
+		answer(JSON.stringify(answerData));
 	};
 
 	return (
@@ -49,7 +63,7 @@ const Question = () => {
 							<Left>
 								<Controller
 									votecount={thread.vote}
-									/*bookmark={thread.bookmark}*/
+									bookmark={isBookmarked}
 									QcreatorNickname={thread.nickname}
 									loginNickname={nickname}></Controller>
 							</Left>
@@ -70,8 +84,8 @@ const Question = () => {
 										{nickname === thread.nickname && <span>Edit</span>}
 									</Options>
 									<History>
-										{!isNaN(timeForToday(thread.midifiedAt)) &&
-											'Edited ' + timeForToday(thread.midifiedAt) + ' ago'}
+										{!isNaN(timeForToday(thread.modifiedAt)) &&
+											'Edited ' + timeForToday(thread.modifiedAt) + ' ago'}
 									</History>
 									<Profile>
 										<div></div>
@@ -112,7 +126,7 @@ const Question = () => {
 											<Controller
 												kind="answer"
 												votecount={el.vote}
-												/*bookmark={thread.bookmark}*/
+												bookmark={isBookmarked}
 												chose={el.choosed}
 												QcreatorNickname={thread.nickname}
 												loginNickname={nickname}></Controller>
@@ -128,9 +142,9 @@ const Question = () => {
 													{nickname === el.nickname && <span>Edit</span>}
 												</Options>
 												<History>
-													{!isNaN(timeForToday(thread.midifiedAt)) &&
+													{!isNaN(timeForToday(thread.modifiedAt)) &&
 														'Edited ' +
-															timeForToday(thread.midifiedAt) +
+															timeForToday(thread.modifiedAt) +
 															' ago'}
 												</History>
 												<Profile>
@@ -189,7 +203,7 @@ const QuestionGroup = styled.article``;
 
 const Header = styled.div``;
 const Title = styled.h1`
-	width: calc(1080px - 3rem);
+	width: 100%;
 	font-size: 1.75rem;
 	font-weight: 400;
 	line-height: 140%;
