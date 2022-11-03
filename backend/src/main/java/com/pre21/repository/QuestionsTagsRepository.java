@@ -14,6 +14,6 @@ public interface QuestionsTagsRepository extends JpaRepository<QuestionsTags, Lo
     void deleteAllByQuestions(Questions questions);
     //Optional<QuestionsTags> findTagsByQuestion(Questions questions);
 
-    @Query(value = "SELECT QuestionsTags FROM QuestionsTags WHERE QuestionsTags.tagValue = ?1")
+    @Query(value = "SELECT qt FROM QuestionsTags qt WHERE qt.tagValue = ?1")
     List<QuestionsTags> findQtag(String tagvalue);
 }

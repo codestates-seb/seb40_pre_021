@@ -72,7 +72,8 @@ public class SearchService {
         // 태그에 대한 질문 모두 가져오기
         for (String tag : tags) {
             List<QuestionsTags> findQtags = questionsTagsRepository.findQtag(tag);
-            findQuestion.addAll(questionsRepository.findAllByQuestionsTagsOrderByChooseYnAsc(findQtags));
+            findQtags.forEach(qtags -> findQuestion.addAll(questionsRepository.findAllByQuestionsTags(qtags)));
+
         }
 
         // 합쳐진 문자열이 포함된 질문 모두 가져오기

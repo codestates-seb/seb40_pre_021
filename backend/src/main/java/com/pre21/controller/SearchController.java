@@ -11,19 +11,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@RestController
-@RequestMapping("/search")
 @Slf4j
+@RestController
 @RequiredArgsConstructor
 public class SearchController {
     private final SearchService searchService;
     private final QuestionsMapper mapper;
 
 
-    @RequestMapping(value = "/{path}", method = RequestMethod.GET)
+    @RequestMapping(value = "/search/{path}", method = RequestMethod.GET)
     public ResponseEntity searchingKeyword(@PathVariable String path, HttpServletRequest request) {
         log.info("########################## keyword ################### -> {}", request);
 
