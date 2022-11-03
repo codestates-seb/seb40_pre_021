@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import parsedHTML from '../../utils/parsedHTML';
+import markdownParse from '../../utils/markdownParse';
 const Container = styled.div``;
 const Header = styled.div``;
 const Textarea = styled.textarea`
@@ -80,7 +80,7 @@ const Editor = ({ id, callback }) => {
 	const [mdText, setMdText] = useState('');
 
 	const handleChange = (e) => {
-		setMdText(parsedHTML(e.target.value));
+		setMdText(markdownParse(e.target.value));
 	};
 	useEffect(() => {
 		callback(mdText);
