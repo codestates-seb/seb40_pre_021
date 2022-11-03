@@ -1,9 +1,6 @@
 package com.pre21.dto;
 
-import com.pre21.entity.Adoption;
-import com.pre21.entity.AnswerLikes;
-import com.pre21.entity.Questions;
-import com.pre21.entity.User;
+import com.pre21.entity.*;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -34,6 +31,7 @@ public class AnswersDto {
         private LocalDateTime modifiedAt;
         private String nickname;
         private List<AnswerCommentResponseDto> comments; // 답변에 달린 댓글 정보
+        private List<AnswerBookmarkResponseDto> bookmarks;
     }
     @Getter
     @Setter

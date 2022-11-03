@@ -95,8 +95,9 @@ public class QuestionsController {
 
     // 질문 삭제
     @DeleteMapping("/delete/{question-id}")
-    public void deleteQuestions(@PathVariable("question-id") Long questionId) throws Exception {
-        questionsService.deleteQuestion(questionId);
+    public void deleteQuestions(@PathVariable("question-id") Long questionId,
+                                @CookieValue(name = "userId") Long userId) {
+        questionsService.deleteQuestion(questionId, userId);
     }
 
 
