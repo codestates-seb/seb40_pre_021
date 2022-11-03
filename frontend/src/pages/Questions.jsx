@@ -93,6 +93,8 @@ const Questions = () => {
 		questionCount,
 		tab,
 		setTab,
+		tagName,
+		q,
 	};
 
 	const paginationProps = {

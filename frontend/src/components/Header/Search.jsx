@@ -77,16 +77,6 @@ const Search = () => {
 	const navigate = useNavigate();
 
 	const keyEvent = (e) => {
-		const notEngExp = /[^A-Za-z]/g;
-		const isNotEng = notEngExp.test(e.key);
-		const koreanExp = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;
-
-		if (isNotEng) {
-			e.preventDefault();
-			e.target.value = e.target.value.replace(koreanExp, '');
-			return;
-		}
-
 		if (options.length > 0) {
 			switch (e.key) {
 				case 'Enter':
