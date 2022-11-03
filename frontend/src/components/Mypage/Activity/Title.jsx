@@ -1,16 +1,23 @@
 import styled from 'styled-components';
 
-const Title = ({ title, number, flex }) => {
+const Title = ({ title, number = '', flex, handleTabChange }) => {
 	const lowerTitle = title?.toLowerCase();
 	const localeNumber = number?.toLocaleString('ko-KR');
 	return (
 		<Container flex={flex}>
-			<StyledTitle>{title}</StyledTitle>
-			{number ? (
-				<Text>
-					Total {localeNumber} {lowerTitle}
-				</Text>
-			) : null}
+			{handleTabChange ? (
+				<>
+					<StyledTitle>{title}</StyledTitle>
+					<Text
+						onClick={() => {
+							handleTabChange({ name: title });
+						}}>
+						View all {localeNumber} {lowerTitle}
+					</Text>
+				</>
+			) : (
+				<StyledTitle>{localeNumber + ' ' + title}</StyledTitle>
+			)}
 		</Container>
 	);
 };
@@ -33,4 +40,8 @@ const Text = styled.span`
 	color: #6f757d;
 	font-size: 13px;
 	font-weight: 400;
+	:hover {
+		color: #525960;
+		cursor: pointer;
+	}
 `;
