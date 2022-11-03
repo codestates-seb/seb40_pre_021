@@ -1,15 +1,16 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import Menu from './Menu';
 
+const Container = styled.div`
+	border: 1px solid rgb(209, 211, 215);
+`;
+
 const LeftMenuStyle = styled.div`
 	min-width: 164px;
-	border-right: 1px solid rgb(209, 211, 215);
 	padding-top: 25px;
 	position: sticky;
 	top: 52px;
-	max-height: 200px;
-
+	max-height: 100vh;
 	.public {
 		color: gray;
 		font-size: 13px;
@@ -51,24 +52,26 @@ const LeftMenu = () => {
 	const props = {};
 
 	return (
-		<LeftMenuStyle>
-			{menus.map((ele) => {
-				props.name = ele.name;
-				props.path = ele.path;
-				if (ele.id > 1) {
-					props.padding = '15%';
-				}
-				if (ele.name === 'Home') {
-					return (
-						<div key={ele.id}>
-							<Menu {...props} />
-							<div className="public">&nbsp;PUBLIC</div>
-						</div>
-					);
-				}
-				return <Menu key={ele.id} {...props} />;
-			})}
-		</LeftMenuStyle>
+		<Container>
+			<LeftMenuStyle>
+				{menus.map((ele) => {
+					props.name = ele.name;
+					props.path = ele.path;
+					if (ele.id > 1) {
+						props.padding = '15%';
+					}
+					if (ele.name === 'Home') {
+						return (
+							<div key={ele.id}>
+								<Menu {...props} />
+								<div className="public">&nbsp;PUBLIC</div>
+							</div>
+						);
+					}
+					return <Menu key={ele.id} {...props} />;
+				})}
+			</LeftMenuStyle>
+		</Container>
 	);
 };
 
