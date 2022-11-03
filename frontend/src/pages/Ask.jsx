@@ -9,29 +9,28 @@ const Ask = () => {
 	const [title, setTitle] = useState('');
 	const [problem, setProblem] = useState('');
 	const [expect, setExpect] = useState('');
-	const [tags, setTags] = useState('');
+	const [tagsarr, setTagsarr] = useState('');
 
 	const handleClick = () => {
 		const data = {
 			title: title,
 			body: problem + expect,
-			tags: tags,
+			tags: tagsarr,
 		};
 		console.log(data);
-		ask(JSON.stringify(data));
 	};
 
 	const handleTitle = (e) => {
 		setTitle(e.target.value);
 	};
-	const handleProblem = (e) => {
-		setProblem(e.target.value);
+	const handleProblem = (str) => {
+		setProblem(str);
 	};
-	const handleExpect = (e) => {
-		setExpect(e.target.value);
+	const handleExpect = (str) => {
+		setExpect(str);
 	};
-	const handleTags = (e) => {
-		setTags(e.target.value);
+	const handleTags = (arr) => {
+		setTagsarr(arr);
 	};
 
 	return (
@@ -118,9 +117,9 @@ const Container = styled.section`
 	background-color: #f8f9f9;
 	padding: 3rem 4.5rem 4.5rem 4.5rem;
 `;
-const Formarea = styled.form`
-	max-width: 850px;
-`;
+// const Formarea = styled.form`
+// 	max-width: 850px;
+// `;
 const AskQuestion = styled.h1`
 	font-weight: 600;
 	font-size: 1.75rem;

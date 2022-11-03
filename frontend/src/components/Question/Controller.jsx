@@ -20,7 +20,7 @@ const Controller = ({
 }) => {
 	const [vote, setVote] = useState(votecount);
 	const [voteStatus, setVoteStatus] = useState('neutral');
-	//const [bookmarked, setBookmarked] = useState(bookmark);
+	const [bookmarked, setBookmarked] = useState(false);
 	const [chosen, setChosen] = useState(choosed);
 
 	const handleUpVote = () => {
@@ -50,6 +50,9 @@ const Controller = ({
 		if (!chosen) setChosen(true);
 		choose();
 	};
+	const handleBookmark = () => {
+		setBookmarked(!bookmarked);
+	};
 	return (
 		<>
 			<Container>
@@ -64,7 +67,7 @@ const Controller = ({
 						<path d="M2 11h32L18 27 2 11Z"></path>
 					</svg>
 				</Down>
-				<Bookmark onClick={HandleBookmark} /*bookmark={bookmarked}*/>
+				<Bookmark onClick={handleBookmark} bookmarked={bookmarked}>
 					<svg width="18" height="18" viewBox="0 0 18 18">
 						<path d="m9 10.6 4 2.66V3H5v10.26l4-2.66ZM3 17V3c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v14l-6-4-6 4Z"></path>
 					</svg>
@@ -141,7 +144,7 @@ const Bookmark = styled.button`
 		display: block;
 		background-color: white;
 		fill: ${(props) =>
-			props.chosen === true ? 'rgb(229, 136, 62);' : 'rgb(187, 191, 195)'};
+			props.bookmarked === true ? 'rgb(229, 136, 62);' : 'rgb(187, 191, 195)'};
 `;
 const Choosed = styled.div`
 	button {

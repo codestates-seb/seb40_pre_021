@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import parsedHTML from '../../utils/parsedHTML';
 const Container = styled.div``;
@@ -75,18 +75,21 @@ const Result = styled.div`
 		margin-bottom: 1rem;
 	}
 `;
+
 const Editor = ({ id, callback }) => {
 	const [mdText, setMdText] = useState('');
 
 	const handleChange = (e) => {
 		setMdText(parsedHTML(e.target.value));
 	};
-
+	useEffect(() => {
+		callback(mdText);
+	}, [mdText]);
 	return (
 		<>
 			<Container>
 				<Header />
-				<Textarea onKeyUp={handleChange} id={id} onChange={callback}></Textarea>
+				<Textarea onKeyUp={handleChange} id={id}></Textarea>
 				<Result
 					mdText={mdText}
 					dangerouslySetInnerHTML={{ __html: mdText }}></Result>
