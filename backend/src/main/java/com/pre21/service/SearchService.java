@@ -14,8 +14,10 @@ import java.util.*;
 @Transactional
 @RequiredArgsConstructor
 public class SearchService {
+
     private final QuestionsTagsRepository questionsTagsRepository;
     private final QuestionsRepository questionsRepository;
+
 
     /**
      * 키워드 리스트 리턴 메서드
@@ -35,6 +37,7 @@ public class SearchService {
      * @return Set(Questions)
      * @author mozzi327
      */
+
     public Set<Questions> makeQuestionListByKeyword(String keyword) {
         // 문자를 + 로 구분하여 분리
         StringTokenizer cutKeyword = new StringTokenizer(keyword, "+");
@@ -88,5 +91,6 @@ public class SearchService {
         // 중복 제거 리턴
         return findQuestion;
     }
+
 }
 

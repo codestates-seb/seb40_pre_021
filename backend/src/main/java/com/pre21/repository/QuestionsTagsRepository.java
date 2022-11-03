@@ -16,4 +16,5 @@ public interface QuestionsTagsRepository extends JpaRepository<QuestionsTags, Lo
 
     @Query(value = "SELECT qt FROM QuestionsTags qt WHERE qt.tagValue = ?1")
     List<QuestionsTags> findQtag(String tagvalue);
+
 }
