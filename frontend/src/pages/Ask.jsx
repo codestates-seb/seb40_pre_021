@@ -6,6 +6,7 @@ import TagForm from '../components/Ask/TagForm';
 import { ask } from '../api/QuestionApi';
 import background from '../assets/images/background.svg';
 import Header from '../components/Header/Header';
+import Footer from '../components/Footer/Footer';
 const Ask = ({ editTitle, editBody, editTag }) => {
 	const [title, setTitle] = useState('');
 	const [problem, setProblem] = useState('');
@@ -118,6 +119,7 @@ const Ask = ({ editTitle, editBody, editTag }) => {
 				</BodyConatiner>
 				{/* </Formarea> */}
 			</Container>
+			<Footer />
 		</>
 	);
 };
@@ -139,7 +141,7 @@ const AskHeader = styled.div`
 	background-position: right top;
 `;
 const BodyConatiner = styled.div`
-	padding: 0 4.5rem 0 4.5rem;
+	padding: 0 4.5rem 4.5rem 4.5rem;
 	max-width: 860px;
 `;
 
