@@ -77,16 +77,6 @@ const Search = () => {
 	const navigate = useNavigate();
 
 	const keyEvent = (e) => {
-		const notEngExp = /[^A-Za-z]/g;
-		const isNotEng = notEngExp.test(e.key);
-		const koreanExp = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;
-
-		if (isNotEng) {
-			e.preventDefault();
-			e.target.value = e.target.value.replace(koreanExp, '');
-			return;
-		}
-
 		if (options.length > 0) {
 			switch (e.key) {
 				case 'Enter':
@@ -121,19 +111,8 @@ const Search = () => {
 							}
 						});
 					});
-					if (
-						searchWords.length === 1 &&
-						searchWords[0].at(0) === '[' &&
-						searchWords[0].at(-1) === ']'
-					) {
-						const tagName = searchWords.join('');
-						navigate(`/questions/tagged/${tagName}`);
-						location.reload;
-					} else {
-						const q = searchWords.join('+');
-						navigate(`/search/${q}`);
-						location.reload;
-					}
+					const q = searchWords.join(' ');
+					navigate(`/search/${q}`);
 				}
 			}
 		}

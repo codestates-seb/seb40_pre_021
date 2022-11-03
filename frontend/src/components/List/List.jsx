@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Button from '../common/Button';
 
 const ListStyle = styled.div`
@@ -45,10 +45,9 @@ const RightSection = styled.div`
 		color: hsl(209, 100%, 37.5%);
 	}
 	.title {
-		a {
-			font-size: 1.2em;
-			font-weight: 600;
-		}
+		color: hsl(209, 100%, 37.5%);
+		font-size: 1.2em;
+		font-weight: 600;
 	}
 	.body {
 		color: hsl(210, 8%, 25%);
@@ -90,6 +89,7 @@ const List = ({ data, type }) => {
 	// const [questionId, setQuestionId] = useState(data.questionId);
 	const [createId, setCreateId] = useState(data.createId);
 	const [choosed, setChoosed] = useState(data.choosed);
+	const navigate = useNavigate();
 
 	const buttonProps = {
 		color: `hsl(205,47%,42%)`,
@@ -105,19 +105,26 @@ const List = ({ data, type }) => {
 				<div className="views">{data.views} views</div>
 			</LeftSection>
 			<RightSection>
-				<div className="title">
-					<Link to="/">{data.title}</Link>
+				<div
+					className="title"
+					role="presentation"
+					onClick={() => navigate(`/questions/question/${data.questionId}`)}>
+					{data.title}
 				</div>
 				{type === 'Questions' && <div className="body">{data.body}</div>}
 				<div className="bottomBox">
 					<div className="tags">
-						{Array.isArray(data.tags) ? (
-							data.tags.map((ele, idx) => {
-								return <Button key={idx} text={ele} {...buttonProps} />;
-							})
-						) : (
-							<Button text={data.tags} {...buttonProps} />
-						)}
+						{Array.isArray(data.tags) &&
+							data.tags.map((ele) => {
+								return (
+									<Button
+										key={ele.tagId}
+										text={ele.title}
+										{...buttonProps}
+										callback={() => navigate(`/search/[${ele.title}]`)}
+									/>
+								);
+							})}
 					</div>
 					<div className="create">
 						<Link to="">{createId}</Link>

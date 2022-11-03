@@ -1,4 +1,7 @@
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { selectIsLogin } from '../../modules/userReducer';
 import Button from '../common/Button';
 import Tab from '../common/Tab';
 
@@ -41,12 +44,24 @@ const ListHeader = ({
 	questionCount,
 	tab,
 	setTab,
+	q,
 }) => {
+	const isLogin = useSelector(selectIsLogin);
+	const navigate = useNavigate();
 	return (
 		<ListHeaderStyle>
 			<Section>
-				<div className="title">{title}</div>
-				<Button text="Ask Question" />
+				<div className="title">
+					{q !== undefined ? `Search Results` : title}
+				</div>
+				<Button
+					text="Ask Question"
+					callback={
+						isLogin
+							? () => navigate('/questions/ask')
+							: () => navigate('/login')
+					}
+				/>
 			</Section>
 			<Section>{Detail}</Section>
 			<BottomSection filter={filter}>

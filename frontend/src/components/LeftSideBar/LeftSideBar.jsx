@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import Menu from './Menu';
 
 const Container = styled.div`
-	border: 1px solid rgb(209, 211, 215);
+	border-right: 1px solid rgb(209, 211, 215);
 `;
 
 const LeftMenuStyle = styled.div`
