@@ -22,11 +22,15 @@ let sortData = [
 	},
 ];
 
-const Answers = ({ answer, limit }) => {
+const Answers = ({ answer, limit, handleTabChange }) => {
 	return (
 		<Container>
 			<TitleBox>
-				<Title title="Answers" number={answer?.length} />
+				<Title
+					title="Answers"
+					number={answer?.length}
+					handleTabChange={handleTabChange}
+				/>
 				<SortButtonGroup data={sortData} />
 			</TitleBox>
 			<ListBox
