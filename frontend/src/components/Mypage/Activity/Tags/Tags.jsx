@@ -17,23 +17,14 @@ let sortData = [
 	},
 ];
 
-const Tags = ({ tag, setTag, limit, handleTabChange, flex = false }) => {
-	const handleSortTags = (name) => {
-		let newTag = [];
-		switch (name) {
-			case 'Score':
-				newTag = [...tag].sort((a, b) => b.tagCount - a.tagCount);
-				break;
-			case 'Name':
-				newTag = [...tag].sort(function compare(a, b) {
-					if (a.title < b.title) return -1;
-					if (a.title > b.title) return 1;
-					return 0;
-				});
-				break;
-		}
-		setTag(newTag);
-	};
+const Tags = ({
+	tag,
+	setTag,
+	limit,
+	handleTabChange,
+	handleSortLists,
+	flex = false,
+}) => {
 	return (
 		<Container>
 			<TitleBox>
@@ -44,7 +35,13 @@ const Tags = ({ tag, setTag, limit, handleTabChange, flex = false }) => {
 					handleTabChange={handleTabChange}
 				/>
 				{!flex ? (
-					<SortButtonGroup data={sortData} handleSortTags={handleSortTags} />
+					<SortButtonGroup
+						menus={sortData}
+						handleSortLists={handleSortLists}
+						data={tag}
+						callback={setTag}
+						tag={true}
+					/>
 				) : null}
 			</TitleBox>
 			<ListBox
