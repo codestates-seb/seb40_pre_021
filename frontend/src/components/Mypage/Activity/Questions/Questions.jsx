@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import ListAdditionalInfo from '../../common/ListAdditionalInfo';
 import AnswerOrQuestionList from '../AnswerOrQuestionList';
 import ListBox from '../ListBox';
 import SortButtonGroup from '../SortButtonGroup';
@@ -12,22 +13,24 @@ let sortData = [
 	},
 	{
 		id: 1,
-		name: 'Activity',
-		clicked: false,
-	},
-	{
-		id: 2,
 		name: 'Newest',
 		clicked: false,
 	},
 	{
-		id: 3,
+		id: 2,
 		name: 'Views',
 		clicked: false,
 	},
 ];
 
-const Questions = ({ question, limit, handleTabChange }) => {
+const Questions = ({
+	question,
+	setQuestion,
+	limit,
+	handleTabChange,
+	handleSortLists,
+}) => {
+	const { vote, choosed, answerCount, view } = question;
 	return (
 		<Container>
 			<TitleBox>
@@ -36,7 +39,12 @@ const Questions = ({ question, limit, handleTabChange }) => {
 					number={question?.length}
 					handleTabChange={handleTabChange}
 				/>
-				<SortButtonGroup data={sortData} />
+				<SortButtonGroup
+					menus={sortData}
+					handleSortLists={handleSortLists}
+					data={question}
+					callback={setQuestion}
+				/>
 			</TitleBox>
 			<ListBox
 				text="You have not asked any questions"
@@ -52,6 +60,7 @@ export default Questions;
 const Container = styled.div`
 	&&& {
 		height: 100%;
+		width: 100%;
 		display: flex;
 		flex-direction: column;
 	}
