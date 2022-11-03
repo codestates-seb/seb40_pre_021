@@ -17,7 +17,7 @@ const Ask = () => {
 			body: problem + expect,
 			tags: tagsarr,
 		};
-		console.log(data);
+		ask(JSON.stringify(data));
 	};
 
 	const handleTitle = (e) => {
