@@ -114,8 +114,8 @@ const Ask = ({ editTitle, editBody, editTag }) => {
 						</Caption>
 						<TagForm callback={handleTags} />
 					</Group>
+					<Button text="Review your question" callback={handleClick} />
 				</BodyConatiner>
-				<Button text="Review your question" callback={handleClick} />
 				{/* </Formarea> */}
 			</Container>
 		</>
