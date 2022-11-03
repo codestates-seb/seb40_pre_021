@@ -1,4 +1,4 @@
-const parsedHTML = (str) => {
+const markdownParse = (str) => {
 	const UlStart = /^\s*\n-\s/gm; // 엔터를 입력하고, - 문자열 후 엔터를 다시 한 번 입력하면 리스트 시작
 	const UlEnd = /^(-.+)\s*\n([^-])/gm; //리스트 클로징
 	const UlLi = /^-(.+)\s/gm; //리스트의 각 항목
@@ -43,4 +43,4 @@ const parsedHTML = (str) => {
 	return text;
 }; //실제로 상세페이지에서 보일 HTML을 리턴합니다.
 
-export default parsedHTML;
+export default markdownParse;

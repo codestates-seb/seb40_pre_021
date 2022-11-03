@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import parsedHTML from '../../utils/parsedHTML';
+import markdownParse from '../../utils/markdownParse';
 const Container = styled.div``;
 const Header = styled.div``;
 const Textarea = styled.textarea`
@@ -40,11 +40,11 @@ const Result = styled.div`
 
 	h1 {
 		font-weight: 700;
-		font-size: 1.25rem;
+		font-size: 1.4rem;
 	}
 	h2 {
 		font-weight: 700;
-		font-size: 1.1rem;
+		font-size: 1.25rem;
 	}
 	h3 {
 		font-weight: 700;
@@ -57,36 +57,40 @@ const Result = styled.div`
 		font-style: italic;
 	}
 	hr {
-		1px;
+		height: 1px;
 	}
 	pre {
-		font-size: 0.9rem;
+		font-size: 0.8rem;
 		background-color: #f6f6f6;
 		padding: 0.5rem;
 		overflow-x: auto;
 	}
 	code {
-		font-size: 0.9rem;
+		font-size: 0.8rem;
 		background-color: #f6f6f6;
 		padding: 0.1rem 0.3rem 0.1rem 0.3rem;
 	}
 
-	p, section {
+	p,
+	section {
 		margin-bottom: 1rem;
 	}
 `;
+
 const Editor = ({ id, callback }) => {
 	const [mdText, setMdText] = useState('');
 
 	const handleChange = (e) => {
-		setMdText(parsedHTML(e.target.value));
+		setMdText(markdownParse(e.target.value));
 	};
-
+	useEffect(() => {
+		callback(mdText);
+	}, [mdText]);
 	return (
 		<>
 			<Container>
 				<Header />
-				<Textarea onKeyUp={handleChange} id={id} onChange={callback}></Textarea>
+				<Textarea onKeyUp={handleChange} id={id}></Textarea>
 				<Result
 					mdText={mdText}
 					dangerouslySetInnerHTML={{ __html: mdText }}></Result>

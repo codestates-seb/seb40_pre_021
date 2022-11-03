@@ -6,65 +6,100 @@ import {
 	downVoteForQ,
 	upVoteForA,
 	upVoteForQ,
+	bookmarkA,
+	bookmarkQ,
+	bookmarkDelA,
+	bookmarkDelQ,
 } from '../../api/QuestionApi';
-
-const HandleBookmark = () => {};
 
 const Controller = ({
 	kind,
 	votecount,
-	/*bookmark={thread.bookmark}*/
+	/*voted 상태 있어야 할 듯;*/
+	bookmark,
 	choosed,
 	QcreatorNickname,
 	loginNickname,
 }) => {
 	const [vote, setVote] = useState(votecount);
 	const [voteStatus, setVoteStatus] = useState('neutral');
-	//const [bookmarked, setBookmarked] = useState(bookmark);
+
+	const [bookmarked, setBookmarked] = useState(bookmark);
+
 	const [chosen, setChosen] = useState(choosed);
 
 	const handleUpVote = () => {
+		const upVote = { upVote: true, downVote: false };
+		const cancelUpVote = { upVote: false, downVote: false };
 		if (voteStatus !== 'up') {
 			setVoteStatus('up');
 			setVote(votecount + 1);
-			kind === 'answer' ? upVoteForA() : upVoteForQ(); //이거 보트카운트 우리가 조정하려고 했는데 백엔드에서도 해야됨. 여러 명이 할 경우에 덮어씌워지는 문제 있음
+			kind === 'answer'
+				? upVoteForA(JSON.stringify(upVote))
+				: upVoteForQ(JSON.stringify(upVote)); //이거 보트카운트 우리가 조정하려고 했는데 백엔드에서도 해야됨. 여러 명이 할 경우에 덮어씌워지는 문제 있음
 		} else {
 			setVoteStatus('neutral');
 			setVote(votecount);
-			kind === 'answer' ? upVoteForA() : upVoteForQ(); //한 번 더 하면 upVote 상태가 취소됨
+			kind === 'answer'
+				? upVoteForA(JSON.stringify(cancelUpVote))
+				: upVoteForQ(JSON.stringify(cancelUpVote)); //한 번 더 하면 upVote 상태가 취소됨
 		}
 	};
+
 	const handleDownVote = () => {
+		const downVote = { upVote: false, downVote: true };
+		const cancelDownVote = { upVote: false, downVote: false };
 		if (voteStatus !== 'down') {
 			setVoteStatus('down');
 			setVote(votecount - 1);
-			kind === 'answer' ? downVoteForA() : downVoteForQ();
+			kind === 'answer'
+				? downVoteForA(JSON.stringify(downVote))
+				: downVoteForQ(JSON.stringify(downVote));
 		} else {
 			setVoteStatus('neutral');
 			setVote(votecount);
-			kind === 'answer' ? downVoteForA() : downVoteForQ();
+			kind === 'answer'
+				? downVoteForA(JSON.stringify(cancelDownVote))
+				: downVoteForQ(JSON.stringify(cancelDownVote));
 		}
 	};
+
+	const handleBookmark = () => {
+		const bookmarkreg = { nickname: loginNickname, bookmarked: bookmarked };
+		if (bookmarked) {
+			setBookmarked(false);
+			kind === 'answer'
+				? bookmarkDelA(JSON.stringify(bookmarkreg))
+				: bookmarkDelQ(JSON.stringify(bookmarkreg));
+		} else {
+			setBookmarked(true);
+			kind === 'answer'
+				? bookmarkA(JSON.stringify(bookmarkreg))
+				: bookmarkQ(JSON.stringify(bookmarkreg));
+		}
+	};
+
 	const handleChose = () => {
 		if (chosen) setChosen(false);
 		if (!chosen) setChosen(true);
 		choose();
-	};
+	}; // 질문 선택 기능
+
 	return (
 		<>
 			<Container>
-				<Up onClick={handleUpVote}>
+				<Up onClick={handleUpVote} voteStatus={voteStatus}>
 					<svg width="36" height="36" viewBox="0 0 36 36">
 						<path d="M2 25h32L18 9 2 25Z"></path>
 					</svg>
 				</Up>
 				<Votes>{vote}</Votes>
-				<Down onClick={handleDownVote}>
+				<Down onClick={handleDownVote} voteStatus={voteStatus}>
 					<svg width="36" height="36" viewBox="0 0 36 36">
 						<path d="M2 11h32L18 27 2 11Z"></path>
 					</svg>
 				</Down>
-				<Bookmark onClick={HandleBookmark} /*bookmark={bookmarked}*/>
+				<Bookmark onClick={handleBookmark} bookmarked={bookmarked}>
 					<svg width="18" height="18" viewBox="0 0 18 18">
 						<path d="m9 10.6 4 2.66V3H5v10.26l4-2.66ZM3 17V3c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v14l-6-4-6 4Z"></path>
 					</svg>
@@ -108,7 +143,8 @@ const Up = styled.button`
 	svg {
 		display: block;
 		background-color: white;
-		fill: rgb(187, 191, 195);
+		fill: ${(props) =>
+			props.voteStatus === 'up' ? 'rgb(229, 136, 62);' : 'rgb(187, 191, 195)'};
 	}
 	:active {
 		svg {
@@ -126,8 +162,12 @@ const Down = styled.button`
 	svg {
 		display: block;
 		background-color: white;
-		fill: rgb(187, 191, 195);
+		fill: ${(props) =>
+			props.voteStatus === 'down'
+				? 'rgb(229, 136, 62);'
+				: 'rgb(187, 191, 195)'};
 	}
+
 	:active {
 		svg {
 			fill: rgb(229, 136, 62);
@@ -141,7 +181,7 @@ const Bookmark = styled.button`
 		display: block;
 		background-color: white;
 		fill: ${(props) =>
-			props.chosen === true ? 'rgb(229, 136, 62);' : 'rgb(187, 191, 195)'};
+			props.bookmarked === true ? 'rgb(229, 136, 62);' : 'rgb(187, 191, 195)'};
 `;
 const Choosed = styled.div`
 	button {
