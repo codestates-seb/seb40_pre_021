@@ -42,6 +42,9 @@ public interface QuestionsMapper {
         List<QuestionComments> questionComments = questions.getComments();  // 질문에 달린 댓글 정보 리스트
         responseDto.setComments(questionCommentsToQuestionCommentsResponseDto(questionComments));   // 댓글 정보 저장
 
+        List<Bookmark> bookmark = questions.getBookmarks(); // 질문을 북마크한 유저 정보 리스트
+        responseDto.setBookmarks(questionBookmarkToQuestionBookmarkResponseDto(bookmark));  // 질문을 북마크한 유저 정보 저장
+
         return responseDto;
     }
 
@@ -86,6 +89,7 @@ public interface QuestionsMapper {
                         .modifiedAt(answers1.getModifiedAt())
                         .nickname(answers1.getUsers().getNickname())
                         .comments(answerCommentsToAnswerCommentsResponseDto(answers1.getComments()))
+                        .bookmarks(answerBookmarkToAnswerBookmarkResponseDto(answers1.getBookmarks()))
                         .build())
                 .collect(Collectors.toList());
     }
@@ -100,6 +104,32 @@ public interface QuestionsMapper {
                         .comments(answerComments1.getComments())
                         .createdAt(answerComments1.getCreatedAt())
                         .nickname(answerComments1.getNickname())
+                        .build()
+                ).collect(Collectors.toList());
+    }
+
+    default List<QuestionBookmarkResponseDto> questionBookmarkToQuestionBookmarkResponseDto(List<Bookmark> bookmarks) {
+        // 질문을 북마크한 유저 정보를 리스트로 저장
+        return bookmarks.stream()
+                .filter(bookmark -> bookmark.getAnswers() == null)
+                .map(bookmark -> QuestionBookmarkResponseDto
+                        .builder()
+                        .id(bookmark.getId())
+                        .userId(bookmark.getUsers().getId())
+                        .nickname(bookmark.getUsers().getNickname())
+                        .build()
+                ).collect(Collectors.toList());
+    }
+
+    default List<AnswerBookmarkResponseDto> answerBookmarkToAnswerBookmarkResponseDto(List<Bookmark> bookmarks) {
+        // 답변을 북마크한 유저 정보를 리스트로 저장
+        return bookmarks.stream()
+                .filter(bookmark -> bookmark.getAnswers() != null)
+                .map(bookmark -> AnswerBookmarkResponseDto
+                        .builder()
+                        .id(bookmark.getId())
+                        .userId(bookmark.getUsers().getId())
+                        .nickname(bookmark.getUsers().getNickname())
                         .build()
                 ).collect(Collectors.toList());
     }

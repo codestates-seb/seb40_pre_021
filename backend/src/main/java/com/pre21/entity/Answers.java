@@ -19,7 +19,7 @@ public class Answers {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ANSWER_ID")
-    private long id;
+    private Long id;
 
     @Column
     private String contents;

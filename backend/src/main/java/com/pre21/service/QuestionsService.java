@@ -91,7 +91,10 @@ public class QuestionsService {
     }
 
     // 질문 삭제
-    public void deleteQuestion(long questionId) throws Exception {
+    public void deleteQuestion(Long questionId, Long userId) {
+
+
+
         Questions findQuestion = verifiedExistQuestion(questionId);
 
         questionsRepository.delete(findQuestion);
