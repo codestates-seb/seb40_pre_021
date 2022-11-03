@@ -30,12 +30,8 @@ public class QuestionsController {
     @PostMapping("/ask")
     public void createQuestion(@RequestBody QuestionsPostDto questionsPostDto,
                                @CookieValue(name = "userId", required = true) Long userId) {
-//        questionsService.createQuestion(questionsPostDto);
 
-        // return new ResponseEntity(questions, HttpStatus.CREATED);
-
-       /* return new ResponseEntity<>(mapper.questionsToQuestionResponse(createdQuestion, null),
-                HttpStatus.CREATED);*/
+        questionsService.createQuestion(questionsPostDto, userId);
     }
 
 
@@ -127,6 +123,14 @@ public class QuestionsController {
     public void clickQuestionBookmark(@PathVariable("question-id") Long questionId,
                                       @CookieValue(name = "userId", required = true) Long userId) {
         questionsService.addQuestionBookmark(questionId, userId);
+
+    }
+
+    @PostMapping("/bookmark/{question-id}/{answer-id}")
+    public void clickAnswerBookmark(@PathVariable("question-id") Long questionId,
+                                    @PathVariable("answer-id") Long answerId,
+                                    @CookieValue(name = "userId", required = true) Long userId) {
+        questionsService.addAnswerBookmark(questionId, answerId, userId);
 
     }
 }

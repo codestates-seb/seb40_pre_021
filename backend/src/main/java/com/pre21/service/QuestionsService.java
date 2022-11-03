@@ -172,7 +172,6 @@ public class QuestionsService {
                         QuestionsTags questionsTags = new QuestionsTags(updatedQuestion, tags1);
                         questionsTagsRepository.save(questionsTags);
                         updatedQuestion.addQuestionsTags(questionsTags);
-                        // questionsRepository.save(questions);
                         findUser.addQuestion(updatedQuestion);
                         updatedQuestion.addUser(findUser);
 
@@ -205,6 +204,24 @@ public class QuestionsService {
             bookmarkRepository.save(bookmark);
         }
     }
+
+    public void addAnswerBookmark(Long questionId,  Long answerId, Long userId) {
+        User findUser = verifiedExistUser(userId);
+        Questions findQuestion = verifiedExistQuestion(questionId);
+        Answers findAnswer = verifiedExistAnswer(answerId);
+        Optional<Bookmark> findBookmark = bookmarkRepository.findBookmarksByUsersAndQuestionsAndAnswers(findUser, findQuestion, findAnswer);
+
+        if (findBookmark.isPresent()) {
+            bookmarkRepository.delete(findBookmark.get());
+        } else {
+            Bookmark bookmark = new Bookmark(questionId, answerId);
+            bookmark.setQuestions(findQuestion);
+            bookmark.setUsers(findUser);
+            bookmark.setAnswers(findAnswer);
+            bookmarkRepository.save(bookmark);
+        }
+    }
+
 
 
     /**

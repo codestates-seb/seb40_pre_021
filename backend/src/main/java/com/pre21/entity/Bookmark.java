@@ -23,15 +23,21 @@ public class Bookmark {
     @JoinColumn(name = "USER_ID")
     private User users;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "QUESTION_ID")
     private Questions questions;
 
-    private Long answerId;
+    @ManyToOne
+    @JoinColumn(name = "ANSWER_ID")
+    private Answers answers;
 
     private String url;
 
     public Bookmark(Long questionId) {
+        this.url = BOOKMARK_BASIC_PAGE + questionId.toString();
+    }
+
+    public Bookmark(Long questionId, Long answerId) {
         this.url = BOOKMARK_BASIC_PAGE + questionId.toString();
     }
 }

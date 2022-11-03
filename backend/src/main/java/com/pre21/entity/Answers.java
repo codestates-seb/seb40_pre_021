@@ -60,6 +60,8 @@ public class Answers {
     @OneToMany(mappedBy = "answers", cascade = CascadeType.ALL)
     private List<AnswerComments> comments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "answers", cascade = CascadeType.ALL)
+    private List<Bookmark> bookmarks = new ArrayList<>();
 
     // 답변 생성 시 필요 생성자
     public Answers(String contents) {
