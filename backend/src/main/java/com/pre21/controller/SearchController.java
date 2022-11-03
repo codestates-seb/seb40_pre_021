@@ -6,6 +6,7 @@ import com.pre21.mapper.QuestionsMapper;
 import com.pre21.service.SearchService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.validator.constraints.URL;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,16 +16,15 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@RequestMapping("/questions")
 @RequiredArgsConstructor
 public class SearchController {
     private final SearchService searchService;
     private final QuestionsMapper mapper;
 
 
-    @RequestMapping(value = "/search/{path}", method = RequestMethod.GET)
-    public ResponseEntity searchingKeyword(@PathVariable String path, HttpServletRequest request) {
-        log.info("########################## keyword ################### -> {}", request);
-
+    @GetMapping("/search/{path:.+}")
+    public ResponseEntity searchingKeyword(@PathVariable String path) {
         List<Questions> searchResult = searchService.findQuestionForKeyword(path);
         int totalSearchCount = searchResult.size();
         List<QuestionDto.GetResponseDtos> response = mapper.questionsToQuestionResponses(searchResult);
