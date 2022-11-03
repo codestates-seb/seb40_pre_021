@@ -121,9 +121,7 @@ const List = ({ data, type }) => {
 										key={ele.tagId}
 										text={ele.title}
 										{...buttonProps}
-										callback={() =>
-											navigate(`/questions/search/[${ele.title}]`)
-										}
+										callback={() => navigate(`/search/[${ele.title}]`)}
 									/>
 								);
 							})}
