@@ -5,6 +5,8 @@ import { getList } from '../api/ListApi';
 import List from '../components/List/List';
 import { Link } from 'react-router-dom';
 import useDynamicTitle from '../hooks/useDynamicTitle';
+import { useDispatch } from 'react-redux';
+import { setTags } from '../modules/tagsReducer';
 
 const HomeStyle = styled.div`
 	width: 100%;
@@ -26,6 +28,7 @@ const Home = () => {
 	const [data, setData] = useState([]);
 	const tabList = ['Hot', 'Week', 'Month'];
 	const [tab, setTab] = useState('Hot');
+	const dispatch = useDispatch();
 	useDynamicTitle(
 		'Stack Overflow - Where Developers Learn, Share, & Build Careers',
 	);
@@ -33,6 +36,7 @@ const Home = () => {
 		const data = { tab: tab.toLowerCase() };
 		getList(data).then((res) => {
 			setData(res.data);
+			dispatch(setTags(res.tags));
 		});
 	}, [tab]);
 

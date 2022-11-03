@@ -1,7 +1,37 @@
 import styled from 'styled-components';
 import { AiOutlineSearch } from 'react-icons/ai';
+import { useSelector } from 'react-redux';
+import { selectTags } from '../../modules/tagsReducer';
+import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+const boxShadow = '0 4px 6px rgb(32 33 36 / 28%)';
+const DropDownContainer = styled.ul`
+	position: absolute;
+	max-width: 90%;
+	min-height: ${(props) => props.height * 26}px;
+	top: 48px;
+	background-color: #ffffff;
+	display: flex;
+	flex-direction: column;
+	border: 1px solid rgb(223, 225, 229);
+	/* border-radius: 1rem; */
+	box-shadow: ${boxShadow};
+	z-index: 3;
 
+	.focus {
+		background-color: #ffffff;
+		filter: brightness(90%);
+	}
+	> li {
+		padding: 0.3rem 1rem;
+		&:hover {
+			background-color: #ffffff;
+			filter: brightness(90%);
+		}
+	}
+`;
 const SearchStyle = styled.li`
+	position: relative;
 	flex-grow: 1;
 	max-width: 50%;
 	display: flex;
@@ -34,12 +64,139 @@ const SearchBox = styled.div`
 		}
 	}
 `;
+
 const Search = () => {
+	const [inputValue, setInputValue] = useState('');
+	const tags = useSelector(selectTags);
+	const [options, setOptions] = useState([]);
+	const [index, setIndex] = useState(0);
+
+	const inputRef = useRef();
+	const ulRef = useRef({});
+
+	const navigate = useNavigate();
+
+	const keyEvent = (e) => {
+		const notEngExp = /[^A-Za-z]/g;
+		const isNotEng = notEngExp.test(e.key);
+		const koreanExp = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;
+
+		if (isNotEng) {
+			e.preventDefault();
+			e.target.value = e.target.value.replace(koreanExp, '');
+			return;
+		}
+
+		if (options.length > 0) {
+			switch (e.key) {
+				case 'Enter':
+					ulRef.current.children[index].click();
+					break;
+				case 'ArrowDown':
+					setIndex(index + 1);
+					if (ulRef.current.childElementCount === index + 1) setIndex(0);
+					break;
+				case 'ArrowUp':
+					setIndex(index - 1);
+					if (index <= 0) {
+						setIndex(0);
+					}
+					break;
+				case 'Escape':
+					setOptions([]);
+					setIndex(0);
+					break;
+			}
+		}
+		if (options.length === 0) {
+			if (e.key === 'Enter') {
+				if (inputValue !== undefined) {
+					let searchWords = inputValue.split(' ').filter((ele) => {
+						return ele !== '';
+					});
+					tags.map((tag) => {
+						searchWords.map((word, idx) => {
+							if (tag === word) {
+								searchWords[idx] = `[${word}]`;
+							}
+						});
+					});
+					if (
+						searchWords.length === 1 &&
+						searchWords[0].at(0) === '[' &&
+						searchWords[0].at(-1) === ']'
+					) {
+						const tagName = searchWords.join('');
+						navigate(`/questions/tagged/${tagName}`);
+						location.reload;
+					} else {
+						const q = searchWords.join('+');
+						navigate(`/search/${q}`);
+						location.reload;
+					}
+				}
+			}
+		}
+	};
+
+	const handleDropDownClick = (clickedOption) => {
+		const text = inputValue.split(' ');
+		text[text.length - 1] = clickedOption;
+		setInputValue(text.join(' '));
+		setIndex(0);
+		setOptions([]);
+		inputRef.current.focus();
+	};
+
+	const NewOptions = (text) => {
+		const newOptions = [...tags];
+		setOptions(
+			newOptions.filter((ele) => {
+				if (text !== '') {
+					return ele.includes(text);
+				} else {
+					setIndex(0);
+				}
+			}),
+		);
+	};
+	const handleInputChange = (event) => {
+		const text = event.target.value;
+
+		setInputValue(text);
+
+		NewOptions(text.split(' ').at(-1));
+	};
+	const DropDown = () => {
+		const height = options.length;
+		return (
+			<DropDownContainer height={height} ref={ulRef}>
+				{options.map((ele, idx) => {
+					return (
+						<li
+							key={idx}
+							className={index === idx ? 'focus' : ''}
+							role="presentation"
+							onClick={() => handleDropDownClick(ele)}>
+							{ele}
+						</li>
+					);
+				})}
+			</DropDownContainer>
+		);
+	};
 	return (
 		<SearchStyle>
 			<SearchBox>
 				<AiOutlineSearch size="24" color="gray" />
-				<input placeholder="Search..." />
+				<input
+					ref={inputRef}
+					placeholder="Search..."
+					onKeyUp={keyEvent}
+					onChange={handleInputChange}
+					value={inputValue}
+				/>
+				{options.length > 0 && <DropDown />}
 			</SearchBox>
 		</SearchStyle>
 	);

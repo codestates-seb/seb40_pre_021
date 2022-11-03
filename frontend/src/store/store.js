@@ -1,4 +1,3 @@
-import userReducer from '../modules/userReducer';
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 import {
 	persistStore,
@@ -12,6 +11,8 @@ import {
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import logger from 'redux-logger';
+import userReducer from '../modules/userReducer';
+import tagsReducer from '../modules/tagsReducer';
 
 const persistConfig = {
 	key: 'root',
@@ -23,6 +24,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
 	//추가되는 reducer
 	user: userReducer,
+	tags: tagsReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
