@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import defaultImage from '../../../assets/images/userDefaultImage.png';
 
-const UserInfo = ({ questionUser = '', date }) => {
+const UserInfo = ({ questionUser = '', date, type }) => {
 	return (
 		<Container>
 			{questionUser ? (
@@ -10,7 +10,7 @@ const UserInfo = ({ questionUser = '', date }) => {
 					<a href="1">{questionUser}</a>
 				</>
 			) : null}
-			<time>asked</time>
+			{type ? <time>answered</time> : <time>asked</time>}
 			<span>{date}</span>
 		</Container>
 	);
