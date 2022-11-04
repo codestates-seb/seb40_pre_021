@@ -15,14 +15,16 @@ import {
 const Controller = ({
 	kind,
 	votecount,
-	/*voted 상태 있어야 할 듯;*/
+	likeYn,
+	unlikeYn,
 	bookmark,
 	choosed,
 	QcreatorNickname,
 	loginNickname,
 }) => {
-	const [vote, setVote] = useState(votecount);
-	const [voteStatus, setVoteStatus] = useState('neutral');
+	const [vote, setVote] = useState(votecount); // 서버에서 가져온 votecount
+	const [upVoted, setUpVoted] = useState(likeYn); // 서버에서 가져온 상태
+	const [downVoted, setDownVoted] = useState(unlikeYn); // 서버에서 가져온 상태
 
 	const [bookmarked, setBookmarked] = useState(bookmark);
 
@@ -31,14 +33,14 @@ const Controller = ({
 	const handleUpVote = () => {
 		const upVote = { upVote: true, downVote: false };
 		const cancelUpVote = { upVote: false, downVote: false };
-		if (voteStatus !== 'up') {
-			setVoteStatus('up');
+		if (!upVoted) {
+			setUpVoted(true);
 			setVote(votecount + 1);
 			kind === 'answer'
 				? upVoteForA(JSON.stringify(upVote))
-				: upVoteForQ(JSON.stringify(upVote)); //이거 보트카운트 우리가 조정하려고 했는데 백엔드에서도 해야됨. 여러 명이 할 경우에 덮어씌워지는 문제 있음
+				: upVoteForQ(JSON.stringify(upVote));
 		} else {
-			setVoteStatus('neutral');
+			setUpVoted(false);
 			setVote(votecount);
 			kind === 'answer'
 				? upVoteForA(JSON.stringify(cancelUpVote))
@@ -49,14 +51,14 @@ const Controller = ({
 	const handleDownVote = () => {
 		const downVote = { upVote: false, downVote: true };
 		const cancelDownVote = { upVote: false, downVote: false };
-		if (voteStatus !== 'down') {
-			setVoteStatus('down');
+		if (!downVoted) {
+			setDownVoted(true);
 			setVote(votecount - 1);
 			kind === 'answer'
 				? downVoteForA(JSON.stringify(downVote))
 				: downVoteForQ(JSON.stringify(downVote));
 		} else {
-			setVoteStatus('neutral');
+			setDownVoted(false);
 			setVote(votecount);
 			kind === 'answer'
 				? downVoteForA(JSON.stringify(cancelDownVote))
@@ -88,13 +90,13 @@ const Controller = ({
 	return (
 		<>
 			<Container>
-				<Up onClick={handleUpVote} voteStatus={voteStatus}>
+				<Up onClick={handleUpVote} upVoted={upVoted}>
 					<svg width="36" height="36" viewBox="0 0 36 36">
 						<path d="M2 25h32L18 9 2 25Z"></path>
 					</svg>
 				</Up>
 				<Votes>{vote}</Votes>
-				<Down onClick={handleDownVote} voteStatus={voteStatus}>
+				<Down onClick={handleDownVote} downVoted={downVoted}>
 					<svg width="36" height="36" viewBox="0 0 36 36">
 						<path d="M2 11h32L18 27 2 11Z"></path>
 					</svg>
@@ -144,7 +146,7 @@ const Up = styled.button`
 		display: block;
 		background-color: white;
 		fill: ${(props) =>
-			props.voteStatus === 'up' ? 'rgb(229, 136, 62);' : 'rgb(187, 191, 195)'};
+			props.upVoted === true ? 'rgb(229, 136, 62);' : 'rgb(187, 191, 195)'};
 	}
 	:active {
 		svg {
@@ -163,9 +165,7 @@ const Down = styled.button`
 		display: block;
 		background-color: white;
 		fill: ${(props) =>
-			props.voteStatus === 'down'
-				? 'rgb(229, 136, 62);'
-				: 'rgb(187, 191, 195)'};
+			props.downVoted === true ? 'rgb(229, 136, 62);' : 'rgb(187, 191, 195)'};
 	}
 
 	:active {

@@ -50,10 +50,12 @@ const Question = () => {
 						<Header>
 							<Title>{thread.title}</Title>
 							<Btn>
-								<Link to="/questions/ask">Ask Question</Link>
+								<Link to="/questions/ask">
+									<Button text="Ask Question" />
+								</Link>
 							</Btn>
 							<Info>
-								Asked{' '}
+								Asked
 								<span>{' ' + timeForToday(thread.createdAt) + ' ago'}</span>
 								Viewed<span>{' ' + thread.views + ' times'}</span>
 							</Info>
@@ -63,6 +65,8 @@ const Question = () => {
 							<Left>
 								<Controller
 									votecount={thread.vote}
+									likeYn={thread.questionsLikes[0].likeYn}
+									unLlikeYn={thread.questionsLikes[0].unlikeYn}
 									bookmark={isBookmarked}
 									QcreatorNickname={thread.nickname}
 									loginNickname={nickname}></Controller>
@@ -126,6 +130,8 @@ const Question = () => {
 											<Controller
 												kind="answer"
 												votecount={el.vote}
+												likeYn={el.answerLikes[0].likeYn}
+												unlikeYn={el.answerLikes[0].unlikeYn}
 												bookmark={isBookmarked}
 												chose={el.choosed}
 												QcreatorNickname={thread.nickname}
