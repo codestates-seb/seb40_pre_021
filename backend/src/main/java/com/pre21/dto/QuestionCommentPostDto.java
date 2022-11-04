@@ -15,6 +15,5 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class QuestionCommentPostDto {
-    private Long userId;
     private String comments;
 }

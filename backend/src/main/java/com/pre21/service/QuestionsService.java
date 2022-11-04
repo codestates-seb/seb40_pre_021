@@ -240,8 +240,7 @@ public class QuestionsService {
      * @param questionId             댓글을 생성하는 질문의 Id입니다.
      * @author dev32user
      */
-    public void createQuestionComment(QuestionCommentPostDto questionCommentPostDto, Long questionId) throws Exception {
-        Long userId = questionCommentPostDto.getUserId();
+    public void createQuestionComment(QuestionCommentPostDto questionCommentPostDto, Long userId, Long questionId) throws Exception {
         User findUser = authRepository
                 .findById(userId)
                 .orElseThrow(() -> new RuntimeException("findUser.findById 실패"));

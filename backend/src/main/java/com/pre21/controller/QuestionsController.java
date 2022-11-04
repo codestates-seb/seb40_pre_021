@@ -147,9 +147,10 @@ public class QuestionsController {
     @PostMapping("/question/{question-id}/comment")
     public void createQuestionComment(
             @PathVariable("question-id") Long questionId,
+            @CookieValue(name = "userId") Long userId,
             @RequestBody QuestionCommentPostDto questionCommentPostDto) throws Exception {
 
-        questionsService.createQuestionComment(questionCommentPostDto, questionId);
+        questionsService.createQuestionComment(questionCommentPostDto, userId, questionId);
     }
 
 
