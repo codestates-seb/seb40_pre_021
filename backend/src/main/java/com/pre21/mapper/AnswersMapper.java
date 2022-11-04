@@ -1,16 +1,23 @@
 package com.pre21.mapper;
 
 import com.pre21.dto.AnswerDto;
+import com.pre21.dto.AnswerInfoDto;
 import com.pre21.entity.Answers;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
+@Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface AnswersMapper {
-    List<AnswerInfoDto> answerToAnswerResponse(List<Answers> answers);
-    default AnswerDto.GetResponse answerToAnswerResponse(Answers answers){
+    List<AnswerInfoDto> answersToAnswerResponses(List<Answers> answers);
+
+    @Mapping(source = "answers.questions.id", target = "questionId")
+    @Mapping(source = "answers.questions.title", target = "title")
+    AnswerInfoDto answersToAnswerResponses(Answers answers);
+
+    default AnswerDto.GetResponse answerToAnswerResponse(Answers answers) {
         AnswerDto.GetResponse responseDto = new AnswerDto.GetResponse();
 
         responseDto.setAnswerId(answers.getId());

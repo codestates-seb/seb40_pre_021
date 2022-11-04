@@ -94,6 +94,7 @@ public class QuestionDto {
         private String nickname;
     }
 
+    // 좋아요, 싫어요 생성 Dto
     @Getter
     @AllArgsConstructor
     public static class Like {

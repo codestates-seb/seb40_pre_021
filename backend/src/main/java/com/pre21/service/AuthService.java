@@ -59,7 +59,7 @@ public class AuthService {
      * 액세스 토큰 리이슈 비즈니스 로직 메서드
      * @param refreshToken 리프레시 토큰
      * @param userId 사용자 식별자
-     * @return AuthoDto.Response
+     * @return AuthoDto.Response(액세스 토큰, 리프레시 토큰)
      * @author mozzi327
      */
     public AuthDto.Response reIssueAccessToken(String refreshToken, Long userId) {
@@ -102,9 +102,9 @@ public class AuthService {
 
     /**
      * 토큰 Response 생성 메서드
-     * @param email
-     * @param roles
-     * @param refreshToken
+     * @param email 이메일
+     * @param roles 권한목록
+     * @param refreshToken 리프레시 토큰
      * @return AuthDto.Token(액세스 토큰, 리프레시 토큰)
      * @author mozzi327
      */

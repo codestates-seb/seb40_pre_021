@@ -45,7 +45,8 @@ public class Answers {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "QUESTION_ID")
     private Questions questions = new Questions();
-
+    @Column
+    private Long questionsId;
     // 답변 - 유저 매핑
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
@@ -70,6 +71,7 @@ public class Answers {
     // 답변 - 질문 매핑 메소드
     public void addQuestion(Questions questions) {
         this.questions = questions;
+        this.questionsId = questions.getId();
     }
 
     // 답변 - 유저 매핑 메소드
