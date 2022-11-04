@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Editor from '../components/common/Editor';
 import Controller from '../components/Question/Controller';
 import Button from '../components/common/Button';
@@ -19,30 +19,58 @@ const Question = () => {
 	const [thread, setThread] = useState('');
 	const [nickname, setNickname] = useState('');
 	const [answerData, setAnswerData] = useState('');
-
+	const { questionId } = useParams();
 	useEffect(() => {
 		getUserInfo().then((res) => setNickname(res.nickname));
 	}, []);
-
 	useEffect(() => {
-		getQuestion().then((res) => setThread(res));
-	}, [thread]);
+		getQuestion(questionId).then((res) => setThread(res));
+	}, []);
 
 	const handleCommentQ = (e) => {
-		const data = { body: e.target.value };
 		if (e.key === 'Enter') {
-			commentQ(JSON.stringify(data));
+			//test
+			const arr = [...thread.comments];
+			const test = {
+				id: thread.comments.length + 1,
+				comments: e.target.value,
+				createdAt: '2022-11-03T23:20:27.362238',
+				nickname: 'gildong',
+			};
+			arr.push(test);
+			const comments = { comments: arr };
+			const data = Object.assign({}, thread, comments);
+
+			//real
+			// const data = { body: e.target.value, questionId };
+
+			commentQ(data);
 			e.target.value = '';
-			getQuestion().then((res) => setThread(res)); // 새로고침해야 댓글 보이...면... 그 뒤에 생각하자.
+			getQuestion(questionId).then((res) => setThread(res)); // 새로고침해야 댓글 보이...면... 그 뒤에 생각하자.
 		}
 	};
 
-	const handleCommentA = (e) => {
-		const data = { body: e.target.value };
+	const handleCommentA = (e, answerId) => {
 		if (e.key === 'Enter') {
-			commentA(JSON.stringify(data));
+			//test
+			const arr = thread.answers.filter((ele) => {
+				return ele.answerId === answerId;
+			});
+			const test = {
+				id: thread.answers.comments?.length + 1,
+				comments: e.target.value,
+				createdAt: '2022-11-03T23:20:29.553901',
+				nickname: 'gildong',
+			};
+			arr[0].comments.push(test);
+			const answers = { answers: arr };
+			const data = Object.assign({}, thread, answers);
+
+			//real
+			// const data = { body: e.target.value, answerId, questionId };
+			commentA(data);
 			e.target.value = '';
-			getQuestion().then((res) => setThread(res));
+			getQuestion(questionId).then((res) => setThread(res));
 		}
 	};
 	const handleDeleteCommentQ = (comments, idx) => {
@@ -51,7 +79,7 @@ const Question = () => {
 		const result = head.concat(tail);
 		const data = { result: result };
 		commentQDEL(JSON.stringify(data));
-		getQuestion().then((res) => setThread(res));
+		getQuestion(questionId).then((res) => setThread(res));
 	};
 	const handleDeleteCommentA = (comments, idx) => {
 		const head = comments.slice(0, idx);
@@ -59,7 +87,7 @@ const Question = () => {
 		const result = head.concat(tail);
 		const data = { result: result };
 		commentADEL(JSON.stringify(data));
-		getQuestion().then((res) => setThread(res));
+		getQuestion(questionId).then((res) => setThread(res));
 	};
 	const handleAnswer = (str) => {
 		setAnswerData({
@@ -67,7 +95,36 @@ const Question = () => {
 		});
 	};
 	const handleSubmitAnswer = () => {
-		answer(JSON.stringify(answerData));
+		//test
+		const arr = [...thread.answers];
+		const test = {
+			answerId: thread.answers.length + 1,
+			contents: answerData.body,
+			vote: -1,
+			chooseYn: false,
+			createdAt: '2022-11-03T23:20:22.798088',
+			modifiedAt: '2022-11-03T23:20:22.798088',
+			nickname: 'gildong',
+			comments: [],
+			bookmarks: [],
+			answerLikes: [
+				{
+					nickname: 'gildong',
+					userId: 1,
+					likeYn: true,
+					unlikeYn: false,
+				},
+			],
+		};
+		arr.push(test);
+		const answers = { answers: arr };
+		const data = Object.assign({}, thread, answers);
+		answer(data);
+		getQuestion(questionId).then((res) => setThread(res));
+
+		//real
+		// const data = { body: answerData.body, questionId };
+		// answer(data);
 	};
 
 	return (
@@ -96,7 +153,8 @@ const Question = () => {
 									votecount={thread.vote}
 									votedata={thread.questionsLikes}
 									QcreatorNickname={thread.nickname}
-									loginNickname={nickname}></Controller>
+									loginNickname={nickname}
+									questionId={questionId}></Controller>
 							</Left>
 							<Right>
 								<Body
@@ -147,7 +205,7 @@ const Question = () => {
 										</Grouper>
 									))}
 								<CommentCreate
-									onKeyUp={handleCommentQ}
+									onKeyDown={handleCommentQ}
 									placeholder="Add a comment"
 								/>
 							</Right>
@@ -170,7 +228,9 @@ const Question = () => {
 												votedata={el.answerLikes}
 												chose={el.choosed}
 												QcreatorNickname={thread.nickname}
-												loginNickname={nickname}></Controller>
+												loginNickname={nickname}
+												questionId={questionId}
+												answerId={el.answerId}></Controller>
 										</Left>
 										<Right>
 											<Body
@@ -217,7 +277,7 @@ const Question = () => {
 													</Grouper>
 												))}
 											<CommentCreate
-												onKeyUp={handleCommentA}
+												onKeyDown={() => handleCommentA(event, el.answerId)}
 												placeholder="Add a comment"
 											/>
 										</Right>

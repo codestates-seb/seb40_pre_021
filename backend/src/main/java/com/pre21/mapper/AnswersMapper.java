@@ -13,6 +13,7 @@ import java.util.List;
 public interface AnswersMapper {
     List<AnswerInfoDto> answersToAnswerResponses(List<Answers> answers);
 
+    @SuppressWarnings("unused")
     @Mapping(source = "answers.questions.id", target = "questionId")
     @Mapping(source = "answers.questions.title", target = "title")
     AnswerInfoDto answersToAnswerResponses(Answers answers);

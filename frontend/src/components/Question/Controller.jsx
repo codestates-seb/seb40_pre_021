@@ -22,6 +22,8 @@ const Controller = ({
 	choosed,
 	QcreatorNickname,
 	loginNickname,
+	questionId,
+	answerId,
 }) => {
 	const [vote, setVote] = useState(votecount);
 	const [chosen, setChosen] = useState(choosed);
@@ -49,55 +51,60 @@ const Controller = ({
 	}, [bookmarkStatus]);
 
 	const handleUpVote = () => {
-		const upVote = { upVote: true, downVote: false };
-		const cancelUpVote = { upVote: false, downVote: false }; // 정보를 하드코딩된 상태로 고정하여 보냅니다.
+		const upVote = { upVote: true, downVote: false, questionId, answerId };
+		const cancelUpVote = {
+			upVote: false,
+			downVote: false,
+			questionId,
+			answerId,
+		}; // 정보를 하드코딩된 상태로 고정하여 보냅니다.
 		if (!upVoted) {
 			setUpVoted(true);
 			setDownVoted(false);
 			setVote(votecount + 1);
-			kind === 'answer'
-				? upVoteForA(JSON.stringify(upVote))
-				: upVoteForQ(JSON.stringify(upVote));
+			kind === 'answer' ? upVoteForA(upVote) : upVoteForQ(upVote);
 		} else {
 			setUpVoted(false);
 			setVote(votecount);
-			kind === 'answer'
-				? upVoteForA(JSON.stringify(cancelUpVote))
-				: upVoteForQ(JSON.stringify(cancelUpVote)); //한 번 더 누르면 upVote 상태가 취소됨
+			kind === 'answer' ? upVoteForA(cancelUpVote) : upVoteForQ(cancelUpVote); //한 번 더 누르면 upVote 상태가 취소됨
 		}
 	};
 
 	const handleDownVote = () => {
-		const downVote = { upVote: false, downVote: true };
-		const cancelDownVote = { upVote: false, downVote: false };
+		const downVote = { upVote: false, downVote: true, questionId, answerId };
+		const cancelDownVote = {
+			upVote: false,
+			downVote: false,
+			questionId,
+			answerId,
+		};
 		if (!downVoted) {
 			setDownVoted(true);
 			setUpVoted(false);
 			setVote(votecount - 1);
-			kind === 'answer'
-				? downVoteForA(JSON.stringify(downVote))
-				: downVoteForQ(JSON.stringify(downVote));
+			kind === 'answer' ? downVoteForA(downVote) : downVoteForQ(downVote);
 		} else {
 			setDownVoted(false);
 			setVote(votecount);
 			kind === 'answer'
-				? downVoteForA(JSON.stringify(cancelDownVote))
-				: downVoteForQ(JSON.stringify(cancelDownVote));
+				? downVoteForA(cancelDownVote)
+				: downVoteForQ(cancelDownVote);
 		}
 	};
 
 	const handleBookmark = () => {
-		const bookmarkreg = { nickname: loginNickname, bookmarked: bookmarked }; // 유저 닉네임과 북마크 상태를 저장하여 보냅니다.
+		const bookmarkreg = {
+			nickname: loginNickname,
+			bookmarked: bookmarked,
+			questionId,
+			answerId,
+		}; // 유저 닉네임과 북마크 상태를 저장하여 보냅니다.
 		if (bookmarked) {
 			setBookmarked(false);
-			kind === 'answer'
-				? bookmarkDelA(JSON.stringify(bookmarkreg))
-				: bookmarkDelQ(JSON.stringify(bookmarkreg));
+			kind === 'answer' ? bookmarkDelA(bookmarkreg) : bookmarkDelQ(bookmarkreg);
 		} else {
 			setBookmarked(true);
-			kind === 'answer'
-				? bookmarkA(JSON.stringify(bookmarkreg))
-				: bookmarkQ(JSON.stringify(bookmarkreg));
+			kind === 'answer' ? bookmarkA(bookmarkreg) : bookmarkQ(bookmarkreg);
 		}
 	};
 
@@ -203,6 +210,7 @@ const Bookmark = styled.button`
 		background-color: white;
 		fill: ${(props) =>
 			props.bookmarked === true ? 'rgb(229, 136, 62);' : 'rgb(187, 191, 195)'};
+	}
 `;
 // 아래의 채택 컴포넌트는 아이디와 질문 작성자를 비교하여 같을 때에는 버튼으로, 아닐 때에는 div로 렌더링됩니다.
 const Choosed = styled.div`
