@@ -1,4 +1,4 @@
-package com.pre21.mapper;
+package com.pre21.dto;
 
 import com.pre21.entity.Adoption;
 import lombok.AllArgsConstructor;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class AnswerInfoDto {
     private Long questionId;
     private Long id;
-    private Long title;
+    private String title;
     private LocalDateTime createdAt;
     private Adoption adoption;
     private Long vote;

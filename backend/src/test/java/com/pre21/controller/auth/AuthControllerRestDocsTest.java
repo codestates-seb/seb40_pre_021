@@ -21,7 +21,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
 import javax.servlet.http.Cookie;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

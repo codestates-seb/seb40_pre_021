@@ -8,16 +8,18 @@ import com.pre21.mapper.AnswersMapper;
 import com.pre21.mapper.QuestionsMapper;
 import com.pre21.mapper.UserMapper;
 import com.pre21.service.AnswersService;
+import com.pre21.service.AuthService;
 import com.pre21.service.QuestionsService;
 import com.pre21.service.TagsService;
-import com.pre21.service.AuthService;
-import com.pre21.util.dto.MultiResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -55,22 +57,32 @@ public class MypageController {
         return new ResponseEntity<>(userMapper.userToUserResponse(findUser), HttpStatus.OK);
     }
 
+    /**
+     * 마이페이지 api 명세서 중 답변 정보 조회에 해당하는 요청사항 컨트롤러
+     *
+     * @param userId 쿠키에서 값을 받아옵니다.
+     * @author dev32user
+     */
     @GetMapping("/answer")
     public ResponseEntity getAnswerInfo(@CookieValue(name = "userId") Long userId) {
         Page<Answers> answersPage = answersService.findMyAnswers(userId, page, size);
         List<Answers> answers = answersPage.getContent();
-        return new ResponseEntity<>(
-                new MultiResponseDto<>(answersMapper.answerToAnswerResponse(answers), answersPage),
+        return new ResponseEntity<>(answersMapper.answersToAnswerResponses(answers),
                 HttpStatus.OK);
     }
 
+    /**
+     * 마이페이지 api 명세서 중 질문 정보 조회에 해당하는 요청사항 컨트롤러
+     *
+     * @param userId 쿠키에서 값을 받아옵니다.
+     * @author dev32user
+     */
     @GetMapping("/question")
     public ResponseEntity getQuestionInfo(@CookieValue(name = "userId") Long userId) {
         Page<Questions> questionsPage = questionsService.findMyQuestions(userId, page, size);
         List<Questions> questions = questionsPage.getContent();
         return new ResponseEntity<>(
-                new MultiResponseDto<>(
-                        questionsMapper.questionsToQuestionResponses(questions), questionsPage),
+                questionsMapper.questionsToQuestionResponses(questions),
                 HttpStatus.OK);
     }
 /*
