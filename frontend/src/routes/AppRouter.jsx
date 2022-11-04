@@ -29,10 +29,7 @@ const AppRouter = () => {
 						<Route path="/questions" element={<Questions />} />
 						{/* keyword 검색 */}
 						<Route path="/search/:q" element={<Questions />} />
-						<Route
-							path="/questions/question/:questionId"
-							element={<Question />}
-						/>
+						<Route path="/questions/question" element={<Question />} />
 						{/* question은 테스트 후 삭제해야 합니다 (메인 화면에서 직접 연결되는 것이 아님)*/}
 						<Route path="/users" element={<Mypage />}>
 							<Route path="activity" element={<MypageActivityPage />} />
