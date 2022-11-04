@@ -222,7 +222,7 @@ const Form = styled.input`
 		outline: none;
 	}
 	::placeholder {
-		color: #bbbbbb;
+		color: #cccccc;
 	}
 `;
 // const DiscardDraft = styled.button``;
