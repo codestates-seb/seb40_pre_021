@@ -4,6 +4,7 @@ import Editor from '../components/common/Editor';
 import Button from '../components/common/Button';
 import TagForm from '../components/Ask/TagForm';
 import { ask } from '../api/QuestionApi';
+import { edit } from '../api/EditApi';
 import background from '../assets/images/background.svg';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
@@ -19,7 +20,8 @@ const Ask = ({ editTitle, editBody, editTag }) => {
 			body: problem + expect,
 			tags: tagsarr,
 		};
-		ask(JSON.stringify(data));
+		if (editTitle && editBody && editTag) edit(JSON.stringify(data));
+		else ask(JSON.stringify(data));
 	};
 
 	const handleTitle = (e) => {
@@ -84,6 +86,7 @@ const Ask = ({ editTitle, editBody, editTag }) => {
 							maxlength="300"
 							placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
 							onChange={handleTitle}
+							value={editTitle}
 						/>
 					</Group>
 					<Tip></Tip>
@@ -93,7 +96,7 @@ const Ask = ({ editTitle, editBody, editTag }) => {
 							Introduce the problem and expand on what you put in the title.
 							Minimum 20 characters.
 						</Caption>
-						<Editor callback={handleProblem} />
+						<Editor callback={handleProblem} value={editBody} />
 					</Group>
 					<Tip></Tip>
 					<Group>
@@ -113,7 +116,7 @@ const Ask = ({ editTitle, editBody, editTag }) => {
 							Add up to 5 tags to describe what your question is about. Start
 							typing to see suggestions.
 						</Caption>
-						<TagForm callback={handleTags} />
+						<TagForm callback={handleTags} value={editTag} />
 					</Group>
 					<Button text="Review your question" callback={handleClick} />
 				</BodyConatiner>
