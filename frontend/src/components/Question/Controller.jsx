@@ -203,6 +203,7 @@ const Bookmark = styled.button`
 		background-color: white;
 		fill: ${(props) =>
 			props.bookmarked === true ? 'rgb(229, 136, 62);' : 'rgb(187, 191, 195)'};
+	}
 `;
 // 아래의 채택 컴포넌트는 아이디와 질문 작성자를 비교하여 같을 때에는 버튼으로, 아닐 때에는 div로 렌더링됩니다.
 const Choosed = styled.div`
