@@ -1,25 +1,9 @@
-import { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import mypageDataSort from '../../../pages/Mypage/utils/mypageDataSort';
+import useSortButton from '../hooks/useSortButton';
 
-const SortButtonGroup = ({
-	menus,
-	handleSortLists,
-	data,
-	callback,
-	tag = false,
-}) => {
-	const [menu, setMenu] = useState([]);
-
-	const handleMenuChange = (id) => {
-		let newMenu = menu.map((item) =>
-			item.id === id ? { ...item, clicked: true } : { ...item, clicked: false },
-		);
-		setMenu(newMenu);
-	};
-
-	useEffect(() => {
-		setMenu(menus);
-	}, [menus]);
+const SortButtonGroup = ({ menus, data, callback, tag = false }) => {
+	const [menu, handleMenuChange] = useSortButton(menus);
 
 	return (
 		<GroupContainer>
@@ -31,7 +15,7 @@ const SortButtonGroup = ({
 						clicked={clicked}
 						onClick={() => {
 							handleMenuChange(id);
-							handleSortLists(name, data, callback, tag);
+							callback(mypageDataSort(name, data, tag));
 						}}>
 						{name}
 					</Menu>
