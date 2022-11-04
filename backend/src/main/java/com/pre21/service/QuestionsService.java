@@ -238,20 +238,20 @@ public class QuestionsService {
      * @param questionId             댓글을 생성하는 질문의 Id입니다.
      * @author dev32user
      */
-/*    public void createQuestionComment(QuestionDto.CommentPost commentPost, Long questionId) throws Exception {
-        Long userId = QuestionDto.CommentPost.getUserId();
+    public void createQuestionComment(QuestionDto.CommentPost commentPost, Long questionId) throws Exception {
+        Long userId = commentPost.getUserId();
         User findUser = authRepository
                 .findById(userId)
                 .orElseThrow(() -> new RuntimeException("findUser.findById 실패"));
         Questions questions = questionsRepository
                 .findQuestionsById(questionId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
-        QuestionComments questionComments = new QuestionComments(QuestionDto.CommentPost.getComments());
+        QuestionComments questionComments = new QuestionComments(commentPost.getComments());
         questionComments.setQuestions(questions);
         questionComments.setUser(findUser);
         questionComments.setNickname(findUser.getNickname()); //2022.11.02 답변 작성 유저 닉네임 추가
         questionCommentRepository.save(questionComments);
-    }*/
+    }
 
 
     /**

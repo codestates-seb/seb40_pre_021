@@ -11,6 +11,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -38,6 +39,9 @@ public class User {
 
     @Column
     private String nickname;
+
+    @Column
+    private LocalDateTime createdAt = LocalDateTime.now();
 
     // Security 유저 권한
     @ElementCollection(fetch = FetchType.EAGER)
@@ -95,7 +99,7 @@ public class User {
 
     public void addUserTags(UserTags userTags) {
         this.userTags.add(userTags);
-        if(userTags.getUsers() != this) {
+        if (userTags.getUsers() != this) {
             userTags.setUser(this);
         }
     }
@@ -121,8 +125,8 @@ public class User {
     }
 
     /**
-     * @method
      * @param bookmark
+     * @method
      */
     public void addAdoption(Bookmark bookmark) {
         this.bookmarks.add(bookmark);
