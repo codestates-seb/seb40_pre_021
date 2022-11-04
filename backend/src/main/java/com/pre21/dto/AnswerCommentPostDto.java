@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * AnswerComment 생성 Post 요청 시 Dto입니다. <br>
+ * AnswerComment 생성 Post 요청 시 Dto입니다.
  * RequestBody에 해당합니다.
  *
  * @author dev32user

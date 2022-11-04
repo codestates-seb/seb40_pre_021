@@ -6,7 +6,7 @@ import lombok.Setter;
 
 
 /**
- * QuestionComment 생성 Post 요청 시 Dto입니다. <br>
+ * QuestionComment 생성 Post 요청 시 Dto입니다.
  * RequestBody에 해당합니다.
  *
  * @author dev32user
@@ -15,5 +15,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class QuestionCommentPostDto {
+    private Long userId;
     private String comments;
 }

@@ -151,7 +151,6 @@ public class QuestionsController {
             @PathVariable("question-id") Long questionId,
             @CookieValue(name = "userId") Long userId,
             @RequestBody QuestionCommentPostDto questionCommentPostDto) throws Exception {
-
         questionsService.createQuestionComment(questionCommentPostDto, userId, questionId);
     }
 

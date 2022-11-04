@@ -99,7 +99,7 @@ public class QuestionsService {
 
         Questions findQuestion = verifiedExistQuestion(questionId);
 
-        if(findUser.getId() == findQuestion.getUsers().getId()) {
+        if (findUser.getId() == findQuestion.getUsers().getId()) {
             questionsRepository.delete(findQuestion);
         } else {
             new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND); /**권한 없는 예외 코드로 변경 필요**/
@@ -135,7 +135,7 @@ public class QuestionsService {
         questionsRepository.save(findQuestion);
         Answers findAnswer = verifiedExistAnswer(answerId);
         findAnswer.setChooseYn(true);
-        //answersRepository.save(findAnswer);
+        // answersRepository.save(findAnswer);
         User findUser = verifiedExistUser(userId);
         Adoption adoption = new Adoption();
         adoption.setQuestions(findQuestion);
@@ -214,7 +214,7 @@ public class QuestionsService {
         }
     }
 
-    public void addAnswerBookmark(Long questionId,  Long answerId, Long userId) {
+    public void addAnswerBookmark(Long questionId, Long answerId, Long userId) {
         User findUser = verifiedExistUser(userId);
         Questions findQuestion = verifiedExistQuestion(questionId);
         Answers findAnswer = verifiedExistAnswer(answerId);
@@ -237,7 +237,8 @@ public class QuestionsService {
      * QuestionCommentRepository에 입력받은 questionCommentPostDto를 저장합니다.
      *
      * @param questionCommentPostDto 댓글을 생성하는 요청의 RequestBody에 해당합니다.
-     * @param questionId             댓글을 생성하는 질문의 Id입니다.
+     * @param userId                 댓글을 작성하는 유저의 Id 값입니다.
+     * @param questionId             댓글을 생성하는 질문의 Id 입니다.
      * @author dev32user
      */
     public void createQuestionComment(QuestionCommentPostDto questionCommentPostDto, Long userId, Long questionId) throws Exception {
@@ -250,13 +251,14 @@ public class QuestionsService {
         QuestionComments questionComments = new QuestionComments(questionCommentPostDto.getComments());
         questionComments.setQuestions(questions);
         questionComments.setUser(findUser);
-        questionComments.setNickname(findUser.getNickname()); //2022.11.02 답변 작성 유저 닉네임 추가
+        questionComments.setNickname(findUser.getNickname()); // 2022.11.02 답변 작성 유저 닉네임 추가
         questionCommentRepository.save(questionComments);
     }
 
 
     /**
-     * @method 유저 조회
+     * 유저 조회
+     *
      * @param userId 유저식별자
      * @return User
      * @author mozzi327
@@ -269,9 +271,9 @@ public class QuestionsService {
 
 
     /**
-     * @method 질문 조회
      * @param questionId 질문식별자
      * @return Questions
+     * @method 질문 조회
      * @author mozzi327
      */
     private Questions verifiedExistQuestion(Long questionId) {
@@ -282,9 +284,9 @@ public class QuestionsService {
 
 
     /**
-     * @method 답변 조회
      * @param answerId 답변식별자
      * @return Answers
+     * @method 답변 조회
      * @author mozzi327
      */
     private Answers verifiedExistAnswer(Long answerId) {
@@ -292,7 +294,6 @@ public class QuestionsService {
                 new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND)
         );
     }
-
 
 
     public Page<Questions> findMyQuestions(Long userId, int page, int size) {
