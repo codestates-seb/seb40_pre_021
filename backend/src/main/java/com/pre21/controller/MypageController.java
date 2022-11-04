@@ -1,19 +1,16 @@
 package com.pre21.controller;
 
 
-import com.pre21.dto.MyPageDto;
-import com.pre21.entity.*;
+import com.pre21.entity.Answers;
+import com.pre21.entity.Questions;
+import com.pre21.entity.User;
 import com.pre21.mapper.AnswersMapper;
 import com.pre21.mapper.QuestionsMapper;
-import com.pre21.mapper.TagMapper;
 import com.pre21.mapper.UserMapper;
 import com.pre21.service.AnswersService;
 import com.pre21.service.AuthService;
 import com.pre21.service.QuestionsService;
 import com.pre21.service.TagsService;
-import com.pre21.service.AuthService;
-import com.pre21.util.dto.MultiResponseDto;
-import com.pre21.util.dto.SingleResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -46,7 +43,6 @@ public class MypageController {
 
     private final AnswersMapper answersMapper;
     private final QuestionsMapper questionsMapper;
-    private final TagMapper tagMapper;
 
     /**
      * 마이페이지 api 명세서 중 유저 정보에 해당하는 요청사항 컨트롤러입니다.
@@ -54,9 +50,10 @@ public class MypageController {
      * @param userId 쿠키에서 읽어온 접속 중인 사용자의 Id 값입니다.
      * @author dev32user
      */
-    @GetMapping("/info")
+    @GetMapping("/user-info")
     public ResponseEntity getUserInfo(@CookieValue(name = "userId") Long userId) {
         User findUser = authService.findUser(userId);
+
         return new ResponseEntity<>(userMapper.userToUserResponse(findUser), HttpStatus.OK);
     }
 
@@ -88,14 +85,12 @@ public class MypageController {
                 questionsMapper.questionsToQuestionResponses(questions),
                 HttpStatus.OK);
     }
-
-
+/*
    @GetMapping("/tags")
    public ResponseEntity getTagsInfo(@CookieValue(name = "userId") Long userId) {
-       List<UserTags> tags = tagsService.findMyTags(userId);
-       List<MyPageDto.TagResponse> response = tagMapper.TagToTagResponse(tags);
-       return new ResponseEntity<>(
-               new SingleResponseDto<>(response), HttpStatus.OK);
+       Page<Tags> tagsPage = tagsService.findMyTags(userId, page, size);
+       List<Tags> tags = tagsPage.getContent();
+       return
    }
-
+   */
 }

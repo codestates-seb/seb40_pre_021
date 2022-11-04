@@ -39,7 +39,6 @@ public class AuthDto {
 
     @Getter
     @Setter
-    @Builder
     @AllArgsConstructor
     public static class UserInfo {
         private Long id;

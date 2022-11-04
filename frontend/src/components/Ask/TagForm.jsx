@@ -1,35 +1,24 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import useInput from './hooks/useInput';
-import useTag from './hooks/useTag';
 
 const TagForm = ({ callback }) => {
-	const [tags, setTags, handleRemoveTag] = useTag();
-	const [value, setValue, onChangeValue] = useInput();
+	const [tags, setTags] = useState([]);
 
-	const handleEditTag = (e) => {
-		if (e.keyCode === 8 && value === '' && tags.length > 0) {
-			const editTag = tags.pop();
-			const newTags = [...tags];
-			setTags(newTags);
-			setValue(editTag + ' ');
-		}
-	};
-
-	const handleAddTag = (e) => {
+	function handleKeyDown(e) {
+		let value;
+		e.stopPropagation();
 		if (e.key !== 'Enter' && e.key !== ' ') return;
 		else {
-			setValue(value.trim().toLowerCase());
+			value = e.target.value.trim().toLowerCase();
+			e.target.value = '';
 		}
 		if (!value.trim()) return;
-		if (tags.includes(value) || tags.length > 4) {
-			setValue('');
-			return;
-		} else {
-			setTags([...tags, value]);
-			setValue('');
-		}
-	};
+		setTags([...tags, value]);
+	}
+
+	function removeTag(index) {
+		setTags(tags.filter((el, idx) => idx !== index));
+	}
 
 	useEffect(() => {
 		callback(tags);
@@ -41,20 +30,13 @@ const TagForm = ({ callback }) => {
 				{tags.map((tag, idx) => (
 					<div className="tag" key={idx}>
 						<span>{tag}</span>
-						<button onClick={() => handleRemoveTag(idx)}>&times;</button>
+						<button onClick={() => removeTag(idx)}>&times;</button>
 					</div>
 				))}
 				<input
 					type="text"
 					placeholder="e.g. (objective-c json windows)"
-					value={value}
-					pattern="[a-zA-Z0-9]"
-					onKeyDown={(e) => {
-						handleAddTag(e);
-						handleEditTag(e);
-					}}
-					onChange={onChangeValue}
-				/>
+					onKeyDown={handleKeyDown}></input>
 			</div>
 		</Style>
 	);
@@ -62,9 +44,6 @@ const TagForm = ({ callback }) => {
 
 const Style = styled.div`
 	.container {
-		display: flex;
-		flex-direction: row;
-		flex-wrap: wrap;
 		input {
 			padding: 0 0.5rem 0 0.5rem;
 			border: none;

@@ -65,7 +65,7 @@ const InputForm = ({ text, blueText, type, callback }) => {
 					type={type}
 					onChange={callback}
 					maxLength="50"
-					onKeyDown={chkCharCode}
+					onKeyUp={chkCharCode}
 				/>
 			</div>
 		</InputFormStyle>
