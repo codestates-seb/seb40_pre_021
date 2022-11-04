@@ -30,12 +30,14 @@ public class QuestionsService {
     private final BookmarkRepository bookmarkRepository;
     private final QuestionCommentRepository questionCommentRepository;
 
+    private final UserTagRepository userTagRepository;
+
 
     // 질문 생성
     public void createQuestion(QuestionDto.Post post,
                                Long userId) {
         User findUser = authRepository.findById(userId).orElseThrow(() ->
-                new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+                new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER));
 
         Questions questions = new Questions(post.getTitle(), post.getContents());
         List<String> tags = post.getTags();
@@ -45,20 +47,27 @@ public class QuestionsService {
                     if (tagsRepository.findByTitle(e).isEmpty()) {
                         Tags tags1 = tagsRepository.save(new Tags(e));
                         QuestionsTags questionsTags = new QuestionsTags(questions, e, tags1);
+                        UserTags userTags = new UserTags(findUser, tags1);
+                        userTags.setTagCount(userTags.getTagCount() + 1);
                         questionsTagsRepository.save(questionsTags);
                         questions.addQuestionsTags(questionsTags);
-                        // questionsRepository.save(questions);
                         findUser.addQuestion(questions);
                         questions.addUser(findUser);
+                        findUser.addUserTags(userTags);
 
                     } else {
                         Tags tags1 = tagsRepository.findByTitle(e).orElseThrow(IllegalArgumentException::new);
-                        updateTagCount(tags1);
+                        updateTagCountUp(tags1);
                         QuestionsTags questionsTags = new QuestionsTags(questions, e, tags1);
+                        UserTags userTags = userTagRepository.findByTagsAndUsers(tags1, findUser).orElse(
+                                new UserTags(findUser, tags1)
+                        );
+                        userTags.setTagCount(userTags.getTagCount() + 1);
                         questionsTagsRepository.save(questionsTags);
                         questions.addQuestionsTags(questionsTags);
                         findUser.addQuestion(questions);
                         questions.addUser(findUser);
+                        findUser.addUserTags(userTags);
                     }
                 }
         );
@@ -93,25 +102,35 @@ public class QuestionsService {
     // 질문 삭제
     public void deleteQuestion(Long questionId, Long userId) {
 
-        User findUser = verifiedExistUser(userId);
-
         Questions findQuestion = verifiedExistQuestion(questionId);
 
-        if(findUser.getId() == findQuestion.getUsers().getId()) {
-            questionsRepository.delete(findQuestion);
-        } else {
-            new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND); /**권한 없는 예외 코드로 변경 필요**/
-        }
+        if (!Objects.equals(findQuestion.getUsers().getId(), userId))
+            throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
+
+        questionsRepository.delete(findQuestion);
     }
 
     // 태그 수 업데이트
-    private void updateTagCount(Tags tags) {
+    private void updateTagCountUp(Tags tags) {
 
         int earnedTagCount = tags.getCount() + 1;
         tags.setCount(earnedTagCount);
         tags.setLatest(LocalDateTime.now());
 
         tagsRepository.save(tags);
+    }
+
+    private void updateTagCountDown(Tags tags) {
+        int nowTagCount = tags.getCount();
+
+        if(nowTagCount == 1) {
+            tagsRepository.delete(tags);
+        } else {
+            int earnedTagCount = nowTagCount - 1;
+            tags.setCount(earnedTagCount);
+
+            tagsRepository.save(tags);
+        }
     }
 
 
@@ -168,6 +187,8 @@ public class QuestionsService {
 
         updatedQuestion.setTitle(patch.getTitle());
         updatedQuestion.setContents(patch.getContents());
+        updatedQuestion.setModifiedAt(LocalDateTime.now());
+
         List<String> tags = patch.getTags();
 
         questionsTagsRepository.deleteAllByQuestions(updatedQuestion);
@@ -184,7 +205,7 @@ public class QuestionsService {
 
                     } else {
                         Tags tags1 = tagsRepository.findByTitle(e).orElseThrow(IllegalArgumentException::new);
-                        updateTagCount(tags1);
+                        updateTagCountUp(tags1);
                         QuestionsTags questionsTags = new QuestionsTags(updatedQuestion, e, tags1);
                         questionsTagsRepository.save(questionsTags);
                         updatedQuestion.addQuestionsTags(questionsTags);

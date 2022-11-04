@@ -54,12 +54,10 @@ public class QuestionsController {
      * @param questionId 수정한 질문Id
      * @author dev32user
      */
-
     @PatchMapping("/{question-id}/edit")
-    public ResponseEntity patchQuestion(
-            @CookieValue(name = "userId") Long userId,
-            @PathVariable("question-id") Long questionId,
-            @RequestBody QuestionDto.Patch patch) {
+    public ResponseEntity patchQuestion(@CookieValue(name = "userId") Long userId,
+                                        @PathVariable("question-id") Long questionId,
+                                        @RequestBody QuestionDto.Patch patch) {
         Questions questions = questionsService.patchQuestion(userId, questionId, patch);
 
         return new ResponseEntity(mapper.questionsToQuestionResponse(questions), HttpStatus.OK);
