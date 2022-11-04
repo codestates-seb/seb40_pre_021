@@ -11,6 +11,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 태그 엔티티
+ */
 @NoArgsConstructor
 @Getter
 @Setter
@@ -27,6 +30,7 @@ public class Tags {
     @Column(nullable = false, name = "TAG_COUNT")
     private int count;
 
+    // 태그 최근 사용 일자
     @Column
     private LocalDateTime latest = LocalDateTime.now();
 
@@ -37,6 +41,9 @@ public class Tags {
     @OneToMany(mappedBy = "tags")
     private List<UserTags> userTags = new ArrayList<>();
 
+    /**
+     * 질문 작성 시 사용되는 태그 생성 생성자
+     */
     public Tags(String title) {
         this.title = title;
         this.count = 1; //질문 생성 시 같이 생성되는 태그는 초기값 1 세팅

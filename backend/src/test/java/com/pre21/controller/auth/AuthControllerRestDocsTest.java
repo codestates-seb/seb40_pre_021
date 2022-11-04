@@ -1,49 +1,32 @@
 package com.pre21.controller.auth;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
-import com.pre21.controller.UserController;
-import com.pre21.dto.AuthDto;
 import com.pre21.dto.UserDto;
-import com.pre21.entity.User;
 import com.pre21.mapper.UserMapper;
-import com.pre21.repository.UserRepository;
 import com.pre21.security.dto.LoginDto;
 import com.pre21.security.jwt.JwtTokenizer;
-import com.pre21.service.UserService;
+import com.pre21.service.AuthService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.data.jpa.mapping.JpaMetamodelMappingContext;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.context.WebApplicationContext;
 
-import javax.servlet.Filter;
 import javax.servlet.http.Cookie;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static com.pre21.util.ApiDocumentUtils.getDocumentRequest;
-import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
@@ -60,7 +43,7 @@ public class AuthControllerRestDocsTest {
     private Gson gson;
 
     @MockBean
-    private UserService userService;
+    private AuthService authService;
 
     @MockBean
     private UserMapper mapper;
@@ -86,7 +69,7 @@ public class AuthControllerRestDocsTest {
         savedUser = new UserDto.Join("gildong",
                 "hgd@gmail.com",
                 "ghdrlfehd");
-        userService.createUser(mapper.joinToUserEntity(savedUser));
+        authService.createUser(mapper.joinToUserEntity(savedUser));
 
 //        Date expiration = jwtTokenizer.getTokenExpiration(jwtTokenizer.getRefreshTokenExpirationMinutes());
 //        String base64EncodedSecretKey = jwtTokenizer.encodeBase64SecretKey(jwtTokenizer.getSecretKey());

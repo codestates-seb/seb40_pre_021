@@ -12,7 +12,7 @@ import com.pre21.exception.ExceptionCode;
 import com.pre21.repository.AnswerCommentRepository;
 import com.pre21.repository.AnswersRepository;
 import com.pre21.repository.QuestionsRepository;
-import com.pre21.repository.UserRepository;
+import com.pre21.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,7 +26,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AnswersService {
     private final QuestionsRepository questionsRepository;
-    private final UserRepository userRepository;
+    private final AuthRepository authRepository;
     private final AnswersRepository answersRepository;
     private final AnswerCommentRepository answerCommentRepository;
 
@@ -36,7 +36,7 @@ public class AnswersService {
                 -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
 
         // 유저 찾기
-        User findUser = userRepository.findUserByEmail(answersPostDto.getEmail()).orElseThrow(()
+        User findUser = authRepository.findUserByEmail(answersPostDto.getEmail()).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
 
         // 답변 생성
@@ -155,7 +155,7 @@ public class AnswersService {
      */
     public void createAnswerComment(AnswerCommentPostDto answerCommentPostDto, Long answerId) throws Exception{
         Long userId = answerCommentPostDto.getUserId();
-        User findUser = userRepository
+        User findUser = authRepository
                 .findById(userId)
                 .orElseThrow(() -> new RuntimeException("findUser.findById 실패"));
         Answers answers = answersRepository

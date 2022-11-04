@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+/**
+ * 질문 좋아요 엔티티
+ */
 @NoArgsConstructor
 @Getter
 @Setter
@@ -45,8 +48,8 @@ public class QuestionLikes {
         }
     }
     public void setUsers(User user) {
-        // 기존에 getQuestionsTags 와 연관관계가 있다면
-        // getQuestionsTags 에서 해당 questions 을 삭제
+        // 기존에 getQuestionsLikes 와 연관관계가 있다면
+        // getQuestionsLikes 에서 해당 user 을 삭제
         if(this.users != null) {
             this.users.getQuestionsLikes().remove(this);
         }

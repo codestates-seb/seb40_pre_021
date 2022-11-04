@@ -10,7 +10,9 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-// Questions 테이블과 Tags 테이블 N:N 관계를 1:N:1로 만들기 위한 Entity
+/**
+ * Questions 테이블과 Tags 테이블 N:N 관계를 1:N:1 관계로 만들기 위한 엔티티
+ */
 @Entity
 @Getter
 @Setter
@@ -49,9 +51,12 @@ public class QuestionsTags {
     }
 
     public void setTags(Tags tags) {
+        // 기존에 getQuestionsTags 와 연관관계가 있다면
+        // getQuestionsTags 에서 해당 tags 을 삭제
         if(this.tags != null) {
             this.tags.getQuestionsTags().remove(this);
         }
+        // 무한 루프 방지
         this.tags = tags;
         if(tags.getQuestionsTags() != this) {
             tags.addQuestionTags(this);

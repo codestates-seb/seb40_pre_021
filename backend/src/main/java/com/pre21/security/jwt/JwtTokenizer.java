@@ -1,12 +1,11 @@
 package com.pre21.security.jwt;
 
-import com.pre21.dto.AuthDto;
 import com.pre21.entity.RefreshToken;
 import com.pre21.entity.User;
 import com.pre21.exception.BusinessLogicException;
 import com.pre21.exception.ExceptionCode;
 import com.pre21.repository.RefreshTokenRepository;
-import com.pre21.repository.UserRepository;
+import com.pre21.repository.AuthRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -15,8 +14,6 @@ import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.Cookie;
@@ -39,7 +36,7 @@ public class JwtTokenizer {
     private int refreshTokenExpirationMinutes = 30;
 
     private final RefreshTokenRepository refreshTokenRepository;
-    private final UserRepository userRepository;
+    private final AuthRepository authRepository;
 
 
     public String encodeBase64SecretKey(String secretKey) {
@@ -118,7 +115,7 @@ public class JwtTokenizer {
     }
 
     public User findUserByEmail(String email) {
-        return userRepository
+        return authRepository
                 .findUserByEmail(email)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
     }

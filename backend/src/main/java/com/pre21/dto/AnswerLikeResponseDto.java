@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AnswerLikeResponseDto {
     private Long userId;
+    private String nickname;
     private boolean likeYn;
     private boolean unlikeYn;
 }
