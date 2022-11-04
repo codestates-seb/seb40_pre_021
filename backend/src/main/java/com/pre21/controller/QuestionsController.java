@@ -26,14 +26,14 @@ public class QuestionsController {
     /**
      * 질문 생성 메서드
      *
-     * @param questionsPostDto  : 질문 생성 Dto
-     * @param userId            : 쿠키에 담긴 유저 Id
+     * @param post      : 질문 생성 Dto
+     * @param userId    : 쿠키에 담긴 유저 Id
      */
     @PostMapping("/ask")
-    public void createQuestion(@RequestBody QuestionsPostDto questionsPostDto,
+    public void createQuestion(@RequestBody QuestionDto.Post post,
                                @CookieValue(name = "userId", required = true) Long userId) {
 
-        questionsService.createQuestion(questionsPostDto, userId);
+        questionsService.createQuestion(post, userId);
 
     }
 
@@ -56,7 +56,7 @@ public class QuestionsController {
      * 질문 patch 요청에 대한 컨트롤러 메서드입니다.
      *
      * @param userId           쿠키에서 값을 받아옵니다.
-     * @param questionPatchDto 질문 수정 요청입니다.
+     * @param patch 질문 수정 요청입니다.
      * @param questionId       수정한 질문의 Id입니다.
      * @author dev32user
      */
@@ -64,8 +64,8 @@ public class QuestionsController {
     public ResponseEntity patchQuestion(
             @CookieValue(name = "userId") Long userId,
             @PathVariable("question-id") Long questionId,
-            @RequestBody QuestionPatchDto questionPatchDto) {
-        Questions questions = questionsService.patchQuestion(userId, questionId, questionPatchDto);
+            @RequestBody QuestionDto.Patch patch) {
+        Questions questions = questionsService.patchQuestion(userId, questionId, patch);
         return new ResponseEntity(mapper.questionsToQuestionResponse(questions), HttpStatus.OK);
     }
 
@@ -141,16 +141,16 @@ public class QuestionsController {
     /**
      * 질문에 대한 댓글 생성 <br>
      * @param questionId             댓글을 생성하는 질문의 Id입니다.
-     * @param questionCommentPostDto 댓글을 생성하는 요청의 RequestBody에 해당합니다.
+     * @param commentPost 댓글을 생성하는 요청의 RequestBody에 해당합니다.
      * @author dev32user
      */
-    @PostMapping("/question/{question-id}/comment")
+/*    @PostMapping("/question/{question-id}/comment")
     public void createQuestionComment(
             @PathVariable("question-id") Long questionId,
-            @RequestBody QuestionCommentPostDto questionCommentPostDto) throws Exception {
+            @RequestBody QuestionDto.CommentPost commentPost) throws Exception {
 
-        questionsService.createQuestionComment(questionCommentPostDto, questionId);
-    }
+        questionsService.createQuestionComment(commentPost, questionId);
+    }*/
 
 
     /**
