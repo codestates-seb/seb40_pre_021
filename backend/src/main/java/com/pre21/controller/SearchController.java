@@ -1,6 +1,7 @@
 package com.pre21.controller;
 
 import com.pre21.dto.QuestionDto;
+import com.pre21.dto.SearchDto;
 import com.pre21.entity.Questions;
 import com.pre21.mapper.QuestionsMapper;
 import com.pre21.service.SearchService;
@@ -27,7 +28,11 @@ public class SearchController {
     public ResponseEntity searchingKeyword(@PathVariable String path) {
         List<Questions> searchResult = searchService.findQuestionForKeyword(path);
         int totalSearchCount = searchResult.size();
-        List<QuestionDto.GetResponseDtos> response = mapper.questionsToQuestionResponses(searchResult);
+        List<QuestionDto.GetResponseDtos> resultDto = mapper.questionsToQuestionResponses(searchResult);
+        SearchDto.Response response = SearchDto.Response.builder()
+                .searchCount(totalSearchCount)
+                .data(searchResult)
+                .build();
 
         return new ResponseEntity(response, HttpStatus.OK);
     }

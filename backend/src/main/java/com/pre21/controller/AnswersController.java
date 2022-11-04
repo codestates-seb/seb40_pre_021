@@ -1,5 +1,6 @@
 package com.pre21.controller;
 
+import com.pre21.dto.AnswerCommentPostDto;
 import com.pre21.dto.AnswerPatchDto;
 import com.pre21.dto.AnswersDto;
 import com.pre21.dto.QuestionDto;
@@ -44,7 +45,7 @@ public class AnswersController {
      * @author dev32user
      */
     @PatchMapping("/answer/{answer-id}/edit")
-    public ResponseEntity patchAnswer(
+    public ResponseEntity patchAnswer (
             @CookieValue(name = "userId") Long userId,
             @PathVariable("answer-id") Long answerId,
             @RequestBody AnswerPatchDto answerPatchDto) {
@@ -67,5 +68,25 @@ public class AnswersController {
         answersService.deleteAnswer(userId, answerId);
         return new ResponseEntity(HttpStatus.OK);
 
+    }
+
+
+
+    /**
+     * 답변에 대한 댓글 생성입니다. <br>
+     * POST "/answers/{answer-id}/comment"<br>
+     * requestBody : {"userId":"userId", "comments":"string"} <br>
+     * responseBody : NULL
+     *
+     * @param answerId             댓글을 생성하는 답변의 Id입니다.
+     * @param answerCommentPostDto 댓글을 생성하는 요청의 RequestBody에 해당합니다.
+     * @author dev32user
+     */
+    @PostMapping("/answers/{answer-id}/comment")
+    public void createAnswerComment(
+            @PathVariable("answer-id") Long answerId,
+            @RequestBody AnswerCommentPostDto answerCommentPostDto) throws Exception {
+
+        answersService.createAnswerComment(answerCommentPostDto, answerId);
     }
 }
