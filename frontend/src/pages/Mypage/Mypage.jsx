@@ -8,7 +8,7 @@ import { RiPencilFill } from 'react-icons/ri';
 import { BiMessageDetail } from 'react-icons/bi';
 import Navigation from '../../components/Mypage/Navigation';
 import { Outlet } from 'react-router-dom';
-import useMypageData from '../../hooks/useMypageData';
+import useMypageData from './hooks/useMypageData';
 
 const Mypage = () => {
 	const [userInfo] = useMypageData('userInfo');

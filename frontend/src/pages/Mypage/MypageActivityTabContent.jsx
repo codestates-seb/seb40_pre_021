@@ -5,7 +5,7 @@ import Reputation from '../../components/Mypage/Activity/Reputation/Reputation';
 import Summary from '../../components/Mypage/Activity/Summary';
 import Tags from '../../components/Mypage/Activity/Tags/Tags';
 import TotalList from '../../components/Mypage/Activity/TotalList';
-import useMypageData from '../../hooks/useMypageData';
+import useMypageData from './hooks/useMypageData';
 
 const MypageTabContent = ({ curTab, changeCurrentTab }) => {
 	const [answer, setAnswer] = useMypageData('answer');

@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import useMypageData from '../../../hooks/useMypageData';
+import useMypageData from '../../../pages/Mypage/hooks/useMypageData';
 import Button from '../../common/Button';
 import SortButtonGroup from '../common/SortButtonGroup';
 import EmptySavesBox from './EmptySavesBox';
