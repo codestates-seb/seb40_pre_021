@@ -2,9 +2,12 @@ import styled from 'styled-components';
 import Header from '../components/Header/Header';
 import OAuths from '../components/OAuths/OAuths';
 import SignupForm from '../components/Signup/SignForm';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import SignupGuide from '../components/Signup/SignupGuide';
 import useDynamicTitle from '../hooks/useDynamicTitle';
+import { useSelector } from 'react-redux';
+import { selectIsLogin } from '../modules/userReducer';
+import { useEffect } from 'react';
 const SignupStyle = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -41,6 +44,13 @@ const SignupBody = styled.div`
 `;
 
 const Signup = () => {
+	const navigate = useNavigate();
+	const isLogin = useSelector(selectIsLogin);
+	useEffect(() => {
+		if (isLogin) {
+			navigate('/', { replace: true });
+		}
+	}, []);
 	useDynamicTitle('Sign Up - Stack Overflow');
 	return (
 		<SignupStyle>

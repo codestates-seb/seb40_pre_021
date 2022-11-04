@@ -1,4 +1,7 @@
+import { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import { selectIsLogin } from '../../modules/userReducer';
 import Menu from './Menu';
 
 const Container = styled.div`
@@ -26,6 +29,7 @@ const LeftMenuStyle = styled.div`
 `;
 
 const LeftMenu = () => {
+	const isLogin = useSelector(selectIsLogin);
 	const menus = [
 		{
 			id: 0,
@@ -39,16 +43,10 @@ const LeftMenu = () => {
 		},
 		{
 			id: 2,
-			name: 'Tags',
-			path: '',
-		},
-		{
-			id: 3,
 			name: 'Users',
 			path: '/users/activity',
 		},
 	];
-
 	const props = {};
 
 	return (
@@ -67,6 +65,9 @@ const LeftMenu = () => {
 								<div className="public">&nbsp;PUBLIC</div>
 							</div>
 						);
+					}
+					if (ele.name === 'Users') {
+						return isLogin && <Menu key={ele.id} {...props} />;
 					}
 					return <Menu key={ele.id} {...props} />;
 				})}

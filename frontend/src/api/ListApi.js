@@ -14,7 +14,10 @@ export const getList = async (data) => {
 	}
 	// console.log(url, data);
 	try {
-		const result = await instance.get('/questions', { params: data });
+		//test
+		// const result = await instance.get('/questions', { params: data });
+		//real
+		const result = await instance.get(url, { params: data });
 		return result.data;
 	} catch (err) {
 		console.log(err);
