@@ -114,8 +114,8 @@ const List = ({ data, type }) => {
 				{type === 'Questions' && <div className="body">{data.body}</div>}
 				<div className="bottomBox">
 					<div className="tags">
-						{Array.isArray(data.tags) &&
-							data.tags.map((ele) => {
+						{Array.isArray(data.questionsTags) &&
+							data.questionsTags.map((ele) => {
 								return (
 									<Button
 										key={ele.tagId}
