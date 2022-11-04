@@ -1,6 +1,5 @@
 package com.pre21.entity;
 
-import com.pre21.dto.AnswerCommentResponseDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
