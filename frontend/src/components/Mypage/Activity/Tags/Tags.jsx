@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import ListBox from '../ListBox';
-import SortButtonGroup from '../SortButtonGroup';
+import SortButtonGroup from '../../common/SortButtonGroup';
 import Title from '../Title';
 import TagsList from './TagsList';
 
@@ -17,14 +17,7 @@ let sortData = [
 	},
 ];
 
-const Tags = ({
-	tag,
-	setTag,
-	limit,
-	handleTabChange,
-	handleSortLists,
-	flex = false,
-}) => {
+const Tags = ({ tag, setTag, limit, handleTabChange, flex = false }) => {
 	return (
 		<Container>
 			<TitleBox>
@@ -37,7 +30,6 @@ const Tags = ({
 				{!flex ? (
 					<SortButtonGroup
 						menus={sortData}
-						handleSortLists={handleSortLists}
 						data={tag}
 						callback={setTag}
 						tag={true}

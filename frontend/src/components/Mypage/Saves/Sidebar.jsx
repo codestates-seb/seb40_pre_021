@@ -1,28 +1,6 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 
-let data = [
-	{
-		id: 0,
-		name: 'All saves',
-		clicked: true,
-	},
-	{
-		id: 1,
-		name: 'For later',
-		clicked: false,
-	},
-];
-
-const Sidebar = () => {
-	const [tabs, setTabs] = useState(data);
-
-	const handleTabChange = (id) => {
-		let newTabs = tabs.map((tab) =>
-			tab.id === id ? { ...tab, clicked: true } : { ...tab, clicked: false },
-		);
-		setTabs(newTabs);
-	};
+const Sidebar = ({ tabs, onChange }) => {
 	return (
 		<Container>
 			<ListBox>
@@ -34,7 +12,7 @@ const Sidebar = () => {
 								key={id}
 								clicked={clicked}
 								onClick={() => {
-									handleTabChange(id);
+									onChange(id);
 								}}>
 								{name}
 							</ListText>

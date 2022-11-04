@@ -8,17 +8,19 @@ const ListAdditionalInfo = ({ vote, choosed, answerCount, views, type }) => {
 				<span>{vote}</span>
 				<span>votes</span>
 			</VotesBox>
-			<AnswerBox choosed={choosed}>
-				{choosed ? <GoCheck style={{ color: 'white' }} /> : null}
-				{!type ? (
-					<>
-						<span>{answerCount}</span>
-						<span>answer</span>
-					</>
-				) : (
+			{type === 'answered' && choosed ? (
+				<AnswerBox choosed={choosed}>
+					<GoCheck style={{ color: 'white' }} />
 					<span>Accepted</span>
-				)}
-			</AnswerBox>
+				</AnswerBox>
+			) : null}
+			{type !== 'answered' ? (
+				<AnswerBox choosed={choosed}>
+					{choosed ? <GoCheck style={{ color: 'white' }} /> : null}
+					<span>{answerCount}</span>
+					<span>answer</span>
+				</AnswerBox>
+			) : null}
 			{views ? (
 				<ViewsBox>
 					<span>{views}</span>
