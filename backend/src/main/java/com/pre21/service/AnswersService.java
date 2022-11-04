@@ -144,17 +144,16 @@ public class AnswersService {
     }
 
 
-
     /**
      * 답변에 대한 댓글을 생성하는 메서드입니다.
      * AnswerCommentRepository에 입력받은 answerCommentPostDto를 저장합니다.
      *
      * @param answerCommentPostDto 댓글을 생성하는 요청의 RequestBody에 해당합니다.
-     * @param answerId             댓글을 생성하는 답변의 Id입니다.
+     * @param userId               댓글 작성하는 유저의 Id 값입니다.
+     * @param answerId             댓글을 생성하는 답변의 Id 값입니다.
      * @author dev32user
      */
-    public void createAnswerComment(AnswerCommentPostDto answerCommentPostDto, Long answerId) throws Exception{
-        Long userId = answerCommentPostDto.getUserId();
+    public void createAnswerComment(AnswerCommentPostDto answerCommentPostDto, Long userId, Long answerId) throws Exception {
         User findUser = authRepository
                 .findById(userId)
                 .orElseThrow(() -> new RuntimeException("findUser.findById 실패"));
@@ -167,8 +166,6 @@ public class AnswersService {
         answerComments.setNickname(findUser.getNickname()); // 2022.11.02 댓글 작성 유저 닉네임 추가
         answerCommentRepository.save(answerComments);
     }
-
-
 
 
     public Page<Answers> findMyAnswers(Long userId, int page, int size) {

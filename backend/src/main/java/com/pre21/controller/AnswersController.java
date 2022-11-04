@@ -45,7 +45,7 @@ public class AnswersController {
      * @author dev32user
      */
     @PatchMapping("/answer/{answer-id}/edit")
-    public ResponseEntity patchAnswer (
+    public ResponseEntity patchAnswer(
             @CookieValue(name = "userId") Long userId,
             @PathVariable("answer-id") Long answerId,
             @RequestBody AnswerPatchDto answerPatchDto) {
@@ -71,22 +71,20 @@ public class AnswersController {
     }
 
 
-
     /**
-     * 답변에 대한 댓글 생성입니다. <br>
-     * POST "/answers/{answer-id}/comment"<br>
-     * requestBody : {"userId":"userId", "comments":"string"} <br>
-     * responseBody : NULL
+     * 답변에 대한 댓글 생성입니다.
      *
-     * @param answerId             댓글을 생성하는 답변의 Id입니다.
-     * @param answerCommentPostDto 댓글을 생성하는 요청의 RequestBody에 해당합니다.
+     * @param answerId             댓글을 생성하는 답변의 Id 입니다.
+     * @param userId               댓글을 생성하는 유저의 Id 값입니다.
+     * @param answerCommentPostDto 댓글을 생성하는 요청의 RequestBody 내용에 해당합니다.
      * @author dev32user
      */
     @PostMapping("/answers/{answer-id}/comment")
     public void createAnswerComment(
             @PathVariable("answer-id") Long answerId,
+            @CookieValue(name = "userId") Long userId,
             @RequestBody AnswerCommentPostDto answerCommentPostDto) throws Exception {
 
-        answersService.createAnswerComment(answerCommentPostDto, answerId);
+        answersService.createAnswerComment(answerCommentPostDto, userId, answerId);
     }
 }

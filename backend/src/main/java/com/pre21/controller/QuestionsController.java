@@ -26,8 +26,8 @@ public class QuestionsController {
     /**
      * 질문 생성 메서드
      *
-     * @param questionsPostDto  : 질문 생성 Dto
-     * @param userId            : 쿠키에 담긴 유저 Id
+     * @param questionsPostDto : 질문 생성 Dto
+     * @param userId           : 쿠키에 담긴 유저 Id
      */
     @PostMapping("/ask")
     public void createQuestion(@RequestBody QuestionsPostDto questionsPostDto,
@@ -104,10 +104,10 @@ public class QuestionsController {
 
 
     /**
-     * @method 질문 작성자 채택 기능
      * @param questionId : 질문식별자
      * @param answerId   : 답변식별자
      * @param userId     : 로그인 유저식별자
+     * @method 질문 작성자 채택 기능
      * @author mozzi327
      */
     @GetMapping("/question/{question-id}/adopt/{answer-id}")
@@ -119,9 +119,9 @@ public class QuestionsController {
     }
 
     /**
-     * @method 질문 북마크 추가
      * @param questionId
      * @param userId
+     * @method 질문 북마크 추가
      * @author mozzi327
      */
     @PostMapping("/bookmark/{question-id}")
@@ -139,9 +139,11 @@ public class QuestionsController {
     }
 
     /**
-     * 질문에 대한 댓글 생성 <br>
-     * @param questionId             댓글을 생성하는 질문의 Id입니다.
-     * @param questionCommentPostDto 댓글을 생성하는 요청의 RequestBody에 해당합니다.
+     * 질문에 대한 댓글 생성
+     *
+     * @param questionId             댓글을 생성하는 질문의 Id 값입니다.
+     * @param userId                 댓글을 생성하는 유저의 Id 값입니다.
+     * @param questionCommentPostDto 댓글을 생성하는 요청의 RequestBody 내용에 해당합니다.
      * @author dev32user
      */
     @PostMapping("/question/{question-id}/comment")
@@ -156,14 +158,15 @@ public class QuestionsController {
 
     /**
      * 질문 좋아요 저장
+     *
      * @param questionId 질문식별자
      * @param request
      * @author dev32user
      */
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/question/{question-id}/like")
-    public void clickQuestionLike (@PathVariable("question-id") Long questionId
-            ,@RequestBody QuestionDto.Like request) {
+    public void clickQuestionLike(@PathVariable("question-id") Long questionId
+            , @RequestBody QuestionDto.Like request) {
         likeService.saveQuestionLike(questionId, request);
     }
 }
