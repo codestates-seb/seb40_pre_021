@@ -83,8 +83,9 @@ public class AnswersController {
     @PostMapping("/answers/{answer-id}/comment")
     public void createAnswerComment(
             @PathVariable("answer-id") Long answerId,
+            @CookieValue(value = "userId", required = false) Long userId,
             @RequestBody AnswerDto.CommentPost answerCommentPostDto) throws Exception {
 
-        answersService.createAnswerComment(answerCommentPostDto, answerId);
+        answersService.createAnswerComment(answerCommentPostDto, userId, answerId);
     }
 }

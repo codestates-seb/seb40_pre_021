@@ -1,8 +1,6 @@
 package com.pre21.service;
 
-import com.pre21.dto.QuestionCommentPostDto;
-import com.pre21.dto.QuestionPatchDto;
-import com.pre21.dto.QuestionsPostDto;
+import com.pre21.dto.QuestionDto;
 import com.pre21.entity.*;
 import com.pre21.exception.BusinessLogicException;
 import com.pre21.exception.ExceptionCode;
@@ -34,13 +32,13 @@ public class QuestionsService {
 
 
     // 질문 생성
-    public void createQuestion(QuestionsPostDto questionsPostDto,
+    public void createQuestion(QuestionDto.Post post,
                                Long userId) {
         User findUser = authRepository.findById(userId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
 
-        Questions questions = new Questions(questionsPostDto.getTitle(), questionsPostDto.getContents());
-        List<String> tags = questionsPostDto.getTags();
+        Questions questions = new Questions(post.getTitle(), post.getContents());
+        List<String> tags = post.getTags();
 
         tags.forEach(
                 e -> {
@@ -151,10 +149,10 @@ public class QuestionsService {
      *
      * @param userId           Long 타입 사용자 Id 값입니다.
      * @param questionId       Long 타입 Question Id 값입니다.
-     * @param questionPatchDto QuestionPatchDto 요청입니다.
+     * @param patch QuestionPatchDto 요청입니다.
      * @author dev32user
      */
-    public Questions patchQuestion(Long userId, Long questionId, QuestionPatchDto questionPatchDto) {
+    public Questions patchQuestion(Long userId, Long questionId, QuestionDto.Patch patch) {
         if (!Objects.equals(userId, verifiedExistQuestion(questionId).getUsers().getId())) {
             throw new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER);
         }
@@ -168,9 +166,9 @@ public class QuestionsService {
                 optionalQuestion
                         .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
 
-        updatedQuestion.setTitle(questionPatchDto.getTitle());
-        updatedQuestion.setContents(questionPatchDto.getContents());
-        List<String> tags = questionPatchDto.getTags();
+        updatedQuestion.setTitle(patch.getTitle());
+        updatedQuestion.setContents(patch.getContents());
+        List<String> tags = patch.getTags();
 
         questionsTagsRepository.deleteAllByQuestions(updatedQuestion);
 
@@ -236,19 +234,18 @@ public class QuestionsService {
      * 질문에 대한 댓글을 생성하는 메서드입니다.
      * QuestionCommentRepository에 입력받은 questionCommentPostDto를 저장합니다.
      *
-     * @param questionCommentPostDto 댓글을 생성하는 요청의 RequestBody에 해당합니다.
+     * @param commentPost 댓글을 생성하는 요청의 RequestBody에 해당합니다.
      * @param questionId             댓글을 생성하는 질문의 Id입니다.
      * @author dev32user
      */
-    public void createQuestionComment(QuestionCommentPostDto questionCommentPostDto, Long questionId) throws Exception {
-        Long userId = questionCommentPostDto.getUserId();
+    public void createQuestionComment(QuestionDto.CommentPost commentPost,Long userId ,Long questionId) throws Exception {
         User findUser = authRepository
                 .findById(userId)
                 .orElseThrow(() -> new RuntimeException("findUser.findById 실패"));
         Questions questions = questionsRepository
                 .findQuestionsById(questionId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
-        QuestionComments questionComments = new QuestionComments(questionCommentPostDto.getComments());
+        QuestionComments questionComments = new QuestionComments(commentPost.getComments());
         questionComments.setQuestions(questions);
         questionComments.setUser(findUser);
         questionComments.setNickname(findUser.getNickname()); //2022.11.02 답변 작성 유저 닉네임 추가
