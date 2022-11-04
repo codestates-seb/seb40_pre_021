@@ -3,6 +3,7 @@ package com.pre21.controller;
 
 import com.pre21.entity.Answers;
 import com.pre21.entity.Questions;
+import com.pre21.entity.Tags;
 import com.pre21.entity.User;
 import com.pre21.mapper.AnswersMapper;
 import com.pre21.mapper.QuestionsMapper;
@@ -11,6 +12,9 @@ import com.pre21.service.AnswersService;
 import com.pre21.service.AuthService;
 import com.pre21.service.QuestionsService;
 import com.pre21.service.TagsService;
+import com.pre21.service.AuthService;
+import com.pre21.util.dto.MultiResponseDto;
+import com.pre21.util.dto.SingleResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -85,12 +89,13 @@ public class MypageController {
                 questionsMapper.questionsToQuestionResponses(questions),
                 HttpStatus.OK);
     }
-/*
+
+
    @GetMapping("/tags")
    public ResponseEntity getTagsInfo(@CookieValue(name = "userId") Long userId) {
-       Page<Tags> tagsPage = tagsService.findMyTags(userId, page, size);
-       List<Tags> tags = tagsPage.getContent();
-       return
+       List<Tags> tags = tagsService.findMyTags(userId);
+       return new ResponseEntity<>(
+               new SingleResponseDto<>(tags), HttpStatus.OK);
    }
-   */
+
 }

@@ -3,8 +3,8 @@ package com.pre21.util.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-@AllArgsConstructor
 @Getter
+@AllArgsConstructor
 public class SingleResponseDto <T> {
     private T data;
 }
