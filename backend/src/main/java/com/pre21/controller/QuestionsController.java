@@ -141,15 +141,16 @@ public class QuestionsController {
     /**
      * 질문에 대한 댓글 생성 <br>
      * @param questionId             댓글을 생성하는 질문의 Id입니다.
-     * @param commentPost 댓글을 생성하는 요청의 RequestBody에 해당합니다.
+     * @param questionCommentPostDto 댓글을 생성하는 요청의 RequestBody에 해당합니다.
      * @author dev32user
      */
     @PostMapping("/question/{question-id}/comment")
     public void createQuestionComment(
             @PathVariable("question-id") Long questionId,
-            @RequestBody QuestionDto.CommentPost commentPost) throws Exception {
+            @CookieValue(value = "userId", required = false) Long userId,
+            @RequestBody QuestionDto.CommentPost questionCommentPostDto) throws Exception {
 
-        questionsService.createQuestionComment(commentPost, questionId);
+        questionsService.createQuestionComment(questionCommentPostDto, userId, questionId);
     }
 
 

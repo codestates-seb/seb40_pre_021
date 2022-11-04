@@ -79,7 +79,6 @@ public class QuestionDto {
     @Setter
     @AllArgsConstructor
     public static class CommentPost {
-        private Long userId;
         private String comments;
     }
 

@@ -83,7 +83,6 @@ public class AnswerDto {
     @Setter
     @AllArgsConstructor
     public static class CommentPost {
-        private Long userId;
         private String comments;
     }
 

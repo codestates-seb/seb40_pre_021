@@ -1,6 +1,6 @@
 package com.pre21.mapper;
 
-import com.pre21.dto.UserDto;
+import com.pre21.dto.AuthDto;
 import com.pre21.entity.User;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 public class UserMapperImpl implements UserMapper {
 
     @Override
-    public User joinToUserEntity(UserDto.Join requestBody) {
+    public User joinToUserEntity(AuthDto.Join requestBody) {
         if ( requestBody == null ) {
             return null;
         }

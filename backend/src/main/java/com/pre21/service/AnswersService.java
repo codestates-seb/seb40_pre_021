@@ -151,8 +151,7 @@ public class AnswersService {
      * @param answerId             댓글을 생성하는 답변의 Id입니다.
      * @author dev32user
      */
-    public void createAnswerComment(AnswerDto.CommentPost answerCommentPostDto, Long answerId) throws Exception{
-        Long userId = answerCommentPostDto.getUserId();
+    public void createAnswerComment(AnswerDto.CommentPost answerCommentPostDto,Long userId ,Long answerId) throws Exception{
         User findUser = authRepository
                 .findById(userId)
                 .orElseThrow(() -> new RuntimeException("findUser.findById 실패"));
