@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import Sidebar from '../../components/Mypage/Activity/Sidebar';
 import useDynamicTitle from '../../hooks/useDynamicTitle';
 import MypageTabContent from './MypageActivityTabContent';
-import useCurrentTab from './utils/useCurrentTab';
-import useTabs from './utils/useTabs';
+import useCurrentTab from './hooks/useCurrentTab';
+import useTabs from './hooks/useTabs';
 
 const MypageActivityPage = () => {
 	const [tabs, onChangeTab] = useTabs(data);
