@@ -122,7 +122,9 @@ const List = ({ data, type }) => {
 										key={ele.tagId}
 										text={ele.title}
 										{...buttonProps}
-										callback={() => navigate(`/search/[${ele.title}]`)}
+										callback={() =>
+											navigate(`/search/${encodeURI(`[${ele.title}]`)}`)
+										}
 									/>
 								);
 							})}
