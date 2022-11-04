@@ -1,36 +1,35 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styled from 'styled-components';
+import useInput from './hooks/useInput';
+import useTag from './hooks/useTag';
 
 const TagForm = ({ callback }) => {
-	const [tags, setTags] = useState([]);
-	const [value, setValue] = useState('');
+	const [tags, setTags, handleRemoveTag] = useTag();
+	const [value, setValue, onChangeValue] = useInput();
 
-	function handleKeyDown(e) {
-		e.stopPropagation();
+	const handleEditTag = (e) => {
 		if (e.keyCode === 8 && value === '' && tags.length > 0) {
 			const editTag = tags.pop();
 			const newTags = [...tags];
 			setTags(newTags);
 			setValue(editTag + ' ');
 		}
+	};
+
+	const handleAddTag = (e) => {
 		if (e.key !== 'Enter' && e.key !== ' ') return;
 		else {
 			setValue(value.trim().toLowerCase());
 		}
 		if (!value.trim()) return;
-		setTags([...tags, value]);
-		setValue('');
-	}
-
-	function removeTag(index) {
-		setTags(tags.filter((el, idx) => idx !== index));
-	}
-
-	function handleChangeValue(e) {
-		let value = e.target.value;
-		value = value.replace(/[^a-zA-z-_0-9]/g, '');
-		setValue(value);
-	}
+		if (tags.includes(value) || tags.length > 4) {
+			setValue('');
+			return;
+		} else {
+			setTags([...tags, value]);
+			setValue('');
+		}
+	};
 
 	useEffect(() => {
 		callback(tags);
@@ -42,7 +41,7 @@ const TagForm = ({ callback }) => {
 				{tags.map((tag, idx) => (
 					<div className="tag" key={idx}>
 						<span>{tag}</span>
-						<button onClick={() => removeTag(idx)}>&times;</button>
+						<button onClick={() => handleRemoveTag(idx)}>&times;</button>
 					</div>
 				))}
 				<input
@@ -50,8 +49,11 @@ const TagForm = ({ callback }) => {
 					placeholder="e.g. (objective-c json windows)"
 					value={value}
 					pattern="[a-zA-Z0-9]"
-					onKeyDown={handleKeyDown}
-					onChange={handleChangeValue}
+					onKeyDown={(e) => {
+						handleAddTag(e);
+						handleEditTag(e);
+					}}
+					onChange={onChangeValue}
 				/>
 			</div>
 		</Style>
