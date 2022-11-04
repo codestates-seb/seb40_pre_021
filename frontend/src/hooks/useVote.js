@@ -8,7 +8,6 @@ const useVoteStatus = (data, nickname) => {
 			const liked = data.filter((el) => el.nickname === nickname);
 			if (liked.length !== 0 && liked[0].likeYn === true) setlikeYn(true);
 			if (liked.length !== 0 && liked[0].unlikeYn === true) setUnlikeYn(true);
-			console.log(liked);
 		}, [data]);
 	}
 	return [likeYn, unlikeYn];
