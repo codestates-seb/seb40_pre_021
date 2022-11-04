@@ -112,7 +112,7 @@ const Search = () => {
 						});
 					});
 					const q = searchWords.join(' ');
-					navigate(`/search/${q}`);
+					navigate(`/questions/search/${q}`);
 				}
 			}
 		}
