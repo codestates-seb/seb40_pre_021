@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import TagList from './TagList';
-import AnswerList from './AnswerList';
-import UserInfo from './UserInfo';
-import ListAdditionalInfo from './ListAdditionalInfo';
+import TagList from '../common/TagList';
+import AnswerList from '../common/AnswerList';
+import UserInfo from '../common/UserInfo';
+import ListAdditionalInfo from '../common/ListAdditionalInfo';
 
 const SavesListBox = ({ bookmarks }) => {
 	return (
@@ -22,8 +22,8 @@ const SavesListBox = ({ bookmarks }) => {
 					answer,
 				} = bookmark;
 
-				let splitDate = createdAt.split(' ');
-				let date = `${splitDate[1]} ${splitDate[2]}, ${splitDate[3]} at ${splitDate[4]}`;
+				let days = new Date(createdAt).toString().split(' ');
+				let date = `${days[1]} ${days[2]} at ${days[4]}`;
 				return (
 					<ListBox key={questionId}>
 						<ListAdditionalInfo
@@ -42,7 +42,7 @@ const SavesListBox = ({ bookmarks }) => {
 								<UserInfo questionUser={questionUser} date={date} />
 							</TagAndUserInfoBox>
 						</ContentBox>
-						{answer ? <AnswerList answer={answer} /> : null}
+						{answer ? <AnswerList answer={answer} type="answer" /> : null}
 					</ListBox>
 				);
 			})}

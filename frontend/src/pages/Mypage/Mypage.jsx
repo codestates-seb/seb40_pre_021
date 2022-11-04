@@ -1,14 +1,14 @@
 import styled from 'styled-components';
-import Avatar from '../components/Mypage//UserProfile/Avatar';
-import ProfileButton from '../components/Mypage/ProfileButton';
-import UserNickname from '../components/Mypage/UserProfile/UserNickname';
-import UserInfo from '../components/Mypage/UserProfile/UserInfo';
-import useDate from '../hooks/useDate';
+import Avatar from '../../components/Mypage/UserProfile/Avatar';
+import ProfileButton from '../../components/Mypage/ProfileButton';
+import UserNickname from '../../components/Mypage/UserProfile/UserNickname';
+import UserInfo from '../../components/Mypage/UserProfile/UserInfo';
+import useDate from '../../hooks/useDate';
 import { RiPencilFill } from 'react-icons/ri';
 import { BiMessageDetail } from 'react-icons/bi';
-import Navigation from '../components/Mypage/Navigation';
+import Navigation from '../../components/Mypage/Navigation';
 import { Outlet } from 'react-router-dom';
-import useMypageData from '../hooks/useMypageData';
+import useMypageData from '../../hooks/useMypageData';
 
 const Mypage = () => {
 	const [userInfo] = useMypageData('userInfo');

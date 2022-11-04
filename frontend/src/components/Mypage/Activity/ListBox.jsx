@@ -4,7 +4,7 @@ const ListBox = ({ lists, text, component }) => {
 	return (
 		<Container lists={lists}>
 			<Box lists={lists}>
-				{lists ? component : <EmptyText>{text}</EmptyText>}
+				{lists?.length ? component : <EmptyText>{text}</EmptyText>}
 			</Box>
 		</Container>
 	);
@@ -18,7 +18,7 @@ const Container = styled.div`
 	border-radius: 5px;
 	overflow: hidden;
 	${(props) =>
-		!props.lists &&
+		(props.lists?.length < 1 || !props.lists) &&
 		css`
 			display: flex;
 			justify-content: center;

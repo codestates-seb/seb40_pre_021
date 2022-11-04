@@ -21,12 +21,6 @@ let data = [
 		clicked: false,
 		path: 'saves',
 	},
-	{
-		id: 3,
-		name: 'Settings',
-		clicked: false,
-		path: 'settings',
-	},
 ];
 
 const Navigation = () => {

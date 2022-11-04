@@ -3,27 +3,28 @@ import styled from 'styled-components';
 const AnswerOrQuestionList = ({ lists, limit }) => {
 	return (
 		<Container>
-			{lists.map((list, i) => {
-				const { questionId, choosed, createdAt, title, url, vote } = list;
-				const days = createdAt.split(' ');
-				let date = `${days[1]} ${days[2]}, ${days[3]}`;
+			{lists.length &&
+				lists.map((list, i) => {
+					const { choosed, createdAt, title, url, vote, id } = list;
+					let days = new Date(createdAt).toDateString().split(' ');
+					let date = `${days[1]} ${days[2]}, ${days[3]}`;
 
-				if (limit && i >= limit) {
-					return;
-				}
+					if (limit && i >= limit) {
+						return;
+					}
 
-				return (
-					<Box key={questionId} limit={limit}>
-						<ContentBox>
-							<LeftContent>
-								<VoteDisplay choosed={choosed}>{vote}</VoteDisplay>
-								<Title href={url}>{title}</Title>
-							</LeftContent>
-							<DateText>{date}</DateText>
-						</ContentBox>
-					</Box>
-				);
-			})}
+					return (
+						<Box key={id} limit={limit}>
+							<ContentBox>
+								<LeftContent>
+									<VoteDisplay choosed={choosed}>{vote}</VoteDisplay>
+									<Title href={url}>{title}</Title>
+								</LeftContent>
+								<DateText>{date}</DateText>
+							</ContentBox>
+						</Box>
+					);
+				})}
 		</Container>
 	);
 };

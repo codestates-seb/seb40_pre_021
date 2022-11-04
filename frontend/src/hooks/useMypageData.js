@@ -14,25 +14,44 @@ function useMypageData(category, value = []) {
 		switch (category) {
 			case 'answer':
 				getMypageUserAnswer().then((res) => {
-					let sortData = res.sort((a, b) => b.vote - a.vote);
-					setData(sortData);
+					const { data, pageInfo } = res;
+					if (data.length > 1) {
+						let sortData = data.sort((a, b) => b.vote - a.vote);
+						setData(sortData);
+					} else {
+						setData(data);
+					}
 				});
 				break;
 			case 'question':
 				getMypageUserQuestion().then((res) => {
-					let sortData = res.sort((a, b) => b.vote - a.vote);
-					setData(sortData);
+					const { data, pageInfo } = res;
+					if (data.length > 1) {
+						let sortData = data.sort((a, b) => b.vote - a.vote);
+						setData(sortData);
+					} else {
+						setData(data);
+					}
 				});
 				break;
 			case 'tag':
 				getMypageUserTag().then((res) => {
-					let sortData = res.sort((a, b) => b.tagCount - a.tagCount);
-					setData(sortData);
+					if (res.length > 1) {
+						let sortData = res.sort((a, b) => b.tagCount - a.tagCount);
+						setData(sortData);
+					} else {
+						setData(res);
+					}
 				});
 				break;
 			case 'bookmark':
 				getMypageUserBookmark().then((res) => {
-					setData(res);
+					if (res.length > 1) {
+						let sortData = res.sort((a, b) => b.views - a.views);
+						setData(sortData);
+					} else {
+						setData(res);
+					}
 				});
 				break;
 			case 'userInfo':

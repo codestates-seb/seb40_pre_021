@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { GoCheck } from 'react-icons/go';
 
-const ListAdditionalInfo = ({ vote, choosed, answerCount, views }) => {
+const ListAdditionalInfo = ({ vote, choosed, answerCount, views, type }) => {
 	return (
 		<Container>
 			<VotesBox>
@@ -10,13 +10,21 @@ const ListAdditionalInfo = ({ vote, choosed, answerCount, views }) => {
 			</VotesBox>
 			<AnswerBox choosed={choosed}>
 				{choosed ? <GoCheck style={{ color: 'white' }} /> : null}
-				<span>{answerCount}</span>
-				<span>answer</span>
+				{!type ? (
+					<>
+						<span>{answerCount}</span>
+						<span>answer</span>
+					</>
+				) : (
+					<span>Accepted</span>
+				)}
 			</AnswerBox>
-			<ViewsBox>
-				<span>{views}</span>
-				<span>views</span>
-			</ViewsBox>
+			{views ? (
+				<ViewsBox>
+					<span>{views}</span>
+					<span>views</span>
+				</ViewsBox>
+			) : null}
 		</Container>
 	);
 };

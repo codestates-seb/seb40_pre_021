@@ -7,9 +7,11 @@ const Ask = lazy(() => import('../pages/Ask'));
 const Question = lazy(() => import('../pages/Question'));
 const Layout = lazy(() => import('../pages/Layout'));
 const Login = lazy(() => import('../pages/Login'));
-const Mypage = lazy(() => import('../pages/Mypage'));
-const MypageActivityPage = lazy(() => import('../pages/MypageActivityPage'));
-const MypageSavesPage = lazy(() => import('../pages/MypageSavesPage'));
+const Mypage = lazy(() => import('../pages/Mypage/Mypage'));
+const MypageActivityPage = lazy(() =>
+	import('../pages/Mypage/MypageActivityPage'),
+);
+const MypageSavesPage = lazy(() => import('../pages/Mypage/MypageSavesPage'));
 const Questions = lazy(() => import('../pages/Questions'));
 const Signup = lazy(() => import('../pages/Signup'));
 
