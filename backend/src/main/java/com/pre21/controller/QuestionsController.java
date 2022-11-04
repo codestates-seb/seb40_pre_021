@@ -140,10 +140,6 @@ public class QuestionsController {
 
     /**
      * 질문에 대한 댓글 생성 <br>
-     * POST "/questions/{question-id}/comment" <br>
-     * requestBody : {"userId":"userId", "comments":"string"} <br>
-     * responseBody : NULL
-     *
      * @param questionId             댓글을 생성하는 질문의 Id입니다.
      * @param questionCommentPostDto 댓글을 생성하는 요청의 RequestBody에 해당합니다.
      * @author dev32user
@@ -157,8 +153,12 @@ public class QuestionsController {
     }
 
 
-
-    // 추천-비추천 버튼 눌렀을 때 요청
+    /**
+     * 질문 좋아요 저장
+     * @param questionId 질문식별자
+     * @param request
+     * @author dev32user
+     */
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/question/{question-id}/like")
     public void clickQuestionLike (@PathVariable("question-id") Long questionId

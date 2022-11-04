@@ -17,7 +17,6 @@ public interface AnswersMapper {
         responseDto.setContents(answers.getContents());
         responseDto.setVote(answers.getVote());
         responseDto.setAdoption(answers.getAdoption());
-        responseDto.setImageUrl(answers.getImageUrl());
         responseDto.setCreatedAt(answers.getCreatedAt());
         responseDto.setModifiedAt(answers.getModifiedAt());
         responseDto.setUser(answers.getUsers());
