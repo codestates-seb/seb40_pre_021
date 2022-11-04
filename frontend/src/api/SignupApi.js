@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { root } from './root';
 
 const axiosConfig = {
-	baseURL: 'http://localhost:3001',
+	baseURL: root,
 };
 
 const instance = axios.create(axiosConfig);
@@ -12,13 +13,11 @@ const instance = axios.create(axiosConfig);
 export const Signup = async (data) => {
 	try {
 		//test용
-		data.accessToken = 'dd';
-		/**************** */
-		const result = await instance.post(
-			`/signup
-		`,
-			data,
-		);
+		// data.accessToken = 'dd';
+		// const result = await instance.post(`/signup`, data);
+
+		//real
+		const result = await instance.post(`/users/signup`, data);
 
 		return result.data;
 	} catch (err) {

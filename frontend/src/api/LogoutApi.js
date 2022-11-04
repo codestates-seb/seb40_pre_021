@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { root } from './root';
 
 const axiosConfig = {
-	baseURL: 'http://localhost:3001',
+	baseURL: root,
 };
 
 const instance = axios.create(axiosConfig);
@@ -11,8 +12,10 @@ const instance = axios.create(axiosConfig);
 export const Logout = async (data) => {
 	try {
 		//test
-		data = {};
-		const result = await instance.post(`/login`, data);
+		// data = {};
+		// const result = await instance.post(`/login`, data);
+		//real
+		const result = await instance.post(`/users/logout`, data);
 		return result.data;
 	} catch (err) {
 		console.log(err);

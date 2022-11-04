@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { root } from './root';
 
 const axiosConfig = {
-	baseURL: 'http://localhost:3001',
+	baseURL: root,
 };
 
 const instance = axios.create(axiosConfig);
@@ -13,7 +14,10 @@ export const getList = async (data) => {
 	}
 	// console.log(url, data);
 	try {
-		const result = await instance.get('/questions', { params: data });
+		//test
+		// const result = await instance.get('/questions', { params: data });
+		//real
+		const result = await instance.get(url, { params: data });
 		return result.data;
 	} catch (err) {
 		console.log(err);
