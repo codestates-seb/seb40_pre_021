@@ -56,13 +56,9 @@ public class TagsService {
                         .of(page, size, Sort.by("id").descending()));
     }
 
-    public List<Tags> findMyTags(Long userId) {
+    public List<UserTags> findMyTags(Long userId) {
         User findUser = findIfExistUser(userId);
-        List<UserTags> findUserTags = findUser.getUserTags();
-
-        return findUserTags.stream()
-                .map(UserTags::getTags)
-                .collect(Collectors.toList());
+        return findUser.getUserTags();
     }
 
     private User findIfExistUser(Long userId) {

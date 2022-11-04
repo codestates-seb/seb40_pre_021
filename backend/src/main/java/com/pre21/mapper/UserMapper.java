@@ -10,5 +10,12 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapper {
     User joinToUserEntity(AuthDto.Join requestBody);
-    AuthDto.UserInfo userToUserResponse(User findUser);
+    default AuthDto.UserInfo userToUserResponse(User findUser) {
+        return AuthDto.UserInfo
+                .builder()
+                .id(findUser.getId())
+                .nickname(findUser.getNickname())
+                .createdAt(findUser.getCreatedAt())
+                .build();
+    }
 }
