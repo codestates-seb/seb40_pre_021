@@ -144,13 +144,13 @@ public class QuestionsController {
      * @param commentPost 댓글을 생성하는 요청의 RequestBody에 해당합니다.
      * @author dev32user
      */
-/*    @PostMapping("/question/{question-id}/comment")
+    @PostMapping("/question/{question-id}/comment")
     public void createQuestionComment(
             @PathVariable("question-id") Long questionId,
             @RequestBody QuestionDto.CommentPost commentPost) throws Exception {
 
         questionsService.createQuestionComment(commentPost, questionId);
-    }*/
+    }
 
 
     /**
