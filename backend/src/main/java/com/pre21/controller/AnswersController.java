@@ -1,6 +1,6 @@
 package com.pre21.controller;
 
-import com.pre21.dto.AnswersDto;
+import com.pre21.dto.AnswerDto;
 import com.pre21.dto.QuestionDto;
 import com.pre21.entity.Answers;
 import com.pre21.mapper.AnswersMapper;
@@ -22,7 +22,7 @@ public class AnswersController {
 
     @PostMapping("/{question-id}/answer")
     public void createAnswer(@PathVariable("question-id") Long questionId,
-                             @RequestBody AnswersDto.Post answerPostDto) {
+                             @RequestBody AnswerDto.Post answerPostDto) {
 
         answersService.createAnswer(answerPostDto, questionId);
     }
@@ -46,7 +46,7 @@ public class AnswersController {
     public ResponseEntity patchAnswer (
             @CookieValue(name = "userId") Long userId,
             @PathVariable("answer-id") Long answerId,
-            @RequestBody AnswersDto.Patch answerPatchDto) {
+            @RequestBody AnswerDto.Patch answerPatchDto) {
         Answers answers = answersService.patchAnswer(userId, answerId, answerPatchDto);
         return new ResponseEntity(mapper.answerToAnswerResponse(answers), HttpStatus.OK);
     }
@@ -83,8 +83,9 @@ public class AnswersController {
     @PostMapping("/answers/{answer-id}/comment")
     public void createAnswerComment(
             @PathVariable("answer-id") Long answerId,
-            @RequestBody AnswersDto.CommentPost answerCommentPostDto) throws Exception {
+            @CookieValue(value = "userId", required = false) Long userId,
+            @RequestBody AnswerDto.CommentPost answerCommentPostDto) throws Exception {
 
-        answersService.createAnswerComment(answerCommentPostDto, answerId);
+        answersService.createAnswerComment(answerCommentPostDto, userId, answerId);
     }
 }

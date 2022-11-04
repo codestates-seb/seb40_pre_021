@@ -1,7 +1,6 @@
 package com.pre21.controller;
 
 import com.pre21.dto.AuthDto;
-import com.pre21.dto.UserDto;
 import com.pre21.mapper.UserMapper;
 import com.pre21.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -26,12 +25,12 @@ public class AuthController {
 
     /**
      * 회원가입을 위한 컨트롤러 호출 메서드
-     * @param requestBody UserDto.Join(회원가입 DTO)
+     * @param requestBody Auth.Join(회원가입 DTO)
      * @author mozzi327
      */
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/signup")
-    public void joinUser(@RequestBody UserDto.Join requestBody) {
+    public void joinUser(@RequestBody AuthDto.Join requestBody) {
         authService.createUser(mapper.joinToUserEntity(requestBody));
     }
 

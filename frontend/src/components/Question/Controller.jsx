@@ -23,15 +23,17 @@ const Controller = ({
 	QcreatorNickname,
 	loginNickname,
 }) => {
+	const [vote, setVote] = useState(votecount);
+	const [chosen, setChosen] = useState(choosed);
+
+	// 아래 2개의 커스텀 훅이 백엔드와 통신하여 가져온 정보는
+	// 그 아래 3개의 상태와 useEffect를 통해 로컬 정보로 전환됩니다.
 	const [upVoteStatus, downVoteStatus] = useVoteStatus(votedata, loginNickname);
 	const [bookmarkStatus] = useBookmark(bookmarkdata, loginNickname);
 
-	const [vote, setVote] = useState(votecount); // 서버에서 가져온 votecount
 	const [upVoted, setUpVoted] = useState(false);
 	const [downVoted, setDownVoted] = useState(false);
 	const [bookmarked, setBookmarked] = useState(false);
-
-	const [chosen, setChosen] = useState(choosed);
 
 	useEffect(() => {
 		if (upVoteStatus || downVoteStatus) {
@@ -48,7 +50,7 @@ const Controller = ({
 
 	const handleUpVote = () => {
 		const upVote = { upVote: true, downVote: false };
-		const cancelUpVote = { upVote: false, downVote: false };
+		const cancelUpVote = { upVote: false, downVote: false }; // 정보를 하드코딩된 상태로 고정하여 보냅니다.
 		if (!upVoted) {
 			setUpVoted(true);
 			setDownVoted(false);
@@ -61,7 +63,7 @@ const Controller = ({
 			setVote(votecount);
 			kind === 'answer'
 				? upVoteForA(JSON.stringify(cancelUpVote))
-				: upVoteForQ(JSON.stringify(cancelUpVote)); //한 번 더 하면 upVote 상태가 취소됨
+				: upVoteForQ(JSON.stringify(cancelUpVote)); //한 번 더 누르면 upVote 상태가 취소됨
 		}
 	};
 
@@ -85,7 +87,7 @@ const Controller = ({
 	};
 
 	const handleBookmark = () => {
-		const bookmarkreg = { nickname: loginNickname, bookmarked: bookmarked };
+		const bookmarkreg = { nickname: loginNickname, bookmarked: bookmarked }; // 유저 닉네임과 북마크 상태를 저장하여 보냅니다.
 		if (bookmarked) {
 			setBookmarked(false);
 			kind === 'answer'
@@ -102,8 +104,8 @@ const Controller = ({
 	const handleChose = () => {
 		if (chosen) setChosen(false);
 		if (!chosen) setChosen(true);
-		choose();
-	}; // 질문 선택 기능
+		choose(); // 채택 여부를 저장하여 보냅니다.
+	};
 
 	return (
 		<>
@@ -124,7 +126,8 @@ const Controller = ({
 						<path d="m9 10.6 4 2.66V3H5v10.26l4-2.66ZM3 17V3c0-1.1.9-2 2-2h8a2 2 0 0 1 2 2v14l-6-4-6 4Z"></path>
 					</svg>
 				</Bookmark>
-				{kind === 'answer' && (
+				{kind ===
+					'answer' /* 컨트롤러가 질문 컨트롤러인지, 답변 컨트롤러인지를 확인하여 답변 컨트롤러일 때에만 채택 부분을 활성화합니다.*/ && (
 					<Choosed
 						QcreatorNickname={QcreatorNickname}
 						loginNickname={loginNickname}
@@ -201,6 +204,7 @@ const Bookmark = styled.button`
 		fill: ${(props) =>
 			props.bookmarked === true ? 'rgb(229, 136, 62);' : 'rgb(187, 191, 195)'};
 `;
+// 아래의 채택 컴포넌트는 아이디와 질문 작성자를 비교하여 같을 때에는 버튼으로, 아닐 때에는 div로 렌더링됩니다.
 const Choosed = styled.div`
 	button {
 		display: ${(props) =>

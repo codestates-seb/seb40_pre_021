@@ -135,10 +135,12 @@ const Container = styled.section`
 const AskHeader = styled.div`
 	height: 10rem;
 	margin-right: 1.5rem;
-	background-image: url('${background}');
-	background-size: 573px;
-	background-repeat: no-repeat;
-	background-position: right top;
+	@media screen and (min-width: 750px) {
+		background-image: url('${background}');
+		background-size: 573px;
+		background-repeat: no-repeat;
+		background-position: right top;
+	}
 `;
 const BodyConatiner = styled.div`
 	padding: 0 4.5rem 4.5rem 4.5rem;

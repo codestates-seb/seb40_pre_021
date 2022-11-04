@@ -4,7 +4,13 @@ import { Link } from 'react-router-dom';
 import Editor from '../components/common/Editor';
 import Controller from '../components/Question/Controller';
 import Button from '../components/common/Button';
-import { answer, getQuestion, getUserInfo } from '../api/QuestionApi';
+import {
+	answer,
+	commentA,
+	commentQ,
+	getQuestion,
+	getUserInfo,
+} from '../api/QuestionApi';
 import timeForToday from '../utils/timeForToday';
 
 const Question = () => {
@@ -20,12 +26,25 @@ const Question = () => {
 		getQuestion().then((res) => setThread(res));
 	}, []);
 
+	const handleCommentQ = (e) => {
+		const data = { body: e.target.value };
+		if (e.key === 'Enter') {
+			commentQ(JSON.stringify(data));
+		}
+	};
+
+	const handleCommentA = (e) => {
+		const data = { body: e.target.value };
+		if (e.key === 'Enter') {
+			commentA(JSON.stringify(data));
+		}
+	};
+
 	const handleAnswer = (str) => {
 		setAnswerData({
 			body: str,
 		});
 	};
-
 	const handleSubmitAnswer = () => {
 		answer(JSON.stringify(answerData));
 	};
@@ -100,7 +119,10 @@ const Question = () => {
 											<hr />
 										</Grouper>
 									))}
-								<CommentCreate>Add a comment</CommentCreate>
+								<CommentCreate
+									onKeyUp={handleCommentQ}
+									placeholder="Add a comment"
+								/>
 							</Right>
 						</QuestionContainer>
 					</QuestionGroup>
@@ -161,7 +183,10 @@ const Question = () => {
 														<hr />
 													</Grouper>
 												))}
-											<CommentCreate>Add a comment</CommentCreate>
+											<CommentCreate
+												onKeyUp={handleCommentA}
+												placeholder="Add a comment"
+											/>
 										</Right>
 									</AnswerContainer>
 									<hr />
@@ -329,10 +354,20 @@ const Comments = styled.div`
 		color: rgb(108, 115, 123);
 	}
 `;
-const CommentCreate = styled.div`
-	padding: 1rem 0 0 0;
+const CommentCreate = styled.input`
+	width: 100%;
+	padding: 1rem 1rem 1rem 0;
 	font-size: 0.85rem;
 	color: rgb(187, 191, 195);
+	&:focus-within {
+		outline: none;
+	}
+	&:focus {
+		outline: none;
+	}
+	::placeholder {
+		color: #bbbbbb;
+	}
 `;
 const AnswerGroup = styled.div``;
 const AnswerContainer = styled.article`

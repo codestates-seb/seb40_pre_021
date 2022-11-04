@@ -3,12 +3,11 @@ package com.pre21.dto;
 import com.pre21.entity.*;
 import lombok.*;
 
-import javax.persistence.Column;
 import java.time.LocalDateTime;
 import java.util.List;
 
 
-public class AnswersDto {
+public class AnswerDto {
     // 답변 생성 POST
     @Getter
     @AllArgsConstructor
@@ -84,7 +83,6 @@ public class AnswersDto {
     @Setter
     @AllArgsConstructor
     public static class CommentPost {
-        private Long userId;
         private String comments;
     }
 
@@ -110,5 +108,18 @@ public class AnswersDto {
         private Long bookmarkId;
         private Long userId;
         private String nickname;
+    }
+
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    public static class AnswerInfo {
+        private Long questionId;
+        private Long id;
+        private Long title;
+        private LocalDateTime createdAt;
+        private Adoption adoption;
+        private Long vote;
     }
 }
