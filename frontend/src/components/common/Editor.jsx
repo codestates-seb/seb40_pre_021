@@ -17,7 +17,6 @@ const Textarea = styled.textarea`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	resize: vertical;
 
 	&:focus-within {
 		outline: none;
@@ -32,8 +31,6 @@ const Result = styled.div`
 	margin-top: 1rem;
 	font-size: 1rem;
 	line-height: 130%;
-	word-break: break-all;
-	white-space: pre-wrap;
 	ul {
 		list-style-type: disc;
 		margin-left: 1rem;

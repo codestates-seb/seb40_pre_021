@@ -2,7 +2,7 @@ package com.pre21.controller.questions;
 
 import com.google.gson.Gson;
 import com.pre21.controller.QuestionsController;
-import com.pre21.dto.QuestionDto;
+import com.pre21.dto.QuestionsPostDto;
 import com.pre21.mapper.QuestionsMapper;
 import com.pre21.service.QuestionsService;
 import org.junit.jupiter.api.Test;
@@ -43,7 +43,7 @@ public class QuestionsControllerRestDocsTest {
     @Test
     public void createQuestion() throws Exception {
         //given
-        QuestionDto.Post postDto = new QuestionDto.Post("제목", "내용", List.of("태그1","태그2"));
+        QuestionsPostDto postDto = new QuestionsPostDto("제목", "내용", List.of("태그1","태그2"));
         String content = gson.toJson(postDto);
 
         //given(questionsService.createQuestion(Mockito.any(QuestionsPostDto.class), Mockito.anyLong()));
