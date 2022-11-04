@@ -3,24 +3,13 @@ import styled from 'styled-components';
 import Sidebar from '../../components/Mypage/Activity/Sidebar';
 import useDynamicTitle from '../../hooks/useDynamicTitle';
 import MypageTabContent from './MypageActivityTabContent';
+import useCurrentTab from './utils/useCurrentTab';
+import useTabs from './utils/useTabs';
 
 const MypageActivityPage = () => {
-	const [tabs, setTabs] = useState(data);
-	const [curTab, setCurTab] = useState(tabs[0]);
-
+	const [tabs, onChangeTab] = useTabs(data);
+	const [curTab, onChangeCurTab] = useCurrentTab(data);
 	useDynamicTitle('User', true);
-
-	const handleTabChange = (id) => {
-		let newTabs = tabs.map((tab) =>
-			tab.id === id ? { ...tab, clicked: true } : { ...tab, clicked: false },
-		);
-		setTabs(newTabs);
-	};
-
-	const changeCurrentTab = ({ id, name }) => {
-		let newCurTab = tabs.filter((tab) => tab.id === id || tab.name === name);
-		setCurTab(...newCurTab);
-	};
 
 	const goToTop = () => {
 		window.scrollTo({ top: 0 });
@@ -28,20 +17,20 @@ const MypageActivityPage = () => {
 
 	useEffect(() => {
 		goToTop();
-		handleTabChange(curTab.id);
+		onChangeTab(curTab.id);
 	}, [curTab]);
 
 	return (
 		<Container>
 			<Sidebar
 				tabs={tabs}
-				onChange={handleTabChange}
-				onFilter={changeCurrentTab}
+				onChange={onChangeTab}
+				onFilter={onChangeCurTab}
 				onScrollTop={goToTop}
 			/>
 			<MypageTabContent
 				curTab={curTab.name}
-				changeCurrentTab={changeCurrentTab}
+				changeCurrentTab={onChangeCurTab}
 			/>
 		</Container>
 	);
