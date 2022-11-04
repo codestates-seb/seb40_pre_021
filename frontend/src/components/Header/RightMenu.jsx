@@ -40,10 +40,14 @@ const RightMenu = () => {
 	const logoutRequestHandler = () => {
 		//api
 		Logout(userInfo).then((res) => {
-			//store의 데이터 지워버림
-			dispatch(logoutSuccess());
-			//로그인 화면으로 이동
-			return navigate('/login');
+			if (res.code) {
+				alert(res.message);
+			} else {
+				//store의 데이터 지워버림
+				dispatch(logoutSuccess());
+				//로그인 화면으로 이동
+				return navigate('/login');
+			}
 		});
 	};
 	return (
