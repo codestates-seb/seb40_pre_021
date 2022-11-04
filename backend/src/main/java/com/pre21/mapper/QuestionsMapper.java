@@ -22,7 +22,7 @@ public interface QuestionsMapper {
         responseDto.setContents(questions.getContents());   // 질문 내용 저장
 
         List<QuestionsTags> questionsTags = questions.getQuestionsTags();   // 질문에 사용된 태그 정보 리스트
-        responseDto.setTags(questionsTagsToQuestionsTagsResponseDto(questionsTags));   // 태그 정보 저장
+        responseDto.setQuestionsTags(questionsTagsToQuestionsTagsResponseDto(questionsTags));   // 태그 정보 저장
 
         responseDto.setVote(questions.getVote());   // 질문 추천수 저장
 
@@ -142,6 +142,7 @@ public interface QuestionsMapper {
                 .map(questionLikes1 -> QuestionLikeResponseDto
                         .builder()
                         .userId(questionLikes1.getUsers().getId())
+                        .nickname(questionLikes1.getUsers().getNickname())
                         .likeYn(questionLikes1.isLikeYn())
                         .unlikeYn(questionLikes1.isUnlikeYn())
                         .build()
@@ -154,6 +155,7 @@ public interface QuestionsMapper {
                 .map(answerLikes1 -> AnswerLikeResponseDto
                         .builder()
                         .userId(answerLikes1.getUsers().getId())
+                        .nickname(answerLikes1.getUsers().getNickname())
                         .likeYn(answerLikes1.isLikeYn())
                         .unlikeYn(answerLikes1.isUnlikeYn())
                         .build()

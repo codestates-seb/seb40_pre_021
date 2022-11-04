@@ -6,23 +6,31 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+/**
+ * 채택 엔티티
+ */
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 public class Adoption {
+    // 채택 식별자
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ADOPTION_ID")
     private Long id;
 
+    // 채택 - 답변 1:1 매핑
     @OneToOne
     @JoinColumn(name = "ANSWER_ID")
     Answers answers = new Answers();
 
+    // 채택 - 유저 1:1 매핑
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "USER_ID")
     User users = new User();
 
+    // 채택 - 답변 1:1 매핑
     @OneToOne
     @JoinColumn(name = "QUESTION_ID")
     Questions questions = new Questions();

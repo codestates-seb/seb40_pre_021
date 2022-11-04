@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+/**
+ * User 와 Tags 의 N:N 관계를 1:N:1 관계로 만들기 위한 엔티티
+ */
 @Entity
 @Getter
 @Setter

@@ -8,6 +8,9 @@ import javax.persistence.*;
 
 import static com.pre21.util.RestConstants.BOOKMARK_BASIC_PAGE;
 
+/**
+ * 북마크 엔티티
+ */
 @Getter
 @Setter
 @Entity
