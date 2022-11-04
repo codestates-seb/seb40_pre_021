@@ -10,6 +10,5 @@ import org.mapstruct.ReportingPolicy;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface UserMapper {
     User joinToUserEntity(AuthDto.Join requestBody);
-
-    UserDto.UserInfo userToUserResponse(User findUser);
+    AuthDto.UserInfo userToUserResponse(User findUser);
 }
