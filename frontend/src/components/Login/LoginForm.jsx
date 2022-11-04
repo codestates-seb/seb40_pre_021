@@ -43,8 +43,10 @@ const LoginForm = () => {
 		}
 		//api
 		Login(loginInfo).then((res) => {
-			//응답이 정상일 경우
-			if (res.nickname) {
+			//응답이 정상이 아닌경우
+			if (res.code) {
+				alert(res.message);
+			} else {
 				//redux-toolkit
 				dispatch(loginSuccess(res));
 
