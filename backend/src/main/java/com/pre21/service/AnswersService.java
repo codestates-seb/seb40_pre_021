@@ -1,12 +1,15 @@
 package com.pre21.service;
 
+import com.pre21.dto.AnswerCommentPostDto;
 import com.pre21.dto.AnswerPatchDto;
 import com.pre21.dto.AnswersDto;
+import com.pre21.entity.AnswerComments;
 import com.pre21.entity.Answers;
 import com.pre21.entity.Questions;
 import com.pre21.entity.User;
 import com.pre21.exception.BusinessLogicException;
 import com.pre21.exception.ExceptionCode;
+import com.pre21.repository.AnswerCommentRepository;
 import com.pre21.repository.AnswersRepository;
 import com.pre21.repository.QuestionsRepository;
 import com.pre21.repository.UserRepository;
@@ -25,6 +28,7 @@ public class AnswersService {
     private final QuestionsRepository questionsRepository;
     private final UserRepository userRepository;
     private final AnswersRepository answersRepository;
+    private final AnswerCommentRepository answerCommentRepository;
 
     public void createAnswer(AnswersDto.Post answersPostDto, Long questionId) {
         // 질문 찾기
@@ -92,7 +96,7 @@ public class AnswersService {
 
         Answers updatedAnswer = findVerifiedAnswer(answerId);
 
-        updatedAnswer.setContents(answerPatchDto.getConents());
+        updatedAnswer.setContents(answerPatchDto.getContents());
         return answersRepository.save(updatedAnswer);
     }
 
@@ -138,6 +142,33 @@ public class AnswersService {
         return optionalAnswer.orElseThrow(
                 () -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
     }
+
+
+
+    /**
+     * 답변에 대한 댓글을 생성하는 메서드입니다.
+     * AnswerCommentRepository에 입력받은 answerCommentPostDto를 저장합니다.
+     *
+     * @param answerCommentPostDto 댓글을 생성하는 요청의 RequestBody에 해당합니다.
+     * @param answerId             댓글을 생성하는 답변의 Id입니다.
+     * @author dev32user
+     */
+    public void createAnswerComment(AnswerCommentPostDto answerCommentPostDto, Long answerId) throws Exception{
+        Long userId = answerCommentPostDto.getUserId();
+        User findUser = userRepository
+                .findById(userId)
+                .orElseThrow(() -> new RuntimeException("findUser.findById 실패"));
+        Answers answers = answersRepository
+                .findAnswerById(answerId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
+        AnswerComments answerComments = new AnswerComments(answerCommentPostDto.getComments());
+        answerComments.setAnswers(answers);
+        answerComments.setUser(findUser);
+        answerComments.setNickname(findUser.getNickname()); // 2022.11.02 댓글 작성 유저 닉네임 추가
+        answerCommentRepository.save(answerComments);
+    }
+
+
 
 
     public Page<Answers> findMyAnswers(Long userId, int page, int size) {
