@@ -8,6 +8,8 @@ import {
 	answer,
 	commentA,
 	commentQ,
+	commentQDEL,
+	commentADEL,
 	getQuestion,
 	getUserInfo,
 } from '../api/QuestionApi';
@@ -24,12 +26,14 @@ const Question = () => {
 
 	useEffect(() => {
 		getQuestion().then((res) => setThread(res));
-	}, []);
+	}, [thread]);
 
 	const handleCommentQ = (e) => {
 		const data = { body: e.target.value };
 		if (e.key === 'Enter') {
 			commentQ(JSON.stringify(data));
+			e.target.value = '';
+			getQuestion().then((res) => setThread(res));
 		}
 	};
 
@@ -37,9 +41,26 @@ const Question = () => {
 		const data = { body: e.target.value };
 		if (e.key === 'Enter') {
 			commentA(JSON.stringify(data));
+			e.target.value = '';
+			getQuestion().then((res) => setThread(res));
 		}
 	};
-
+	const handleDeleteCommentQ = (comments, idx) => {
+		const head = comments.slice(0, idx);
+		const tail = comments.slice(idx + 1);
+		const result = head.concat(tail);
+		const data = { result: result };
+		commentQDEL(JSON.stringify(data));
+		getQuestion().then((res) => setThread(res));
+	};
+	const handleDeleteCommentA = (comments, idx) => {
+		const head = comments.slice(0, idx);
+		const tail = comments.slice(idx + 1);
+		const result = head.concat(tail);
+		const data = { result: result };
+		commentADEL(JSON.stringify(data));
+		getQuestion().then((res) => setThread(res));
+	};
 	const handleAnswer = (str) => {
 		setAnswerData({
 			body: str,
@@ -104,7 +125,7 @@ const Question = () => {
 								</Footer>
 								{thread.comments && <hr />}
 								{thread.comments &&
-									thread.comments.map((c) => (
+									thread.comments.map((c, idx) => (
 										<Grouper key={c.id}>
 											<Comments>
 												<span>{c.comments} – </span>
@@ -113,7 +134,13 @@ const Question = () => {
 													{' ' + timeForToday(c.createdAt) + ' ago'}
 												</span>
 												{nickname === c.nickname && (
-													<span className="delete"> × </span>
+													<DEL
+														className="delete"
+														onClick={() =>
+															handleDeleteCommentQ(thread.comments, idx)
+														}>
+														×
+													</DEL>
 												)}
 											</Comments>
 											<hr />
@@ -168,7 +195,7 @@ const Question = () => {
 											</Footer>
 											{el.comments && <hr />}
 											{el.comments &&
-												el.comments.map((c) => (
+												el.comments.map((c, idx) => (
 													<Grouper key={c.id}>
 														<Comments>
 															<span>{c.comments} – </span>
@@ -177,7 +204,13 @@ const Question = () => {
 																{' ' + timeForToday(c.createdAt) + ' ago'}
 															</span>
 															{nickname === c.nickname && (
-																<span className="delete"> × </span>
+																<DEL
+																	className="delete"
+																	onClick={() =>
+																		handleDeleteCommentA(el.comments, idx)
+																	}>
+																	×
+																</DEL>
 															)}
 														</Comments>
 														<hr />
@@ -354,6 +387,11 @@ const Comments = styled.div`
 		color: rgb(108, 115, 123);
 	}
 `;
+const DEL = styled.button`
+	cursor: pointer;
+	background: none;
+	margin: 0 0.5rem 0 0.5rem;
+`;
 const CommentCreate = styled.input`
 	width: 100%;
 	padding: 1rem 1rem 1rem 0;
@@ -381,7 +419,12 @@ const AnswerCount = styled.h2`
 	margin-bottom: 1rem;
 `;
 
-const EditGroup = styled.div``;
+const EditGroup = styled.div`
+	button {
+		margin-top: 2rem;
+	}
+`;
+
 const YourAnswer = styled.h2`
 	font-size: 1.25rem;
 	font-weight: 400;
