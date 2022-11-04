@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 import SavesLayout from '../../components/Mypage/Saves/SavesLayout';
 import Sidebar from '../../components/Mypage/Saves/Sidebar';
