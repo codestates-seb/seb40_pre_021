@@ -19,14 +19,14 @@ export const ask = async (data) => {
 
 export const getUserInfo = async () => {
 	try {
-		//const result = await instance.get(`/user/user-info`);
-		const result = await instance.get(`/user`);
+		const result = await instance.get(`/user/user-info`);
+		// const result = await instance.get(`/user`); //테스트용
 		return result.data;
 	} catch (err) {
 		console.log(err);
 		return err;
 	}
-}; //유저 인포 가져옴, 테스트용
+}; //유저 인포 가져옴
 
 export const getQuestion = async () => {
 	try {

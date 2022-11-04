@@ -26,10 +26,12 @@ const AppRouter = () => {
           */}
 						<Route path="/" element={<Home />} />
 						{/* 왼쪽 Quesions 메뉴 */}
-						<Route path="/questions" element={<Questions />} />
+						<Route path="/questions" element={<Questions />}>
+							<Route path=":questionId" element={<Question />} />
+						</Route>
 						{/* keyword 검색 */}
 						<Route path="/search/:q" element={<Questions />} />
-						<Route path="/questions/question" element={<Question />} />
+
 						<Route path="/users" element={<Mypage />}>
 							<Route path="activity" element={<MypageActivityPage />} />
 							<Route path="saves" element={<MypageSavesPage />} />

@@ -33,7 +33,7 @@ const Question = () => {
 		if (e.key === 'Enter') {
 			commentQ(JSON.stringify(data));
 			e.target.value = '';
-			getQuestion().then((res) => setThread(res));
+			getQuestion().then((res) => setThread(res)); // 새로고침해야 댓글 보이...면... 그 뒤에 생각하자.
 		}
 	};
 
