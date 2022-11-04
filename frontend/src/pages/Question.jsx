@@ -33,6 +33,7 @@ const Question = () => {
 		if (e.key === 'Enter') {
 			commentQ(JSON.stringify(data));
 			e.target.value = '';
+			getQuestion().then((res) => setThread(res));
 		}
 	};
 
@@ -41,6 +42,7 @@ const Question = () => {
 		if (e.key === 'Enter') {
 			commentA(JSON.stringify(data));
 			e.target.value = '';
+			getQuestion().then((res) => setThread(res));
 		}
 	};
 	const handleDeleteCommentQ = (comments, idx) => {
@@ -49,6 +51,7 @@ const Question = () => {
 		const result = head.concat(tail);
 		const data = { result: result };
 		commentQDEL(JSON.stringify(data));
+		getQuestion().then((res) => setThread(res));
 	};
 	const handleDeleteCommentA = (comments, idx) => {
 		const head = comments.slice(0, idx);
@@ -56,6 +59,7 @@ const Question = () => {
 		const result = head.concat(tail);
 		const data = { result: result };
 		commentADEL(JSON.stringify(data));
+		getQuestion().then((res) => setThread(res));
 	};
 	const handleAnswer = (str) => {
 		setAnswerData({
@@ -415,7 +419,12 @@ const AnswerCount = styled.h2`
 	margin-bottom: 1rem;
 `;
 
-const EditGroup = styled.div``;
+const EditGroup = styled.div`
+	button {
+		margin-top: 2rem;
+	}
+`;
+
 const YourAnswer = styled.h2`
 	font-size: 1.25rem;
 	font-weight: 400;

@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import markdownParse from '../../utils/markdownParse';
-const Container = styled.div``;
+const Container = styled.div`
+	width: 100%;
+`;
 const Header = styled.div``;
 const Textarea = styled.textarea`
 	font-size: 0.8rem;
 	font-family: IBM Plex Mono, monospace;
 	border: 1px solid rgb(179, 183, 188);
-	padding: 0.5rem;
+	padding: 0.75rem;
 	height: 14rem;
-	width: 99%;
+	width: calc(100% - 1.5rem);
 	border-radius: 3px;
 	background-color: white;
 	display: flex;
