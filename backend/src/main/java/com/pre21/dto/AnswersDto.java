@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import java.time.LocalDateTime;
 import java.util.List;
 
+
 public class AnswersDto {
     // 답변 생성 POST
     @Getter
@@ -43,7 +44,6 @@ public class AnswersDto {
         private String contents;
         private int vote;
         private Adoption adoption;
-        private String imageUrl;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
         private User user;

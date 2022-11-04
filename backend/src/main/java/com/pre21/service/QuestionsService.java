@@ -1,5 +1,6 @@
 package com.pre21.service;
 
+import com.pre21.dto.QuestionCommentPostDto;
 import com.pre21.dto.QuestionPatchDto;
 import com.pre21.dto.QuestionsPostDto;
 import com.pre21.entity.*;
@@ -17,7 +18,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -26,16 +26,17 @@ public class QuestionsService {
     private final QuestionsRepository questionsRepository;
     private final QuestionsTagsRepository questionsTagsRepository;
     private final TagsRepository tagsRepository;
-    private final UserRepository userRepository;
+    private final AuthRepository authRepository;
     private final AnswersRepository answersRepository;
     private final AdoptionRepository adoptionRepository;
     private final BookmarkRepository bookmarkRepository;
+    private final QuestionCommentRepository questionCommentRepository;
 
 
     // 질문 생성
     public void createQuestion(QuestionsPostDto questionsPostDto,
                                Long userId) {
-        User findUser = userRepository.findById(userId).orElseThrow(() ->
+        User findUser = authRepository.findById(userId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
 
         Questions questions = new Questions(questionsPostDto.getTitle(), questionsPostDto.getContents());
@@ -159,7 +160,7 @@ public class QuestionsService {
         }
 
         Optional<Questions> optionalQuestion = questionsRepository.findById(questionId);
-        User findUser = userRepository
+        User findUser = authRepository
                 .findById(userId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
 
@@ -232,13 +233,37 @@ public class QuestionsService {
 
 
     /**
+     * 질문에 대한 댓글을 생성하는 메서드입니다.
+     * QuestionCommentRepository에 입력받은 questionCommentPostDto를 저장합니다.
+     *
+     * @param questionCommentPostDto 댓글을 생성하는 요청의 RequestBody에 해당합니다.
+     * @param questionId             댓글을 생성하는 질문의 Id입니다.
+     * @author dev32user
+     */
+    public void createQuestionComment(QuestionCommentPostDto questionCommentPostDto, Long questionId) throws Exception {
+        Long userId = questionCommentPostDto.getUserId();
+        User findUser = authRepository
+                .findById(userId)
+                .orElseThrow(() -> new RuntimeException("findUser.findById 실패"));
+        Questions questions = questionsRepository
+                .findQuestionsById(questionId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+        QuestionComments questionComments = new QuestionComments(questionCommentPostDto.getComments());
+        questionComments.setQuestions(questions);
+        questionComments.setUser(findUser);
+        questionComments.setNickname(findUser.getNickname()); //2022.11.02 답변 작성 유저 닉네임 추가
+        questionCommentRepository.save(questionComments);
+    }
+
+
+    /**
      * @method 유저 조회
      * @param userId 유저식별자
      * @return User
      * @author mozzi327
      */
     private User verifiedExistUser(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() ->
+        return authRepository.findById(userId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.USER_NOT_FOUND)
         );
     }
@@ -268,6 +293,8 @@ public class QuestionsService {
                 new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND)
         );
     }
+
+
 
     public Page<Questions> findMyQuestions(Long userId, int page, int size) {
         return questionsRepository.findAllByUsersId(

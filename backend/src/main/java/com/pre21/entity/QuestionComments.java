@@ -38,7 +38,6 @@ public class QuestionComments extends Auditable {
     @JoinColumn(name = "QUESTION_ID")
     private Questions questions;
 
-    // TODO : User.java 구현 시 추가
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     private User user;

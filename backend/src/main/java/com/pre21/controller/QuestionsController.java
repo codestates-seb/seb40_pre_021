@@ -1,10 +1,9 @@
 package com.pre21.controller;
 
-import com.pre21.dto.QuestionPatchDto;
-import com.pre21.dto.QuestionsPostDto;
-import com.pre21.dto.QuestionsResponseDto;
+import com.pre21.dto.*;
 import com.pre21.entity.Questions;
 import com.pre21.mapper.QuestionsMapper;
+import com.pre21.service.LikeService;
 import com.pre21.service.QuestionsService;
 import com.pre21.util.dto.MultiResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +20,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class QuestionsController {
     private final QuestionsService questionsService;
+    private final LikeService likeService;
     private final QuestionsMapper mapper;
 
     /**
@@ -84,7 +84,7 @@ public class QuestionsController {
     }
 
     // Pagination + 질문 전체 조회
-    @GetMapping("/questions")
+    @GetMapping("/question")
     public ResponseEntity getPagingQuestions(@RequestParam int page,
                                              @RequestParam int size) {
         Page<Questions> questionsPage = questionsService.findPageQuestions(page - 1, size);
@@ -136,5 +136,33 @@ public class QuestionsController {
                                     @PathVariable("answer-id") Long answerId,
                                     @CookieValue(name = "userId", required = true) Long userId) {
         questionsService.addAnswerBookmark(questionId, answerId, userId);
+    }
+
+    /**
+     * 질문에 대한 댓글 생성 <br>
+     * @param questionId             댓글을 생성하는 질문의 Id입니다.
+     * @param questionCommentPostDto 댓글을 생성하는 요청의 RequestBody에 해당합니다.
+     * @author dev32user
+     */
+    @PostMapping("/question/{question-id}/comment")
+    public void createQuestionComment(
+            @PathVariable("question-id") Long questionId,
+            @RequestBody QuestionCommentPostDto questionCommentPostDto) throws Exception {
+
+        questionsService.createQuestionComment(questionCommentPostDto, questionId);
+    }
+
+
+    /**
+     * 질문 좋아요 저장
+     * @param questionId 질문식별자
+     * @param request
+     * @author dev32user
+     */
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/question/{question-id}/like")
+    public void clickQuestionLike (@PathVariable("question-id") Long questionId
+            ,@RequestBody QuestionDto.Like request) {
+        likeService.saveQuestionLike(questionId, request);
     }
 }

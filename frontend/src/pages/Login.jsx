@@ -3,8 +3,11 @@ import Header from '../components/Header/Header';
 import { ReactComponent as Icon } from '../assets/images/icon.svg';
 import OAuths from '../components/OAuths/OAuths';
 import LoginForm from '../components/Login/LoginForm';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useDynamicTitle from '../hooks/useDynamicTitle';
+import { useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { selectIsLogin } from '../modules/userReducer';
 const LoginStyle = styled.div`
 	height: 100vh;
 	display: flex;
@@ -38,6 +41,13 @@ const LoginBody = styled.div`
 
 const Login = () => {
 	useDynamicTitle('Login - Stack Overflow');
+	const navigate = useNavigate();
+	const isLogin = useSelector(selectIsLogin);
+	useEffect(() => {
+		if (isLogin) {
+			navigate('/', { replace: true });
+		}
+	}, []);
 	return (
 		<LoginStyle>
 			<Header />

@@ -11,11 +11,12 @@ const instance = axios.create(axiosConfig);
 
 //acessToken reissue
 
-//real /users/refresh
-//test /signup
 export const AccessTokenRefresh = async () => {
 	try {
-		const result = await instance.get(`/login`);
+		//test
+		// const result = await instance.get(`/login`);
+		//real
+		const result = await instance.get(`/users/refresh`);
 		if (result.data.accessToken) {
 			console.log('AccessTokenRefresh');
 			TokenExpireSetting(result);

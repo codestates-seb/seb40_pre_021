@@ -4,7 +4,7 @@ import com.pre21.entity.User;
 import com.pre21.exception.BusinessLogicException;
 import com.pre21.exception.ExceptionCode;
 import com.pre21.security.utils.CustomAuthorityUtils;
-import com.pre21.repository.UserRepository;
+import com.pre21.repository.AuthRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,18 +12,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
 public class UserDetailService implements UserDetailsService {
-    private final UserRepository userRepository;
+    private final AuthRepository authRepository;
     private final CustomAuthorityUtils authorityUtils;
 
     @Override
     public org.springframework.security.core.userdetails.UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<User> optionalUser = userRepository.findByEmail(email);
+        Optional<User> optionalUser = authRepository.findByEmail(email);
         User findUser = optionalUser.orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
 
         return new UserDetails(findUser);
