@@ -10,8 +10,6 @@ import timeForToday from '../utils/timeForToday';
 const Question = () => {
 	const [thread, setThread] = useState('');
 	const [nickname, setNickname] = useState('');
-	const [isBookmarked, setIsBookmarked] = useState(false);
-
 	const [answerData, setAnswerData] = useState('');
 
 	useEffect(() => {
@@ -20,16 +18,6 @@ const Question = () => {
 
 	useEffect(() => {
 		getQuestion().then((res) => setThread(res));
-	}, []);
-
-	useEffect(() => {
-		if (thread) {
-			const bookmarked = thread.bookmarks.filter(
-				(el) => el.nickname === nickname,
-			);
-			if (bookmarked.length !== 0) setIsBookmarked(true);
-			else setIsBookmarked(false);
-		}
 	}, []);
 
 	const handleAnswer = (str) => {
@@ -64,10 +52,9 @@ const Question = () => {
 						<QuestionContainer>
 							<Left>
 								<Controller
+									bookmarkdata={thread.bookmarks}
 									votecount={thread.vote}
-									likeYn={thread.questionsLikes[0].likeYn}
-									unLlikeYn={thread.questionsLikes[0].unlikeYn}
-									bookmark={isBookmarked}
+									votedata={thread.questionsLikes}
 									QcreatorNickname={thread.nickname}
 									loginNickname={nickname}></Controller>
 							</Left>
@@ -129,10 +116,9 @@ const Question = () => {
 										<Left>
 											<Controller
 												kind="answer"
+												bookmarkdata={el.bookmarks}
 												votecount={el.vote}
-												likeYn={el.answerLikes[0].likeYn}
-												unlikeYn={el.answerLikes[0].unlikeYn}
-												bookmark={isBookmarked}
+												votedata={el.answerLikes}
 												chose={el.choosed}
 												QcreatorNickname={thread.nickname}
 												loginNickname={nickname}></Controller>
@@ -196,7 +182,7 @@ const Question = () => {
 const Wrapper = styled.section`
 	position: relative;
 	max-width: 1080px;
-	padding: 1.5rem 0 1.5rem 1.5rem;
+	padding: 1.5rem 1rem 1.5rem 1.5rem;
 	hr {
 		margin: 1rem 0 1rem;
 		height: 1px;
@@ -217,7 +203,7 @@ const Title = styled.h1`
 `;
 const Btn = styled.div`
 	position: absolute;
-	right: 0;
+	right: 1rem;
 	top: 2rem;
 `;
 const Info = styled.div`

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import {
 	choose,
@@ -11,30 +11,47 @@ import {
 	bookmarkDelA,
 	bookmarkDelQ,
 } from '../../api/QuestionApi';
+import useBookmark from '../../hooks/useBookmark';
+import useVoteStatus from '../../hooks/useVote';
 
 const Controller = ({
 	kind,
 	votecount,
-	likeYn,
-	unlikeYn,
-	bookmark,
+	votedata,
+	bookmarkdata,
 	choosed,
 	QcreatorNickname,
 	loginNickname,
 }) => {
-	const [vote, setVote] = useState(votecount); // 서버에서 가져온 votecount
-	const [upVoted, setUpVoted] = useState(likeYn); // 서버에서 가져온 상태
-	const [downVoted, setDownVoted] = useState(unlikeYn); // 서버에서 가져온 상태
+	const [upVoteStatus, downVoteStatus] = useVoteStatus(votedata, loginNickname);
+	const [bookmarkStatus] = useBookmark(bookmarkdata, loginNickname);
 
-	const [bookmarked, setBookmarked] = useState(bookmark);
+	const [vote, setVote] = useState(votecount); // 서버에서 가져온 votecount
+	const [upVoted, setUpVoted] = useState(false);
+	const [downVoted, setDownVoted] = useState(false);
+	const [bookmarked, setBookmarked] = useState(false);
 
 	const [chosen, setChosen] = useState(choosed);
+
+	useEffect(() => {
+		if (upVoteStatus || downVoteStatus) {
+			setUpVoted(upVoteStatus);
+			setDownVoted(downVoteStatus);
+		}
+	}, [upVoteStatus, downVoteStatus]);
+
+	useEffect(() => {
+		if (bookmarkStatus) {
+			setBookmarked(bookmarkStatus);
+		}
+	}, [bookmarkStatus]);
 
 	const handleUpVote = () => {
 		const upVote = { upVote: true, downVote: false };
 		const cancelUpVote = { upVote: false, downVote: false };
 		if (!upVoted) {
 			setUpVoted(true);
+			setDownVoted(false);
 			setVote(votecount + 1);
 			kind === 'answer'
 				? upVoteForA(JSON.stringify(upVote))
@@ -53,6 +70,7 @@ const Controller = ({
 		const cancelDownVote = { upVote: false, downVote: false };
 		if (!downVoted) {
 			setDownVoted(true);
+			setUpVoted(false);
 			setVote(votecount - 1);
 			kind === 'answer'
 				? downVoteForA(JSON.stringify(downVote))
