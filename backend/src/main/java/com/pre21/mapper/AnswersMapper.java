@@ -10,8 +10,8 @@ import java.util.List;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface AnswersMapper {
     List<AnswerInfoDto> answerToAnswerResponse(List<Answers> answers);
-    default AnswersDto.GetResponseDto answerToAnswerResponse(Answers answers){
-        AnswersDto.GetResponseDto responseDto = new AnswersDto.GetResponseDto();
+    default AnswersDto.GetResponse answerToAnswerResponse(Answers answers){
+        AnswersDto.GetResponse responseDto = new AnswersDto.GetResponse();
 
         responseDto.setAnswerId(answers.getId());
         responseDto.setContents(answers.getContents());

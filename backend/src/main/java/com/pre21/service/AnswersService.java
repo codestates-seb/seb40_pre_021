@@ -1,7 +1,5 @@
 package com.pre21.service;
 
-import com.pre21.dto.AnswerCommentPostDto;
-import com.pre21.dto.AnswerPatchDto;
 import com.pre21.dto.AnswersDto;
 import com.pre21.entity.AnswerComments;
 import com.pre21.entity.Answers;
@@ -84,7 +82,7 @@ public class AnswersService {
      * @param answerPatchDto AnswerPatchDto 요청입니다.
      * @author dev32user
      */
-    public Answers patchAnswer(Long userId, Long answerId, AnswerPatchDto answerPatchDto) {
+    public Answers patchAnswer(Long userId, Long answerId, AnswersDto.Patch answerPatchDto) {
         userIdAnswerIdCheck(userId, answerId);
 
 
@@ -153,7 +151,7 @@ public class AnswersService {
      * @param answerId             댓글을 생성하는 답변의 Id입니다.
      * @author dev32user
      */
-    public void createAnswerComment(AnswerCommentPostDto answerCommentPostDto, Long answerId) throws Exception{
+    public void createAnswerComment(AnswersDto.CommentPost answerCommentPostDto, Long answerId) throws Exception{
         Long userId = answerCommentPostDto.getUserId();
         User findUser = authRepository
                 .findById(userId)

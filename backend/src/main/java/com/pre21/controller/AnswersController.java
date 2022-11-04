@@ -1,7 +1,5 @@
 package com.pre21.controller;
 
-import com.pre21.dto.AnswerCommentPostDto;
-import com.pre21.dto.AnswerPatchDto;
 import com.pre21.dto.AnswersDto;
 import com.pre21.dto.QuestionDto;
 import com.pre21.entity.Answers;
@@ -48,7 +46,7 @@ public class AnswersController {
     public ResponseEntity patchAnswer (
             @CookieValue(name = "userId") Long userId,
             @PathVariable("answer-id") Long answerId,
-            @RequestBody AnswerPatchDto answerPatchDto) {
+            @RequestBody AnswersDto.Patch answerPatchDto) {
         Answers answers = answersService.patchAnswer(userId, answerId, answerPatchDto);
         return new ResponseEntity(mapper.answerToAnswerResponse(answers), HttpStatus.OK);
     }
@@ -85,7 +83,7 @@ public class AnswersController {
     @PostMapping("/answers/{answer-id}/comment")
     public void createAnswerComment(
             @PathVariable("answer-id") Long answerId,
-            @RequestBody AnswerCommentPostDto answerCommentPostDto) throws Exception {
+            @RequestBody AnswersDto.CommentPost answerCommentPostDto) throws Exception {
 
         answersService.createAnswerComment(answerCommentPostDto, answerId);
     }
