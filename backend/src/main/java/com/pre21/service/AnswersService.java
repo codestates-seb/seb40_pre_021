@@ -1,6 +1,6 @@
 package com.pre21.service;
 
-import com.pre21.dto.AnswersDto;
+import com.pre21.dto.AnswerDto;
 import com.pre21.entity.AnswerComments;
 import com.pre21.entity.Answers;
 import com.pre21.entity.Questions;
@@ -28,7 +28,7 @@ public class AnswersService {
     private final AnswersRepository answersRepository;
     private final AnswerCommentRepository answerCommentRepository;
 
-    public void createAnswer(AnswersDto.Post answersPostDto, Long questionId) {
+    public void createAnswer(AnswerDto.Post answersPostDto, Long questionId) {
         // 질문 찾기
         Questions findQuestion = questionsRepository.findQuestionsById(questionId).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
@@ -82,7 +82,7 @@ public class AnswersService {
      * @param answerPatchDto AnswerPatchDto 요청입니다.
      * @author dev32user
      */
-    public Answers patchAnswer(Long userId, Long answerId, AnswersDto.Patch answerPatchDto) {
+    public Answers patchAnswer(Long userId, Long answerId, AnswerDto.Patch answerPatchDto) {
         userIdAnswerIdCheck(userId, answerId);
 
 
@@ -151,7 +151,7 @@ public class AnswersService {
      * @param answerId             댓글을 생성하는 답변의 Id입니다.
      * @author dev32user
      */
-    public void createAnswerComment(AnswersDto.CommentPost answerCommentPostDto, Long answerId) throws Exception{
+    public void createAnswerComment(AnswerDto.CommentPost answerCommentPostDto, Long answerId) throws Exception{
         Long userId = answerCommentPostDto.getUserId();
         User findUser = authRepository
                 .findById(userId)
