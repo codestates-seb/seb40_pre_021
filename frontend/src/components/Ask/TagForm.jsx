@@ -3,21 +3,33 @@ import styled from 'styled-components';
 
 const TagForm = ({ callback }) => {
 	const [tags, setTags] = useState([]);
+	const [value, setValue] = useState('');
 
 	function handleKeyDown(e) {
-		let value;
 		e.stopPropagation();
+		if (e.keyCode === 8 && value === '' && tags.length > 0) {
+			const editTag = tags.pop();
+			const newTags = [...tags];
+			setTags(newTags);
+			setValue(editTag + ' ');
+		}
 		if (e.key !== 'Enter' && e.key !== ' ') return;
 		else {
-			value = e.target.value.trim().toLowerCase();
-			e.target.value = '';
+			setValue(value.trim().toLowerCase());
 		}
 		if (!value.trim()) return;
 		setTags([...tags, value]);
+		setValue('');
 	}
 
 	function removeTag(index) {
 		setTags(tags.filter((el, idx) => idx !== index));
+	}
+
+	function handleChangeValue(e) {
+		let value = e.target.value;
+		value = value.replace(/[^a-zA-z-_0-9]/g, '');
+		setValue(value);
 	}
 
 	useEffect(() => {
@@ -36,7 +48,11 @@ const TagForm = ({ callback }) => {
 				<input
 					type="text"
 					placeholder="e.g. (objective-c json windows)"
-					onKeyDown={handleKeyDown}></input>
+					value={value}
+					pattern="[a-zA-Z0-9]"
+					onKeyDown={handleKeyDown}
+					onChange={handleChangeValue}
+				/>
 			</div>
 		</Style>
 	);
@@ -44,6 +60,9 @@ const TagForm = ({ callback }) => {
 
 const Style = styled.div`
 	.container {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
 		input {
 			padding: 0 0.5rem 0 0.5rem;
 			border: none;
