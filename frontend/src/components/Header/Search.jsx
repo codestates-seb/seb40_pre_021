@@ -100,7 +100,7 @@ const Search = () => {
 		}
 		if (options.length === 0) {
 			if (e.key === 'Enter') {
-				if (inputValue !== undefined) {
+				if (inputValue !== '') {
 					let searchWords = inputValue.split(' ').filter((ele) => {
 						return ele !== '';
 					});
@@ -113,6 +113,7 @@ const Search = () => {
 					});
 					const q = searchWords.join(' ');
 					navigate(`/search/${q}`);
+					setInputValue('');
 				}
 			}
 		}

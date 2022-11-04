@@ -50,7 +50,11 @@ const SignupForm = () => {
 	const navigate = useNavigate();
 
 	const handleInputValue = (key) => (e) => {
-		setSignupInfo({ ...signupInfo, [key]: e.target.value });
+		const koreanExp = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;
+		setSignupInfo({
+			...signupInfo,
+			[key]: e.target.value.replace(koreanExp, ''),
+		});
 	};
 	const signupRequestHandler = () => {
 		const { nickname, email, password } = signupInfo;

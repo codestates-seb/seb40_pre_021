@@ -48,6 +48,7 @@ const RightSection = styled.div`
 		color: hsl(209, 100%, 37.5%);
 		font-size: 1.2em;
 		font-weight: 600;
+		cursor: pointer;
 	}
 	.body {
 		color: hsl(210, 8%, 25%);
