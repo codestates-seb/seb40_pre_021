@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Editor from '../components/common/Editor';
 import Controller from '../components/Question/Controller';
 import Button from '../components/common/Button';
@@ -19,6 +19,7 @@ const Question = () => {
 	const [thread, setThread] = useState('');
 	const [nickname, setNickname] = useState('');
 	const [answerData, setAnswerData] = useState('');
+	const { questionId } = useParams();
 
 	useEffect(() => {
 		getUserInfo().then((res) => setNickname(res.nickname));
@@ -26,7 +27,7 @@ const Question = () => {
 
 	useEffect(() => {
 		getQuestion().then((res) => setThread(res));
-	}, [thread]);
+	}, []);
 
 	const handleCommentQ = (e) => {
 		const data = { body: e.target.value };
