@@ -1,8 +1,14 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-const SortButtonGroup = ({ data, handleSortTags }) => {
-	const [menu, setMenu] = useState(data);
+const SortButtonGroup = ({
+	menus,
+	handleSortLists,
+	data,
+	callback,
+	tag = false,
+}) => {
+	const [menu, setMenu] = useState([]);
 
 	const handleMenuChange = (id) => {
 		let newMenu = menu.map((item) =>
@@ -10,6 +16,10 @@ const SortButtonGroup = ({ data, handleSortTags }) => {
 		);
 		setMenu(newMenu);
 	};
+
+	useEffect(() => {
+		setMenu(menus);
+	}, [menus]);
 
 	return (
 		<GroupContainer>
@@ -21,7 +31,7 @@ const SortButtonGroup = ({ data, handleSortTags }) => {
 						clicked={clicked}
 						onClick={() => {
 							handleMenuChange(id);
-							handleSortTags(name);
+							handleSortLists(name, data, callback, tag);
 						}}>
 						{name}
 					</Menu>
@@ -53,6 +63,7 @@ const Menu = styled.a`
 	color: ${(props) => (props.clicked ? '#3b4045' : '#6a737c')};
 	:hover {
 		background-color: ${(props) => (props.clicked ? '#e3e6e8' : '#f8f9f9')};
+		cursor: pointer;
 	}
 	&:first-child {
 		border-top-left-radius: 3px;

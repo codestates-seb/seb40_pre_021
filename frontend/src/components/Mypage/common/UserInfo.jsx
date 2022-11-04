@@ -1,11 +1,15 @@
 import styled from 'styled-components';
 import defaultImage from '../../../assets/images/userDefaultImage.png';
 
-const UserInfo = ({ questionUser, date }) => {
+const UserInfo = ({ questionUser = '', date }) => {
 	return (
 		<Container>
-			<img src={defaultImage} alt="user" />
-			<a href="1">{questionUser}</a>
+			{questionUser ? (
+				<>
+					<img src={defaultImage} alt="user" />
+					<a href="1">{questionUser}</a>
+				</>
+			) : null}
 			<time>asked</time>
 			<span>{date}</span>
 		</Container>
