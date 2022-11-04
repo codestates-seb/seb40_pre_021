@@ -1,8 +1,9 @@
 import axios from 'axios';
+import { root } from './root';
 import { TokenExpireSetting } from './TokenApi';
 
 const axiosConfig = {
-	baseURL: 'http://localhost:3001',
+	baseURL: root,
 };
 
 const instance = axios.create(axiosConfig);
