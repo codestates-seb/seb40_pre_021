@@ -1,6 +1,5 @@
 package com.pre21.entity;
 
-import com.pre21.dto.AnswerCommentResponseDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +9,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 답변 엔티티
+ */
 @Table
 @Entity
 @Getter
@@ -30,9 +32,6 @@ public class Answers {
     @OneToOne(mappedBy = "answers", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private Adoption adoption;
 
-    @Column(name = "IMAGE_URL")
-    private String imageUrl;
-
     @Column
     private boolean chooseYn = false;
 
@@ -42,7 +41,7 @@ public class Answers {
     @Column(name = "MODIFIED_AT")
     private LocalDateTime modifiedAt = LocalDateTime.now();
 
-    // 딥변 - 질문 매핑
+    // 답변 - 질문 매핑
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "QUESTION_ID")
     private Questions questions = new Questions();

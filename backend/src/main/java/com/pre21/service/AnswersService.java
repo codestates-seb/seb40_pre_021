@@ -84,7 +84,7 @@ public class AnswersService {
      * @param answerPatchDto AnswerPatchDto 요청입니다.
      * @author dev32user
      */
-    public Answers patchAnswer(Long userId, Long answerId, AnswerPatchDto answerPatchDto) {
+    public Answers patchAnswer(Long userId, Long answerId, AnswersDto.Patch answerPatchDto) {
         userIdAnswerIdCheck(userId, answerId);
 
 
@@ -153,7 +153,7 @@ public class AnswersService {
      * @param answerId             댓글을 생성하는 답변의 Id 값입니다.
      * @author dev32user
      */
-    public void createAnswerComment(AnswerCommentPostDto answerCommentPostDto, Long userId, Long answerId) throws Exception {
+    public void createAnswerComment(AnswersDto.CommentPost answerCommentPostDto, Long userId, Long answerId) throws Exception {
         User findUser = authRepository
                 .findById(userId)
                 .orElseThrow(() -> new RuntimeException("findUser.findById 실패"));

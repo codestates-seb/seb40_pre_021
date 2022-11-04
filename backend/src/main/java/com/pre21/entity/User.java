@@ -16,10 +16,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 /**
- * JavaDocs 테스트
- * User entity입니다.
+ * 유저 엔티티
  */
 @NoArgsConstructor
 @Getter
@@ -89,9 +87,9 @@ public class User {
     }
 
     public void addQuestionsLikes(QuestionLikes questionLikes) {
-        this.questionsLikes.add(questionLikes); // question 에 questionsTags 지정
+        this.questionsLikes.add(questionLikes); // user 에 questionLikes 지정
         if (questionLikes.getUsers() != this) {
-            questionLikes.setUsers(this); //(owner)questionsTags 에 question 지정
+            questionLikes.setUsers(this); //(owner)questionLikes 에 user 지정
         }
     }
 

@@ -26,9 +26,9 @@ public class QuestionDto {
         private Long questionId;    // 질문 Id
         private String title;   // 질문 제목
         private String contents;    // 질문 내용
-        private List<QuestionsTagsResponseDto> tags;   // 질문에 사용한 태그 정보
+        private List<QuestionsTagsResponseDto> questionsTags;   // 질문에 사용한 태그 정보
         private int vote;   // 질문 추천수
-        private List<AnswersDto.ResponseDto> answers;   // 질문에 달린 답글 정보
+        private List<AnswersDto.Response> answers;   // 질문에 달린 답글 정보
         private int views;  // 질문 조회수
         private LocalDateTime createdAt;    // 질문 생성 일자
         private String nickname;    // 질문을 생성한 유저 닉네임
@@ -48,7 +48,7 @@ public class QuestionDto {
         private Long id;
         private String title;
         private String contents;
-        private List<QuestionsTagsResponseDto> tags;
+        private List<QuestionsTagsResponseDto> questionsTags;
         private int vote;
         private boolean chooseYn;
         private int views;

@@ -45,10 +45,10 @@ public class AnswersController {
      * @author dev32user
      */
     @PatchMapping("/answer/{answer-id}/edit")
-    public ResponseEntity patchAnswer(
+    public ResponseEntity patchAnswer (
             @CookieValue(name = "userId") Long userId,
             @PathVariable("answer-id") Long answerId,
-            @RequestBody AnswerPatchDto answerPatchDto) {
+            @RequestBody AnswersDto.Patch answerPatchDto) {
         Answers answers = answersService.patchAnswer(userId, answerId, answerPatchDto);
         return new ResponseEntity(mapper.answerToAnswerResponse(answers), HttpStatus.OK);
     }
@@ -83,7 +83,7 @@ public class AnswersController {
     public void createAnswerComment(
             @PathVariable("answer-id") Long answerId,
             @CookieValue(name = "userId") Long userId,
-            @RequestBody AnswerCommentPostDto answerCommentPostDto) throws Exception {
+            @RequestBody AnswersDto.CommentPost answerCommentPostDto) throws Exception {
 
         answersService.createAnswerComment(answerCommentPostDto, userId, answerId);
     }
