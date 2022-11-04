@@ -1,7 +1,5 @@
 package com.pre21.service;
 
-import com.pre21.dto.AnswerCommentPostDto;
-import com.pre21.dto.AnswerPatchDto;
 import com.pre21.dto.AnswersDto;
 import com.pre21.entity.AnswerComments;
 import com.pre21.entity.Answers;
