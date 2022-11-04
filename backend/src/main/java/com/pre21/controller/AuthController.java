@@ -31,7 +31,7 @@ public class AuthController {
      */
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/signup")
-    public void joinUser(@RequestBody UserDto.Join requestBody) {
+    public void joinUser(@RequestBody AuthDto.Join requestBody) {
         authService.createUser(mapper.joinToUserEntity(requestBody));
     }
 
