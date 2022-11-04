@@ -111,7 +111,7 @@ const Search = () => {
 							}
 						});
 					});
-					const q = encodeURI(searchWords.join(' '));
+					const q = searchWords.join(' ');
 					navigate(`/search/${q}`);
 					setInputValue('');
 				}
