@@ -30,7 +30,6 @@ const LeftMenuStyle = styled.div`
 
 const LeftMenu = () => {
 	const isLogin = useSelector(selectIsLogin);
-	console.log(isLogin);
 	const menus = [
 		{
 			id: 0,
