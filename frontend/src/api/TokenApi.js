@@ -1,9 +1,10 @@
 import axios from 'axios';
+import { root } from './root';
 
 const JWT_EXPIRY_TIME = 60 * 1000; // 만료 시간 (1분)
 
 const axiosConfig = {
-	baseURL: 'http://localhost:3001',
+	baseURL: root,
 };
 
 const instance = axios.create(axiosConfig);
