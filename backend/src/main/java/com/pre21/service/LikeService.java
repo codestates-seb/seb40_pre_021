@@ -126,17 +126,17 @@ public class LikeService {
     private int dtoCheck(QuestionLikes likes, QuestionDto.Like like) {
         if (likes.isLikeYn()) {
             if (like.isLikeYn()) {
-                return -1;
+                return +1;
             }
             if (like.isUnlikeYn()) {
-                return -2;
+                return +2;
             }
         } else if (likes.isUnlikeYn()) {
             if (like.isLikeYn()) {
-                return +2;
+                return -2;
             }
             if (like.isUnlikeYn()) {
-                return +1;
+                return -1;
             }
         }
         return 0;
@@ -144,17 +144,17 @@ public class LikeService {
     private int dtoCheck(AnswerLikes likes, QuestionDto.Like like) {
         if (likes.isLikeYn()) {
             if (like.isLikeYn()) {
-                return -1;
+                return +1;
             }
             if (like.isUnlikeYn()) {
-                return -2;
+                return +2;
             }
         } else if (likes.isUnlikeYn()) {
             if (like.isLikeYn()) {
-                return +2;
+                return -2;
             }
             if (like.isUnlikeYn()) {
-                return +1;
+                return -1;
             }
         }
         return 0;
