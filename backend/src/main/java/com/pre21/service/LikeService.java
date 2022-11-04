@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class LikeService {
-    private final UserRepository userRepository;
+    private final AuthRepository authRepository;
     private final QuestionsRepository questionsRepository;
     private final QuestionLikeRepository questionLikeRepository;
     private final AnswersRepository answersRepository;
@@ -107,7 +107,7 @@ public class LikeService {
 
     // 유저를 찾아 리턴
     private User verifiedExistUser(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() ->
+        return authRepository.findById(userId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.USER_NOT_FOUND)
         );
     }

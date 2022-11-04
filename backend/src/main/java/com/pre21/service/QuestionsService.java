@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -27,7 +26,7 @@ public class QuestionsService {
     private final QuestionsRepository questionsRepository;
     private final QuestionsTagsRepository questionsTagsRepository;
     private final TagsRepository tagsRepository;
-    private final UserRepository userRepository;
+    private final AuthRepository authRepository;
     private final AnswersRepository answersRepository;
     private final AdoptionRepository adoptionRepository;
     private final BookmarkRepository bookmarkRepository;
@@ -37,7 +36,7 @@ public class QuestionsService {
     // 질문 생성
     public void createQuestion(QuestionsPostDto questionsPostDto,
                                Long userId) {
-        User findUser = userRepository.findById(userId).orElseThrow(() ->
+        User findUser = authRepository.findById(userId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
 
         Questions questions = new Questions(questionsPostDto.getTitle(), questionsPostDto.getContents());
@@ -161,7 +160,7 @@ public class QuestionsService {
         }
 
         Optional<Questions> optionalQuestion = questionsRepository.findById(questionId);
-        User findUser = userRepository
+        User findUser = authRepository
                 .findById(userId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
 
@@ -243,7 +242,7 @@ public class QuestionsService {
      */
     public void createQuestionComment(QuestionCommentPostDto questionCommentPostDto, Long questionId) throws Exception {
         Long userId = questionCommentPostDto.getUserId();
-        User findUser = userRepository
+        User findUser = authRepository
                 .findById(userId)
                 .orElseThrow(() -> new RuntimeException("findUser.findById 실패"));
         Questions questions = questionsRepository
@@ -264,7 +263,7 @@ public class QuestionsService {
      * @author mozzi327
      */
     private User verifiedExistUser(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() ->
+        return authRepository.findById(userId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.USER_NOT_FOUND)
         );
     }

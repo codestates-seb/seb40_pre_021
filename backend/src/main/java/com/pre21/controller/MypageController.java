@@ -3,7 +3,6 @@ package com.pre21.controller;
 
 import com.pre21.entity.Answers;
 import com.pre21.entity.Questions;
-import com.pre21.entity.Tags;
 import com.pre21.entity.User;
 import com.pre21.mapper.AnswersMapper;
 import com.pre21.mapper.QuestionsMapper;
@@ -11,7 +10,7 @@ import com.pre21.mapper.UserMapper;
 import com.pre21.service.AnswersService;
 import com.pre21.service.QuestionsService;
 import com.pre21.service.TagsService;
-import com.pre21.service.UserService;
+import com.pre21.service.AuthService;
 import com.pre21.util.dto.MultiResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,7 +33,7 @@ import java.util.List;
 public class MypageController {
     private final int page = 0;
     private final int size = 5;
-    private final UserService userService;
+    private final AuthService authService;
     private final QuestionsService questionsService;
     private final AnswersService answersService;
     private final TagsService tagsService;
@@ -51,7 +50,7 @@ public class MypageController {
      */
     @GetMapping("/user-info")
     public ResponseEntity getUserInfo(@CookieValue(name = "userId") Long userId) {
-        User findUser = userService.findUser(userId);
+        User findUser = authService.findUser(userId);
 
         return new ResponseEntity<>(userMapper.userToUserResponse(findUser), HttpStatus.OK);
     }
