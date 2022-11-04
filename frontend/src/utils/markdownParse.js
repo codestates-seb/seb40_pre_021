@@ -24,9 +24,9 @@ const markdownParse = (str) => {
 	text = text.replace(UlStart, '<ul>\n-');
 	text = text.replace(UlEnd, '$1\n</ul>\n\n$2');
 	text = text.replace(UlLi, '<li>$1</li>');
-	text = text.replace(OlStart, '<ol>\n1.');
-	text = text.replace(OlEnd, '$1\n</ol>\n\n$2');
-	text = text.replace(OlLi, '<li>$1</li>');
+	// text = text.replace(OlStart, '<ol>\n1.');
+	// text = text.replace(OlEnd, '$1\n</ol>\n\n$2');
+	// text = text.replace(OlLi, '<li>$1</li>');
 
 	text = text.replace(H3, '<h3>$1</h3>');
 	text = text.replace(H2, '<h2>$1</h2>');
