@@ -68,7 +68,24 @@ export const commentA = async (data) => {
 		return err;
 	}
 }; //답변에 대한 댓글 작성
-
+export const commentQDEL = async (data) => {
+	try {
+		const result = await instance.post('/questions/:questionId/comment', data);
+		return result.data;
+	} catch (err) {
+		console.log(err);
+		return err;
+	}
+}; //질문 댓글 삭제(임시)
+export const commentADEL = async (data) => {
+	try {
+		const result = await instance.post('/answers/:answerId/comment', data);
+		return result.data;
+	} catch (err) {
+		console.log(err);
+		return err;
+	}
+}; //질문 댓글 삭제(임시)
 export const upVoteForQ = async (data) => {
 	try {
 		const result = await instance.put('/questions/:questionId/up', data);
