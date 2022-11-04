@@ -30,6 +30,7 @@ const Question = () => {
 		const data = { body: e.target.value };
 		if (e.key === 'Enter') {
 			commentQ(JSON.stringify(data));
+			e.target.value = '';
 		}
 	};
 
@@ -37,6 +38,7 @@ const Question = () => {
 		const data = { body: e.target.value };
 		if (e.key === 'Enter') {
 			commentA(JSON.stringify(data));
+			e.target.value = '';
 		}
 	};
 
