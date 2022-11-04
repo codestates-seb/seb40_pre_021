@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import ListAdditionalInfo from '../common/ListAdditionalInfo';
 import TagList from '../common/TagList';
 import UserInfo from '../common/UserInfo';
-import SortButtonGroup from './SortButtonGroup';
+import SortButtonGroup from '../common/SortButtonGroup';
 import Title from './Title';
 
 let questionSortData = [
@@ -37,25 +37,20 @@ let answerSortData = [
 	},
 ];
 
-const TotalList = ({ lists, title, type, handleSortLists, callback }) => {
+const TotalList = ({ lists, title, type, callback }) => {
 	const [sortData, setSortData] = useState([]);
-	console.log(sortData);
 
 	useEffect(() => {
-		type === 'answer'
+		type === 'answered'
 			? setSortData(answerSortData)
 			: setSortData(questionSortData);
 	}, [type]);
+
 	return (
 		<Container>
 			<TitleBox>
 				<Title title={title} number={lists?.length} />
-				<SortButtonGroup
-					menus={sortData}
-					handleSortLists={handleSortLists}
-					data={lists}
-					callback={callback}
-				/>
+				<SortButtonGroup menus={sortData} data={lists} callback={callback} />
 			</TitleBox>
 			<ListContainer>
 				{lists?.map((list) => {
@@ -89,7 +84,7 @@ const TotalList = ({ lists, title, type, handleSortLists, callback }) => {
 								<TagAndUserInfoBox>
 									{tags ? <TagList tag={tags} /> : <div></div>}
 
-									<UserInfo date={date} />
+									<UserInfo date={date} type={type} />
 								</TagAndUserInfoBox>
 							</ContentBox>
 						</ListBox>
