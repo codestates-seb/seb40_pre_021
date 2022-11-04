@@ -8,12 +8,14 @@ const Title = ({ title, number = '', flex, handleTabChange }) => {
 			{handleTabChange ? (
 				<>
 					<StyledTitle>{title}</StyledTitle>
-					<Text
-						onClick={() => {
-							handleTabChange({ name: title });
-						}}>
-						View all {localeNumber} {lowerTitle}
-					</Text>
+					{localeNumber > 0 ? (
+						<Text
+							onClick={() => {
+								handleTabChange({ name: title });
+							}}>
+							View all {localeNumber} {lowerTitle}
+						</Text>
+					) : null}
 				</>
 			) : (
 				<StyledTitle>{localeNumber + ' ' + title}</StyledTitle>
