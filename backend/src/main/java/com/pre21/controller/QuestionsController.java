@@ -25,65 +25,67 @@ public class QuestionsController {
 
     /**
      * 질문 생성 메서드
-     *
-     * @param post      : 질문 생성 Dto
-     * @param userId    : 쿠키에 담긴 유저 Id
+     * @param post   질문 생성 Dto
+     * @param userId 쿠키에 담긴 유저 Id
      */
     @PostMapping("/ask")
     public void createQuestion(@RequestBody QuestionDto.Post post,
                                @CookieValue(name = "userId", required = true) Long userId) {
-
         questionsService.createQuestion(post, userId);
-
     }
 
 
     /**
      * 질문 상세 조회 메서드
-     *
-     * @param questionId : 질문 식별자
+     * @param questionId 질문 식별자
      */
     @GetMapping("/{question-id}")
     public ResponseEntity getQuestion(@PathVariable("question-id") Long questionId) {
         Questions questions = questionsService.findQuestion(questionId);
-
 
         return new ResponseEntity<>(mapper.questionsToQuestionResponse(questions),
                 HttpStatus.OK);
     }
 
     /**
-     * 질문 patch 요청에 대한 컨트롤러 메서드입니다.
-     *
-     * @param userId           쿠키에서 값을 받아옵니다.
-     * @param patch 질문 수정 요청입니다.
-     * @param questionId       수정한 질문의 Id입니다.
+     * 질문 patch 요청에 대한 컨트롤러 메서드
+     * @param userId     쿠키에 담긴 유저Id
+     * @param patch      질문 수정 요청
+     * @param questionId 수정한 질문Id
      * @author dev32user
      */
+
     @PatchMapping("/{question-id}/edit")
     public ResponseEntity patchQuestion(
             @CookieValue(name = "userId") Long userId,
             @PathVariable("question-id") Long questionId,
             @RequestBody QuestionDto.Patch patch) {
         Questions questions = questionsService.patchQuestion(userId, questionId, patch);
+
         return new ResponseEntity(mapper.questionsToQuestionResponse(questions), HttpStatus.OK);
     }
 
-
-    // 질문 전체 조회
+    /**
+     * 질문 전체 조회 메서드
+     * @return  생성된 질문 전체 + 질문 개수
+     */
     @GetMapping
     public ResponseEntity getQuestions() {
 
         List<Questions> questions = questionsService.findQuestions();
         long questionsCount = questionsService.findQuestionCount();
 
-
         return new ResponseEntity<>(
                 new MultiResponseDto.MultiResponseDtos<>(mapper.questionsToQuestionResponses(questions), questionsCount),
                 HttpStatus.OK);
     }
 
-    // Pagination + 질문 전체 조회
+    /**
+     * Pagination 질문 전체 조회 메서드
+     * @param page  페이지
+     * @param size  페이지에 출력되는 개수
+     * @return 생성된 질문 중 size 개수 + pageInfo
+     */
     @GetMapping("/question")
     public ResponseEntity getPagingQuestions(@RequestParam int page,
                                              @RequestParam int size) {
@@ -95,7 +97,11 @@ public class QuestionsController {
                 HttpStatus.OK);
     }
 
-    // 질문 삭제
+    /**
+     * 질문 삭제 메서드
+     * @param questionId    삭제할 질문Id
+     * @param userId        쿠키에 담긴 유저Id
+     */
     @DeleteMapping("/delete/{question-id}")
     public void deleteQuestions(@PathVariable("question-id") Long questionId,
                                 @CookieValue(name = "userId") Long userId) {
@@ -104,7 +110,7 @@ public class QuestionsController {
 
 
     /**
-     * @method 질문 작성자 채택 기능
+     * 질문 작성자 채택 메서드
      * @param questionId : 질문식별자
      * @param answerId   : 답변식별자
      * @param userId     : 로그인 유저식별자
@@ -115,22 +121,26 @@ public class QuestionsController {
                               @PathVariable("answer-id") Long answerId,
                               @CookieValue(name = "userId", required = true) Long userId) {
         questionsService.adoptingQuestion(questionId, answerId, userId);
-
     }
 
     /**
-     * @method 질문 북마크 추가
-     * @param questionId
-     * @param userId
+     * 질문 북마크 메서드
+     * @param questionId    북마크 처리 할 질문Id
+     * @param userId        쿠키에 담긴 유저Id
      * @author mozzi327
      */
     @PostMapping("/bookmark/{question-id}")
     public void clickQuestionBookmark(@PathVariable("question-id") Long questionId,
                                       @CookieValue(name = "userId", required = true) Long userId) {
         questionsService.addQuestionBookmark(questionId, userId);
-
     }
 
+    /**
+     * 답변 북마크 메서드
+     * @param questionId    답변이 달린 질문Id
+     * @param answerId      북마크 처리 할 답변Id
+     * @param userId        쿠키에 담긴 유저Id
+     */
     @PostMapping("/bookmark/{question-id}/{answer-id}")
     public void clickAnswerBookmark(@PathVariable("question-id") Long questionId,
                                     @PathVariable("answer-id") Long answerId,
@@ -139,31 +149,31 @@ public class QuestionsController {
     }
 
     /**
-     * 질문에 대한 댓글 생성 <br>
-     * @param questionId             댓글을 생성하는 질문의 Id입니다.
-     * @param questionCommentPostDto 댓글을 생성하는 요청의 RequestBody에 해당합니다.
+     * 질문에 대한 댓글 생성
+     * @param questionId             댓글을 생성하는 질문Id
+     * @param CommentPost 댓글을 생성하는 요청의 RequestBody
      * @author dev32user
      */
     @PostMapping("/question/{question-id}/comment")
     public void createQuestionComment(
             @PathVariable("question-id") Long questionId,
             @CookieValue(value = "userId", required = false) Long userId,
-            @RequestBody QuestionDto.CommentPost questionCommentPostDto) throws Exception {
+            @RequestBody QuestionDto.CommentPost CommentPost) throws Exception {
 
-        questionsService.createQuestionComment(questionCommentPostDto, userId, questionId);
+        questionsService.createQuestionComment(CommentPost, userId, questionId);
     }
 
 
     /**
-     * 질문 좋아요 저장
+     * 질문 좋아요,싫어요 메서드
      * @param questionId 질문식별자
      * @param request
      * @author dev32user
      */
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/question/{question-id}/like")
-    public void clickQuestionLike (@PathVariable("question-id") Long questionId
-            ,@RequestBody QuestionDto.Like request) {
+    public void clickQuestionLike (@PathVariable("question-id") Long questionId,
+                                   @RequestBody QuestionDto.Like request) {
         likeService.saveQuestionLike(questionId, request);
     }
 }

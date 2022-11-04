@@ -1,7 +1,5 @@
 package com.pre21.util.dto;
 
-import com.pre21.dto.QuestionDto;
-import com.pre21.dto.QuestionsResponseDto;
 import lombok.Getter;
 import org.springframework.data.domain.Page;
 
