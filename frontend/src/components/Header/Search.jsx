@@ -112,8 +112,10 @@ const Search = () => {
 						});
 					});
 					const q = searchWords.join(' ');
-					navigate(`/search/${q}`);
-					setInputValue('');
+					if (q !== '') {
+						navigate(`/search/${q}`);
+						setInputValue('');
+					}
 				}
 			}
 		}
