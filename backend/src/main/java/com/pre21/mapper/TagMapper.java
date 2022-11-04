@@ -15,7 +15,9 @@ public interface TagMapper {
         return tagsList.stream()
                 .map(tag -> MyPageDto.TagResponse
                         .builder()
-                        .tagId(tag.getCount())
+                        .tagId(tag.getId())
+                        .tagCount(tag.getTagCount())
+                        .title(tag.getTags().getTitle())
                         .build()
                 ).collect(Collectors.toList());
     }
