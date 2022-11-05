@@ -49,8 +49,9 @@ public class SecurityConfiguration {
                 .addFilterBefore(encodingFilter, CsrfFilter.class)
                 .headers().frameOptions().sameOrigin()
                 .and()
-                .httpBasic().disable()
-                .cors().configurationSource(corsConfigurationSource())
+                .cors()
+//                .disable()
+                .configurationSource(corsConfigurationSource())
                 .and()
                 .httpBasic().disable()
                 .csrf().disable()
@@ -82,10 +83,9 @@ public class SecurityConfiguration {
     public CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("*");
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
-        configuration.addAllowedOriginPattern("*");
+        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PATCH"));
