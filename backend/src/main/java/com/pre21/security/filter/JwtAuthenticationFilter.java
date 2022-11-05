@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -63,12 +64,20 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         sendResponse(accessToken, email, res);
 
         String encodedRefresh = URLEncoder.encode(refreshToken, "UTF-8");
-        Cookie cookie = new Cookie("RefreshToken", encodedRefresh);
-        cookie.setPath("http://2ne1-client.s3-website.ap-northeast-2.amazonaws.com");
-        cookie.setHttpOnly(true);
-//        cookie.setSecure(true);
-
-        res.addCookie(cookie);
+//        Cookie cookie = new Cookie("RefreshToken", encodedRefresh);
+//
+//        cookie.setPath("http://2ne1-client.s3-website.ap-northeast-2.amazonaws.com");
+//        cookie.setHttpOnly(true);
+////        cookie.setSecure(true);
+//
+//        res.addCookie(cookie);
+        ResponseCookie cookie = ResponseCookie.from("Lax", "Lax")
+                .path("/")
+                .sameSite("Lax")
+                .httpOnly(true)
+                .domain("http://2ne1-client.s3-website.ap-northeast-2.amazonaws.com")
+                .build();
+        res.addHeader("Set-Header", cookie.toString());
 
         this.getSuccessHandler().onAuthenticationSuccess(req, res, authResult);
     }
@@ -101,12 +110,19 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                               String email, HttpServletResponse res) throws IOException {
         Gson gson = new Gson();
         User findUser = jwtTokenizer.findUserByEmail(email);
-        Cookie cookie = new Cookie("userId", findUser.getId().toString());
-        cookie.setPath("http://2ne1-client.s3-website.ap-northeast-2.amazonaws.com");
-        cookie.setHttpOnly(true);
-//        cookie.setSecure(true);
-
-        res.addCookie(cookie);
+//        Cookie cookie = new Cookie("userId", findUser.getId().toString());
+//        cookie.setPath("http://2ne1-client.s3-website.ap-northeast-2.amazonaws.com");
+//        cookie.setHttpOnly(true);
+////        cookie.setSecure(true);
+//
+//        res.addCookie(cookie);
+        ResponseCookie cookie = ResponseCookie.from("Lax", "Lax")
+                .path("/")
+                .sameSite("Lax")
+                .httpOnly(true)
+                .domain("http://2ne1-client.s3-website.ap-northeast-2.amazonaws.com")
+                .build();
+        res.addHeader("Set-Cookie", cookie.toString());
 
         AuthDto.Response response = AuthDto.Response.builder()
                 .accessToken(accessToken)
