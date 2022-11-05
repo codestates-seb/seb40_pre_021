@@ -66,4 +66,8 @@ const GridBox = styled.div`
 	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: 24px;
 	margin: 8px 0 8px 8px;
+	@media screen and (max-width: 1264px) {
+		display: flex;
+		flex-direction: column;
+	}
 `;

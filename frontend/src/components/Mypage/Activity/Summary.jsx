@@ -71,6 +71,9 @@ const Container = styled.div`
 
 const FlexBox = styled.div`
 	display: flex;
+	@media screen and (max-width: 980px) {
+		flex-direction: column;
+	}
 	aside {
 		&:first-child {
 			margin-left: 0;
