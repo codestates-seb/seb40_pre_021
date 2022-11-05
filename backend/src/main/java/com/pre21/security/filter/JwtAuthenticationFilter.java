@@ -77,7 +77,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .secure(true)
                 .path("/")
                 .build();
-        res.addHeader("Set-Cookie", cookie.toString());
 
         sendResponse(accessToken, email, res, domain, refCookie);
         this.getSuccessHandler().onAuthenticationSuccess(req, res, authResult);
