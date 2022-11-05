@@ -113,6 +113,14 @@ public class Questions {
         }
     }
 
+    public void addBookmark(Bookmark bookmark) {
+        this.bookmarks.add(bookmark); // question 에 questionsLikes 지정
+        if (bookmark.getQuestions() != this) {
+            bookmark.setQuestions(this); //(owner)questionsLikes 에 question 지정
+        }
+    }
+
+
     public void addAnswer(Answers answers) {
         this.answers.add(answers);
     }

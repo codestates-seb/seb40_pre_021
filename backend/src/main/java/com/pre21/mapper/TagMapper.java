@@ -1,7 +1,6 @@
 package com.pre21.mapper;
 
 import com.pre21.dto.MyPageDto;
-import com.pre21.entity.Tags;
 import com.pre21.entity.UserTags;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
@@ -11,9 +10,9 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface TagMapper {
-    default List<MyPageDto.TagResponse> TagToTagResponse(List<UserTags> tagsList) {
+    default List<MyPageDto.TagInfo> TagToTagResponse(List<UserTags> tagsList) {
         return tagsList.stream()
-                .map(tag -> MyPageDto.TagResponse
+                .map(tag -> MyPageDto.TagInfo
                         .builder()
                         .tagId(tag.getId())
                         .tagCount(tag.getTagCount())

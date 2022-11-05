@@ -3,16 +3,8 @@ package com.pre21.controller;
 
 import com.pre21.dto.MyPageDto;
 import com.pre21.entity.*;
-import com.pre21.mapper.AnswersMapper;
-import com.pre21.mapper.QuestionsMapper;
-import com.pre21.mapper.TagMapper;
-import com.pre21.mapper.UserMapper;
-import com.pre21.service.AnswersService;
-import com.pre21.service.AuthService;
-import com.pre21.service.QuestionsService;
-import com.pre21.service.TagsService;
-import com.pre21.service.AuthService;
-import com.pre21.util.dto.MultiResponseDto;
+import com.pre21.mapper.*;
+import com.pre21.service.*;
 import com.pre21.util.dto.SingleResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,16 +34,19 @@ public class MypageController {
     private final QuestionsService questionsService;
     private final AnswersService answersService;
     private final TagsService tagsService;
+    private final BookmarkService bookmarkService;
     private final UserMapper userMapper;
 
     private final AnswersMapper answersMapper;
     private final QuestionsMapper questionsMapper;
     private final TagMapper tagMapper;
+    private final BookmarkMapper bookmarkMapper;
 
     /**
-     * 마이페이지 api 명세서 중 유저 정보에 해당하는 요청사항 컨트롤러입니다.
+     * 마이페이지 api 명세서 중 유저 정보에 해당하는 요청사항 컨트롤러
      *
-     * @param userId 쿠키에서 읽어온 접속 중인 사용자의 Id 값입니다.
+     * @param userId 사용자 식별자
+     * @return ResponseEntity
      * @author dev32user
      */
     @GetMapping("/info")
@@ -61,23 +56,9 @@ public class MypageController {
     }
 
     /**
-     * 마이페이지 api 명세서 중 답변 정보 조회에 해당하는 요청사항 컨트롤러
-     *
-     * @param userId 쿠키에서 값을 받아옵니다.
-     * @author dev32user
-     */
-    @GetMapping("/answer")
-    public ResponseEntity getAnswerInfo(@CookieValue(name = "userId") Long userId) {
-        Page<Answers> answersPage = answersService.findMyAnswers(userId, page, size);
-        List<Answers> answers = answersPage.getContent();
-        return new ResponseEntity<>(answersMapper.answersToAnswerResponses(answers),
-                HttpStatus.OK);
-    }
-
-    /**
      * 마이페이지 api 명세서 중 질문 정보 조회에 해당하는 요청사항 컨트롤러
      *
-     * @param userId 쿠키에서 값을 받아옵니다.
+     * @param userId 사용자 식별자
      * @author dev32user
      */
     @GetMapping("/question")
@@ -89,13 +70,53 @@ public class MypageController {
                 HttpStatus.OK);
     }
 
+    /**
+     * 마이페이지 api 명세서 중 답변 정보 조회에 해당하는 요청사항 컨트롤러
+     *
+     * @param userId 사용자 식별자
+     * @author dev32user
+     */
+    @GetMapping("/answer")
+    public ResponseEntity getAnswerInfo(@CookieValue(name = "userId") Long userId) {
+        Page<Answers> answersPage = answersService.findMyAnswers(userId, page, size);
+        List<Answers> answers = answersPage.getContent();
+        return new ResponseEntity<>(answersMapper.answersToAnswerResponses(answers),
+                HttpStatus.OK);
+    }
 
+
+
+    /**
+     * 마이페이지 api 명세서 중 태그 정보 조회에 해당하는 요청사항 컨트롤러
+     *
+     * @param userId 사용자 식별자
+     * @return ResponseEntity(MyPageDto.TagResponse)
+     * @author mozzi327
+     */
     @GetMapping("/tags")
     public ResponseEntity getTagsInfo(@CookieValue(name = "userId") Long userId) {
         List<UserTags> tags = tagsService.findMyTags(userId);
-        List<MyPageDto.TagResponse> response = tagMapper.TagToTagResponse(tags);
+        List<MyPageDto.TagInfo> response = tagMapper.TagToTagResponse(tags);
         return new ResponseEntity<>(
                 new SingleResponseDto<>(response), HttpStatus.OK);
     }
 
+
+    /**
+     * 마이페이지 api 명세서 중 북마크 정보 조회에 해당하는 요청사항 컨트롤러
+     *
+     * @param userId 사용자 식별자
+     * @return ResponseEntity(MypageDto.BookmarkResponse)
+     * @author mozzi327
+     */
+    @GetMapping("/bookmarks")
+    public ResponseEntity getBookmarkInfo(@CookieValue(name = "userId") Long userId) {
+        List<Bookmark> bookmarks = bookmarkService.findMyBookmarks(userId);
+        List<MyPageDto.BookmarkInfo> response = bookmarkMapper
+                .bookmarkToBookmarkResponses(bookmarks);
+
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(response), HttpStatus.OK
+        );
+    }
 }
