@@ -25,9 +25,14 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CharacterEncodingFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
 import java.util.Arrays;
+import java.util.List;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
@@ -46,15 +51,15 @@ public class SecurityConfiguration {
         encodingFilter.setForceEncoding(true);
 
         http
-                .addFilterBefore(encodingFilter, CsrfFilter.class)
-                .headers().frameOptions().sameOrigin()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .cors()
-//                .disable()
-                .configurationSource(corsConfigurationSource())
+                .addFilterBefore(encodingFilter, CsrfFilter.class)
+                .headers().frameOptions().disable()
+                .and()
+                .csrf().disable()
+                .cors().configurationSource(corsConfigurationSource())
                 .and()
                 .httpBasic().disable()
-                .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .formLogin().disable()
@@ -64,13 +69,13 @@ public class SecurityConfiguration {
                 .and()
                 .apply(new CustomFilterConfigurer())
                 .and()
-                .authorizeHttpRequests(authorize -> authorize
-                                .antMatchers(HttpMethod.GET, "/h2/**").permitAll()
-                                .antMatchers(HttpMethod.POST, "**/login").permitAll()
+                .authorizeHttpRequests()
+                .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+                .antMatchers(HttpMethod.GET, "/h2/**").permitAll()
+                .antMatchers(HttpMethod.POST, "**/login").permitAll()
 //                    .antMatchers(HttpMethod.POST, "/**/questions/ask").hasRole("USER")
 //                    .antMatchers(HttpMethod.GET, "/docs/**").hasRole("ADMIN")
-                                .anyRequest().permitAll()
-                );
+                .anyRequest().permitAll();
         return http.build();
     }
 
@@ -85,13 +90,24 @@ public class SecurityConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
-        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PATCH"));
+        configuration.addAllowedOrigin("*");
+        configuration.setAllowedMethods(List.of("GET", "POST", "DELETE", "PATCH"));
         source.registerCorsConfiguration("/**", configuration);
 
         return source;
+    }
+
+    @Bean
+    public WebMvcConfigurer corsConfigurer() {
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedMethods("*")
+                        .allowedOriginPatterns("*");
+            }
+        };
     }
 
 
