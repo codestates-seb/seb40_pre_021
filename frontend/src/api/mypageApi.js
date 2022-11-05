@@ -1,11 +1,4 @@
-import axios from 'axios';
-import { root } from './root';
-
-const axiosConfig = {
-	baseURL: root,
-};
-
-const instance = axios.create(axiosConfig);
+import instance from './root';
 
 export const getMypageUserInfo = async () => {
 	try {
