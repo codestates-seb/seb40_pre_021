@@ -95,6 +95,7 @@ const Title = styled.a`
 	margin: 0 12px;
 	:hover {
 		color: #0a95ff;
+		cursor: pointer;
 	}
 `;
 

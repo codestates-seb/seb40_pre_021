@@ -5,7 +5,7 @@ import {
 	getMypageUserInfo,
 	getMypageUserQuestion,
 	getMypageUserTag,
-} from '../api/mypageApi';
+} from '../../../api/mypageApi';
 
 function useMypageData(category, value = []) {
 	const [data, setData] = useState(value);
