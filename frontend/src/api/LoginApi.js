@@ -1,14 +1,6 @@
-import axios from 'axios';
-import { root } from './root';
+import instance from './root';
 import { TokenExpireSetting } from './TokenApi';
 
-const axiosConfig = {
-	baseURL: root,
-};
-
-const instance = axios.create(axiosConfig);
-
-instance.defaults.withCredentials = true; // withCredentials 전역 설정
 //test
 // test를 위해 회원가입 데이터를 get 하여 들고옴
 // export const Login = async (data) => {
