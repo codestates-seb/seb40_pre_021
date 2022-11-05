@@ -69,7 +69,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .maxAge(7 * 24 * 60 * 60)
                 .path("/")
 //                .secure(true)
-                .sameSite("None")
+                .sameSite("Lax")
                 .httpOnly(true)
                 .domain(domain)
                 .build();
@@ -120,7 +120,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .maxAge(7 * 24 * 60 * 60)
                 .path("/")
 //                .secure(true)
-                .sameSite("None")
+                .sameSite("Lax")
                 .httpOnly(true)
                 .domain(domain)
                 .build();
