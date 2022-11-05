@@ -61,7 +61,7 @@ public class MypageController {
      * @param userId 사용자 식별자
      * @author dev32user
      */
-    @GetMapping("/question")
+    @GetMapping("/questions")
     public ResponseEntity getQuestionInfo(@CookieValue(name = "userId") Long userId) {
         Page<Questions> questionsPage = questionsService.findMyQuestions(userId, page, size);
         List<Questions> questions = questionsPage.getContent();
@@ -76,7 +76,7 @@ public class MypageController {
      * @param userId 사용자 식별자
      * @author dev32user
      */
-    @GetMapping("/answer")
+    @GetMapping("/answers")
     public ResponseEntity getAnswerInfo(@CookieValue(name = "userId") Long userId) {
         Page<Answers> answersPage = answersService.findMyAnswers(userId, page, size);
         List<Answers> answers = answersPage.getContent();
