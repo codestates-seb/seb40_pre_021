@@ -59,9 +59,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String accessToken = delegateAccessToken(user);
         String refreshToken = delegateRefreshToken(findUser);
+        String encodeDomain = URLEncoder.encode("http://2ne1-client.s3-website.ap-northeast-2.amazonaws.com", StandardCharsets.UTF_8);
 
         jwtTokenizer.savedRefreshToken(refreshToken, email, findUser.getId());
-        sendResponse(accessToken, email, res);
+        sendResponse(accessToken, email, res, encodeDomain);
 
         String encodedRefresh = URLEncoder.encode(refreshToken, "UTF-8");
 //        Cookie cookie = new Cookie("RefreshToken", encodedRefresh);
@@ -75,7 +76,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .path("/")
                 .sameSite("Lax")
                 .httpOnly(true)
-                .domain("http://2ne1-client.s3-website.ap-northeast-2.amazonaws.com")
+                .domain(encodeDomain)
                 .build();
         res.addHeader("Set-Header", cookie.toString());
 
@@ -107,7 +108,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     private void sendResponse(String accessToken,
-                              String email, HttpServletResponse res) throws IOException {
+                              String email, HttpServletResponse res,
+                              String domain) throws IOException {
         Gson gson = new Gson();
         User findUser = jwtTokenizer.findUserByEmail(email);
 //        Cookie cookie = new Cookie("userId", findUser.getId().toString());
@@ -120,7 +122,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .path("/")
                 .sameSite("Lax")
                 .httpOnly(true)
-                .domain("http://2ne1-client.s3-website.ap-northeast-2.amazonaws.com")
+                .domain(domain)
                 .build();
         res.addHeader("Set-Cookie", cookie.toString());
 
