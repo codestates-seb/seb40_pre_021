@@ -64,7 +64,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String encodedRefresh = URLEncoder.encode(refreshToken, "UTF-8");
         Cookie cookie = new Cookie("RefreshToken", encodedRefresh);
-        cookie.setPath("http://2ne1-client.s3-website.ap-northeast-2.amazonaws.com/");
+        cookie.setPath("http://2ne1-client.s3-website.ap-northeast-2.amazonaws.com");
         cookie.setHttpOnly(true);
 //        cookie.setSecure(true);
 
@@ -102,7 +102,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         Gson gson = new Gson();
         User findUser = jwtTokenizer.findUserByEmail(email);
         Cookie cookie = new Cookie("userId", findUser.getId().toString());
-        cookie.setPath("http://2ne1-client.s3-website.ap-northeast-2.amazonaws.com/");
+        cookie.setPath("http://2ne1-client.s3-website.ap-northeast-2.amazonaws.com");
         cookie.setHttpOnly(true);
 //        cookie.setSecure(true);
 
