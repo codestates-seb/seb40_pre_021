@@ -22,6 +22,10 @@ const Aside = styled.aside`
 	padding: 12px;
 	border-radius: 5px;
 	border: 1px solid #d7d9dc;
+
+	@media screen and (max-width: 980px) {
+		margin: 8px 0;
+	}
 `;
 
 const ContentBox = styled.div`
