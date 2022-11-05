@@ -12,6 +12,7 @@ import Avatar from '../Mypage/UserProfile/Avatar';
 
 const RightMenuStlye = styled.li`
 	width: 150px;
+	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -19,6 +20,7 @@ const RightMenuStlye = styled.li`
 const Box = styled.div`
 	display: flex;
 	align-items: center;
+	height: 100%;
 
 	button {
 		margin-left: 5px;
@@ -26,6 +28,16 @@ const Box = styled.div`
 
 	a {
 		text-decoration: none;
+	}
+`;
+
+const CustomLink = styled(Link)`
+	display: flex;
+	align-items: center;
+	height: 100%;
+	padding: 0 20px;
+	:hover {
+		background-color: #e4e6e8;
 	}
 `;
 
@@ -54,7 +66,7 @@ const RightMenu = () => {
 		<RightMenuStlye>
 			{isLogin ? (
 				<Box>
-					<Link to="/users/activity">
+					<CustomLink to="/users/activity">
 						<Avatar
 							nickname={userInfo.nickname}
 							padding="10px"
@@ -62,7 +74,7 @@ const RightMenu = () => {
 							heigth="30px"
 							fontSize={`${20 - 2 * userInfo.nickname.length}px`}
 						/>
-					</Link>
+					</CustomLink>
 
 					<Button
 						text="Log out"
