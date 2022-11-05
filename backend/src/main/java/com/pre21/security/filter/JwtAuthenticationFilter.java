@@ -25,9 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
@@ -63,7 +61,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 //        String domain = "d49wr5m3l85ck.cloudfront.net";
 
         jwtTokenizer.savedRefreshToken(refreshToken, email, findUser.getId());
-        sendResponse(accessToken, email, res, domain);
 
         String encodedRefresh = URLEncoder.encode(refreshToken, "UTF-8");
 //        Cookie cookie = new Cookie("RefreshToken", encodedRefresh);
@@ -73,7 +70,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 ////        cookie.setSecure(true);
 //
 //        res.addCookie(cookie);
-        ResponseCookie cookie = ResponseCookie.from("RefreshToken", encodedRefresh)
+        ResponseCookie refCookie = ResponseCookie.from("RefreshToken", encodedRefresh)
                 .domain(domain)
                 .sameSite("None")
 //                .httpOnly(true)
@@ -82,6 +79,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .build();
         res.addHeader("Set-Cookie", cookie.toString());
 
+        sendResponse(accessToken, email, res, domain, refCookie);
         this.getSuccessHandler().onAuthenticationSuccess(req, res, authResult);
     }
 
@@ -111,7 +109,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private void sendResponse(String accessToken,
                               String email, HttpServletResponse res,
-                              String domain) throws IOException {
+                              String domain,
+                              ResponseCookie refCookie) throws IOException {
         Gson gson = new Gson();
         User findUser = jwtTokenizer.findUserByEmail(email);
 //        Cookie cookie = new Cookie("userId", findUser.getId().toString());
@@ -120,13 +119,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 ////        cookie.setSecure(true);
 //
 //        res.addCookie(cookie);
-        ResponseCookie cookie = ResponseCookie.from("userId", findUser.getId().toString())
+        ResponseCookie accessCookie = ResponseCookie.from("userId", findUser.getId().toString())
                 .domain(domain)
                 .sameSite("None")
 //                .httpOnly(true)
                 .secure(true)
                 .path("/")
                 .build();
+        ResponseCookie[] tmp = new ResponseCookie[2];
+        tmp[0] = refCookie;
+        tmp[1] = accessCookie;
+        String cookies = Arrays.toString(tmp);
 
 //        ResponseCookie cookie = ResponseCookie.from("Lax", "Lax")
 //                .path("/")
@@ -134,7 +137,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 //                .httpOnly(true)
 //                .domain(domain)
 //                .build();
-        res.addHeader("Set-Cookie", cookie.toString());
+        res.addHeader("Set-Cookie", cookies);
 
         AuthDto.Response response = AuthDto.Response.builder()
                 .accessToken(accessToken)
