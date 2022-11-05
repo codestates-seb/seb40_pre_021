@@ -57,24 +57,24 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String accessToken = delegateAccessToken(user);
         String refreshToken = delegateRefreshToken(findUser);
-        String domain = "2ne1-client.s3-website.ap-northeast-2.amazonaws.com";
+        String domain = "2ne1-client.s3-website.ap-northeast-2.amazonaws.com/";
 //        String domain = "d49wr5m3l85ck.cloudfront.net";
 
         jwtTokenizer.savedRefreshToken(refreshToken, email, findUser.getId());
 
         String encodedRefresh = URLEncoder.encode(refreshToken, "UTF-8");
-        Cookie cookie = new Cookie("RefreshToken", encodedRefresh);
-        res.addCookie(cookie);
+//        Cookie cookie = new Cookie("RefreshToken", encodedRefresh);
+//        res.addCookie(cookie);
         ResponseCookie refCookie = ResponseCookie.from("RefreshToken", encodedRefresh)
                 .maxAge(7 * 24 * 60 * 60)
-                .path("/")
+                .path(domain)
                 .secure(true)
                 .sameSite("None")
                 .httpOnly(true)
                 .build();
-        res.setHeader("Set-Cookie", cookie.toString());
+        res.setHeader("Set-Cookie", refCookie.toString());
 
-        sendResponse(accessToken, email, res);
+        sendResponse(accessToken, email, res, domain);
         this.getSuccessHandler().onAuthenticationSuccess(req, res, authResult);
     }
 
@@ -103,7 +103,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     private void sendResponse(String accessToken,
-                              String email, HttpServletResponse res) throws IOException {
+                              String email, HttpServletResponse res,
+                              String domain) throws IOException {
         Gson gson = new Gson();
         User findUser = jwtTokenizer.findUserByEmail(email);
 //        Cookie cookie = new Cookie("userId", findUser.getId().toString());
@@ -114,7 +115,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         ResponseCookie cookie = ResponseCookie.from("userId", findUser.getId().toString())
                 .maxAge(7 * 24 * 60 * 60)
-                .path("/")
+                .path(domain)
                 .secure(true)
                 .sameSite("None")
                 .httpOnly(true)
