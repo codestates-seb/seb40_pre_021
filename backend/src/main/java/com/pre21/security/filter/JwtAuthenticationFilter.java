@@ -74,7 +74,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 //        res.addCookie(cookie);
         ResponseCookie cookie = ResponseCookie.from("RefreshToken", encodedRefresh)
                 .domain(domain)
-                .sameSite("None")
+                .sameSite("Lax")
+                .httpOnly(true)
                 .secure(true)
                 .path("/")
                 .build();
@@ -120,7 +121,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 //        res.addCookie(cookie);
         ResponseCookie cookie = ResponseCookie.from("userId", findUser.getId().toString())
                 .domain(domain)
-                .sameSite("None")
+                .sameSite("Lax")
+                .httpOnly(true)
                 .secure(true)
                 .path("/")
                 .build();
