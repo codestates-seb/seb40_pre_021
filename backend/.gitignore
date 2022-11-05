@@ -37,3 +37,4 @@ out/
 .vscode/
 *.yml
 *.p12
+*.gradle
