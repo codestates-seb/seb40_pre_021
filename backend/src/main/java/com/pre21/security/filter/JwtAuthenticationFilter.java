@@ -59,26 +59,26 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String accessToken = delegateAccessToken(user);
         String refreshToken = delegateRefreshToken(findUser);
-        String encodeDomain = URLEncoder.encode("http://2ne1-client.s3-website.ap-northeast-2.amazonaws.com", StandardCharsets.UTF_8);
+        String domain = "2ne1-client.s3-website.ap-northeast-2.amazonaws.com";
 
         jwtTokenizer.savedRefreshToken(refreshToken, email, findUser.getId());
-        sendResponse(accessToken, email, res, encodeDomain);
+        sendResponse(accessToken, email, res, domain);
 
         String encodedRefresh = URLEncoder.encode(refreshToken, "UTF-8");
 //        Cookie cookie = new Cookie("RefreshToken", encodedRefresh);
 //
-//        cookie.setPath("http://2ne1-client.s3-website.ap-northeast-2.amazonaws.com");
+//        cookie.setPath("2ne1-client.s3-website.ap-northeast-2.amazonaws.com");
 //        cookie.setHttpOnly(true);
 ////        cookie.setSecure(true);
 //
 //        res.addCookie(cookie);
-        ResponseCookie cookie = ResponseCookie.from("Lax", "Lax")
+        ResponseCookie cookie = ResponseCookie.from("RefreshToken", encodedRefresh)
+                .domain(domain)
+                .sameSite("None")
+                .secure(true)
                 .path("/")
-                .sameSite("Lax")
-                .httpOnly(true)
-                .domain(encodeDomain)
                 .build();
-        res.addHeader("Set-Header", cookie.toString());
+        res.addHeader("Set-Cookie", cookie.toString());
 
         this.getSuccessHandler().onAuthenticationSuccess(req, res, authResult);
     }
@@ -118,12 +118,19 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 ////        cookie.setSecure(true);
 //
 //        res.addCookie(cookie);
-        ResponseCookie cookie = ResponseCookie.from("Lax", "Lax")
-                .path("/")
-                .sameSite("Lax")
-                .httpOnly(true)
+        ResponseCookie cookie = ResponseCookie.from("userId", findUser.getId().toString())
                 .domain(domain)
+                .sameSite("None")
+                .secure(true)
+                .path("/")
                 .build();
+
+//        ResponseCookie cookie = ResponseCookie.from("Lax", "Lax")
+//                .path("/")
+//                .sameSite("Lax")
+//                .httpOnly(true)
+//                .domain(domain)
+//                .build();
         res.addHeader("Set-Cookie", cookie.toString());
 
         AuthDto.Response response = AuthDto.Response.builder()
