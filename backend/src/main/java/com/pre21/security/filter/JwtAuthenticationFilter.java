@@ -57,7 +57,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String accessToken = delegateAccessToken(user);
         String refreshToken = delegateRefreshToken(findUser);
-        String domain = "2ne1-client.s3-website.ap-northeast-2.amazonaws.com/";
+        String domain = "amazon.com";
 //        String domain = "d49wr5m3l85ck.cloudfront.net";
 
         jwtTokenizer.savedRefreshToken(refreshToken, email, findUser.getId());
@@ -67,10 +67,11 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 //        res.addCookie(cookie);
         ResponseCookie refCookie = ResponseCookie.from("RefreshToken", encodedRefresh)
                 .maxAge(7 * 24 * 60 * 60)
-                .path(domain)
+                .path("/")
                 .secure(true)
                 .sameSite("None")
                 .httpOnly(true)
+                .domain(domain)
                 .build();
 //        res.setHeader("Set-Cookie", refCookie.toString());
 
@@ -114,18 +115,17 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 //        cookie.setHttpOnly(true);
 //        cookie.setMaxAge(3600);
 //        res.addCookie(cookie);
-        List<ResponseCookie> cookies = new ArrayList<>();
 
         ResponseCookie cookie = ResponseCookie.from("userId", findUser.getId().toString())
                 .maxAge(7 * 24 * 60 * 60)
-                .path(domain)
+                .path("/")
                 .secure(true)
                 .sameSite("None")
                 .httpOnly(true)
+                .domain(domain)
                 .build();
-        cookies.add(refCookie);
-        cookies.add(cookie);
-        res.setHeader("Set-Cookie", cookies.toString());
+        res.addHeader("Set-Cookie", refCookie.toString());
+        res.addHeader("Set-Cookie", cookie.toString());
 
         AuthDto.Response response = AuthDto.Response.builder()
                 .accessToken(accessToken)
