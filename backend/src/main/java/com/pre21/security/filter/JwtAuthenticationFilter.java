@@ -71,10 +71,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         ResponseCookie refCookie = ResponseCookie.from("RefreshToken", encodedRefresh)
                 .maxAge(7 * 24 * 60 * 60)
                 .path("/")
-//                .secure(true)
-                .sameSite("")
+                .secure(true)
+                .sameSite("None")
                 .httpOnly(true)
-                .domain(domain)
+//                .domain(domain)
                 .build();
         res.setHeader("Set-Cookie", refCookie.toString());
 
@@ -122,10 +122,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         ResponseCookie cookie = ResponseCookie.from("userId", findUser.getId().toString())
                 .maxAge(7 * 24 * 60 * 60)
                 .path("/")
-//                .secure(true)
-                .sameSite("")
+                .secure(true)
+                .sameSite("None")
                 .httpOnly(true)
-                .domain(domain)
+//                .domain(domain)
                 .build();
         res.addHeader("Set-Cookie", refCookie.toString());
         res.addHeader("Set-Cookie", cookie.toString());
