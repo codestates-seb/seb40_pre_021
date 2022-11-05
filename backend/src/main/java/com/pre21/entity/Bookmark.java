@@ -6,7 +6,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-import static com.pre21.util.RestConstants.BOOKMARK_BASIC_PAGE;
+import java.time.LocalDateTime;
+
+import static com.pre21.util.RestConstants.BOOKMARK_URL;
 
 /**
  * 북마크 엔티티
@@ -34,13 +36,14 @@ public class Bookmark {
     @JoinColumn(name = "ANSWER_ID")
     private Answers answers;
 
+    @Column
     private String url;
 
-    public Bookmark(Long questionId) {
-        this.url = BOOKMARK_BASIC_PAGE + questionId.toString();
-    }
+    @Column
+    private LocalDateTime createdAt;
 
-    public Bookmark(Long questionId, Long answerId) {
-        this.url = BOOKMARK_BASIC_PAGE + questionId.toString();
+    public Bookmark(Long questionId) {
+        this.url = BOOKMARK_URL + questionId.toString();
+        this.createdAt = LocalDateTime.now();
     }
 }
