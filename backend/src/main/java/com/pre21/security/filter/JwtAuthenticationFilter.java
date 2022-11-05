@@ -72,9 +72,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .sameSite("None")
                 .httpOnly(true)
                 .build();
-        res.setHeader("Set-Cookie", refCookie.toString());
+//        res.setHeader("Set-Cookie", refCookie.toString());
 
-        sendResponse(accessToken, email, res, domain);
+
+        sendResponse(accessToken, email, res, domain, refCookie);
         this.getSuccessHandler().onAuthenticationSuccess(req, res, authResult);
     }
 
@@ -104,7 +105,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private void sendResponse(String accessToken,
                               String email, HttpServletResponse res,
-                              String domain) throws IOException {
+                              String domain,
+                              ResponseCookie refCookie) throws IOException {
         Gson gson = new Gson();
         User findUser = jwtTokenizer.findUserByEmail(email);
 //        Cookie cookie = new Cookie("userId", findUser.getId().toString());
@@ -112,6 +114,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 //        cookie.setHttpOnly(true);
 //        cookie.setMaxAge(3600);
 //        res.addCookie(cookie);
+        ResponseCookie[] cookies = new ResponseCookie[2];
 
         ResponseCookie cookie = ResponseCookie.from("userId", findUser.getId().toString())
                 .maxAge(7 * 24 * 60 * 60)
@@ -120,7 +123,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .sameSite("None")
                 .httpOnly(true)
                 .build();
-        res.setHeader("Set-Cookie", cookie.toString());
+        cookies[0] = refCookie;
+        cookies[1] = cookie;
+        res.setHeader("Set-Cookie", Arrays.toString(cookies));
 
         AuthDto.Response response = AuthDto.Response.builder()
                 .accessToken(accessToken)
