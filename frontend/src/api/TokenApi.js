@@ -16,7 +16,9 @@ export const AccessTokenRefresh = async () => {
 		//test
 		// const result = await instance.get(`/login`);
 		//real
+		console.log('AccessTokenRefresh start');
 		const result = await instance.get(`/users/refresh`);
+		console.log('AccessTokenRefresh', result);
 		if (result.data.accessToken) {
 			console.log('AccessTokenRefresh');
 			TokenExpireSetting(result);

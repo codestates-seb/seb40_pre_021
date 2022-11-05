@@ -14,8 +14,9 @@ export const Logout = async (data) => {
 		//test
 		// data = {};
 		// const result = await instance.post(`/login`, data);
+		console.log('Logout', data);
 		//real
-		const result = await instance.delete(`/users/logout`, data);
+		const result = await instance.delete(`/users/logout`);
 		return result.data;
 	} catch (err) {
 		console.log(err);
