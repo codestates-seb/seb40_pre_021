@@ -127,7 +127,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .httpOnly(true)
 //                .domain(domain)
                 .build();
-        res.addHeader("Set-Cookie", refCookie.toString());
+//        res.addHeader("Set-Cookie", refCookie.toString());
         res.addHeader("Set-Cookie", cookie.toString());
 
         AuthDto.Response response = AuthDto.Response.builder()
