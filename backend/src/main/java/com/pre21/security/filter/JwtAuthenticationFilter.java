@@ -114,7 +114,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 //        cookie.setHttpOnly(true);
 //        cookie.setMaxAge(3600);
 //        res.addCookie(cookie);
-        ResponseCookie[] cookies = new ResponseCookie[2];
+        List<ResponseCookie> cookies = new ArrayList<>();
 
         ResponseCookie cookie = ResponseCookie.from("userId", findUser.getId().toString())
                 .maxAge(7 * 24 * 60 * 60)
@@ -123,9 +123,9 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .sameSite("None")
                 .httpOnly(true)
                 .build();
-        cookies[0] = refCookie;
-        cookies[1] = cookie;
-        res.setHeader("Set-Cookie", Arrays.toString(cookies));
+        cookies.add(refCookie);
+        cookies.add(cookie);
+        res.setHeader("Set-Cookie", cookies.toString());
 
         AuthDto.Response response = AuthDto.Response.builder()
                 .accessToken(accessToken)
