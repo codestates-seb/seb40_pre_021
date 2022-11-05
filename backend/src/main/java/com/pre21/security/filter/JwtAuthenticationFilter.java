@@ -63,23 +63,18 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         jwtTokenizer.savedRefreshToken(refreshToken, email, findUser.getId());
 
         String encodedRefresh = URLEncoder.encode(refreshToken, "UTF-8");
-//        Cookie cookie = new Cookie("RefreshToken", encodedRefresh);
-//
-//        cookie.setPath("2ne1-client.s3-website.ap-northeast-2.amazonaws.com");
-//        cookie.setHttpOnly(true);
-////        cookie.setSecure(true);
-//
-//        res.addCookie(cookie);
+        Cookie cookie = new Cookie("RefreshToken", encodedRefresh);
+        res.addCookie(cookie);
         ResponseCookie refCookie = ResponseCookie.from("RefreshToken", encodedRefresh)
-                .domain(domain)
-                .sameSite("None")
-                .maxAge(3600L)
-//                .httpOnly(true)
-                .secure(true)
+                .maxAge(7 * 24 * 60 * 60)
                 .path("/")
+                .secure(true)
+                .sameSite("None")
+                .httpOnly(true)
                 .build();
+        res.setHeader("Set-Cookie", cookie.toString());
 
-        sendResponse(accessToken, email, res, domain, refCookie);
+        sendResponse(accessToken, email, res);
         this.getSuccessHandler().onAuthenticationSuccess(req, res, authResult);
     }
 
@@ -108,37 +103,23 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     }
 
     private void sendResponse(String accessToken,
-                              String email, HttpServletResponse res,
-                              String domain,
-                              ResponseCookie refCookie) throws IOException {
+                              String email, HttpServletResponse res) throws IOException {
         Gson gson = new Gson();
         User findUser = jwtTokenizer.findUserByEmail(email);
 //        Cookie cookie = new Cookie("userId", findUser.getId().toString());
-//        cookie.setPath("http://2ne1-client.s3-website.ap-northeast-2.amazonaws.com");
+//        cookie.setPath("2ne1-client.s3-website.ap-northeast-2.amazonaws.com");
 //        cookie.setHttpOnly(true);
-////        cookie.setSecure(true);
-//
+//        cookie.setMaxAge(3600);
 //        res.addCookie(cookie);
-        ResponseCookie accessCookie = ResponseCookie.from("userId", findUser.getId().toString())
-                .domain(domain)
-                .sameSite("None")
-                .maxAge(3600L)
-//                .httpOnly(true)
-                .secure(true)
-                .path("/")
-                .build();
-        ResponseCookie[] tmp = new ResponseCookie[2];
-        tmp[0] = refCookie;
-        tmp[1] = accessCookie;
-        String cookies = Arrays.toString(tmp);
 
-//        ResponseCookie cookie = ResponseCookie.from("Lax", "Lax")
-//                .path("/")
-//                .sameSite("Lax")
-//                .httpOnly(true)
-//                .domain(domain)
-//                .build();
-        res.addHeader("Set-Cookie", cookies);
+        ResponseCookie cookie = ResponseCookie.from("userId", findUser.getId().toString())
+                .maxAge(7 * 24 * 60 * 60)
+                .path("/")
+                .secure(true)
+                .sameSite("None")
+                .httpOnly(true)
+                .build();
+        res.setHeader("Set-Cookie", cookie.toString());
 
         AuthDto.Response response = AuthDto.Response.builder()
                 .accessToken(accessToken)

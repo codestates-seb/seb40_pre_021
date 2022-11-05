@@ -90,7 +90,8 @@ public class SecurityConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
-        configuration.addAllowedOriginPattern("*");
+//        configuration.addAllowedOriginPattern("*");
+        configuration.addAllowedOrigin("http://2ne1-client.s3-website.ap-northeast-2.amazonaws.com");
         configuration.setAllowCredentials(true);
         configuration.setAllowedMethods(List.of("GET", "POST", "DELETE", "PATCH"));
         source.registerCorsConfiguration("/**", configuration);
