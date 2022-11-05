@@ -57,7 +57,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String accessToken = delegateAccessToken(user);
         String refreshToken = delegateRefreshToken(findUser);
-        String domain = "amazonaws.com";
+        String domain = "2ne1-client.s3-website.ap-northeast-2.amazonaws.com";
 //        String domain = "d49wr5m3l85ck.cloudfront.net";
 
         jwtTokenizer.savedRefreshToken(refreshToken, email, findUser.getId());
