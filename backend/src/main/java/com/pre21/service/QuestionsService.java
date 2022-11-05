@@ -229,7 +229,9 @@ public class QuestionsService {
             Bookmark bookmark = new Bookmark(questionId);
             bookmark.setQuestions(findQuestion);
             bookmark.setUsers(findUser);
-            bookmarkRepository.save(bookmark);
+            Bookmark savedBookmark = bookmarkRepository.save(bookmark);
+            findUser.addBookmark(savedBookmark);
+            findQuestion.addBookmark(savedBookmark);
         }
     }
 
@@ -242,7 +244,7 @@ public class QuestionsService {
         if (findBookmark.isPresent()) {
             bookmarkRepository.delete(findBookmark.get());
         } else {
-            Bookmark bookmark = new Bookmark(questionId, answerId);
+            Bookmark bookmark = new Bookmark(questionId);
             bookmark.setQuestions(findQuestion);
             bookmark.setUsers(findUser);
             bookmark.setAnswers(findAnswer);

@@ -125,13 +125,16 @@ public class User {
     }
 
     /**
-     * @param bookmark
-     * @method
+     * Bookmark 리스트 추가 메서드
+     *
+     * @param bookmark 북마크 정보
+     * @author mozzi327
      */
-    public void addAdoption(Bookmark bookmark) {
+    public void addBookmark(Bookmark bookmark) {
         this.bookmarks.add(bookmark);
         if (bookmark.getUsers() != this) {
             bookmark.setUsers(this);
         }
     }
+
 }
