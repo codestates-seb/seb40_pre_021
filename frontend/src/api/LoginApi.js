@@ -8,6 +8,7 @@ const axiosConfig = {
 
 const instance = axios.create(axiosConfig);
 
+instance.defaults.withCredentials = true; // withCredentials 전역 설정
 //test
 // test를 위해 회원가입 데이터를 get 하여 들고옴
 // export const Login = async (data) => {
@@ -34,6 +35,7 @@ const instance = axios.create(axiosConfig);
 export const Login = async (data) => {
 	try {
 		const result = await instance.post(`/users/login`, data);
+		console.log('Login', result);
 		if (result.data.accessToken) {
 			TokenExpireSetting(result);
 		} else {
