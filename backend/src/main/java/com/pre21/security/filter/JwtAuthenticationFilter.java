@@ -59,8 +59,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String accessToken = delegateAccessToken(user);
         String refreshToken = delegateRefreshToken(findUser);
-//        String domain = "2ne1-client.s3-website.ap-northeast-2.amazonaws.com";
-        String domain = "d49wr5m3l85ck.cloudfront.net";
+        String domain = "2ne1-client.s3-website.ap-northeast-2.amazonaws.com";
+//        String domain = "d49wr5m3l85ck.cloudfront.net";
 
         jwtTokenizer.savedRefreshToken(refreshToken, email, findUser.getId());
         sendResponse(accessToken, email, res, domain);
@@ -75,8 +75,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 //        res.addCookie(cookie);
         ResponseCookie cookie = ResponseCookie.from("RefreshToken", encodedRefresh)
                 .domain(domain)
-                .sameSite("Lax")
-                .httpOnly(true)
+                .sameSite("None")
+//                .httpOnly(true)
                 .secure(true)
                 .path("/")
                 .build();
@@ -122,8 +122,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 //        res.addCookie(cookie);
         ResponseCookie cookie = ResponseCookie.from("userId", findUser.getId().toString())
                 .domain(domain)
-                .sameSite("Lax")
-                .httpOnly(true)
+                .sameSite("None")
+//                .httpOnly(true)
                 .secure(true)
                 .path("/")
                 .build();
