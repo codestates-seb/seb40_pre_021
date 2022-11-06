@@ -38,10 +38,10 @@ public class QuestionsController {
      * @param userId 쿠키에 담긴 유저 Id
      */
     @PostMapping("/ask")
-    public void createQuestion(@RequestBody QuestionDto.Post post,
+    public ResponseEntity createQuestion(@RequestBody QuestionDto.Post post,
                                @CookieValue(name = "userId", required = true) Long userId) {
-
-        questionsService.createQuestion(post, userId);
+        Long questionId = questionsService.createQuestion(post, userId);
+        return new ResponseEntity(questionId, HttpStatus.OK);
     }
 
 
