@@ -112,6 +112,7 @@ const Controller = ({
 
 	const handleChose = () => {
 		if (!chosen) setChosen(true);
+		if (chosen) alert('중복해서 채택할 수 없다.');
 		choose({ questionId, answerId }); // 채택 여부를 저장하여 보냅니다.
 	};
 
@@ -220,7 +221,7 @@ const Choosed = styled.div`
 		display: ${(props) =>
 			props.QcreatorNickname === props.loginNickname &&
 			props.chosen === false &&
-			!props.choseAnswerId
+			props.choseAnswerId.length === 0
 				? 'block'
 				: 'none'};
 		cursor: pointer;

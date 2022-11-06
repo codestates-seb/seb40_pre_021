@@ -19,15 +19,13 @@ const Question = () => {
 	const [thread, setThread] = useState('');
 	const [nickname, setNickname] = useState('');
 	const [answerData, setAnswerData] = useState('');
-	const [choseAnswerId, setChoseAnswerId] = useState('');
+	const [choseAnswerId, setChoseAnswerId] = useState([]);
 	const { questionId } = useParams();
 	useEffect(() => {
 		getQuestion(questionId).then((res) => {
 			setThread(res);
 			if (res.answers) {
-				const chosen = res.answers.filter((el) => el.chooseYn === true);
-				setChoseAnswerId(chosen.answerId);
-				console.log('chosen', chosen, 'choseAnswerId', choseAnswerId);
+				setChoseAnswerId(res.answers.filter((el) => el.chooseYn === true));
 			}
 		});
 		getUserInfo().then((res) => {
