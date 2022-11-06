@@ -3,20 +3,20 @@ package com.pre21.exception;
 import lombok.Getter;
 
 public enum ExceptionCode {
-    USER_NOT_FOUND(404, "User not found"),
-    COMMENT_NOT_FOUND(404, "Comment not found"),
-    QUESTION_NOT_FOUND(404, "Question not found"),
-    TOKEN_NOT_FOUND(404, "Token not found"),
-    COOKIE_NOT_FOUND(404, "Cookie not found"),
-    ANSWER_NOT_FOUND(404, "Answer not found"),
-    UNAUTHORIZED_USER(404, "Unauthorized user"),
-    ALREADY_ADOPTED(404, "Already adopted"),
+    USER_NOT_FOUND(504, "User not found"),
+    COMMENT_NOT_FOUND(504, "Comment not found"),
+    QUESTION_NOT_FOUND(504, "Question not found"),
+    TOKEN_NOT_FOUND(504, "Token not found"),
+    COOKIE_NOT_FOUND(504, "Cookie not found"),
+    ANSWER_NOT_FOUND(504, "Answer not found"),
+    UNAUTHORIZED_USER(401, "Unauthorized user"),
+    ALREADY_ADOPTED(506, "Already adopted"),
 
-    USER_EXISTS(409, "User already exists"),
+    USER_EXISTS(506, "User already exists"),
 
 
     NOT_IMPLEMENTATION(501, "Not Implementation"),
-    INVALID_USER_STATUS(400, "Invalid member status");
+    INVALID_USER_STATUS(600, "Invalid member status");
 
 
     @Getter
