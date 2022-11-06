@@ -93,6 +93,7 @@ public class SecurityConfiguration {
 //        configuration.addAllowedOriginPattern("*");
         configuration.addAllowedOrigin("https://api.mozzidev.com");
         configuration.addAllowedOrigin("https://d184hsf03uyfp2.cloudfront.net");
+//        configuration.addAllowedOrigin("http://localhost:8080");
         configuration.setAllowCredentials(true);
         configuration.setAllowedMethods(List.of("GET", "POST", "DELETE", "PATCH"));
         source.registerCorsConfiguration("/**", configuration);
