@@ -248,7 +248,6 @@ const Question = () => {
 												votecount={el.vote}
 												votedata={el.answerLikes}
 												chose={el.chooseYn}
-												choseAnswerId={choseAnswerId}
 												QcreatorNickname={thread.nickname}
 												loginNickname={nickname}
 												questionId={questionId}
