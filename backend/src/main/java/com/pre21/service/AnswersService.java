@@ -28,13 +28,13 @@ public class AnswersService {
     private final AnswersRepository answersRepository;
     private final AnswerCommentRepository answerCommentRepository;
 
-    public void createAnswer(AnswerDto.Post answersPostDto, Long questionId) {
+    public void createAnswer(AnswerDto.Post answersPostDto, Long questionId, Long userId) {
         // 질문 찾기
         Questions findQuestion = questionsRepository.findQuestionsById(questionId).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
 
         // 유저 찾기
-        User findUser = authRepository.findUserByEmail(answersPostDto.getEmail()).orElseThrow(()
+        User findUser = authRepository.findById(userId).orElseThrow(()
                 -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
 
         // 답변 생성

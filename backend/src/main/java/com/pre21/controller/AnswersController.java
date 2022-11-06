@@ -22,9 +22,10 @@ public class AnswersController {
 
     @PostMapping("/answer/{question-id}")
     public void createAnswer(@PathVariable("question-id") Long questionId,
+                             @CookieValue(value = "userID", required = true) Long userId,
                              @RequestBody AnswerDto.Post answerPostDto) {
 
-        answersService.createAnswer(answerPostDto, questionId);
+        answersService.createAnswer(answerPostDto, questionId, userId);
     }
 
     @PostMapping("/answer/{answer-id}/like")
