@@ -12,7 +12,7 @@ export const ask = async (data) => {
 
 export const getUserInfo = async () => {
 	try {
-		const result = await instance.get(`/user/user-info`);
+		const result = await instance.get(`/user/info`);
 		// const result = await instance.get(`/user`); //테스트용
 		return result.data;
 	} catch (err) {
@@ -21,9 +21,9 @@ export const getUserInfo = async () => {
 	}
 }; //유저 인포 가져옴
 
-export const getQuestion = async () => {
+export const getQuestion = async (data) => {
 	try {
-		const result = await instance.get(`/question/:questionId/data`);
+		const result = await instance.get(`/question/${data}/data`);
 		// const result = await instance.get(`/data`); //테스트용
 		return result.data;
 	} catch (err) {
@@ -34,7 +34,11 @@ export const getQuestion = async () => {
 
 export const commentQ = async (data) => {
 	try {
-		const result = await instance.post('/questions/:questionId/comment', data);
+		// const result = await instance.post('/data', data); //테스트용
+		const result = await instance.post(
+			`/questions/question/${data.questionId}/comment`,
+			JSON.stringify(data),
+		);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -44,7 +48,11 @@ export const commentQ = async (data) => {
 
 export const answer = async (data) => {
 	try {
-		const result = await instance.post('/questions/:questionId/answer', data);
+		// const result = await instance.post('/data', data); //test
+		const result = await instance.post(
+			`/questions/${data.questionId}/answer`,
+			JSON.stringify(data),
+		);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -54,7 +62,11 @@ export const answer = async (data) => {
 
 export const commentA = async (data) => {
 	try {
-		const result = await instance.post('/answers/:answerId/comment', data);
+		// const result = await instance.post('/data', data); //test
+		const result = await instance.post(
+			`/questions/answer/${data.answerId}/comment`,
+			JSON.stringify(data),
+		);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -81,7 +93,10 @@ export const commentADEL = async (data) => {
 }; //질문 댓글 삭제(임시)
 export const upVoteForQ = async (data) => {
 	try {
-		const result = await instance.put('/questions/:questionId/up', data);
+		const result = await instance.put(
+			`/questions/${data.questionId}/like`,
+			JSON.stringify(data),
+		);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -91,7 +106,10 @@ export const upVoteForQ = async (data) => {
 
 export const downVoteForQ = async (data) => {
 	try {
-		const result = await instance.put('/questions/:questionId/down', data);
+		const result = await instance.put(
+			`/questions/${data.questionId}/like`,
+			JSON.stringify(data),
+		);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -101,7 +119,10 @@ export const downVoteForQ = async (data) => {
 
 export const upVoteForA = async (data) => {
 	try {
-		const result = await instance.put('/answers/:answerId/up', data);
+		const result = await instance.put(
+			`/answers/${data.answerId}/like`,
+			JSON.stringify(data),
+		);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -111,7 +132,10 @@ export const upVoteForA = async (data) => {
 
 export const downVoteForA = async (data) => {
 	try {
-		const result = await instance.put('/answers/:answerId/down', data);
+		const result = await instance.put(
+			`/answers/${data.answerId}/like`,
+			JSON.stringify(data),
+		);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -121,7 +145,10 @@ export const downVoteForA = async (data) => {
 
 export const bookmarkQ = async (data) => {
 	try {
-		const result = await instance.post('/bookmark/:questionId', data);
+		const result = await instance.post(
+			`/questions/bookmark/${data.questionId}`,
+			JSON.stringify(data),
+		);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -131,7 +158,10 @@ export const bookmarkQ = async (data) => {
 
 export const bookmarkA = async (data) => {
 	try {
-		const result = await instance.post('/bookmark/:answerId', data);
+		const result = await instance.post(
+			`/questions/bookmark/${data.questionId}/${data.answerId}`,
+			JSON.stringify(data),
+		);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -141,7 +171,10 @@ export const bookmarkA = async (data) => {
 
 export const bookmarkDelQ = async (data) => {
 	try {
-		const result = await instance.delete('/bookmark/:questionid', data);
+		const result = await instance.delete(
+			`/questions/bookmark/${data.questionId}`,
+			JSON.stringify(data),
+		);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -152,8 +185,8 @@ export const bookmarkDelQ = async (data) => {
 export const bookmarkDelA = async (data) => {
 	try {
 		const result = await instance.delete(
-			'/bookmark/:questionid/answer/:answerid',
-			data,
+			`/questions/bookmark/${data.questionId}/${data.answerId}`,
+			JSON.stringify(data),
 		);
 		return result.data;
 	} catch (err) {
@@ -165,8 +198,8 @@ export const bookmarkDelA = async (data) => {
 export const choose = async (data) => {
 	try {
 		const result = await instance.put(
-			'/questions/:questionid/answer/:answerid/selection',
-			data,
+			`questions/question/${data.questionId}/adopt/${data.answerId}`,
+			JSON.stringify(data),
 		);
 		return result.data;
 	} catch (err) {
