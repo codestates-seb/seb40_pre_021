@@ -20,8 +20,19 @@ const Ask = ({ editTitle, editBody, editTag }) => {
 			contents: problem + expect,
 			tags: tagsarr,
 		};
-		if (editTitle && editBody && editTag) edit(data);
-		else ask(data);
+		if (
+			title.length <= 15 ||
+			problem.length <= 20 ||
+			expect.length <= 20 ||
+			tagsarr.length === 0
+		)
+			alert('제목은 15자, 본문은 각 20자, 태그에는 무언가 하나 있어야 합니다');
+		else {
+			// 편집할 때 else ask(data); // 새 글 쓸 때 } };
+
+			if (editTitle && editBody && editTag) edit(data);
+			else ask(data);
+		}
 	};
 
 	const handleTitle = (e) => {

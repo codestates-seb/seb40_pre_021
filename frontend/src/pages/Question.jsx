@@ -133,11 +133,14 @@ const Question = () => {
 
 		//real
 		const data = { contents: answerData.body, questionId };
-		answer(data).then((res) => {
-			if (!res.code) {
-				getQuestion(questionId).then((res) => setThread(res));
-			}
-		});
+		if (answerData.body.length <= 30) alert('글자 수 채워라.');
+		else {
+			answer(data).then((res) => {
+				if (!res.code) {
+					getQuestion(questionId).then((res) => setThread(res));
+				}
+			});
+		}
 	};
 
 	return (
