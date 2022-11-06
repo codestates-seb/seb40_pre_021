@@ -81,6 +81,7 @@ public class AnswerDto {
      */
     @Getter
     @Setter
+    @NoArgsConstructor
     @AllArgsConstructor
     public static class CommentPost {
         private String comments;
@@ -113,6 +114,7 @@ public class AnswerDto {
 
     @Getter
     @Setter
+    @NoArgsConstructor
     @AllArgsConstructor
     public static class AnswerInfo {
         private Long questionId;
