@@ -182,8 +182,9 @@ public class QuestionsController {
     @ResponseStatus(HttpStatus.OK)
     @PostMapping("/question/{question-id}/like")
     public void clickQuestionLike (@PathVariable("question-id") Long questionId,
+                                   @CookieValue("userId") Long userId,
                                    @RequestBody QuestionDto.Like request) {
-        likeService.saveQuestionLike(questionId, request);
+        likeService.saveQuestionLike(questionId, request, userId);
     }
 
 
@@ -197,9 +198,10 @@ public class QuestionsController {
 
     @PostMapping("/answer/{answer-id}/like")
     public void clickAnswerLike(@PathVariable("answer-id") Long answerId,
+                                @CookieValue("userId") Long userId,
                                 @RequestBody QuestionDto.Like request) {
 
-        likeService.saveAnswerLike(answerId, request);
+        likeService.saveAnswerLike(answerId, request, userId);
     }
 
     /**

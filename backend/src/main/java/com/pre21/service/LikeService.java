@@ -26,8 +26,7 @@ public class LikeService {
      * @param questionId Long 타입, 질문의 ID 값입니다.
      * @param like       QuestionDto.Like 타입, 좋아요 Dto입니다.
      */
-    public void saveQuestionLike(Long questionId, QuestionDto.Like like) {
-        Long userId = like.getUserId();
+    public void saveQuestionLike(Long questionId, QuestionDto.Like like, Long userId) {
         // 유저 id를 통해 유저 조회
         User findUser = verifiedExistUser(userId);
 
@@ -69,8 +68,7 @@ public class LikeService {
      * @param like     QuestionDto.Like 타입, 좋아요 Dto입니다.
      */
     // 답변 좋아요를 DB에 저장
-    public void saveAnswerLike(Long answerId, QuestionDto.Like like) {
-        Long userId = like.getUserId();
+    public void saveAnswerLike(Long answerId, QuestionDto.Like like, Long userId) {
 
         // 유저 id를 통해 유저 조회
         User findUser = verifiedExistUser(userId);
