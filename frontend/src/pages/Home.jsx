@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ListHeader from '../components/List/ListHeader';
-import { getHomeList } from '../api/ListApi';
+import { getHomeList, getList } from '../api/ListApi';
 import List from '../components/List/List';
 import { Link } from 'react-router-dom';
 import useDynamicTitle from '../hooks/useDynamicTitle';
@@ -34,7 +34,8 @@ const Home = () => {
 	);
 	useEffect(() => {
 		const data = { tab: tab.toLowerCase() };
-		getHomeList(data).then((res) => {
+		console.log('getList');
+		getList(data).then((res) => {
 			setData(res.data);
 			dispatch(setTags(res.tags));
 		});

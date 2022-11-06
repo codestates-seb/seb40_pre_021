@@ -51,10 +51,10 @@ const Controller = ({
 	}, [bookmarkStatus]);
 
 	const handleUpVote = () => {
-		const upVote = { upVote: true, downVote: false, questionId, answerId };
+		const upVote = { likeYn: true, unlikeYn: false, questionId, answerId };
 		const cancelUpVote = {
-			upVote: false,
-			downVote: false,
+			likeYn: false,
+			unlikeYn: false,
 			questionId,
 			answerId,
 		}; // 정보를 하드코딩된 상태로 고정하여 보냅니다.
@@ -71,8 +71,13 @@ const Controller = ({
 	};
 
 	const handleDownVote = () => {
-		const downVote = { upVote: false, downVote: true };
-		const cancelDownVote = { upVote: false, downVote: false };
+		const downVote = { likeYn: false, unlikeYn: true, questionId, answerId };
+		const cancelDownVote = {
+			likeYn: false,
+			unlikeYn: false,
+			questionId,
+			answerId,
+		};
 		if (!downVoted) {
 			setDownVoted(true);
 			setUpVoted(false);
@@ -206,6 +211,7 @@ const Bookmark = styled.button`
 		background-color: white;
 		fill: ${(props) =>
 			props.bookmarked === true ? 'rgb(229, 136, 62);' : 'rgb(187, 191, 195)'};
+	}
 `;
 // 아래의 채택 컴포넌트는 아이디와 질문 작성자를 비교하여 같을 때에는 버튼으로, 아닐 때에는 div로 렌더링됩니다.
 const Choosed = styled.div`

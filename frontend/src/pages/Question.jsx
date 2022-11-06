@@ -21,16 +21,17 @@ const Question = () => {
 	const [answerData, setAnswerData] = useState('');
 	const { questionId } = useParams();
 	useEffect(() => {
-		getUserInfo().then((res) => setNickname(res.nickname));
+		getQuestion(questionId).then((res) => {
+			console.log('getQuestion', res);
+			setThread(res);
+		});
+		getUserInfo().then((res) => {
+			setNickname(res.nickname);
+		});
 	}, []);
-
-	useEffect(() => {
-		getQuestion(questionId).then((res) => setThread(res));
-	}, [thread]);
 
 	const handleCommentQ = (e) => {
 		if (e.key === 'Enter') {
-			commentQ(data);
 			//test
 			// const arr = [...thread.comments];
 			// const test = {
@@ -44,11 +45,14 @@ const Question = () => {
 			// const data = Object.assign({}, thread, comments);
 
 			//real
-			const data = { body: e.target.value, questionId };
+			const data = { comments: e.target.value, questionId };
 
-			commentQ(data);
-			e.target.value = '';
-			getQuestion(questionId).then((res) => setThread(res));
+			commentQ(data).then((res) => {
+				if (!res.code) {
+					e.target.value = '';
+					getQuestion(questionId).then((res) => setThread(res));
+				}
+			});
 		}
 	};
 
@@ -69,10 +73,13 @@ const Question = () => {
 			// const data = Object.assign({}, thread, answers);
 
 			//real
-			const data = { body: e.target.value, answerId, questionId };
-			commentA(data);
-			e.target.value = '';
-			getQuestion(questionId).then((res) => setThread(res));
+			const data = { comments: e.target.value, answerId, questionId };
+			commentA(data).then((res) => {
+				if (!res.code) {
+					e.target.value = '';
+					getQuestion(questionId).then((res) => setThread(res));
+				}
+			});
 		}
 	};
 	const handleDeleteCommentQ = (comments, idx) => {
@@ -125,8 +132,12 @@ const Question = () => {
 		// getQuestion(questionId).then((res) => setThread(res));
 
 		//real
-		const data = { body: answerData.body, questionId };
-		answer(data);
+		const data = { contents: answerData.body, questionId };
+		answer(data).then((res) => {
+			if (!res.code) {
+				getQuestion(questionId).then((res) => setThread(res));
+			}
+		});
 	};
 
 	return (
@@ -279,7 +290,7 @@ const Question = () => {
 													</Grouper>
 												))}
 											<CommentCreate
-												onKeyDown={handleCommentA}
+												onKeyDown={() => handleCommentA(event, el.answerId)}
 												placeholder="Add a comment"
 											/>
 										</Right>

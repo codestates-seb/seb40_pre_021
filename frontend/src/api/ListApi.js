@@ -10,7 +10,6 @@ export const getList = async (data) => {
 		//test
 		// const result = await instance.get('/questions', { params: data });
 		//real
-		console.log('getList start');
 		const result = await instance.get(url, { params: data });
 		console.log('getList', result);
 		return result.data;

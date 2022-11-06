@@ -109,7 +109,7 @@ const List = ({ data, type }) => {
 				<div
 					className="title"
 					role="presentation"
-					onClick={() => navigate(`/questions/question/${data.questionId}`)}>
+					onClick={() => navigate(`/questions/question/${data.id}`)}>
 					{data.title}
 				</div>
 				{type === 'Questions' && <div className="body">{data.body}</div>}
