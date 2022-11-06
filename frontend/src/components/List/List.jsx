@@ -2,6 +2,7 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../common/Button';
+import timeForToday from '../../utils/timeForToday';
 
 const ListStyle = styled.div`
 	border-top: 1px solid rgb(209, 211, 215);
@@ -129,7 +130,7 @@ const List = ({ data, type }) => {
 					</div>
 					<div className="create">
 						<Link to="">{createId}</Link>
-						{data.createdAt}
+						asked {timeForToday(data.createdAt, 'ago')}
 					</div>
 				</div>
 			</RightSection>
