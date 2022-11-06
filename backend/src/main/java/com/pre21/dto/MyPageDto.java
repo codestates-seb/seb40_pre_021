@@ -15,7 +15,6 @@ public class MyPageDto {
     @AllArgsConstructor
     public static class QuestionInfo {
         private Long id;
-        private String nickname;
         private String title;
         private String contents;
         private List<String> tags;
