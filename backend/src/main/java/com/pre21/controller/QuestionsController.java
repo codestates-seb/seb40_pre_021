@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.pre21.security.utils.ControllerConstants.USER_ID;
+
 @Slf4j
 @RestController
 @RequestMapping(value = "/questions")
@@ -120,7 +122,7 @@ public class QuestionsController {
     @GetMapping("/question/{question-id}/adopt/{answer-id}")
     public void adoptQuestion(@PathVariable("question-id") Long questionId,
                               @PathVariable("answer-id") Long answerId,
-                              @CookieValue(name = "userId", required = true) Long userId) {
+                              @CookieValue(name = USER_ID, required = false) Long userId) {
         questionsService.adoptingQuestion(questionId, answerId, userId);
     }
 
@@ -132,7 +134,7 @@ public class QuestionsController {
      */
     @PostMapping("/bookmark/{question-id}")
     public void clickQuestionBookmark(@PathVariable("question-id") Long questionId,
-                                      @CookieValue(name = "userId", required = true) Long userId) {
+                                      @CookieValue(name = USER_ID, required = true) Long userId) {
         questionsService.addQuestionBookmark(questionId, userId);
     }
 
@@ -145,7 +147,7 @@ public class QuestionsController {
     @PostMapping("/bookmark/{question-id}/{answer-id}")
     public void clickAnswerBookmark(@PathVariable("question-id") Long questionId,
                                     @PathVariable("answer-id") Long answerId,
-                                    @CookieValue(name = "userId", required = true) Long userId) {
+                                    @CookieValue(name = USER_ID, required = true) Long userId) {
         questionsService.addAnswerBookmark(questionId, answerId, userId);
     }
 
