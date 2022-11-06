@@ -37,7 +37,7 @@ export const commentQ = async (data) => {
 		// const result = await instance.post('/data', data); //테스트용
 		const result = await instance.post(
 			`/questions/question/${data.questionId}/comment`,
-			JSON.stringify(data),
+			data,
 		);
 		return result.data;
 	} catch (err) {
@@ -51,7 +51,7 @@ export const answer = async (data) => {
 		// const result = await instance.post('/data', data); //test
 		const result = await instance.post(
 			`/questions/${data.questionId}/answer`,
-			JSON.stringify(data),
+			data,
 		);
 		return result.data;
 	} catch (err) {
@@ -65,7 +65,7 @@ export const commentA = async (data) => {
 		// const result = await instance.post('/data', data); //test
 		const result = await instance.post(
 			`/questions/answer/${data.answerId}/comment`,
-			JSON.stringify(data),
+			data,
 		);
 		return result.data;
 	} catch (err) {
@@ -95,7 +95,7 @@ export const upVoteForQ = async (data) => {
 	try {
 		const result = await instance.put(
 			`/questions/${data.questionId}/like`,
-			JSON.stringify(data),
+			data,
 		);
 		return result.data;
 	} catch (err) {
@@ -108,7 +108,7 @@ export const downVoteForQ = async (data) => {
 	try {
 		const result = await instance.put(
 			`/questions/${data.questionId}/like`,
-			JSON.stringify(data),
+			data,
 		);
 		return result.data;
 	} catch (err) {
@@ -119,10 +119,7 @@ export const downVoteForQ = async (data) => {
 
 export const upVoteForA = async (data) => {
 	try {
-		const result = await instance.put(
-			`/answers/${data.answerId}/like`,
-			JSON.stringify(data),
-		);
+		const result = await instance.put(`/answers/${data.answerId}/like`, data);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -132,10 +129,7 @@ export const upVoteForA = async (data) => {
 
 export const downVoteForA = async (data) => {
 	try {
-		const result = await instance.put(
-			`/answers/${data.answerId}/like`,
-			JSON.stringify(data),
-		);
+		const result = await instance.put(`/answers/${data.answerId}/like`, data);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -147,7 +141,7 @@ export const bookmarkQ = async (data) => {
 	try {
 		const result = await instance.post(
 			`/questions/bookmark/${data.questionId}`,
-			JSON.stringify(data),
+			data,
 		);
 		return result.data;
 	} catch (err) {
@@ -160,7 +154,7 @@ export const bookmarkA = async (data) => {
 	try {
 		const result = await instance.post(
 			`/questions/bookmark/${data.questionId}/${data.answerId}`,
-			JSON.stringify(data),
+			data,
 		);
 		return result.data;
 	} catch (err) {
@@ -173,7 +167,7 @@ export const bookmarkDelQ = async (data) => {
 	try {
 		const result = await instance.delete(
 			`/questions/bookmark/${data.questionId}`,
-			JSON.stringify(data),
+			data,
 		);
 		return result.data;
 	} catch (err) {
@@ -186,7 +180,7 @@ export const bookmarkDelA = async (data) => {
 	try {
 		const result = await instance.delete(
 			`/questions/bookmark/${data.questionId}/${data.answerId}`,
-			JSON.stringify(data),
+			data,
 		);
 		return result.data;
 	} catch (err) {
@@ -199,7 +193,7 @@ export const choose = async (data) => {
 	try {
 		const result = await instance.put(
 			`questions/question/${data.questionId}/adopt/${data.answerId}`,
-			JSON.stringify(data),
+			data,
 		);
 		return result.data;
 	} catch (err) {

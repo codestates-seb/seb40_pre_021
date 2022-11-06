@@ -30,7 +30,7 @@ const Question = () => {
 
 	const handleCommentQ = (e) => {
 		if (e.key === 'Enter') {
-			commentQ(JSON.stringify(data));
+			commentQ(data);
 			//test
 			// const arr = [...thread.comments];
 			// const test = {
@@ -80,7 +80,7 @@ const Question = () => {
 		const tail = comments.slice(idx + 1);
 		const result = head.concat(tail);
 		const data = { result: result };
-		commentQDEL(JSON.stringify(data));
+		commentQDEL(data);
 		getQuestion(questionId).then((res) => setThread(res));
 	};
 	const handleDeleteCommentA = (comments, idx) => {
@@ -88,7 +88,7 @@ const Question = () => {
 		const tail = comments.slice(idx + 1);
 		const result = head.concat(tail);
 		const data = { result: result };
-		commentADEL(JSON.stringify(data));
+		commentADEL(data);
 		getQuestion(questionId).then((res) => setThread(res));
 	};
 	const handleAnswer = (str) => {
