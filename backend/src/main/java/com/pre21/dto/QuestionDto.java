@@ -79,6 +79,7 @@ public class QuestionDto {
     @Getter
     @Setter
     @ToString
+    @NoArgsConstructor
     @AllArgsConstructor
     public static class CommentPost {
         private String comments;
