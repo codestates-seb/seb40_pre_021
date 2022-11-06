@@ -67,7 +67,11 @@ const TotalList = ({ lists, title, type, callback, text }) => {
 							vote,
 						} = list;
 
-						let splitDate = new Date(createdAt).toString().split(' ');
+						let splitDate = new Date(
+							new Date(createdAt).getTime() + 9 * 60 * 60 * 1000,
+						)
+							.toString()
+							.split(' ');
 						let date = `${splitDate[1]} ${splitDate[2]}, ${splitDate[3]} at ${splitDate[4]}`;
 						return (
 							<ListBox key={id}>

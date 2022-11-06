@@ -4,6 +4,7 @@ package com.pre21.mapper;
 import com.pre21.dto.*;
 import com.pre21.entity.*;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
@@ -15,6 +16,10 @@ import static com.pre21.util.RestConstants.QUESTION_URL;
 public interface QuestionsMapper {
 
     List<QuestionDto.GetResponseDtos> questionsToQuestionResponses(List<Questions> questions);
+
+
+    @Mapping(source = "questions.users.nickname", target = "nickname")
+    QuestionDto.GetResponseDtos questionsToQuestionResponses(Questions questions);
 
 
     default List<MyPageDto.QuestionInfo> questionsToMypageQuestionResponse(List<Questions> questions) {

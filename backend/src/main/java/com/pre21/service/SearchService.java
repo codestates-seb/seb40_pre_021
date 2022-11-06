@@ -43,7 +43,7 @@ public class SearchService {
     public Set<Questions> makeQuestionListByKeyword(String keyword) {
 
         // 문자를 %20(+기호)으로 구분하여 분리
-        String[] keywordArr = keyword.split("\\+");
+        String[] keywordArr = keyword.split(" ");
 
         // tag 정보와 제목 문자열을 구분
         List<String> tags = new ArrayList<>();
