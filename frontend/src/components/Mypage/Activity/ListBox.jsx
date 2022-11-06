@@ -13,6 +13,7 @@ const ListBox = ({ lists, text, component }) => {
 export default ListBox;
 
 const Container = styled.div`
+	height: 100%;
 	border: 1px solid #d7d9dc;
 	border-radius: 5px;
 	overflow: hidden;
