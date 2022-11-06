@@ -13,14 +13,16 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface AnswersMapper {
-    //    List<MyPageDto.AnswerInfo> answersToAnswerResponses(List<Answers> answers);
-//
-//    @Mapping(source = "answers.questions.id", target = "questionId")
-//    @Mapping(source = "answers.questions.title", target = "title")
-//    MyPageDto.AnswerInfo answersToAnswerResponses(Answers answers);
-    default List<MyPageDto.AnswerInfo> answerToAnswerResponse(List<Answers> answers) {
+    List<MyPageDto.AnswerInfo> answersToAnswerResponses(List<Answers> answers);
+
+    @Mapping(source = "answers.questions.id", target = "questionId")
+    @Mapping(source = "answers.questions.title", target = "title")
+    MyPageDto.AnswerInfo answersToAnswerResponses(Answers answers);
+
+
+    default List<MyPageDto.AnswerInfos> answerToAnswerResponses(List<Answers> answers) {
         return answers.stream()
-                .map(answer -> MyPageDto.AnswerInfo
+                .map(answer -> MyPageDto.AnswerInfos
                         .builder()
                         .questionId(answer.getQuestionsId())
                         .id(answer.getId())
@@ -30,6 +32,7 @@ public interface AnswersMapper {
                         .vote(answer.getVote())
                         .build()).collect(Collectors.toList());
     }
+
 
     default AnswerDto.GetResponse answerToAnswerResponse(Answers answers) {
         AnswerDto.GetResponse responseDto = new AnswerDto.GetResponse();

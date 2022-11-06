@@ -80,7 +80,7 @@ public class MypageController {
     public ResponseEntity getAnswerInfo(@CookieValue(name = "userId") Long userId) {
         Page<Answers> answersPage = answersService.findMyAnswers(userId, page, size);
         List<Answers> answers = answersPage.getContent();
-        return new ResponseEntity<>(answersMapper.answerToAnswerResponse(answers),
+        return new ResponseEntity<>(answersMapper.answerToAnswerResponses(answers),
                 HttpStatus.OK);
     }
 
