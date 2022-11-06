@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 import static com.pre21.security.utils.ControllerConstants.USER_ID;
@@ -81,16 +82,18 @@ public class QuestionsController {
 
     /**
      * 질문 전체 조회 메서드
-     * @return  생성된 질문 전체 + 질문 개수
+     * @return  생성된 질문 전체 + 질문 개수 ㅎ
      */
     @GetMapping
     public ResponseEntity getQuestions() {
 
         List<Questions> questions = questionsService.findQuestions();
         long questionsCount = questionsService.findQuestionCount();
+        List<QuestionDto.GetResponseDtos> response = mapper.questionsToQuestionResponses(questions);
+        Collections.sort(response);
 
         return new ResponseEntity<>(
-                new MultiResponseDto.MultiResponseDtos<>(mapper.questionsToQuestionResponses(questions), questionsCount),
+                new MultiResponseDto.MultiResponseDtos<>(response, questionsCount),
                 HttpStatus.OK);
     }
 
