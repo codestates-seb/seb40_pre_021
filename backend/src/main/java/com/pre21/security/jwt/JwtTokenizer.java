@@ -14,6 +14,7 @@ import io.jsonwebtoken.io.Encoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.Cookie;
@@ -26,14 +27,16 @@ import java.util.*;
 public class JwtTokenizer {
 
     @Getter
-//    @Value("${JWT_SECRET_KEY}")
-    private String secretKey = "ewqiopasdasdhjqwjkdqwdjkashdjkashdasjdhqweqeqweqwdasjxasxqweu123dhasd3423hasjdk";
+    @Value("${jwt.secret-key}")
+    private String secretKey;
 
     @Getter
-    private int accessTokenExpirationMinutes = 15;
+    @Value("${jwt.access-token-expiration-minutes}")
+    private int accessTokenExpirationMinutes;
 
     @Getter
-    private int refreshTokenExpirationMinutes = 30;
+    @Value("${jwt.refresh-token-expiration-minutes}")
+    private int refreshTokenExpirationMinutes;
 
     private final RefreshTokenRepository refreshTokenRepository;
     private final AuthRepository authRepository;

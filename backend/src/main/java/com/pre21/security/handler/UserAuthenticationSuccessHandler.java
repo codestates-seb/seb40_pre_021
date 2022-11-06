@@ -20,8 +20,6 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
-    private final JwtTokenizer jwtTokenizer;
-
     @Override
     public void onAuthenticationSuccess(HttpServletRequest req,
                                         HttpServletResponse res,
