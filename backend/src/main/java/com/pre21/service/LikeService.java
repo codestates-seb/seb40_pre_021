@@ -7,12 +7,10 @@ import com.pre21.exception.ExceptionCode;
 import com.pre21.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class LikeService {
     private final AuthRepository authRepository;
@@ -35,7 +33,7 @@ public class LikeService {
         // 질문 id를 통해 질문 조회
         Questions findQuestion = verifiedExistQuestion(questionId);
         int oldVote = findQuestion.getVote();
-        int compareResult;
+        int compareResult = 0;
 
         // 현재 유저의 질문 좋아요 상태를 가져온 후
         Optional<QuestionLikes> findQuestionLikes = findQuestionLike(findUser);
@@ -43,22 +41,27 @@ public class LikeService {
 
         if (findQuestionLikes.isPresent()) { // 상태 값이 있을 경우 업데이트
             QuestionLikes likes = findQuestionLikes.get();
+            compareResult = dtoCheck(oldVote, likes, like);
             likes.setLikeYn(like.isLikeYn());
             likes.setUnlikeYn(like.isUnlikeYn());
-            compareResult = dtoCheck(oldVote, likes, like);
             findQuestion.setVote(compareResult);
             QuestionLikes savedLike = questionLikeRepository.save(likes);
-            findUser.addQuestionsLikes(savedLike);
             findQuestion.addQuestionsLikes(savedLike);
+            findUser.addQuestionsLikes(savedLike);
+            questionsRepository.save(findQuestion);
         } else { // 없을 경우 QuestionLikes를 생성하여 저장
             QuestionLikes likes = new QuestionLikes(like.isLikeYn(), like.isUnlikeYn());
-            compareResult = dtoCheck(oldVote, likes, like);
-            findQuestion.setVote(compareResult);
             likes.setUsers(findUser);
             likes.addQuestions(findQuestion);
+            if (like.isLikeYn()) {
+                compareResult = oldVote + 1;
+            } else if (like.isUnlikeYn()) {
+                compareResult = oldVote - 1;
+            }
+            findQuestion.setVote(compareResult);
             QuestionLikes savedLike = questionLikeRepository.save(likes);
-            findUser.addQuestionsLikes(savedLike);
             findQuestion.addQuestionsLikes(savedLike);
+            findUser.addQuestionsLikes(savedLike);
         }
     }
 
@@ -84,9 +87,9 @@ public class LikeService {
 
         if (findQuestionLikes.isPresent()) { // 상태 값이 있을 경우 업데이트
             AnswerLikes likes = findQuestionLikes.get();
+            compareResult = dtoCheck(oldVote, likes, like);
             likes.setLikeYn(like.isLikeYn());
             likes.setUnlikeYn(like.isUnlikeYn());
-            compareResult = dtoCheck(oldVote, likes, like);
             findAnswer.setVote(compareResult);
             AnswerLikes savedLike = answerLikeRepository.save(likes);
             findAnswer.addAnswerLike(savedLike);
@@ -95,7 +98,11 @@ public class LikeService {
             AnswerLikes likes = new AnswerLikes(like.isLikeYn(), like.isUnlikeYn());
             likes.setUsers(findUser);
             likes.addAnswer(findAnswer);
-            compareResult = dtoCheck(oldVote, likes, like);
+            if (like.isLikeYn()) {
+                compareResult = oldVote + 1;
+            } else if (like.isUnlikeYn()) {
+                compareResult = oldVote - 1;
+            }
             findAnswer.setVote(compareResult);
             AnswerLikes savedLike = answerLikeRepository.save(likes);
             findAnswer.addAnswerLike(savedLike);
@@ -137,16 +144,24 @@ public class LikeService {
     private int dtoCheck(int oldVote, QuestionLikes likes, QuestionDto.Like like) {
         if (likes.isLikeYn()) {
             if (like.isLikeYn()) {
-                return oldVote + 1;
-            }
-            if (like.isUnlikeYn()) {
-                return oldVote + 2;
+                return oldVote;
+            } else if (like.isUnlikeYn()) {
+                return oldVote - 2;
+            } else {
+                return oldVote - 1;
             }
         } else if (likes.isUnlikeYn()) {
             if (like.isLikeYn()) {
-                return oldVote - 2;
+                return oldVote + 2;
+            } else if (like.isUnlikeYn()) {
+                return oldVote;
+            } else {
+                return oldVote + 1;
             }
-            if (like.isUnlikeYn()) {
+        } else {
+            if (like.isLikeYn()) {
+                return oldVote + 1;
+            } else if (like.isUnlikeYn()) {
                 return oldVote - 1;
             }
         }
@@ -156,16 +171,24 @@ public class LikeService {
     private int dtoCheck(int oldVote, AnswerLikes likes, QuestionDto.Like like) {
         if (likes.isLikeYn()) {
             if (like.isLikeYn()) {
-                return oldVote + 1;
-            }
-            if (like.isUnlikeYn()) {
-                return oldVote + 2;
+                return oldVote;
+            } else if (like.isUnlikeYn()) {
+                return oldVote - 2;
+            } else {
+                return oldVote - 1;
             }
         } else if (likes.isUnlikeYn()) {
             if (like.isLikeYn()) {
-                return oldVote - 2;
+                return oldVote + 2;
+            } else if (like.isUnlikeYn()) {
+                return oldVote;
+            } else {
+                return oldVote + 1;
             }
-            if (like.isUnlikeYn()) {
+        } else {
+            if (like.isLikeYn()) {
+                return oldVote + 1;
+            } else if (like.isUnlikeYn()) {
                 return oldVote - 1;
             }
         }
