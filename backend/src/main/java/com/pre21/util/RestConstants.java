@@ -14,7 +14,7 @@ public class RestConstants {
 
     public static final String BASIC_PAGE = "https://d184hsf03uyfp2.cloudfront.net/";
     public static final String BOOKMARK_URL = BASIC_PAGE + "user/";
-    public static final String DETAIL = "questions/";
+    public static final String DETAIL = "questions/question/";
 
     public static final String QUESTION_URL = BASIC_PAGE + DETAIL;
 }
