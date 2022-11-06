@@ -5,13 +5,13 @@ const TagsList = ({ lists, limit }) => {
 	return (
 		<Container>
 			{lists.map((list, i) => {
-				const { title, tagCount } = list;
+				const { title, tagCount, id } = list;
 
 				if (limit && i >= limit) {
 					return;
 				}
 				return (
-					<Box key={title} limit={limit}>
+					<Box key={id} limit={limit}>
 						<ContentBox>
 							<LeftCotent>
 								<TagView>
