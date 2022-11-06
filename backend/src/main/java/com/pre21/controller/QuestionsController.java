@@ -35,7 +35,7 @@ public class QuestionsController {
     @PostMapping("/ask")
     public void createQuestion(@RequestBody QuestionDto.Post post,
                                @CookieValue(name = "userId", required = true) Long userId) {
-        log.info("############## post ################## {}", post);
+
         questionsService.createQuestion(post, userId);
     }
 
@@ -160,7 +160,7 @@ public class QuestionsController {
     @PostMapping("/question/comment/{question-id}")
     public void createQuestionComment(
             @PathVariable("question-id") Long questionId,
-            @CookieValue(value = "userId", required = false) Long userId,
+            @CookieValue(name = "userId") Long userId,
             @RequestBody QuestionDto.CommentPost CommentPost) throws Exception {
 
         questionsService.createQuestionComment(CommentPost, userId, questionId);
