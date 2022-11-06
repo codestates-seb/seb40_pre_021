@@ -20,7 +20,7 @@ import static com.pre21.security.utils.ControllerConstants.USER_ID;
 
 @Slf4j
 @RestController
-@RequestMapping(value = "/questions")
+@RequestMapping(value = "/questions1")
 @RequiredArgsConstructor
 public class QuestionsController {
     private final QuestionsService questionsService;
