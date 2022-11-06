@@ -248,7 +248,7 @@ public class QuestionsController {
      * @param answerCommentPostDto 댓글을 생성하는 요청의 RequestBody에 해당합니다.
      * @author dev32user
      */
-    @PostMapping("/answers/{answer-id}/comment")
+    @PostMapping("/answer/{answer-id}/comment")
     public void createAnswerComment(
             @PathVariable("answer-id") Long answerId,
             @CookieValue(value = "userId", required = false) Long userId,
