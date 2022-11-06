@@ -19,7 +19,6 @@ const persistConfig = {
 	key: 'root',
 	version: 1,
 	storage: storageSession,
-	whitelist: ['tags'],
 };
 
 //reducer 합치는 부분

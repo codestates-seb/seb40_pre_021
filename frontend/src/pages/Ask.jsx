@@ -17,11 +17,11 @@ const Ask = ({ editTitle, editBody, editTag }) => {
 	const handleClick = () => {
 		const data = {
 			title: title,
-			body: problem + expect,
+			contents: problem + expect,
 			tags: tagsarr,
 		};
-		if (editTitle && editBody && editTag) edit(JSON.stringify(data));
-		else ask(JSON.stringify(data));
+		if (editTitle && editBody && editTag) edit(data);
+		else ask(data);
 	};
 
 	const handleTitle = (e) => {
