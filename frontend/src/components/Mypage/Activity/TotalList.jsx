@@ -5,7 +5,6 @@ import TagList from '../common/TagList';
 import UserInfo from '../common/UserInfo';
 import SortButtonGroup from '../common/SortButtonGroup';
 import Title from './Title';
-import { useNavigate } from 'react-router-dom';
 
 let questionSortData = [
 	{
@@ -40,7 +39,6 @@ let answerSortData = [
 
 const TotalList = ({ lists, title, type, callback, text }) => {
 	const [sortData, setSortData] = useState([]);
-	const navigate = useNavigate();
 
 	useEffect(() => {
 		type === 'answered'
@@ -82,12 +80,7 @@ const TotalList = ({ lists, title, type, callback, text }) => {
 								/>
 								<ContentBox>
 									<h3>
-										<PostTitle
-											onClick={() => {
-												navigate(`/questions/question/${id}`);
-											}}>
-											{title}
-										</PostTitle>
+										<a href={url}>{title}</a>
 									</h3>
 									<TagAndUserInfoBox>
 										{tags ? <TagList tag={tags} /> : <div></div>}
@@ -155,14 +148,14 @@ const ContentBox = styled.div`
 		word-break: break-word;
 		overflow-wrap: break-word;
 		hyphens: auto;
-		/* span {
+		a {
 			text-decoration: none;
 			cursor: pointer;
 			color: #0074cc;
 			:hover {
 				color: #0a95ff;
 			}
-		} */
+		}
 	}
 `;
 
@@ -183,13 +176,4 @@ const EmptyText = styled.p`
 	font-size: 13px;
 	font-weight: 400;
 	padding: 48px;
-`;
-
-const PostTitle = styled.span`
-	text-decoration: none;
-	cursor: pointer;
-	color: #0074cc;
-	:hover {
-		color: #0a95ff;
-	}
 `;
