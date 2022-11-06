@@ -27,6 +27,7 @@ const Question = () => {
 			if (res.answers) {
 				const chosen = res.answers.filter((el) => el.chooseYn === true);
 				setChoseAnswerId(chosen.answerId);
+				console.log('chosen', chosen, 'choseAnswerId', choseAnswerId);
 			}
 		});
 		getUserInfo().then((res) => {
@@ -102,7 +103,7 @@ const Question = () => {
 		commentADEL(data);
 		getQuestion(questionId).then((res) => setThread(res));
 	};
-	const handleAnswer = (str, e) => {
+	const handleAnswer = (str) => {
 		setAnswerData({
 			body: str,
 		});
@@ -311,7 +312,7 @@ const Question = () => {
 
 					<EditGroup>
 						<YourAnswer>Your Answer</YourAnswer>
-						<Editor callback={handleAnswer} answerData={answerData} />
+						<Editor callback={handleAnswer} />
 						<Button text="Post Your Answer" callback={handleSubmitAnswer} />
 					</EditGroup>
 				</Wrapper>
