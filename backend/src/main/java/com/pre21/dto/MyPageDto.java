@@ -13,7 +13,7 @@ public class MyPageDto {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class QuestionInfo {
+    public static class QuestionInfo implements Comparable<QuestionInfo> {
         private Long id;
         private String title;
         private String contents;
@@ -25,7 +25,10 @@ public class MyPageDto {
         private int answerCount;
         private String url;
 
-
+        @Override
+        public int compareTo(QuestionInfo o) {
+            return (int) (o.id - this.id);
+        }
     }
 
 

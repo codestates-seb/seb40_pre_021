@@ -52,7 +52,7 @@ public class QuestionDto {
     @AllArgsConstructor
     @NoArgsConstructor
     @Builder
-    public static class GetResponseDtos {
+    public static class GetResponseDtos implements Comparable<GetResponseDtos> {
         private Long id;
         private String nickname;
         private String title;
@@ -63,6 +63,11 @@ public class QuestionDto {
         private int views;
         private LocalDateTime createdAt;
         private int answerCount;
+
+        @Override
+        public int compareTo(GetResponseDtos o) {
+            return (int) (o.id - this.id);
+        }
     }
 
     // 질문 북마크 Dto
