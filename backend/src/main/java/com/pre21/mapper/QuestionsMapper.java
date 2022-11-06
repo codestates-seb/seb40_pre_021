@@ -25,7 +25,7 @@ public interface QuestionsMapper {
                         .title(question.getTitle())
                         .contents(question.getContents())
                         .tags(question.getQuestionsTags().stream()
-                                .map(qt -> qt.getTagValue())
+                                .map(QuestionsTags::getTagValue)
                                 .collect(Collectors.toList())
                         )
                         .vote(question.getVote())

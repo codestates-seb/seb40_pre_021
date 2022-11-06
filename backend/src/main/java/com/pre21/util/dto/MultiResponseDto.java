@@ -1,6 +1,10 @@
 package com.pre21.util.dto;
 
+import com.pre21.dto.QuestionDto;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
@@ -14,17 +18,5 @@ public class MultiResponseDto <T> {
         this.data = data;
         this.pageInfo = new PageInfo(page.getNumber() + 1,
                 page.getSize(), page.getTotalElements(), page.getTotalPages());
-    }
-
-    @Getter
-    public static class MultiResponseDtos<T> {
-        private List<T> data;
-
-        private long questionsCount;
-
-        public MultiResponseDtos(List<T> data, long questionsCount) {
-            this.data = data;
-            this.questionsCount = questionsCount;
-        }
     }
 }

@@ -7,14 +7,15 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-
-public class SearchDto {
-    @Getter
+public class MainDto {
     @Builder
+    @Getter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class Response <T>{
-        private int searchCount;
-        private T data;
+    public static class MainPage {
+        private long questionsCount;
+        private List<QuestionDto.GetResponseDtos> data;
+        private List<String> tags;
     }
+
 }

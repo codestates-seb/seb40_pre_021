@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -65,4 +66,11 @@ public class TagsService {
         return authRepository.findById(userId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
     }
+
+
+    public List<String> findAllTags() {
+        return tagsRepository.findAll().stream()
+                .map(Tags::getTitle).collect(Collectors.toList());
+    }
+
 }

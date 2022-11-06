@@ -1,26 +1,32 @@
 package com.pre21.controller;
 
+import com.pre21.dto.MainDto;
 import com.pre21.dto.QuestionDto;
 import com.pre21.dto.SearchDto;
 import com.pre21.entity.Questions;
 import com.pre21.mapper.QuestionsMapper;
+import com.pre21.service.QuestionsService;
 import com.pre21.service.SearchService;
+import com.pre21.service.TagsService;
+import com.pre21.util.dto.MultiResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.constraints.URL;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Slf4j
 @RestController
 //@RequestMapping("/questions")
 @RequiredArgsConstructor
-public class SearchController {
+public class MainController {
     private final SearchService searchService;
+    private final QuestionsService questionsService;
+    private final TagsService tagsService;
     private final QuestionsMapper mapper;
 
     /**
@@ -40,5 +46,26 @@ public class SearchController {
                 .build();
 
         return new ResponseEntity(response, HttpStatus.OK);
+    }
+
+
+    /**
+     * 질문 전체 조회 메서드
+     * @return  생성된 질문 전체 + 질문 개수
+     */
+    @GetMapping
+    public ResponseEntity getQuestions() {
+
+        List<Questions> questions = questionsService.findQuestions();
+        List<String> tags = tagsService.findAllTags();
+        long questionsCount = questionsService.findQuestionCount();
+        return new ResponseEntity<>(
+                MainDto.MainPage
+                        .builder()
+                        .questionsCount(questionsCount)
+                        .data(mapper.questionsToQuestionResponses(questions))
+                        .tags(tags)
+                        .build(),
+                HttpStatus.OK);
     }
 }
