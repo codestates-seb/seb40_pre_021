@@ -36,8 +36,9 @@ function useMypageData(category, value = []) {
 				break;
 			case 'tag':
 				getMypageUserTag().then((res) => {
-					if (res.length > 1) {
-						let sortData = res.sort((a, b) => b.tagCount - a.tagCount);
+					const { data, pageInfo } = res;
+					if (data.length > 1) {
+						let sortData = data.sort((a, b) => b.tagCount - a.tagCount);
 						setData(sortData);
 					} else {
 						setData(res);
@@ -46,8 +47,9 @@ function useMypageData(category, value = []) {
 				break;
 			case 'bookmark':
 				getMypageUserBookmark().then((res) => {
-					if (res.length > 1) {
-						let sortData = res.sort((a, b) => b.views - a.views);
+					const { data, pageInfo } = res;
+					if (data.length > 1) {
+						let sortData = data.sort((a, b) => b.views - a.views);
 						setData(sortData);
 					} else {
 						setData(res);

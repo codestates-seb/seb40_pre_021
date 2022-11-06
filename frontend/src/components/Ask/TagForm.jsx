@@ -63,7 +63,7 @@ const TagForm = ({ callback }) => {
 const Style = styled.div`
 	.container {
 		input {
-			display: flex;
+			display: inline-flex;
 			flex-direction: row;
 			flex-wrap: wrap;
 			padding: 0 0.5rem 0 0.5rem;
