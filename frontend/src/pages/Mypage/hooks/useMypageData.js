@@ -24,34 +24,31 @@ function useMypageData(category, value = []) {
 				break;
 			case 'question':
 				getMypageUserQuestion().then((res) => {
-					const { data, pageInfo } = res;
-					if (data.length > 1) {
-						let sortData = data.sort((a, b) => b.vote - a.vote);
+					if (res.length > 1) {
+						let sortData = res.sort((a, b) => b.vote - a.vote);
 						setData(sortData);
 					} else {
-						setData(data);
+						setData(res);
 					}
 				});
 				break;
 			case 'tag':
 				getMypageUserTag().then((res) => {
-					const { data, pageInfo } = res;
-					if (data.length > 1) {
-						let sortData = data.sort((a, b) => b.tagCount - a.tagCount);
+					if (res.length > 1) {
+						let sortData = res.sort((a, b) => b.tagCount - a.tagCount);
 						setData(sortData);
 					} else {
-						setData(data);
+						setData(res);
 					}
 				});
 				break;
 			case 'bookmark':
 				getMypageUserBookmark().then((res) => {
-					const { data, pageInfo } = res;
-					if (data.length > 1) {
-						let sortData = data.sort((a, b) => b.views - a.views);
+					if (res.length > 1) {
+						let sortData = res.sort((a, b) => b.views - a.views);
 						setData(sortData);
 					} else {
-						setData(data);
+						setData(res);
 					}
 				});
 				break;
