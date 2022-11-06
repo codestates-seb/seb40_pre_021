@@ -1,6 +1,7 @@
 package com.pre21.mapper;
 
 import com.pre21.dto.MyPageDto;
+import com.pre21.entity.Adoption;
 import com.pre21.entity.Answers;
 import com.pre21.entity.Bookmark;
 import com.pre21.entity.QuestionsTags;
@@ -16,9 +17,8 @@ public interface BookmarkMapper {
     default List<MyPageDto.BookmarkInfo> bookmarkToBookmarkResponses(List<Bookmark> bookmarks) {
         return bookmarks.stream()
                 .map(bookmark -> {
-                            Answers ifExistAdoptedAnswer = bookmark.getQuestions()
-                                    .getAdoption()
-                                    .getAnswers();
+                            Adoption ifExistAdoptedAnswer = bookmark.getQuestions()
+                                    .getAdoption();
 
                             if (ifExistAdoptedAnswer == null) {
                                 return MyPageDto.BookmarkInfo
@@ -47,9 +47,7 @@ public interface BookmarkMapper {
                                         .views(bookmark.getQuestions().getViews())
                                         .answerCount(bookmark.getQuestions().getAnswerCount())
                                         .createdAt(bookmark.getCreatedAt())
-                                        .answer(bookmarkToAdoptedAnswer(
-                                                ifExistAdoptedAnswer
-                                        ))
+                                        .answer(bookmarkToAdoptedAnswer(ifExistAdoptedAnswer.getAnswers()))
                                         .build();
                             }}
                 ).collect(Collectors.toList());
