@@ -91,8 +91,8 @@ public class SecurityConfiguration {
         configuration.addAllowedHeader("*");
         configuration.addAllowedMethod("*");
 //        configuration.addAllowedOriginPattern("*");
-        configuration.addAllowedOrigin("http://ec2-3-35-11-221.ap-northeast-2.compute.amazonaws.com:8080");
-        configuration.addAllowedOrigin("http://2ne1-client.s3-website.ap-northeast-2.amazonaws.com");
+        configuration.addAllowedOrigin("https://api.mozzidev.com");
+        configuration.addAllowedOrigin("https://d184hsf03uyfp2.cloudfront.net");
         configuration.setAllowCredentials(true);
         configuration.setAllowedMethods(List.of("GET", "POST", "DELETE", "PATCH"));
         source.registerCorsConfiguration("/**", configuration);
