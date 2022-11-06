@@ -100,7 +100,6 @@ public class QuestionDto {
     @Getter
     @AllArgsConstructor
     public static class Like {
-        private Long userId;
         private boolean likeYn;
         private boolean unlikeYn;
     }
