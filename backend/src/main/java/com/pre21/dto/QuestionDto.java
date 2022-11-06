@@ -53,7 +53,7 @@ public class QuestionDto {
     @NoArgsConstructor
     @Builder
     public static class GetResponseDtos {
-        private Long id;
+        private Long questionId;
         private String title;
         private String contents;
         private List<QuestionDto.TagResponse> questionsTags;
