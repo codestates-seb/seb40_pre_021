@@ -2,7 +2,7 @@ import instance from './root';
 
 export const ask = async (data) => {
 	try {
-		const result = await instance.post('/question/ask', data);
+		const result = await instance.post('/questions/ask', data);
 		return result.data;
 	} catch (err) {
 		console.log(err);
