@@ -19,11 +19,16 @@ const Question = () => {
 	const [thread, setThread] = useState('');
 	const [nickname, setNickname] = useState('');
 	const [answerData, setAnswerData] = useState('');
+	const [choseAnswerId, setChoseAnswerId] = useState('');
 	const { questionId } = useParams();
 	useEffect(() => {
 		getQuestion(questionId).then((res) => {
 			console.log('getQuestion', res);
 			setThread(res);
+			if (res.answers) {
+				const chosen = res.answers.filter((el) => el.chooseYn === true);
+				setChoseAnswerId(chosen.answerId);
+			}
 		});
 		getUserInfo().then((res) => {
 			setNickname(res.nickname);
@@ -243,6 +248,7 @@ const Question = () => {
 												votecount={el.vote}
 												votedata={el.answerLikes}
 												chose={el.chooseYn}
+												choseAnswerId={choseAnswerId}
 												QcreatorNickname={thread.nickname}
 												loginNickname={nickname}
 												questionId={questionId}

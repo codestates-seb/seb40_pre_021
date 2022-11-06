@@ -20,6 +20,7 @@ const Controller = ({
 	votedata,
 	bookmarkdata,
 	chose,
+	choseAnswerId,
 	QcreatorNickname,
 	loginNickname,
 	questionId,
@@ -110,9 +111,12 @@ const Controller = ({
 	};
 
 	const handleChose = () => {
-		if (chosen) setChosen(false);
-		if (!chosen) setChosen(true);
-		choose({ questionId, answerId }); // 채택 여부를 저장하여 보냅니다.
+		if (choseAnswerId !== answerId) alert('채택 여러개 못한다.');
+		else {
+			if (chosen) setChosen(false);
+			if (!chosen) setChosen(true);
+			choose({ questionId, answerId }); // 채택 여부를 저장하여 보냅니다.
+		}
 	};
 
 	return (
@@ -139,7 +143,8 @@ const Controller = ({
 					<Choosed
 						QcreatorNickname={QcreatorNickname}
 						loginNickname={loginNickname}
-						chosen={chosen}>
+						chosen={chosen}
+						choseAnswerId={choseAnswerId}>
 						<button onClick={handleChose}>
 							<svg width="36" height="36" viewBox="0 0 36 36">
 								<path d="m6 14 8 8L30 6v8L14 30l-8-8v-8Z"></path>
@@ -222,7 +227,9 @@ const Choosed = styled.div`
 	}
 	div {
 		display: ${(props) =>
-			props.QcreatorNickname === props.loginNickname ? 'none' : 'block'};
+			props.QcreatorNickname !== props.loginNickname && props.chosen === true
+				? 'block'
+				: 'none'};
 	}
 	svg {
 		display: block;
