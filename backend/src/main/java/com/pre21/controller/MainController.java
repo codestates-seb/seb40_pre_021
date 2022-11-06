@@ -58,12 +58,15 @@ public class MainController {
 
         List<Questions> questions = questionsService.findQuestions();
         List<String> tags = tagsService.findAllTags();
+        List<QuestionDto.GetResponseDtos> response = mapper.questionsToQuestionResponses(questions);
+        Collections.sort(response);
+
         long questionsCount = questionsService.findQuestionCount();
         return new ResponseEntity<>(
                 MainDto.MainPage
                         .builder()
                         .questionsCount(questionsCount)
-                        .data(mapper.questionsToQuestionResponses(questions))
+                        .data(response)
                         .tags(tags)
                         .build(),
                 HttpStatus.OK);
