@@ -1,6 +1,8 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
 const AnswerOrQuestionList = ({ lists, limit }) => {
+	const navigate = useNavigate();
 	return (
 		<Container>
 			{lists.length &&
@@ -18,7 +20,13 @@ const AnswerOrQuestionList = ({ lists, limit }) => {
 							<ContentBox>
 								<LeftContent>
 									<VoteDisplay choosed={choosed}>{vote}</VoteDisplay>
-									<Title href={url}>{title}</Title>
+									<Title
+										// href={url}
+										onClick={() => {
+											navigate(`/questions/question/${id}`);
+										}}>
+										{title}
+									</Title>
 								</LeftContent>
 								<DateText>{date}</DateText>
 							</ContentBox>
@@ -79,7 +87,7 @@ const VoteDisplay = styled.div`
 	white-space: nowrap;
 `;
 
-const Title = styled.a`
+const Title = styled.span`
 	text-decoration: none;
 	display: -webkit-box;
 	color: #0063bf;
