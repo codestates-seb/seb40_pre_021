@@ -41,7 +41,7 @@ function useMypageData(category, value = []) {
 						let sortData = data.sort((a, b) => b.tagCount - a.tagCount);
 						setData(sortData);
 					} else {
-						setData(res);
+						setData(data);
 					}
 				});
 				break;
@@ -52,7 +52,7 @@ function useMypageData(category, value = []) {
 						let sortData = data.sort((a, b) => b.views - a.views);
 						setData(sortData);
 					} else {
-						setData(res);
+						setData(data);
 					}
 				});
 				break;
