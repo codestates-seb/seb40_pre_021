@@ -106,13 +106,15 @@ const Search = () => {
 					let searchWords = inputValue.split(' ').filter((ele) => {
 						return ele !== '';
 					});
-					tags.map((tag) => {
-						searchWords.map((word, idx) => {
-							if (tag === word) {
-								searchWords[idx] = `[${word}]`;
-							}
+					if (Array.isArray(tags)) {
+						tags.map((tag) => {
+							searchWords.map((word, idx) => {
+								if (tag === word) {
+									searchWords[idx] = `[${word}]`;
+								}
+							});
 						});
-					});
+					}
 					const q = searchWords.join(' ');
 					navigate(`/search/${q}`);
 					setInputValue('');
@@ -131,16 +133,18 @@ const Search = () => {
 	};
 
 	const NewOptions = (text) => {
-		const newOptions = [...tags];
-		setOptions(
-			newOptions.filter((ele) => {
-				if (text !== '') {
-					return ele.includes(text);
-				} else {
-					setIndex(0);
-				}
-			}),
-		);
+		if (Array.isArray(tags)) {
+			const newOptions = [...tags];
+			setOptions(
+				newOptions.filter((ele) => {
+					if (text !== '') {
+						return ele.includes(text);
+					} else {
+						setIndex(0);
+					}
+				}),
+			);
+		}
 	};
 	const handleInputChange = (event) => {
 		const text = event.target.value;

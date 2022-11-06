@@ -31,6 +31,9 @@ const Question = () => {
 	}, []);
 
 	const handleCommentQ = (e) => {
+		if (e.nativeEvent.isComposing) {
+			return;
+		}
 		if (e.key === 'Enter') {
 			//test
 			// const arr = [...thread.comments];
@@ -57,6 +60,9 @@ const Question = () => {
 	};
 
 	const handleCommentA = (e, answerId) => {
+		if (e.nativeEvent.isComposing) {
+			return;
+		}
 		if (e.key === 'Enter') {
 			//test
 			// const arr = thread.answers.filter((ele) => {
@@ -293,7 +299,7 @@ const Question = () => {
 													</Grouper>
 												))}
 											<CommentCreate
-												onKeyDown={() => handleCommentA(event, el.answerId)}
+												onKeyDown={(e) => handleCommentA(e, el.answerId)}
 												placeholder="Add a comment"
 											/>
 										</Right>
