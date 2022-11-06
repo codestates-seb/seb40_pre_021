@@ -16,15 +16,18 @@ const LeftMenuStyle = styled.div`
 	max-height: 100vh;
 	.public {
 		color: gray;
-		font-size: 13px;
+		font-size: 11px;
 		user-select: none;
-		margin: 5%;
+		margin-top: 0.2rem;
+		padding: 1rem 0 0.1rem 0.3rem;
 	}
 	.active {
 		background-color: rgb(239, 240, 241);
 		color: black;
 		border-right: 3px solid rgb(223, 126, 44);
 		font-weight: bold;
+		margin-top: 0.2rem;
+		padding: 0 0 0.1rem 0.3rem;
 	}
 `;
 
