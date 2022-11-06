@@ -7,10 +7,12 @@ import com.pre21.exception.ExceptionCode;
 import com.pre21.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class LikeService {
     private final AuthRepository authRepository;
