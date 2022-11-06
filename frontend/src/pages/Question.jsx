@@ -109,7 +109,7 @@ const Question = () => {
 		commentADEL(data);
 		getQuestion(questionId).then((res) => setThread(res));
 	};
-	const handleAnswer = (str) => {
+	const handleAnswer = (str, e) => {
 		setAnswerData({
 			body: str,
 		});
@@ -151,7 +151,7 @@ const Question = () => {
 					getQuestion(questionId).then((res) => setThread(res));
 				}
 			});
-		}
+		} //여기서 에디터가 다시 렌더링되어야함.
 	};
 
 	return (

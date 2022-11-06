@@ -111,7 +111,8 @@ const Controller = ({
 	};
 
 	const handleChose = () => {
-		if (choseAnswerId !== answerId) alert('채택 여러개 못한다.');
+		if (choseAnswerId !== undefined && choseAnswerId !== answerId)
+			alert('채택 여러개 못한다.');
 		else {
 			if (chosen) setChosen(false);
 			if (!chosen) setChosen(true);
