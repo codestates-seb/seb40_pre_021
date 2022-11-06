@@ -46,7 +46,7 @@ public class QuestionDto {
         private List<QuestionDto.LikeResponse> questionsLikes;   // 질문 좋아요,싫어요 유저 정보
     }
 
-    // 질문 전체 조회 Dto
+    // 질문 전체 조회 Dto1
     @Getter
     @Setter
     @AllArgsConstructor
