@@ -23,7 +23,6 @@ const Question = () => {
 	const { questionId } = useParams();
 	useEffect(() => {
 		getQuestion(questionId).then((res) => {
-			console.log('getQuestion', res);
 			setThread(res);
 			if (res.answers) {
 				const chosen = res.answers.filter((el) => el.chooseYn === true);
@@ -36,17 +35,14 @@ const Question = () => {
 	}, []);
 
 	const handleCommentQ = (e) => {
-		if (e.nativeEvent.isComposing) {
-			return;
-		}
 		if (e.key === 'Enter') {
 			//test
 			// const arr = [...thread.comments];
 			// const test = {
-			// 	id: thread.comments.length + 1,
-			// 	comments: e.target.value,
-			// 	createdAt: '2022-11-03T23:20:27.362238',
-			// 	nickname: 'gildong',
+			//  id: thread.comments.length + 1,
+			//  comments: e.target.value,
+			//  createdAt: '2022-11-03T23:20:27.362238',
+			//  nickname: 'gildong',
 			// };
 			// arr.push(test);
 			// const comments = { comments: arr };
@@ -65,19 +61,16 @@ const Question = () => {
 	};
 
 	const handleCommentA = (e, answerId) => {
-		if (e.nativeEvent.isComposing) {
-			return;
-		}
 		if (e.key === 'Enter') {
 			//test
 			// const arr = thread.answers.filter((ele) => {
-			// 	return ele.answerId === answerId;
+			//  return ele.answerId === answerId;
 			// });
 			// const test = {
-			// 	id: thread.answers.comments?.length + 1,
-			// 	comments: e.target.value,
-			// 	createdAt: '2022-11-03T23:20:29.553901',
-			// 	nickname: 'gildong',
+			//  id: thread.answers.comments?.length + 1,
+			//  comments: e.target.value,
+			//  createdAt: '2022-11-03T23:20:29.553901',
+			//  nickname: 'gildong',
 			// };
 			// arr[0].comments.push(test);
 			// const answers = { answers: arr };
@@ -118,23 +111,23 @@ const Question = () => {
 		//test
 		// const arr = [...thread.answers];
 		// const test = {
-		// 	answerId: thread.answers.length + 1,
-		// 	contents: answerData.body,
-		// 	vote: -1,
-		// 	chooseYn: false,
-		// 	createdAt: '2022-11-03T23:20:22.798088',
-		// 	modifiedAt: '2022-11-03T23:20:22.798088',
-		// 	nickname: 'gildong',
-		// 	comments: [],
-		// 	bookmarks: [],
-		// 	answerLikes: [
-		// 		{
-		// 			nickname: 'gildong',
-		// 			userId: 1,
-		// 			likeYn: true,
-		// 			unlikeYn: false,
-		// 		},
-		// 	],
+		//  answerId: thread.answers.length + 1,
+		//  contents: answerData.body,
+		//  vote: -1,
+		//  chooseYn: false,
+		//  createdAt: '2022-11-03T23:20:22.798088',
+		//  modifiedAt: '2022-11-03T23:20:22.798088',
+		//  nickname: 'gildong',
+		//  comments: [],
+		//  bookmarks: [],
+		//  answerLikes: [
+		//    {
+		//      nickname: 'gildong',
+		//      userId: 1,
+		//      likeYn: true,
+		//      unlikeYn: false,
+		//    },
+		//  ],
 		// };
 		// arr.push(test);
 		// const answers = { answers: arr };
@@ -149,6 +142,7 @@ const Question = () => {
 			answer(data).then((res) => {
 				if (!res.code) {
 					getQuestion(questionId).then((res) => setThread(res));
+					setAnswerData('');
 				}
 			});
 		} //여기서 에디터가 다시 렌더링되어야함.
@@ -254,7 +248,6 @@ const Question = () => {
 												votecount={el.vote}
 												votedata={el.answerLikes}
 												chose={el.chooseYn}
-												choseAnswerId={choseAnswerId}
 												QcreatorNickname={thread.nickname}
 												loginNickname={nickname}
 												questionId={questionId}
@@ -305,7 +298,7 @@ const Question = () => {
 													</Grouper>
 												))}
 											<CommentCreate
-												onKeyDown={(e) => handleCommentA(e, el.answerId)}
+												onKeyDown={() => handleCommentA(event, el.answerId)}
 												placeholder="Add a comment"
 											/>
 										</Right>
@@ -317,7 +310,7 @@ const Question = () => {
 
 					<EditGroup>
 						<YourAnswer>Your Answer</YourAnswer>
-						<Editor callback={handleAnswer} />
+						<Editor callback={handleAnswer} answerData={answerData} />
 						<Button text="Post Your Answer" callback={handleSubmitAnswer} />
 					</EditGroup>
 				</Wrapper>
