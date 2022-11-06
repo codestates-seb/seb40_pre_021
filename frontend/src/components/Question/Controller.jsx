@@ -111,6 +111,7 @@ const Controller = ({
 	};
 
 	const handleChose = () => {
+		if (choseAnswerId.length !== 0) alert('중복해서 채택할 수 없다.');
 		if (!chosen) setChosen(true);
 		if (chosen) alert('중복해서 채택할 수 없다.');
 		choose({ questionId, answerId }); // 채택 여부를 저장하여 보냅니다.
