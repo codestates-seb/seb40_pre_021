@@ -17,6 +17,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 import static com.pre21.security.utils.ControllerConstants.USER_ID;
@@ -88,9 +89,11 @@ public class QuestionsController {
 
         List<Questions> questions = questionsService.findQuestions();
         long questionsCount = questionsService.findQuestionCount();
+        List<QuestionDto.GetResponseDtos> response = mapper.questionsToQuestionResponses(questions);
+        Collections.sort(response);
 
         return new ResponseEntity<>(
-                new MultiResponseDto.MultiResponseDtos<>(mapper.questionsToQuestionResponses(questions), questionsCount),
+                new MultiResponseDto.MultiResponseDtos<>(response, questionsCount),
                 HttpStatus.OK);
     }
 
