@@ -10,6 +10,7 @@ public class QuestionDto {
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
+    @ToString
     public static class Post {
         private String title;
         private String contents;
