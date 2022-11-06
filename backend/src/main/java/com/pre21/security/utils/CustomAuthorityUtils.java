@@ -12,9 +12,9 @@ import java.util.stream.Collectors;
 
 @Component
 public class CustomAuthorityUtils {
-    //    @Value("${mail.address.admin}")
-//    private String adminMailAddress;
-    private String adminMailAddress = "2ne1admin@gmail.com";
+
+    @Value("${mail.address.admin}")
+    private String adminMailAddress;
 
     private final List<GrantedAuthority> ADMIN_ROLES = AuthorityUtils.createAuthorityList("ROLE_ADMIN", "ROLE_USER");
     private final List<GrantedAuthority> USER_ROLES = AuthorityUtils.createAuthorityList("ROLE_USER");
@@ -29,10 +29,9 @@ public class CustomAuthorityUtils {
     }
 
     public List<GrantedAuthority> createAuthorities(List<String> roles) {
-        List<GrantedAuthority> authorities = roles.stream()
+        return roles.stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .collect(Collectors.toList());
-        return authorities;
     }
 
     public List<String> createRoles(String email) {

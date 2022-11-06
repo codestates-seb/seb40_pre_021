@@ -39,9 +39,15 @@ public class QuestionsController {
      */
     @PostMapping("/ask")
     public ResponseEntity createQuestion(@RequestBody QuestionDto.Post post,
-                               @CookieValue(name = "userId", required = true) Long userId) {
-        Long questionId = questionsService.createQuestion(post, userId);
-        return new ResponseEntity(questionId, HttpStatus.OK);
+                                         @CookieValue(name = "userId", required = true) Long userId) {
+        Questions questions = questionsService.createQuestion(post, userId);
+
+        return new ResponseEntity<>(
+                QuestionDto.CreateResponse
+                        .builder()
+                        .id(questions.getId())
+                        .build(),
+                HttpStatus.CREATED);
     }
 
 

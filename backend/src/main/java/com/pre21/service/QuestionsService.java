@@ -34,8 +34,8 @@ public class QuestionsService {
 
 
     // 질문 생성
-    public Long createQuestion(QuestionDto.Post post,
-                               Long userId) {
+    public Questions createQuestion(QuestionDto.Post post,
+                                    Long userId) {
         User findUser = authRepository.findById(userId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.UNAUTHORIZED_USER));
 
@@ -72,7 +72,7 @@ public class QuestionsService {
                 }
         );
 
-        return questions.getId();
+        return questions;
     }
 
     // 질문 조회

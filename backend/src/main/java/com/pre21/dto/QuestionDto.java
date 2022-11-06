@@ -132,4 +132,14 @@ public class QuestionDto {
         private Long tagId;
         private String title;
     }
+
+
+    // 질문 생성 응답
+    @Getter
+    @Builder
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class CreateResponse {
+        private Long id;
+    }
 }
