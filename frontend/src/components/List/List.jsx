@@ -89,7 +89,7 @@ const RightSection = styled.div`
 `;
 const List = ({ data, type }) => {
 	// const [questionId, setQuestionId] = useState(data.questionId);
-	const [createId, setCreateId] = useState(data.createId);
+	const [createId, setCreateId] = useState(data.nickname);
 	const [choosed, setChoosed] = useState(data.choosed);
 	const navigate = useNavigate();
 
