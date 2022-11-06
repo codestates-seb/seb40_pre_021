@@ -20,7 +20,7 @@ public class AnswersController {
     private final AnswersMapper mapper;
 
 
-    @PostMapping("/{question-id}/answer")
+    @PostMapping("/answer/{question-id}")
     public void createAnswer(@PathVariable("question-id") Long questionId,
                              @RequestBody AnswerDto.Post answerPostDto) {
 
