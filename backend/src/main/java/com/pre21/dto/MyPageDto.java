@@ -75,6 +75,7 @@ public class MyPageDto {
     @Builder
     @Getter
     @Setter
+    @NoArgsConstructor
     @AllArgsConstructor
     public static class BookmarkInfo {
         private Long questionId;
@@ -87,5 +88,20 @@ public class MyPageDto {
         private int views;
         private int answerCount;
         private LocalDateTime createdAt;
+        private BookmarkAnswer answer;
+    }
+
+    @Builder
+    @Getter
+    @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class BookmarkAnswer {
+        private Long answerId;
+        private String answerUser;
+        private String answerBody;
+        private LocalDateTime answerCreatedAt;
+        private int vote;
+        private boolean choosed;
     }
 }
