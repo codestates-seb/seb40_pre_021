@@ -10,13 +10,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/questions")
+@RequestMapping(value = "/questions",
+produces = MediaType.APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 public class QuestionsController {
     private final QuestionsService questionsService;
