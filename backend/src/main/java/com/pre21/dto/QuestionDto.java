@@ -66,7 +66,7 @@ public class QuestionDto {
 
         @Override
         public int compareTo(GetResponseDtos o) {
-            return (int) (o.id - this.id);
+            return (int) (this.id - o.id);
         }
     }
 
