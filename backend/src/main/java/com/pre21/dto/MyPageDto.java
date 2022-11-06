@@ -11,6 +11,28 @@ public class MyPageDto {
     @Builder
     @Getter
     @Setter
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class QuestionInfo {
+        private Long id;
+        private String title;
+        private String contents;
+        private List<String> tags;
+        private int vote;
+        private boolean choosed;
+        private int views;
+        private LocalDateTime createdAt;
+        private int answerCount;
+        private String url;
+
+
+    }
+
+
+    @Builder
+    @Getter
+    @Setter
+    @NoArgsConstructor
     @AllArgsConstructor
     public static class TagInfo {
         private Long id;
@@ -22,6 +44,7 @@ public class MyPageDto {
     @Builder
     @Getter
     @Setter
+    @NoArgsConstructor
     @AllArgsConstructor
     public static class AnswerInfo {
         private Long questionId;
