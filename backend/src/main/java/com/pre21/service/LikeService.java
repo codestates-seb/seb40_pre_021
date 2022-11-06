@@ -7,10 +7,12 @@ import com.pre21.exception.ExceptionCode;
 import com.pre21.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class LikeService {
     private final AuthRepository authRepository;
@@ -33,7 +35,7 @@ public class LikeService {
         // 질문 id를 통해 질문 조회
         Questions findQuestion = verifiedExistQuestion(questionId);
         int oldVote = findQuestion.getVote();
-        int compareResult = 0;
+        int compareResult;
 
         // 현재 유저의 질문 좋아요 상태를 가져온 후
         Optional<QuestionLikes> findQuestionLikes = findQuestionLike(findUser);
@@ -43,21 +45,20 @@ public class LikeService {
             QuestionLikes likes = findQuestionLikes.get();
             likes.setLikeYn(like.isLikeYn());
             likes.setUnlikeYn(like.isUnlikeYn());
-
             compareResult = dtoCheck(oldVote, likes, like);
             findQuestion.setVote(compareResult);
             QuestionLikes savedLike = questionLikeRepository.save(likes);
-            findQuestion.addQuestionsLikes(savedLike);
             findUser.addQuestionsLikes(savedLike);
+            findQuestion.addQuestionsLikes(savedLike);
         } else { // 없을 경우 QuestionLikes를 생성하여 저장
             QuestionLikes likes = new QuestionLikes(like.isLikeYn(), like.isUnlikeYn());
-            likes.setUsers(findUser);
-            likes.addQuestions(findQuestion);
             compareResult = dtoCheck(oldVote, likes, like);
             findQuestion.setVote(compareResult);
+            likes.setUsers(findUser);
+            likes.addQuestions(findQuestion);
             QuestionLikes savedLike = questionLikeRepository.save(likes);
-            findQuestion.addQuestionsLikes(savedLike);
             findUser.addQuestionsLikes(savedLike);
+            findQuestion.addQuestionsLikes(savedLike);
         }
     }
 
