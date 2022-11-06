@@ -109,7 +109,7 @@ public class JwtTokenizer {
 
     // 리프레시 토큰 저장
     public void savedRefreshToken(String refreshToken, String email, Long userId) {
-        Optional<RefreshToken> findRefreshToken = refreshTokenRepository.findRefreshTokenByTokenEmail(email);
+        Optional<RefreshToken> findRefreshToken = refreshTokenRepository.findByUserId(userId);
         findRefreshToken.ifPresent(refreshTokenRepository::delete);
         refreshTokenRepository.save(new RefreshToken(refreshToken, email, userId));
     }
