@@ -98,7 +98,7 @@ public class MypageController {
         List<UserTags> tags = tagsService.findMyTags(userId);
         List<MyPageDto.TagInfo> response = tagMapper.TagToTagResponse(tags);
         return new ResponseEntity<>(
-                new SingleResponseDto<>(response), HttpStatus.OK);
+                response, HttpStatus.OK);
     }
 
 
@@ -116,7 +116,7 @@ public class MypageController {
                 .bookmarkToBookmarkResponses(bookmarks);
 
         return new ResponseEntity<>(
-                new SingleResponseDto<>(response), HttpStatus.OK
+                response, HttpStatus.OK
         );
     }
 }
