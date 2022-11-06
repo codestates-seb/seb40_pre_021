@@ -44,6 +44,7 @@ public class MyPageDto {
         private LocalDateTime createdAt;
         private boolean choosed;
         private int vote;
+        private String url;
     }
 
 

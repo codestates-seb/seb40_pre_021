@@ -11,6 +11,8 @@ import org.mapstruct.ReportingPolicy;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.pre21.util.RestConstants.QUESTION_URL;
+
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface AnswersMapper {
     List<MyPageDto.AnswerInfo> answersToAnswerResponses(List<Answers> answers);
@@ -29,6 +31,7 @@ public interface AnswersMapper {
                         .createdAt(answer.getCreatedAt())
                         .choosed(answer.isChooseYn())
                         .vote(answer.getVote())
+                        .url(QUESTION_URL + answer.getQuestions().getId())
                         .build()).collect(Collectors.toList());
     }
 
