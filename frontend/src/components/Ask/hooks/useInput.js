@@ -5,7 +5,7 @@ const useInput = (initialValue = '') => {
 
 	function handleChangeValue(e) {
 		let value = e.target.value;
-		value = value.replace(/[^a-zA-z-_0-9]/g, '');
+		value = value.replace(/[^a-zA-z-_0-9_+]/g, '');
 		setValue(value);
 	}
 
