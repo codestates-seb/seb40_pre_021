@@ -6,6 +6,7 @@ import com.pre21.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,16 +47,24 @@ public class AuthController {
     public void logoutUser(@CookieValue(name = REFRESH_TOKEN, required = true) String refreshToken,
                            HttpServletResponse response) {
         authService.logoutUser(refreshToken);
-        Cookie deleteToken = new Cookie(REFRESH_TOKEN, null);
-        deleteToken.setMaxAge(0);
-        deleteToken.setPath("/");
+        ResponseCookie deleteToken = ResponseCookie.from("RefreshToken", "")
+                .maxAge(0)
+                .path("/")
+                .secure(true)
+                .sameSite("None")
+                .httpOnly(true)
+                .build();
 
-        Cookie deleteUserId = new Cookie("userId", null);
-        deleteUserId.setMaxAge(0);
-        deleteUserId.setPath("/");
+        ResponseCookie deleteUserId = ResponseCookie.from("userId", "")
+                .maxAge(0)
+                .path("/")
+                .secure(true)
+                .sameSite("None")
+                .httpOnly(true)
+                .build();
 
-        response.addCookie(deleteToken);
-        response.addCookie(deleteUserId);
+        response.addHeader("Set-Cookie", deleteToken.toString());
+        response.addHeader("Set-Cookie", deleteUserId.toString());
     }
 
 

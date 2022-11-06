@@ -17,8 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/questions",
-produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/questions")
 @RequiredArgsConstructor
 public class QuestionsController {
     private final QuestionsService questionsService;
