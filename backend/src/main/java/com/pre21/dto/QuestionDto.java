@@ -54,6 +54,7 @@ public class QuestionDto {
     @Builder
     public static class GetResponseDtos {
         private Long id;
+        private String nickname;
         private String title;
         private String contents;
         private List<QuestionDto.TagResponse> questionsTags;
