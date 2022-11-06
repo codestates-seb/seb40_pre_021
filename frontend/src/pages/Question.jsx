@@ -23,7 +23,6 @@ const Question = () => {
 	const { questionId } = useParams();
 	useEffect(() => {
 		getQuestion(questionId).then((res) => {
-			console.log('getQuestion', res);
 			setThread(res);
 			if (res.answers) {
 				const chosen = res.answers.filter((el) => el.chooseYn === true);

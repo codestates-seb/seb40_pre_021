@@ -60,7 +60,7 @@ const Questions = () => {
 		}
 		getList(data).then((res) => {
 			setData(res.data);
-			setQuestionCount(res.questionCount);
+			setQuestionCount(res.questionsCount);
 		});
 	};
 	useEffect(() => {
