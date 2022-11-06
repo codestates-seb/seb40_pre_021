@@ -22,6 +22,7 @@ public interface QuestionsMapper {
                 .map(question -> MyPageDto.QuestionInfo
                         .builder()
                         .id(question.getId())
+                        .nickname(question.getUsers().getNickname())
                         .title(question.getTitle())
                         .contents(question.getContents())
                         .tags(question.getQuestionsTags().stream()
