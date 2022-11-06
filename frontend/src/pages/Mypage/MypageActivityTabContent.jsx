@@ -46,11 +46,17 @@ const MypageTabContent = ({ curTab, changeCurrentTab }) => {
 					title="Answers"
 					callback={setAnswer}
 					type="answered"
+					text="You have not answered any questions"
 				/>
 			);
 		case 'Questions':
 			return (
-				<TotalList lists={question} title="Questions" callback={setQuestion} />
+				<TotalList
+					lists={question}
+					title="Questions"
+					callback={setQuestion}
+					text="You have not asked any questions"
+				/>
 			);
 		case 'Tags':
 			return <Tags tag={tag} setTag={setTag} />;
