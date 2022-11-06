@@ -20,6 +20,7 @@ const Controller = ({
 	votedata,
 	bookmarkdata,
 	chose,
+	choseAnswerId,
 	QcreatorNickname,
 	loginNickname,
 	questionId,
@@ -110,7 +111,6 @@ const Controller = ({
 	};
 
 	const handleChose = () => {
-		if (chosen) setChosen(false);
 		if (!chosen) setChosen(true);
 		choose({ questionId, answerId }); // 채택 여부를 저장하여 보냅니다.
 	};
@@ -139,7 +139,8 @@ const Controller = ({
 					<Choosed
 						QcreatorNickname={QcreatorNickname}
 						loginNickname={loginNickname}
-						chosen={chosen}>
+						chosen={chosen}
+						choseAnswerId={choseAnswerId}>
 						<button onClick={handleChose}>
 							<svg width="36" height="36" viewBox="0 0 36 36">
 								<path d="m6 14 8 8L30 6v8L14 30l-8-8v-8Z"></path>
@@ -217,7 +218,9 @@ const Bookmark = styled.button`
 const Choosed = styled.div`
 	button {
 		display: ${(props) =>
-			props.QcreatorNickname === props.loginNickname && props.chosen === false
+			props.QcreatorNickname === props.loginNickname &&
+			props.chosen === false &&
+			!props.choseAnswerId
 				? 'block'
 				: 'none'};
 		cursor: pointer;
