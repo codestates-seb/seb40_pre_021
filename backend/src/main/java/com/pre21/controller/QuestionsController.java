@@ -74,6 +74,21 @@ public class QuestionsController {
     }
 
     /**
+     * 질문 전체 조회 메서드
+     * @return  생성된 질문 전체 + 질문 개수
+     */
+    @GetMapping
+    public ResponseEntity getQuestions() {
+
+        List<Questions> questions = questionsService.findQuestions();
+        long questionsCount = questionsService.findQuestionCount();
+
+        return new ResponseEntity<>(
+                new MultiResponseDto.MultiResponseDtos<>(mapper.questionsToQuestionResponses(questions), questionsCount),
+                HttpStatus.OK);
+    }
+
+    /**
      * Pagination 질문 전체 조회 메서드
      * @param page  페이지
      * @param size  페이지에 출력되는 개수
