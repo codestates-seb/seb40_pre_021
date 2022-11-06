@@ -3,10 +3,8 @@ import TagList from '../common/TagList';
 import AnswerList from '../common/AnswerList';
 import UserInfo from '../common/UserInfo';
 import ListAdditionalInfo from '../common/ListAdditionalInfo';
-import { useNavigate } from 'react-router-dom';
 
 const SavesListBox = ({ bookmarks }) => {
-	const navigate = useNavigate();
 	return (
 		<Container>
 			{bookmarks?.map((bookmark) => {
@@ -36,13 +34,7 @@ const SavesListBox = ({ bookmarks }) => {
 						/>
 						<ContentBox>
 							<h3>
-								<PostTitle
-									href={url}
-									onClick={() => {
-										navigate(`/questions/question/${questionId}`);
-									}}>
-									{title}
-								</PostTitle>
+								<a href={url}>{title}</a>
 							</h3>
 							<TagAndUserInfoBox>
 								<TagList tag={tag} />
@@ -51,12 +43,7 @@ const SavesListBox = ({ bookmarks }) => {
 							</TagAndUserInfoBox>
 						</ContentBox>
 						{answer ? (
-							<AnswerList
-								answer={answer}
-								postUrl={url}
-								type="answer"
-								questionId={questionId}
-							/>
+							<AnswerList answer={answer} postUrl={url} type="answer" />
 						) : null}
 					</ListBox>
 				);
@@ -115,13 +102,4 @@ const TagAndUserInfoBox = styled.div`
 	flex-wrap: wrap;
 	column-gap: 6px;
 	row-gap: 8px;
-`;
-
-const PostTitle = styled.span`
-	text-decoration: none;
-	cursor: pointer;
-	color: #0074cc;
-	:hover {
-		color: #0a95ff;
-	}
 `;

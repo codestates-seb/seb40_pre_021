@@ -1,13 +1,11 @@
 import styled from 'styled-components';
 import defaultImage from '../../../assets/images/userDefaultImage.png';
 import { GoCheck } from 'react-icons/go';
-import { useNavigate } from 'react-router-dom';
 
-const AnswerList = ({ answer, postUrl, questionId }) => {
+const AnswerList = ({ answer, postUrl }) => {
 	const { answerUser, answerBody, answerCreatedAt, vote, choosed } = answer;
 	let days = new Date(answerCreatedAt).toString().split(' ');
 	let date = `${days[1]} ${days[2]} at ${days[4]}`;
-	const navigate = useNavigate();
 	return (
 		<AnswerListBox>
 			<AnswerVoteAnswerBox>
@@ -24,10 +22,7 @@ const AnswerList = ({ answer, postUrl, questionId }) => {
 				<AnswerContent choosed={choosed}>{answerBody}</AnswerContent>
 			</AnswerVoteAnswerBox>
 			<AnswerAndUserInfoBox>
-				<PostViewText
-					onClick={() => navigate(`/questions/question/${questionId}`)}>
-					View answer
-				</PostViewText>
+				<a href={postUrl}>View answer</a>
 				<UserInfoBox>
 					<UserImage src={defaultImage} alt="user-image" />
 					<a href="1">{answerUser}</a>
@@ -87,7 +82,7 @@ const AnswerAndUserInfoBox = styled.div`
 	flex-wrap: wrap;
 	column-gap: 6px;
 	row-gap: 8px;
-	/* a {
+	a {
 		text-decoration: none;
 		cursor: pointer;
 		color: #0074cc;
@@ -96,7 +91,7 @@ const AnswerAndUserInfoBox = styled.div`
 		:hover {
 			color: #0a95ff;
 		}
-	} */
+	}
 `;
 
 const UserImage = styled.img`
@@ -174,16 +169,5 @@ const AnswerBox = styled.div`
 		&:first-child {
 			font-weight: 500;
 		}
-	}
-`;
-
-const PostViewText = styled.span`
-	text-decoration: none;
-	cursor: pointer;
-	color: #0074cc;
-	font-size: 13px;
-	font-weight: 400;
-	:hover {
-		color: #0a95ff;
 	}
 `;
