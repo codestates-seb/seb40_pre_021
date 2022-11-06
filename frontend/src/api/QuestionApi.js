@@ -33,7 +33,6 @@ export const getQuestion = async (data) => {
 }; //질문 상세페이지 조회
 
 export const commentQ = async (data) => {
-	console.log('commentQ', data);
 	try {
 		// const result = await instance.post('/data', data); //테스트용
 		const result = await instance.post(
@@ -48,7 +47,6 @@ export const commentQ = async (data) => {
 }; //질문에 대한 댓글 작성
 
 export const answer = async (data) => {
-	console.log('answer', data);
 	try {
 		// const result = await instance.post('/data', data); //test
 		const result = await instance.post(

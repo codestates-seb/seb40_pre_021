@@ -27,7 +27,6 @@ import { TokenExpireSetting } from './TokenApi';
 export const Login = async (data) => {
 	try {
 		const result = await instance.post(`/users/login`, data);
-		console.log('Login', result);
 		if (result.data.accessToken) {
 			TokenExpireSetting(result);
 		} else {
