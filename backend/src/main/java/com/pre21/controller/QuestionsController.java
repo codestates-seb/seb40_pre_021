@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping(value = "/questions")
 @RequiredArgsConstructor
@@ -32,6 +33,7 @@ public class QuestionsController {
     @PostMapping("/ask")
     public void createQuestion(@RequestBody QuestionDto.Post post,
                                @CookieValue(name = "userId", required = true) Long userId) {
+        log.info("############## post ################## {}", post);
         questionsService.createQuestion(post, userId);
     }
 
