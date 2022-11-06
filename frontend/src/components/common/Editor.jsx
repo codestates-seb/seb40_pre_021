@@ -82,8 +82,8 @@ const Result = styled.div`
 	}
 `;
 
-const Editor = ({ id, callback }) => {
-	const [mdText, setMdText] = useState('');
+const Editor = ({ id, callback, answerData }) => {
+	const [mdText, setMdText] = useState(answerData);
 
 	const handleChange = (e) => {
 		setMdText(markdownParse(e.target.value));
@@ -95,7 +95,7 @@ const Editor = ({ id, callback }) => {
 		<>
 			<Container>
 				<Header />
-				<Textarea onKeyUp={handleChange} id={id}></Textarea>
+				<Textarea onKeyUp={handleChange} value={mdText} id={id}></Textarea>
 				<Result
 					mdText={mdText}
 					dangerouslySetInnerHTML={{ __html: mdText }}></Result>
