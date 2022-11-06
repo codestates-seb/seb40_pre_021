@@ -19,7 +19,6 @@ public interface AnswersMapper {
     @Mapping(source = "answers.questions.title", target = "title")
     MyPageDto.AnswerInfo answersToAnswerResponses(Answers answers);
 
-
     default List<MyPageDto.AnswerInfos> answerToAnswerResponses(List<Answers> answers) {
         return answers.stream()
                 .map(answer -> MyPageDto.AnswerInfos

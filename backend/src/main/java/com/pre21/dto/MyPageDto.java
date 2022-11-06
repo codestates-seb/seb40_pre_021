@@ -28,7 +28,7 @@ public class MyPageDto {
         private Long id;
         private String title;
         private LocalDateTime createdAt;
-        private Adoption choosed;
+        private Adoption adoption;
         private int vote;
     }
 
