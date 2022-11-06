@@ -16,7 +16,7 @@ public class MyPageDto {
     @Setter
     @AllArgsConstructor
     public static class TagInfo {
-        private Long tagId;
+        private Long id;
         private String title;
         private long tagCount;
     }
@@ -31,8 +31,8 @@ public class MyPageDto {
         private Long id;
         private String title;
         private LocalDateTime createdAt;
-        private Adoption adoption;
-        private Long vote;
+        private boolean choosed;
+        private int vote;
     }
 
     @Builder

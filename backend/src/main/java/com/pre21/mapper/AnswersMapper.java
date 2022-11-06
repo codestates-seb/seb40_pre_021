@@ -9,14 +9,27 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface AnswersMapper {
-    List<MyPageDto.AnswerInfo> answersToAnswerResponses(List<Answers> answers);
-
-    @Mapping(source = "answers.questions.id", target = "questionId")
-    @Mapping(source = "answers.questions.title", target = "title")
-    MyPageDto.AnswerInfo answersToAnswerResponses(Answers answers);
+    //    List<MyPageDto.AnswerInfo> answersToAnswerResponses(List<Answers> answers);
+//
+//    @Mapping(source = "answers.questions.id", target = "questionId")
+//    @Mapping(source = "answers.questions.title", target = "title")
+//    MyPageDto.AnswerInfo answersToAnswerResponses(Answers answers);
+    default List<MyPageDto.AnswerInfo> answerToAnswerResponse(List<Answers> answers) {
+        return answers.stream()
+                .map(answer -> MyPageDto.AnswerInfo
+                        .builder()
+                        .questionId(answer.getQuestionsId())
+                        .id(answer.getId())
+                        .title(answer.getQuestions().getTitle())
+                        .createdAt(answer.getCreatedAt())
+                        .choosed(answer.isChooseYn())
+                        .vote(answer.getVote())
+                        .build()).collect(Collectors.toList());
+    }
 
     default AnswerDto.GetResponse answerToAnswerResponse(Answers answers) {
         AnswerDto.GetResponse responseDto = new AnswerDto.GetResponse();
