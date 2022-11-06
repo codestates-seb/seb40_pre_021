@@ -66,7 +66,7 @@ public class MypageController {
         Page<Questions> questionsPage = questionsService.findMyQuestions(userId, page, size);
         List<Questions> questions = questionsPage.getContent();
         return new ResponseEntity<>(
-                questionsMapper.questionsToQuestionResponses(questions),
+                questionsMapper.questionsToMypageQuestionResponse(questions),
                 HttpStatus.OK);
     }
 

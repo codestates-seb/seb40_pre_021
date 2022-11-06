@@ -9,10 +9,35 @@ import org.mapstruct.ReportingPolicy;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.pre21.util.RestConstants.QUESTION_URL;
+
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface QuestionsMapper {
 
     List<QuestionDto.GetResponseDtos> questionsToQuestionResponses(List<Questions> questions);
+
+
+    default List<MyPageDto.QuestionInfo> questionsToMypageQuestionResponse(List<Questions> questions) {
+        return questions.stream()
+                .map(question -> MyPageDto.QuestionInfo
+                        .builder()
+                        .id(question.getId())
+                        .title(question.getTitle())
+                        .contents(question.getContents())
+                        .tags(question.getQuestionsTags().stream()
+                                .map(qt -> qt.getTagValue())
+                                .collect(Collectors.toList())
+                        )
+                        .vote(question.getVote())
+                        .choosed(question.isChooseYn())
+                        .views(question.getViews())
+                        .createdAt(question.getCreatedAt())
+                        .answerCount(question.getAnswerCount())
+                        .url(QUESTION_URL + question.getId())
+                        .build()).collect(Collectors.toList());
+    }
+
+
 
     default QuestionDto.GetResponseDto questionsToQuestionResponse(Questions questions) {
         QuestionDto.GetResponseDto responseDto = new QuestionDto.GetResponseDto();
