@@ -27,7 +27,7 @@ public class MyPageDto {
 
         @Override
         public int compareTo(QuestionInfo o) {
-            return (int) (o.id - this.id);
+            return (int) (this.id - o.id);
         }
     }
 
