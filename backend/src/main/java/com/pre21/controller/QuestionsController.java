@@ -10,13 +10,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
-@RequestMapping("/questions")
+@RequestMapping(value = "/questions")
 @RequiredArgsConstructor
 public class QuestionsController {
     private final QuestionsService questionsService;
@@ -31,6 +33,7 @@ public class QuestionsController {
     @PostMapping("/ask")
     public void createQuestion(@RequestBody QuestionDto.Post post,
                                @CookieValue(name = "userId", required = true) Long userId) {
+        log.info("############## post ################## {}", post);
         questionsService.createQuestion(post, userId);
     }
 
