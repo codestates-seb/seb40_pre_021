@@ -23,7 +23,7 @@ export const getUserInfo = async () => {
 
 export const getQuestion = async (data) => {
 	try {
-		const result = await instance.get(`/question/${data}`);
+		const result = await instance.get(`/questions/${data}`);
 		// const result = await instance.get(`/data`); //테스트용
 		return result.data;
 	} catch (err) {
@@ -33,10 +33,11 @@ export const getQuestion = async (data) => {
 }; //질문 상세페이지 조회
 
 export const commentQ = async (data) => {
+	console.log('commentQ', data);
 	try {
 		// const result = await instance.post('/data', data); //테스트용
 		const result = await instance.post(
-			`/questions/question/${data.questionId}/comment`,
+			`/questions/question/comment/${data.questionId}`,
 			data,
 		);
 		return result.data;
@@ -47,10 +48,11 @@ export const commentQ = async (data) => {
 }; //질문에 대한 댓글 작성
 
 export const answer = async (data) => {
+	console.log('answer', data);
 	try {
 		// const result = await instance.post('/data', data); //test
 		const result = await instance.post(
-			`/questions/${data.questionId}/answer`,
+			`/questions/answer/${data.questionId}`,
 			data,
 		);
 		return result.data;
@@ -93,8 +95,8 @@ export const commentADEL = async (data) => {
 }; //질문 댓글 삭제(임시)
 export const upVoteForQ = async (data) => {
 	try {
-		const result = await instance.put(
-			`/questions/${data.questionId}/like`,
+		const result = await instance.post(
+			`/questions/question/${data.questionId}/like`,
 			data,
 		);
 		return result.data;
@@ -106,8 +108,8 @@ export const upVoteForQ = async (data) => {
 
 export const downVoteForQ = async (data) => {
 	try {
-		const result = await instance.put(
-			`/questions/${data.questionId}/like`,
+		const result = await instance.post(
+			`/questions/question/${data.questionId}/like`,
 			data,
 		);
 		return result.data;
@@ -119,7 +121,10 @@ export const downVoteForQ = async (data) => {
 
 export const upVoteForA = async (data) => {
 	try {
-		const result = await instance.put(`/answers/${data.answerId}/like`, data);
+		const result = await instance.post(
+			`/questions/answer/${data.answerId}/like`,
+			data,
+		);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -129,7 +134,10 @@ export const upVoteForA = async (data) => {
 
 export const downVoteForA = async (data) => {
 	try {
-		const result = await instance.put(`/answers/${data.answerId}/like`, data);
+		const result = await instance.post(
+			`/questions/answer/${data.answerId}/like`,
+			data,
+		);
 		return result.data;
 	} catch (err) {
 		console.log(err);
@@ -165,7 +173,7 @@ export const bookmarkA = async (data) => {
 
 export const bookmarkDelQ = async (data) => {
 	try {
-		const result = await instance.delete(
+		const result = await instance.post(
 			`/questions/bookmark/${data.questionId}`,
 			data,
 		);
@@ -178,7 +186,7 @@ export const bookmarkDelQ = async (data) => {
 
 export const bookmarkDelA = async (data) => {
 	try {
-		const result = await instance.delete(
+		const result = await instance.post(
 			`/questions/bookmark/${data.questionId}/${data.answerId}`,
 			data,
 		);
@@ -191,9 +199,8 @@ export const bookmarkDelA = async (data) => {
 
 export const choose = async (data) => {
 	try {
-		const result = await instance.put(
+		const result = await instance.get(
 			`questions/question/${data.questionId}/adopt/${data.answerId}`,
-			data,
 		);
 		return result.data;
 	} catch (err) {

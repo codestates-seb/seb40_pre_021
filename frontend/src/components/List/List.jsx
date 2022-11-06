@@ -102,7 +102,7 @@ const List = ({ data, type }) => {
 	return (
 		<ListStyle>
 			<LeftSection>
-				<div className="vote">{data.votes} votes</div>
+				<div className="vote">{data.vote} votes</div>
 				<div className="answer">{data.answerCount} answer</div>
 				<div className="views">{data.views} views</div>
 			</LeftSection>
@@ -110,7 +110,7 @@ const List = ({ data, type }) => {
 				<div
 					className="title"
 					role="presentation"
-					onClick={() => navigate(`/questions/question/${data.questionId}`)}>
+					onClick={() => navigate(`/questions/question/${data.id}`)}>
 					{data.title}
 				</div>
 				{type === 'Questions' && <div className="body">{data.body}</div>}

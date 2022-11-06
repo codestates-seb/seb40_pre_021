@@ -54,6 +54,7 @@ public class QuestionDto {
     @Builder
     public static class GetResponseDtos {
         private Long id;
+        private String nickname;
         private String title;
         private String contents;
         private List<QuestionDto.TagResponse> questionsTags;
@@ -79,6 +80,7 @@ public class QuestionDto {
     @Getter
     @Setter
     @ToString
+    @NoArgsConstructor
     @AllArgsConstructor
     public static class CommentPost {
         private String comments;
@@ -100,7 +102,6 @@ public class QuestionDto {
     @Getter
     @AllArgsConstructor
     public static class Like {
-        private Long userId;
         private boolean likeYn;
         private boolean unlikeYn;
     }

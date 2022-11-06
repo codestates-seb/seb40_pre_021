@@ -19,36 +19,44 @@ const Question = () => {
 	const [thread, setThread] = useState('');
 	const [nickname, setNickname] = useState('');
 	const [answerData, setAnswerData] = useState('');
+	const [choseAnswerId, setChoseAnswerId] = useState('');
 	const { questionId } = useParams();
 	useEffect(() => {
-		getUserInfo().then((res) => setNickname(res.nickname));
+		getQuestion(questionId).then((res) => {
+			setThread(res);
+			if (res.answers) {
+				const chosen = res.answers.filter((el) => el.chooseYn === true);
+				setChoseAnswerId(chosen.answerId);
+			}
+		});
+		getUserInfo().then((res) => {
+			setNickname(res.nickname);
+		});
 	}, []);
-
-	useEffect(() => {
-		getQuestion(questionId).then((res) => setThread(res));
-	}, [thread]);
 
 	const handleCommentQ = (e) => {
 		if (e.key === 'Enter') {
-			commentQ(data);
 			//test
 			// const arr = [...thread.comments];
 			// const test = {
-			// 	id: thread.comments.length + 1,
-			// 	comments: e.target.value,
-			// 	createdAt: '2022-11-03T23:20:27.362238',
-			// 	nickname: 'gildong',
+			//  id: thread.comments.length + 1,
+			//  comments: e.target.value,
+			//  createdAt: '2022-11-03T23:20:27.362238',
+			//  nickname: 'gildong',
 			// };
 			// arr.push(test);
 			// const comments = { comments: arr };
 			// const data = Object.assign({}, thread, comments);
 
 			//real
-			const data = { body: e.target.value, questionId };
+			const data = { comments: e.target.value, questionId };
 
-			commentQ(data);
-			e.target.value = '';
-			getQuestion(questionId).then((res) => setThread(res));
+			commentQ(data).then((res) => {
+				if (!res.code) {
+					e.target.value = '';
+					getQuestion(questionId).then((res) => setThread(res));
+				}
+			});
 		}
 	};
 
@@ -56,23 +64,26 @@ const Question = () => {
 		if (e.key === 'Enter') {
 			//test
 			// const arr = thread.answers.filter((ele) => {
-			// 	return ele.answerId === answerId;
+			//  return ele.answerId === answerId;
 			// });
 			// const test = {
-			// 	id: thread.answers.comments?.length + 1,
-			// 	comments: e.target.value,
-			// 	createdAt: '2022-11-03T23:20:29.553901',
-			// 	nickname: 'gildong',
+			//  id: thread.answers.comments?.length + 1,
+			//  comments: e.target.value,
+			//  createdAt: '2022-11-03T23:20:29.553901',
+			//  nickname: 'gildong',
 			// };
 			// arr[0].comments.push(test);
 			// const answers = { answers: arr };
 			// const data = Object.assign({}, thread, answers);
 
 			//real
-			const data = { body: e.target.value, answerId, questionId };
-			commentA(data);
-			e.target.value = '';
-			getQuestion(questionId).then((res) => setThread(res));
+			const data = { comments: e.target.value, answerId, questionId };
+			commentA(data).then((res) => {
+				if (!res.code) {
+					e.target.value = '';
+					getQuestion(questionId).then((res) => setThread(res));
+				}
+			});
 		}
 	};
 	const handleDeleteCommentQ = (comments, idx) => {
@@ -91,7 +102,7 @@ const Question = () => {
 		commentADEL(data);
 		getQuestion(questionId).then((res) => setThread(res));
 	};
-	const handleAnswer = (str) => {
+	const handleAnswer = (str, e) => {
 		setAnswerData({
 			body: str,
 		});
@@ -100,23 +111,23 @@ const Question = () => {
 		//test
 		// const arr = [...thread.answers];
 		// const test = {
-		// 	answerId: thread.answers.length + 1,
-		// 	contents: answerData.body,
-		// 	vote: -1,
-		// 	chooseYn: false,
-		// 	createdAt: '2022-11-03T23:20:22.798088',
-		// 	modifiedAt: '2022-11-03T23:20:22.798088',
-		// 	nickname: 'gildong',
-		// 	comments: [],
-		// 	bookmarks: [],
-		// 	answerLikes: [
-		// 		{
-		// 			nickname: 'gildong',
-		// 			userId: 1,
-		// 			likeYn: true,
-		// 			unlikeYn: false,
-		// 		},
-		// 	],
+		//  answerId: thread.answers.length + 1,
+		//  contents: answerData.body,
+		//  vote: -1,
+		//  chooseYn: false,
+		//  createdAt: '2022-11-03T23:20:22.798088',
+		//  modifiedAt: '2022-11-03T23:20:22.798088',
+		//  nickname: 'gildong',
+		//  comments: [],
+		//  bookmarks: [],
+		//  answerLikes: [
+		//    {
+		//      nickname: 'gildong',
+		//      userId: 1,
+		//      likeYn: true,
+		//      unlikeYn: false,
+		//    },
+		//  ],
 		// };
 		// arr.push(test);
 		// const answers = { answers: arr };
@@ -125,8 +136,16 @@ const Question = () => {
 		// getQuestion(questionId).then((res) => setThread(res));
 
 		//real
-		const data = { body: answerData.body, questionId };
-		answer(data);
+		const data = { contents: answerData.body, questionId };
+		if (answerData.body.length <= 30) alert('글자 수 채워라.');
+		else {
+			answer(data).then((res) => {
+				if (!res.code) {
+					getQuestion(questionId).then((res) => setThread(res));
+					setAnswerData('');
+				}
+			});
+		} //여기서 에디터가 다시 렌더링되어야함.
 	};
 
 	return (
@@ -228,7 +247,7 @@ const Question = () => {
 												bookmarkdata={el.bookmarks}
 												votecount={el.vote}
 												votedata={el.answerLikes}
-												chose={el.choosed}
+												chose={el.chooseYn}
 												QcreatorNickname={thread.nickname}
 												loginNickname={nickname}
 												questionId={questionId}
@@ -279,7 +298,7 @@ const Question = () => {
 													</Grouper>
 												))}
 											<CommentCreate
-												onKeyDown={handleCommentA}
+												onKeyDown={() => handleCommentA(event, el.answerId)}
 												placeholder="Add a comment"
 											/>
 										</Right>
@@ -291,7 +310,7 @@ const Question = () => {
 
 					<EditGroup>
 						<YourAnswer>Your Answer</YourAnswer>
-						<Editor callback={handleAnswer} />
+						<Editor callback={handleAnswer} answerData={answerData} />
 						<Button text="Post Your Answer" callback={handleSubmitAnswer} />
 					</EditGroup>
 				</Wrapper>

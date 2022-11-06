@@ -66,7 +66,7 @@ public class MypageController {
         Page<Questions> questionsPage = questionsService.findMyQuestions(userId, page, size);
         List<Questions> questions = questionsPage.getContent();
         return new ResponseEntity<>(
-                questionsMapper.questionsToQuestionResponses(questions),
+                questionsMapper.questionsToMypageQuestionResponse(questions),
                 HttpStatus.OK);
     }
 
@@ -80,7 +80,7 @@ public class MypageController {
     public ResponseEntity getAnswerInfo(@CookieValue(name = "userId") Long userId) {
         Page<Answers> answersPage = answersService.findMyAnswers(userId, page, size);
         List<Answers> answers = answersPage.getContent();
-        return new ResponseEntity<>(answersMapper.answersToAnswerResponses(answers),
+        return new ResponseEntity<>(answersMapper.answerToAnswerResponses(answers),
                 HttpStatus.OK);
     }
 
@@ -98,7 +98,7 @@ public class MypageController {
         List<UserTags> tags = tagsService.findMyTags(userId);
         List<MyPageDto.TagInfo> response = tagMapper.TagToTagResponse(tags);
         return new ResponseEntity<>(
-                new SingleResponseDto<>(response), HttpStatus.OK);
+                response, HttpStatus.OK);
     }
 
 
@@ -116,7 +116,7 @@ public class MypageController {
                 .bookmarkToBookmarkResponses(bookmarks);
 
         return new ResponseEntity<>(
-                new SingleResponseDto<>(response), HttpStatus.OK
+                response, HttpStatus.OK
         );
     }
 }

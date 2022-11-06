@@ -26,9 +26,11 @@ const AppRouter = () => {
           */}
 						<Route path="/" element={<Home />} />
 						{/* 왼쪽 Quesions 메뉴 */}
-						<Route path="/questions" element={<Questions />}>
-							<Route path=":questionId" element={<Question />} />
-						</Route>
+						<Route path="/questions" element={<Questions />}></Route>
+						<Route
+							path="/questions/question/:questionId"
+							element={<Question />}
+						/>
 						{/* keyword 검색 */}
 						<Route path="/search/:q" element={<Questions />} />
 

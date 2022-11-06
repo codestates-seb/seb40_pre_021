@@ -9,6 +9,9 @@ import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.pre21.util.RestConstants.QUESTION_URL;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface AnswersMapper {
@@ -17,6 +20,21 @@ public interface AnswersMapper {
     @Mapping(source = "answers.questions.id", target = "questionId")
     @Mapping(source = "answers.questions.title", target = "title")
     MyPageDto.AnswerInfo answersToAnswerResponses(Answers answers);
+
+    default List<MyPageDto.AnswerInfos> answerToAnswerResponses(List<Answers> answers) {
+        return answers.stream()
+                .map(answer -> MyPageDto.AnswerInfos
+                        .builder()
+                        .questionId(answer.getQuestionsId())
+                        .id(answer.getId())
+                        .title(answer.getQuestions().getTitle())
+                        .createdAt(answer.getCreatedAt())
+                        .choosed(answer.isChooseYn())
+                        .vote(answer.getVote())
+                        .url(QUESTION_URL + answer.getQuestions().getId())
+                        .build()).collect(Collectors.toList());
+    }
+
 
     default AnswerDto.GetResponse answerToAnswerResponse(Answers answers) {
         AnswerDto.GetResponse responseDto = new AnswerDto.GetResponse();

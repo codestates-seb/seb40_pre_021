@@ -19,14 +19,14 @@ const Controller = ({
 	votecount,
 	votedata,
 	bookmarkdata,
-	choosed,
+	chose,
 	QcreatorNickname,
 	loginNickname,
 	questionId,
 	answerId,
 }) => {
 	const [vote, setVote] = useState(votecount);
-	const [chosen, setChosen] = useState(choosed);
+	const [chosen, setChosen] = useState(chose);
 
 	// 아래 2개의 커스텀 훅이 백엔드와 통신하여 가져온 정보는
 	// 그 아래 3개의 상태와 useEffect를 통해 로컬 정보로 전환됩니다.
@@ -51,10 +51,10 @@ const Controller = ({
 	}, [bookmarkStatus]);
 
 	const handleUpVote = () => {
-		const upVote = { upVote: true, downVote: false, questionId, answerId };
+		const upVote = { likeYn: true, unlikeYn: false, questionId, answerId };
 		const cancelUpVote = {
-			upVote: false,
-			downVote: false,
+			likeYn: false,
+			unlikeYn: false,
 			questionId,
 			answerId,
 		}; // 정보를 하드코딩된 상태로 고정하여 보냅니다.
@@ -71,8 +71,13 @@ const Controller = ({
 	};
 
 	const handleDownVote = () => {
-		const downVote = { upVote: false, downVote: true };
-		const cancelDownVote = { upVote: false, downVote: false };
+		const downVote = { likeYn: false, unlikeYn: true, questionId, answerId };
+		const cancelDownVote = {
+			likeYn: false,
+			unlikeYn: false,
+			questionId,
+			answerId,
+		};
 		if (!downVoted) {
 			setDownVoted(true);
 			setUpVoted(false);
@@ -107,7 +112,7 @@ const Controller = ({
 	const handleChose = () => {
 		if (chosen) setChosen(false);
 		if (!chosen) setChosen(true);
-		choose(); // 채택 여부를 저장하여 보냅니다.
+		choose({ questionId, answerId }); // 채택 여부를 저장하여 보냅니다.
 	};
 
 	return (
@@ -206,17 +211,19 @@ const Bookmark = styled.button`
 		background-color: white;
 		fill: ${(props) =>
 			props.bookmarked === true ? 'rgb(229, 136, 62);' : 'rgb(187, 191, 195)'};
+	}
 `;
 // 아래의 채택 컴포넌트는 아이디와 질문 작성자를 비교하여 같을 때에는 버튼으로, 아닐 때에는 div로 렌더링됩니다.
 const Choosed = styled.div`
 	button {
 		display: ${(props) =>
-			props.QcreatorNickname === props.loginNickname ? 'block' : 'none'};
+			props.QcreatorNickname === props.loginNickname && props.chosen === false
+				? 'block'
+				: 'none'};
 		cursor: pointer;
 	}
 	div {
-		display: ${(props) =>
-			props.QcreatorNickname === props.loginNickname ? 'none' : 'block'};
+		display: ${(props) => (props.chosen === true ? 'block' : 'none')};
 	}
 	svg {
 		display: block;

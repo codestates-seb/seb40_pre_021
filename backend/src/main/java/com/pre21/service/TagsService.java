@@ -13,13 +13,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class TagsService {
     private final TagsRepository tagsRepository;
@@ -65,4 +66,11 @@ public class TagsService {
         return authRepository.findById(userId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
     }
+
+
+    public List<String> findAllTags() {
+        return tagsRepository.findAll().stream()
+                .map(Tags::getTitle).collect(Collectors.toList());
+    }
+
 }
