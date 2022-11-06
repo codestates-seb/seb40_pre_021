@@ -239,7 +239,7 @@ const Question = () => {
 												bookmarkdata={el.bookmarks}
 												votecount={el.vote}
 												votedata={el.answerLikes}
-												chose={el.choosed}
+												chose={el.chooseYn}
 												QcreatorNickname={thread.nickname}
 												loginNickname={nickname}
 												questionId={questionId}

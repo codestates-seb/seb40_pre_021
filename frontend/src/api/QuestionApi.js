@@ -199,9 +199,8 @@ export const bookmarkDelA = async (data) => {
 
 export const choose = async (data) => {
 	try {
-		const result = await instance.put(
+		const result = await instance.get(
 			`questions/question/${data.questionId}/adopt/${data.answerId}`,
-			data,
 		);
 		return result.data;
 	} catch (err) {
