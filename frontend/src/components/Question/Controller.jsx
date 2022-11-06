@@ -19,14 +19,14 @@ const Controller = ({
 	votecount,
 	votedata,
 	bookmarkdata,
-	choosed,
+	chose,
 	QcreatorNickname,
 	loginNickname,
 	questionId,
 	answerId,
 }) => {
 	const [vote, setVote] = useState(votecount);
-	const [chosen, setChosen] = useState(choosed);
+	const [chosen, setChosen] = useState(chose);
 
 	// 아래 2개의 커스텀 훅이 백엔드와 통신하여 가져온 정보는
 	// 그 아래 3개의 상태와 useEffect를 통해 로컬 정보로 전환됩니다.
@@ -112,7 +112,7 @@ const Controller = ({
 	const handleChose = () => {
 		if (chosen) setChosen(false);
 		if (!chosen) setChosen(true);
-		choose(); // 채택 여부를 저장하여 보냅니다.
+		choose({ questionId, answerId }); // 채택 여부를 저장하여 보냅니다.
 	};
 
 	return (
