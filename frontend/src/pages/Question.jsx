@@ -29,7 +29,6 @@ const Question = () => {
 	}, [thread]);
 
 	const handleCommentQ = (e) => {
-		const data = { body: e.target.value };
 		if (e.key === 'Enter') {
 			commentQ(JSON.stringify(data));
 			//test
