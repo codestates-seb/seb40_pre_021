@@ -15,23 +15,43 @@ public interface BookmarkMapper {
 
     default List<MyPageDto.BookmarkInfo> bookmarkToBookmarkResponses(List<Bookmark> bookmarks) {
         return bookmarks.stream()
-                .map(bookmark -> MyPageDto.BookmarkInfo
-                        .builder()
-                        .questionId(bookmark.getQuestions().getId())
-                        .questionUser(bookmark.getUsers().getNickname())
-                        .title(bookmark.getQuestions().getTitle())
-                        .url(bookmark.getUrl())
-                        .tag(questionTagsToTags(bookmark.getQuestions().getQuestionsTags()))
-                        .vote(bookmark.getQuestions().getVote())
-                        .choosed(bookmark.getQuestions().isChooseYn())
-                        .views(bookmark.getQuestions().getViews())
-                        .answerCount(bookmark.getQuestions().getAnswerCount())
-                        .createdAt(bookmark.getCreatedAt())
-                        .answer(bookmarkToAdoptedAnswer(
-                                bookmark.getQuestions()
-                                .getAdoption()
-                                .getAnswers()))
-                        .build()
+                .map(bookmark -> {
+                            Answers ifExistAdoptedAnswer = bookmark.getQuestions()
+                                    .getAdoption()
+                                    .getAnswers();
+
+                            if (ifExistAdoptedAnswer == null) {
+                                return MyPageDto.BookmarkInfo
+                                        .builder()
+                                        .questionId(bookmark.getQuestions().getId())
+                                        .questionUser(bookmark.getUsers().getNickname())
+                                        .title(bookmark.getQuestions().getTitle())
+                                        .url(bookmark.getUrl())
+                                        .tag(questionTagsToTags(bookmark.getQuestions().getQuestionsTags()))
+                                        .vote(bookmark.getQuestions().getVote())
+                                        .choosed(bookmark.getQuestions().isChooseYn())
+                                        .views(bookmark.getQuestions().getViews())
+                                        .answerCount(bookmark.getQuestions().getAnswerCount())
+                                        .createdAt(bookmark.getCreatedAt())
+                                        .build();
+                            } else {
+                                return MyPageDto.BookmarkInfo
+                                        .builder()
+                                        .questionId(bookmark.getQuestions().getId())
+                                        .questionUser(bookmark.getUsers().getNickname())
+                                        .title(bookmark.getQuestions().getTitle())
+                                        .url(bookmark.getUrl())
+                                        .tag(questionTagsToTags(bookmark.getQuestions().getQuestionsTags()))
+                                        .vote(bookmark.getQuestions().getVote())
+                                        .choosed(bookmark.getQuestions().isChooseYn())
+                                        .views(bookmark.getQuestions().getViews())
+                                        .answerCount(bookmark.getQuestions().getAnswerCount())
+                                        .createdAt(bookmark.getCreatedAt())
+                                        .answer(bookmarkToAdoptedAnswer(
+                                                ifExistAdoptedAnswer
+                                        ))
+                                        .build();
+                            }}
                 ).collect(Collectors.toList());
     }
 
