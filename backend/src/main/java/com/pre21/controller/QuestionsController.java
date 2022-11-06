@@ -157,7 +157,7 @@ public class QuestionsController {
      * @param CommentPost 댓글을 생성하는 요청의 RequestBody
      * @author dev32user
      */
-    @PostMapping("/question/{question-id}/comment")
+    @PostMapping("/question/comment/{question-id}")
     public void createQuestionComment(
             @PathVariable("question-id") Long questionId,
             @CookieValue(value = "userId", required = false) Long userId,
