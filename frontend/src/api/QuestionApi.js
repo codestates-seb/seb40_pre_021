@@ -23,7 +23,7 @@ export const getUserInfo = async () => {
 
 export const getQuestion = async (data) => {
 	try {
-		const result = await instance.get(`/question/${data}/data`);
+		const result = await instance.get(`/question/${data}`);
 		// const result = await instance.get(`/data`); //테스트용
 		return result.data;
 	} catch (err) {
