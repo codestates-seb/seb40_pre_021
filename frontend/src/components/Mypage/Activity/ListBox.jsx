@@ -13,7 +13,6 @@ const ListBox = ({ lists, text, component }) => {
 export default ListBox;
 
 const Container = styled.div`
-	flex-grow: 1;
 	border: 1px solid #d7d9dc;
 	border-radius: 5px;
 	overflow: hidden;
@@ -28,7 +27,7 @@ const Container = styled.div`
 
 const Box = styled.div`
 	display: flex;
-	padding: ${(props) => (props.lists?.length > 0 ? '0' : '24px')};
+	padding: ${(props) => (props.lists?.length > 0 ? '0' : '48px')};
 	justify-content: ${(props) =>
 		props.lists?.length > 0 ? 'space-between' : 'center'};
 	align-items: ${(props) =>
@@ -37,7 +36,6 @@ const Box = styled.div`
 `;
 
 const EmptyText = styled.p`
-	height: 100%;
 	color: #6a737c;
 	text-align: center;
 	margin: 0 auto;
