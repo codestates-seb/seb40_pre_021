@@ -78,6 +78,7 @@ public class QuestionDto {
     // 질문 댓글 생성 Dto
     @Getter
     @Setter
+    @ToString
     @AllArgsConstructor
     public static class CommentPost {
         private String comments;
