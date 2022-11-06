@@ -4,7 +4,9 @@ import { GoCheck } from 'react-icons/go';
 
 const AnswerList = ({ answer, postUrl }) => {
 	const { answerUser, answerBody, answerCreatedAt, vote, choosed } = answer;
-	let days = new Date(answerCreatedAt).toString().split(' ');
+	let days = new Date(new Date(answerCreatedAt).getTime() + 9 * 60 * 60 * 1000)
+		.toString()
+		.split(' ');
 	let date = `${days[1]} ${days[2]} at ${days[4]}`;
 	return (
 		<AnswerListBox>

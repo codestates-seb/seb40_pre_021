@@ -22,7 +22,9 @@ const SavesListBox = ({ bookmarks }) => {
 					answer,
 				} = bookmark;
 
-				let days = new Date(createdAt).toString().split(' ');
+				let days = new Date(new Date(createdAt).getTime() + 9 * 60 * 60 * 1000)
+					.toString()
+					.split(' ');
 				let date = `${days[1]} ${days[2]} at ${days[4]}`;
 				return (
 					<ListBox key={questionId}>
