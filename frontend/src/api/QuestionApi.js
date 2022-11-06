@@ -173,7 +173,7 @@ export const bookmarkA = async (data) => {
 
 export const bookmarkDelQ = async (data) => {
 	try {
-		const result = await instance.delete(
+		const result = await instance.post(
 			`/questions/bookmark/${data.questionId}`,
 			data,
 		);
@@ -186,7 +186,7 @@ export const bookmarkDelQ = async (data) => {
 
 export const bookmarkDelA = async (data) => {
 	try {
-		const result = await instance.delete(
+		const result = await instance.post(
 			`/questions/bookmark/${data.questionId}/${data.answerId}`,
 			data,
 		);

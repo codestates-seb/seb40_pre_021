@@ -8,12 +8,14 @@ import { edit } from '../api/EditApi';
 import background from '../assets/images/background.svg';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
+import { useNavigate } from 'react-router-dom';
 const Ask = ({ editTitle, editBody, editTag }) => {
 	const [title, setTitle] = useState('');
 	const [problem, setProblem] = useState('');
 	const [expect, setExpect] = useState('');
 	const [tagsarr, setTagsarr] = useState('');
 
+	const navigate = useNavigate();
 	const handleClick = () => {
 		const data = {
 			title: title,
@@ -31,7 +33,14 @@ const Ask = ({ editTitle, editBody, editTag }) => {
 			// 편집할 때 else ask(data); // 새 글 쓸 때 } };
 
 			if (editTitle && editBody && editTag) edit(data);
-			else ask(data);
+			else
+				ask(data).then((res) => {
+					if (res) {
+						navigate(`/questions/question/${res}`);
+					} else {
+						navigate(`/questions`);
+					}
+				});
 		}
 	};
 
