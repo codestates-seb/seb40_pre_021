@@ -11,7 +11,7 @@ export default function timeForToday(value, type = '') {
 		(today.getTime() - timeValue.getTime()) / 1000 / 60,
 	);
 
-	console.log(betweenTime);
+	// console.log(betweenTime);
 
 	if (betweenTime < 1) return 'just before';
 	if (betweenTime < 60) {
