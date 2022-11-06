@@ -49,8 +49,8 @@ public class LikeService {
             compareResult = dtoCheck(oldVote, likes, like);
             findQuestion.setVote(compareResult);
             QuestionLikes savedLike = questionLikeRepository.save(likes);
-            findQuestion.addQuestionsLikes(savedLike);
             findUser.addQuestionsLikes(savedLike);
+            findQuestion.addQuestionsLikes(savedLike);
         } else { // 없을 경우 QuestionLikes를 생성하여 저장
             QuestionLikes likes = new QuestionLikes(like.isLikeYn(), like.isUnlikeYn());
             likes.setUsers(findUser);
@@ -58,8 +58,8 @@ public class LikeService {
             compareResult = dtoCheck(oldVote, likes, like);
             findQuestion.setVote(compareResult);
             QuestionLikes savedLike = questionLikeRepository.save(likes);
-            findQuestion.addQuestionsLikes(savedLike);
             findUser.addQuestionsLikes(savedLike);
+            findQuestion.addQuestionsLikes(savedLike);
         }
     }
 
