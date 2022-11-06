@@ -35,8 +35,8 @@ const Ask = ({ editTitle, editBody, editTag }) => {
 			if (editTitle && editBody && editTag) edit(data);
 			else
 				ask(data).then((res) => {
-					if (res) {
-						navigate(`/questions/question/${res}`);
+					if (res.id) {
+						navigate(`/questions/question/${res.id}`);
 					} else {
 						navigate(`/questions`);
 					}
