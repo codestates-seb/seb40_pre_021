@@ -16,8 +16,8 @@ const HomeStyle = styled.div`
 const More = styled.div`
 	margin-top: 36px;
 	padding: 36px;
-	font-size: 1.1em;
-	font-weight: 600;
+	font-size: 1.1rem;
+	font-weight: 400;
 
 	a {
 		text-decoration: none;

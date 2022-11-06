@@ -9,12 +9,11 @@ const MenuStyle = styled.div`
 `;
 const Content = styled.div`
 	height: 34px;
-	color: gray;
-	font-size: 15px;
+	color: #666666;
+	font-size: 13px;
 	user-select: none;
-	padding-left: ${(props) => props.padding || '5%'};
-	padding-top: 1%;
-	padding-bottom: 1%;
+	padding-left: ${(props) => props.padding || '0.3rem'};
+	padding-top: 0.1rem;
 	display: flex;
 	align-items: center;
 	cursor: pointer;
@@ -33,7 +32,7 @@ const Menu = ({ name, padding, path }) => {
 					className={
 						location.pathname.split('/')[1] === path.split('/')[1] && 'active'
 					}>
-					{name === 'Questions' && <RiEarthFill size="17px" maring="5px" />}
+					{name === 'Questions' && <RiEarthFill size="19px" />}
 					&nbsp;
 					{name}
 				</Content>
