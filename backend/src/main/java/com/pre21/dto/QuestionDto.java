@@ -31,7 +31,7 @@ public class QuestionDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class GetResponseDto {
-        private Long questionId;    // 질문 Id
+        private Long id;    // 질문 Id
         private String title;   // 질문 제목
         private String contents;    // 질문 내용
         private List<QuestionDto.TagResponse> questionsTags;   // 질문에 사용한 태그 정보
