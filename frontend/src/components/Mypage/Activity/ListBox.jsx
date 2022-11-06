@@ -28,9 +28,11 @@ const Container = styled.div`
 
 const Box = styled.div`
 	display: flex;
-	padding: ${(props) => (props.lists ? '0' : '24px')};
-	justify-content: ${(props) => (props.lists ? 'space-between' : 'center')};
-	align-items: ${(props) => (props.lists ? 'flex-start' : 'center')};
+	padding: ${(props) => (props.lists?.length > 0 ? '0' : '24px')};
+	justify-content: ${(props) =>
+		props.lists?.length > 0 ? 'space-between' : 'center'};
+	align-items: ${(props) =>
+		props.lists?.length > 0 ? 'flex-start' : 'center'};
 	text-align: left;
 `;
 
