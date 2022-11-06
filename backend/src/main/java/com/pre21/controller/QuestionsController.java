@@ -82,7 +82,7 @@ public class QuestionsController {
 
     /**
      * 질문 전체 조회 메서드
-     * @return  생성된 질문 전체 + 질문 개수
+     * @return  생성된 질문 전체 + 질문 개수 ㅎ
      */
     @GetMapping
     public ResponseEntity getQuestions() {
