@@ -7,6 +7,10 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 
+
+/**
+ * 로그인에 사용되는 Dto 클래스
+ */
 @Getter
 @Setter
 @NoArgsConstructor

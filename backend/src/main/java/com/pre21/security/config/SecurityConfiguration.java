@@ -1,4 +1,3 @@
-
 package com.pre21.security.config;
 
 import com.pre21.security.filter.JwtAuthenticationFilter;
@@ -28,13 +27,13 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.CorsUtils;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CharacterEncodingFilter;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.util.Arrays;
 import java.util.List;
 
-import static org.springframework.security.config.Customizer.withDefaults;
+
+/**
+ * 필터체인을 등록하기 위한 SecurityConfiguration 클래스(Configuration)
+ * @author mozzi327
+ */
 
 @Configuration
 @EnableWebSecurity
@@ -43,6 +42,13 @@ public class SecurityConfiguration {
     private final JwtTokenizer jwtTokenizer;
     private final CustomAuthorityUtils authorityUtils;
 
+
+    /**
+     * Spring Context에 필터 체인을 등록하는 메서드
+     * @param http HttpSecurity
+     * @return SecurityFilterChain
+     * @author mozzi327
+     */
     @Bean
     @SneakyThrows
     public SecurityFilterChain filterChain(HttpSecurity http) {
@@ -77,11 +83,21 @@ public class SecurityConfiguration {
         return http.build();
     }
 
+    /**
+     * 사용자 패스워드 생성에 사용되는 passwordEncoder를 등록하는 Spring Bean 메서드
+     * @return PasswordEncoder
+     * @author mozzi327
+     */
     @Bean
     public PasswordEncoder passwordEncoder() {
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
+    /**
+     * AllowedHeader, AllowedMethod, AllowedOrigin (sameSite 및 cors)설정을 위한 메서드
+     * @return CorsConfigurationSource(cors 설정 소스)
+     * @author mozzi327
+     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -99,19 +115,11 @@ public class SecurityConfiguration {
         return source;
     }
 
-    @Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**")
-                        .allowedMethods("*")
-                        .allowedOriginPatterns("*");
-            }
-        };
-    }
 
-
+    /**
+     * 커스텀 Filter 클래스
+     * @author mozzi327
+     */
     private class CustomFilterConfigurer extends AbstractHttpConfigurer<CustomFilterConfigurer, HttpSecurity> {
         @Override
         public void configure(HttpSecurity builder) {

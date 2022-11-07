@@ -8,6 +8,11 @@ import org.springframework.http.MediaType;
 
 import javax.servlet.http.HttpServletResponse;
 
+
+/**
+ * 권한 인증 실패시 발생하는 예외 핸들러 메서드 클래스
+ * @author mozzi327
+ */
 public class ErrorResponder {
     @SneakyThrows
     public static void sendErrorResponse(HttpServletResponse res, HttpStatus status) {

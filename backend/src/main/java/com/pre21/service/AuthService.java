@@ -124,7 +124,11 @@ public class AuthService {
     }
 
 
-    // 해당 이메일이 존재하는지 확인
+    /**
+     * 사용자 이메일을 통해 사용자 정보가 존재하는지 확인하는 메서드
+     * @param email 사용자 이메일
+     * @author mozzi327
+     */
     private void verifyExistsEmail(String email) {
         Optional<User> user = authRepository.findByEmail(email);
         if (user.isPresent()) {
@@ -132,17 +136,15 @@ public class AuthService {
         }
     }
 
-    public User findUser(Long userId) {
-        User findUser = findVerifiedUser(userId);
-        return findUser;
-    }
+
 
     /**
-     * @param userId Long 타입의 사용자 Id 값을 받아서 User 객체를 찾고 반환합니다.
+     * 사용자 식별자를 통해 사용자 정보가 존재하는지 확인하는 메서드
+     * @param userId 사용자 식별자
      * @return User
      * @author dev32user
      */
-    private User findVerifiedUser(Long userId) {
+    public User findVerifiedUser(Long userId) {
         Optional<User> optionalUser =
                 authRepository.findById(userId);
         return optionalUser.orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));

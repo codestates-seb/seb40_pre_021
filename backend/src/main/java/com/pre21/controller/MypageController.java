@@ -53,7 +53,7 @@ public class MypageController {
      */
     @GetMapping("/info")
     public ResponseEntity getUserInfo(@CookieValue(name = "userId") Long userId) {
-        User findUser = authService.findUser(userId);
+        User findUser = authService.findVerifiedUser(userId);
         return new ResponseEntity<>(userMapper.userToUserResponse(findUser), HttpStatus.OK);
     }
 

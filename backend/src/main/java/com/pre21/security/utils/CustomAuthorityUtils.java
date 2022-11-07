@@ -10,6 +10,10 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * 유저 Role 정보를 만들어주는 Authority Util 클래스
+ * @author mozzi327
+ */
 @Component
 public class CustomAuthorityUtils {
 
@@ -21,6 +25,12 @@ public class CustomAuthorityUtils {
     private final List<String> ADMIN_ROLES_STRING = List.of("ADMIN", "USER");
     private final List<String> USER_ROLES_STRING = List.of("USER");
 
+    /**
+     * 사용자 이메일을 통해 GrantedAuthority 컬렉션을 리턴해주는 메서드
+     * @param email 사용자 이메일
+     * @return List(GrantedAuthority)
+     * @author mozzi327
+     */
     public List<GrantedAuthority> createAuthorities(String email) {
         if (email.equals(adminMailAddress)) {
             return ADMIN_ROLES;
@@ -28,12 +38,25 @@ public class CustomAuthorityUtils {
         return USER_ROLES;
     }
 
+    /**
+     * 사용자 권한 리스트를 통해 GradtedAuthority 컬렉션을 리턴해주는 메서드
+     * @param roles 사용자 권한 리스트
+     * @return List(GrantedAuthority)
+     * @author mozzi327
+     */
     public List<GrantedAuthority> createAuthorities(List<String> roles) {
         return roles.stream()
                 .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
                 .collect(Collectors.toList());
     }
 
+
+    /**
+     * 사용자 이메일을 통해 데이터베이스에 저장된 유저 권한 리스트를 리턴해주는 메서드
+     * @param email 사용자 이메일
+     * @return List(String)
+     * @author mozzi327
+     */
     public List<String> createRoles(String email) {
         if (email.equals(adminMailAddress)) {
             return ADMIN_ROLES_STRING;
