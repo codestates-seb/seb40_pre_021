@@ -53,9 +53,13 @@ Other Tools `Slack`, `Git`, `Github`
 - 질문 전체 조회 및 페이지네이션
 #### 마이페이지
 - 마이페이지 사용자 조회
+![사용자 조회](https://user-images.githubusercontent.com/93763666/200302488-d435bcdf-e237-427a-a420-156def2645af.gif)
 - 작성한 질문 및 답변 조회
+![질문답변](https://user-images.githubusercontent.com/93763666/200302504-87191d96-cbbe-4db2-a11f-079be02dbbe9.gif)
 - 사용한 태그 조회
+![태그](https://user-images.githubusercontent.com/93763666/200302515-1bd4b6e0-131e-456a-be2e-6fe49db10ed0.gif)
 - 북마크 조회
+![북마크](https://user-images.githubusercontent.com/93763666/200302527-240b680d-f8b9-4677-9240-3455cb95ede0.gif)
 
 ### Project Architecture
 ![스크린샷 2022-11-07 오후 7 43 26](https://user-images.githubusercontent.com/80810465/200291260-9e2a2c66-042e-47cb-9916-6fbcea33191f.png)
