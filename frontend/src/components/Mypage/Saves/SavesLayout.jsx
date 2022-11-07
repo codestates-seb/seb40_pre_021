@@ -28,7 +28,7 @@ const SavesLayout = () => {
 				<Button text="Create new list" />
 			</TopWrapper>
 			<InfoArea>
-				<CountText>{total} Saved items</CountText>
+				<CountText>{total} saved items</CountText>
 				{bookmark?.length ? (
 					<SortButtonGroup
 						menus={sortData}
