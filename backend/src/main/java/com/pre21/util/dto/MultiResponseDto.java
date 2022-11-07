@@ -23,7 +23,6 @@ public class MultiResponseDto <T> {
     @Getter
     public static class MultiResponseDtos<T> {
         private List<T> data;
-
         private long questionsCount;
 
         public MultiResponseDtos(List<T> data, long questionsCount) {
