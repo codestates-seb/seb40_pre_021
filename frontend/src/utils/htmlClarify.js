@@ -38,7 +38,7 @@ const htmlClarify = (str) => {
 	text = text.replace(Pre, '$1');
 	text = text.replace(Code, '$1');
 
-	text = text.replace(Pgh, '\n\n');
+	text = text.replace(Pgh, '\n');
 
 	return text;
 }; //실제로 상세페이지에서 보일 HTML을 리턴합니다.

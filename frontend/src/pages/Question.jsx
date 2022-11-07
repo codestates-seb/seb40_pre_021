@@ -106,7 +106,7 @@ const Question = () => {
 	};
 	const handleAnswer = (str) => {
 		setAnswerData({
-			body: markdownParse(str),
+			body: str,
 		});
 	};
 	const handleSubmitAnswer = () => {
@@ -182,7 +182,7 @@ const Question = () => {
 							<Right>
 								<Body
 									dangerouslySetInnerHTML={{
-										__html: thread.contents.mdText,
+										__html: thread.contents,
 									}}></Body>
 								<Tags>
 									{thread.questionsTags.map((el) => (
@@ -260,7 +260,7 @@ const Question = () => {
 										<Right>
 											<Body
 												dangerouslySetInnerHTML={{
-													__html: el.contents.mdText,
+													__html: el.contents,
 												}}></Body>
 											<Footer>
 												<Options>
