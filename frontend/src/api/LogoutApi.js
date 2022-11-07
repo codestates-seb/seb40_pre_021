@@ -11,7 +11,6 @@ export const Logout = async (data) => {
 		const result = await instance.delete(`/users/logout`);
 		return result.data;
 	} catch (err) {
-		console.log(err);
 		return err;
 	}
 };
