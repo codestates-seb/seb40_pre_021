@@ -11,7 +11,7 @@ const Title = ({ title, number = '', flex, handleTabChange }) => {
 					{localeNumber > 0 ? (
 						<Text
 							onClick={() => {
-								handleTabChange({ name: title });
+								handleTabChange(title);
 							}}>
 							View all {localeNumber} {lowerTitle}
 						</Text>

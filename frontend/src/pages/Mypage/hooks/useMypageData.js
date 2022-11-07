@@ -29,12 +29,7 @@ function useMypageData(category, value = []) {
 				break;
 			case 'bookmark':
 				getMypageUserBookmark().then((res) => {
-					if (res.length > 1) {
-						let sortData = res.sort((a, b) => b.views - a.views);
-						setData(sortData);
-					} else {
-						setData(res);
-					}
+					setData(res);
 				});
 				break;
 			case 'userInfo':

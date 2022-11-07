@@ -8,12 +8,12 @@ import SavesListBox from './SavesListBox';
 let sortData = [
 	{
 		id: 0,
-		name: 'Views',
+		name: 'Newest',
 		clicked: true,
 	},
 	{
 		id: 1,
-		name: 'Newest',
+		name: 'Views',
 		clicked: false,
 	},
 ];
