@@ -12,8 +12,9 @@ import useMypageData from './hooks/useMypageData';
 
 const Mypage = () => {
 	const [userInfo] = useMypageData('userInfo');
-	const { nickname, createdAt } = userInfo;
+	const { nickname, createdAt, latestLogin } = userInfo;
 	const [date] = useDate(createdAt);
+	const [recentLogin] = useDate(latestLogin, 'ago');
 
 	return (
 		<Container>
@@ -21,7 +22,7 @@ const Mypage = () => {
 				<Avatar nickname={nickname} shadow={true} />
 				<UserInfoBox>
 					<UserNickname nickname={nickname} />
-					<UserInfo date={date} />
+					<UserInfo date={date} recentLogin={recentLogin} />
 				</UserInfoBox>
 				<ProfileBtnArea>
 					<ProfileButton
