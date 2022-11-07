@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../common/Button';
 import timeForToday from '../../utils/timeForToday';
+import { GoCheck } from 'react-icons/go';
 
 const ListStyle = styled.div`
 	border-top: 1px solid rgb(209, 211, 215);
@@ -18,14 +19,25 @@ const LeftSection = styled.div`
 
 	div {
 		margin: 3px;
-		font-weight: 600;
+		font-weight: 400;
 	}
 
 	.vote {
 	}
 
 	.answer {
-		color: hsl(210, 8%, 45%);
+		color: ${(props) =>
+			props.choosed ? 'white' : props.answerCount ? '#2E6F44' : '#6A737C'};
+		background-color: ${(props) => (props.choosed ? '#2E6F44' : 'white')};
+		border: ${(props) => (props.answerCount ? '1px solid #2e6f44' : 'none')};
+		border-radius: 3px;
+		padding: 4px;
+		display: inline-flex;
+		gap: 0.2rem;
+		align-items: center;
+		justify-content: center;
+		white-space: nowrap;
+		font-weight: 400;
 	}
 	.views {
 		color: hsl(210, 8%, 45%);
@@ -48,7 +60,7 @@ const RightSection = styled.div`
 	.title {
 		color: hsl(209, 100%, 37.5%);
 		font-size: 1.2em;
-		font-weight: 600;
+		font-weight: 400;
 		cursor: pointer;
 	}
 	.body {
@@ -101,9 +113,12 @@ const List = ({ data, type }) => {
 	};
 	return (
 		<ListStyle>
-			<LeftSection>
+			<LeftSection choosed={choosed} answerCount={data.answerCount}>
 				<div className="vote">{data.vote} votes</div>
-				<div className="answer">{data.answerCount} answer</div>
+				<div className="answer">
+					{choosed && <GoCheck />}
+					{data.answerCount} answer
+				</div>
 				<div className="views">{data.views} views</div>
 			</LeftSection>
 			<RightSection>
