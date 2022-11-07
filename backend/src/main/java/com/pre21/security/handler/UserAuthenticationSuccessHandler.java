@@ -17,6 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
+/**
+ * 로그인 성공 시 실행되는 핸들러 메서드
+ * @author mozzi327
+ */
+
+
 @Slf4j
 @RequiredArgsConstructor
 public class UserAuthenticationSuccessHandler implements AuthenticationSuccessHandler {

@@ -13,14 +13,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
-
-import static com.pre21.security.utils.ControllerConstants.USER_ID;
 
 @Slf4j
 @RestController
@@ -40,8 +37,7 @@ public class QuestionsController {
      */
     @PostMapping("/ask")
     public ResponseEntity createQuestion(@RequestBody QuestionDto.Post post,
-                                         @CookieValue(name = "userId", required = true) Long userId) {
-        log.info("###################### 제발 나와라 @##########################, {}", post);
+                                         @CookieValue(name = "userId") Long userId) {
         Questions questions = questionsService.createQuestion(post, userId);
 
         return new ResponseEntity<>(
@@ -83,11 +79,10 @@ public class QuestionsController {
 
     /**
      * 질문 전체 조회 메서드
-     * @return  생성된 질문 전체 + 질문 개수 ㅎ
+     * @return  생성된 질문 전체 + 질문 개수
      */
     @GetMapping
     public ResponseEntity getQuestions() {
-
         List<Questions> questions = questionsService.findQuestions();
         long questionsCount = questionsService.findQuestionCount();
         List<QuestionDto.GetResponseDtos> response = mapper.questionsToQuestionResponses(questions);
@@ -137,7 +132,7 @@ public class QuestionsController {
     @GetMapping("/question/{question-id}/adopt/{answer-id}")
     public void adoptQuestion(@PathVariable("question-id") Long questionId,
                               @PathVariable("answer-id") Long answerId,
-                              @CookieValue(name = USER_ID, required = false) Long userId) {
+                              @CookieValue(name = "userId") Long userId) {
         questionsService.adoptingQuestion(questionId, answerId, userId);
     }
 
@@ -149,7 +144,7 @@ public class QuestionsController {
      */
     @PostMapping("/bookmark/{question-id}")
     public void clickQuestionBookmark(@PathVariable("question-id") Long questionId,
-                                      @CookieValue(name = USER_ID, required = true) Long userId) {
+                                      @CookieValue(name = "userId") Long userId) {
         questionsService.addQuestionBookmark(questionId, userId);
     }
 
@@ -162,7 +157,7 @@ public class QuestionsController {
     @PostMapping("/bookmark/{question-id}/{answer-id}")
     public void clickAnswerBookmark(@PathVariable("question-id") Long questionId,
                                     @PathVariable("answer-id") Long answerId,
-                                    @CookieValue(name = USER_ID, required = true) Long userId) {
+                                    @CookieValue(name = "userId") Long userId) {
         questionsService.addAnswerBookmark(questionId, answerId, userId);
     }
 
@@ -177,7 +172,6 @@ public class QuestionsController {
             @PathVariable("question-id") Long questionId,
             @CookieValue(name = "userId") Long userId,
             @RequestBody QuestionDto.CommentPost commentPost) throws Exception {
-        log.info("############################# COMMENT DEBUG ##################### {}", commentPost);
 
         questionsService.createQuestionComment(commentPost, userId, questionId);
     }

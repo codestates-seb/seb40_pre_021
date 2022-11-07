@@ -13,8 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-import static com.pre21.security.utils.ControllerConstants.USER_ID;
-import static com.pre21.security.utils.JwtConstants.REFRESH_TOKEN;
+import static com.pre21.security.utils.JwtConstants.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -47,24 +46,8 @@ public class AuthController {
     public void logoutUser(@CookieValue(name = REFRESH_TOKEN, required = true) String refreshToken,
                            HttpServletResponse response) {
         authService.logoutUser(refreshToken);
-        ResponseCookie deleteToken = ResponseCookie.from("RefreshToken", "")
-                .maxAge(0)
-                .path("/")
-                .secure(true)
-                .sameSite("None")
-                .httpOnly(true)
-                .build();
 
-        ResponseCookie deleteUserId = ResponseCookie.from("userId", "")
-                .maxAge(0)
-                .path("/")
-                .secure(true)
-                .sameSite("None")
-                .httpOnly(true)
-                .build();
-
-        response.addHeader("Set-Cookie", deleteToken.toString());
-        response.addHeader("Set-Cookie", deleteUserId.toString());
+        response.addHeader("Set-Cookie", null);
     }
 
 

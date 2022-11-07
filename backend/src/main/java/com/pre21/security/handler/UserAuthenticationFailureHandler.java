@@ -13,6 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 로그인 실패 시 실행되는 핸들러 메서드
+ * @author mozzi327
+ */
+
 @Slf4j
 public class UserAuthenticationFailureHandler implements AuthenticationFailureHandler {
     @Override
