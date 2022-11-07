@@ -9,12 +9,12 @@ import Title from './Title';
 let questionSortData = [
 	{
 		id: 0,
-		name: 'Score',
+		name: 'Newest',
 		clicked: true,
 	},
 	{
 		id: 1,
-		name: 'Newest',
+		name: 'Score',
 		clicked: false,
 	},
 	{
@@ -27,12 +27,12 @@ let questionSortData = [
 let answerSortData = [
 	{
 		id: 0,
-		name: 'Score',
+		name: 'Newest',
 		clicked: true,
 	},
 	{
 		id: 1,
-		name: 'Newest',
+		name: 'Score',
 		clicked: false,
 	},
 ];
