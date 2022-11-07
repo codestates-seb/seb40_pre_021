@@ -17,6 +17,7 @@ const LeftSection = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
+	font-size: 0.85rem;
 
 	div {
 		margin: 3px;
@@ -63,7 +64,8 @@ const RightSection = styled.div`
 	}
 	.title {
 		color: hsl(209, 100%, 37.5%);
-		font-size: 1.2em;
+		font-size: 1.1rem;
+		line-height: 1.3;
 		font-weight: 400;
 		cursor: pointer;
 	}
@@ -75,7 +77,7 @@ const RightSection = styled.div`
 		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
 		word-wrap: break-word;
-		line-height: 1.2em;
+		line-height: 1.3;
 		height: 2.4em;
 		word-break: break-all;
 	}
