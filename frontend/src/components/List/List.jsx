@@ -128,7 +128,9 @@ const List = ({ data, type }) => {
 					onClick={() => navigate(`/questions/question/${data.id}`)}>
 					{data.title}
 				</div>
-				{type === 'Questions' && <div className="body">{data.contents}</div>}
+				{type === 'Questions' && (
+					<div className="body">{data.contents.rawText}</div>
+				)}
 				<div className="bottomBox">
 					<div className="tags">
 						{Array.isArray(data.questionsTags) &&
