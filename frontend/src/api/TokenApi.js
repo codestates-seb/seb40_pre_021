@@ -16,7 +16,6 @@ export const AccessTokenRefresh = async () => {
 		}
 		return result.data;
 	} catch (err) {
-		console.log(err);
 		return err;
 	}
 };

@@ -12,7 +12,6 @@ export const Signup = async (data) => {
 		const result = await instance.post(`/users/signup`, data);
 		return result.data;
 	} catch (err) {
-		console.log(err);
 		return err;
 	}
 };

@@ -339,6 +339,8 @@ const QuestionGroup = styled.article``;
 const Header = styled.div``;
 const Title = styled.h1`
 	width: 100%;
+	max-width: calc(100% - 150px)
+	word-break: break-all;
 	font-size: 1.75rem;
 	font-weight: 400;
 	line-height: 140%;
