@@ -104,6 +104,15 @@ const List = ({ data, type }) => {
 	const [createId, setCreateId] = useState(data.nickname);
 	const [choosed, setChoosed] = useState(data.chooseYn);
 	const navigate = useNavigate();
+	let body;
+	let checkJSON = false;
+	try {
+		body = JSON.parse(data.contents);
+		checkJSON = true;
+	} catch {
+		//이전글들 오류 때문에 그냥 넘김
+		body = data.contents;
+	}
 
 	const buttonProps = {
 		color: `hsl(205,47%,42%)`,
@@ -129,7 +138,7 @@ const List = ({ data, type }) => {
 					{data.title}
 				</div>
 				{type === 'Questions' && (
-					<div className="body">{data.contents.rawText}</div>
+					<div className="body">{checkJSON ? body.rawText : body}</div>
 				)}
 				<div className="bottomBox">
 					<div className="tags">
