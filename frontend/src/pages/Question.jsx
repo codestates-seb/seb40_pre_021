@@ -19,7 +19,6 @@ const Question = () => {
 	const [thread, setThread] = useState('');
 	const [nickname, setNickname] = useState('');
 	const [answerData, setAnswerData] = useState('');
-	const [chosen, setChosen] = useState(false);
 	const { questionId } = useParams();
 	useEffect(() => {
 		getQuestion(questionId).then((res) => {
@@ -249,8 +248,6 @@ const Question = () => {
 												votecount={el.vote}
 												votedata={el.answerLikes}
 												chose={el.chooseYn}
-												chosen={chosen}
-												setChosen={setChosen}
 												QcreatorNickname={thread.nickname}
 												loginNickname={nickname}
 												questionId={questionId}
