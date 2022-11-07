@@ -7,12 +7,12 @@ import Title from '../Title';
 let sortData = [
 	{
 		id: 0,
-		name: 'Score',
+		name: 'Newest',
 		clicked: true,
 	},
 	{
 		id: 1,
-		name: 'Newest',
+		name: 'Score',
 		clicked: false,
 	},
 ];

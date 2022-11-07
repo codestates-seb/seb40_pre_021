@@ -7,12 +7,12 @@ import TagsList from './TagsList';
 let sortData = [
 	{
 		id: 0,
-		name: 'Score',
+		name: 'Name',
 		clicked: true,
 	},
 	{
 		id: 1,
-		name: 'Name',
+		name: 'Score',
 		clicked: false,
 	},
 ];
