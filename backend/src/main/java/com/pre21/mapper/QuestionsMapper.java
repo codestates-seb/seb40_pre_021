@@ -50,6 +50,7 @@ public interface QuestionsMapper {
         responseDto.setQuestionId(questions.getId());   // 질문 Id 저장
         responseDto.setTitle(questions.getTitle()); // 질문 제목 저장
         responseDto.setContents(questions.getContents());   // 질문 내용 저장
+        responseDto.setChooseYn(questions.isChooseYn());    // 질문 답변 채택 여부 저장
 
         List<QuestionsTags> questionsTags = questions.getQuestionsTags();   // 질문에 사용된 태그 정보 리스트
         responseDto.setQuestionsTags(questionsTagsToQuestionsTagsResponseDto(questionsTags));   // 태그 정보 저장

@@ -41,6 +41,7 @@ public class QuestionDto {
         private LocalDateTime createdAt;    // 질문 생성 일자
         private String nickname;    // 질문을 생성한 유저 닉네임
         private int answerCount;    // 질문에 달린 답변 개수
+        private boolean chooseYn;  // 질문 답변 채택 여부
         private List<QuestionDto.CommentResponse> comments;  // 질문에 달린 댓글 정보
         private List<QuestionDto.BookmarkResponse> bookmarks;    // 북마크 유저 정보
         private List<QuestionDto.LikeResponse> questionsLikes;   // 질문 좋아요,싫어요 유저 정보

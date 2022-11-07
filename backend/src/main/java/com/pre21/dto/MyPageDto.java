@@ -27,7 +27,7 @@ public class MyPageDto {
 
         @Override
         public int compareTo(QuestionInfo o) {
-            return (int) (this.id - o.id);
+            return (int) (o.id - this.id);
         }
     }
 
@@ -44,7 +44,7 @@ public class MyPageDto {
 
         @Override
         public int compareTo(TagInfo o) {
-            return (int) (this.tagCount - o.tagCount);
+            return (int) (o.tagCount - this.tagCount);
         }
     }
 
@@ -80,7 +80,7 @@ public class MyPageDto {
 
         @Override
         public int compareTo(AnswerInfos o) {
-            return (int) (this.id - o.id);
+            return (int) (o.id - this.id);
         }
     }
 
@@ -107,7 +107,7 @@ public class MyPageDto {
 
         @Override
         public int compareTo(BookmarkInfo o) {
-            return (int) (this.id - o.id);
+            return (int) (o.id - this.id);
         }
     }
 

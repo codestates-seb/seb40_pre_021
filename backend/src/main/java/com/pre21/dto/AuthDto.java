@@ -44,5 +44,6 @@ public class AuthDto {
         private Long id;
         private String nickname;
         private LocalDateTime createdAt;
+        private LocalDateTime latestLogin;
     }
 }
