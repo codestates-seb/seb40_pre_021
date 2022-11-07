@@ -16,9 +16,13 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class BookmarkService {
-    private final BookmarkRepository bookmarkRepository;
     private final AuthRepository authRepository;
 
+    /**
+     * 
+     * @param userId
+     * @return
+     */
     public List<Bookmark> findMyBookmarks(Long userId) {
         User findUser = findIfExistUser(userId);
         return findUser.getBookmarks();
