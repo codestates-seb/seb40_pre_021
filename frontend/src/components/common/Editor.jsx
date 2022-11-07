@@ -1,6 +1,32 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import markdownParse from '../../utils/markdownParse';
+import htmlClarify from '../../utils/htmlClarify';
+
+const Editor = ({ id, callback, callback2 }) => {
+	const [mdText, setMdText] = useState('');
+	const [rawText, setRawText] = useState('');
+
+	const handleChange = (e) => {
+		setMdText(markdownParse(e.target.value));
+		setRawText(htmlClarify(e.target.value));
+	};
+	useEffect(() => {
+		callback({ mdText: mdText, rawText: rawText });
+	}, [mdText]);
+	return (
+		<>
+			<Container>
+				<Header />
+				<Textarea onKeyUp={handleChange} id={id}></Textarea>
+				<Result
+					mdText={mdText}
+					dangerouslySetInnerHTML={{ __html: mdText }}></Result>
+			</Container>
+		</>
+	); // XSS공격 대비 필요. 마크다운 텍스트 에디터를 웹으로 만드는 것의 한계인 듯하다.
+	// https://ui.toast.com/weekly-pick/ko_monthly_202006 참고. 여기서도 수동으로 XSS의 가능성이 있는 코드들을 분석해서 따로 파싱한다.
+};
 const Container = styled.div`
 	width: 100%;
 `;
@@ -81,28 +107,4 @@ const Result = styled.div`
 		margin-bottom: 1rem;
 	}
 `;
-
-const Editor = ({ id, callback }) => {
-	const [mdText, setMdText] = useState('');
-
-	const handleChange = (e) => {
-		setMdText(markdownParse(e.target.value));
-	};
-	useEffect(() => {
-		callback(mdText);
-	}, [mdText]);
-	return (
-		<>
-			<Container>
-				<Header />
-				<Textarea onKeyUp={handleChange} id={id}></Textarea>
-				<Result
-					mdText={mdText}
-					dangerouslySetInnerHTML={{ __html: mdText }}></Result>
-			</Container>
-		</>
-	); // XSS공격 대비 필요. 마크다운 텍스트 에디터를 웹으로 만드는 것의 한계인 듯하다.
-	// https://ui.toast.com/weekly-pick/ko_monthly_202006 참고. 여기서도 수동으로 XSS의 가능성이 있는 코드들을 분석해서 따로 파싱한다.
-};
-
 export default Editor;

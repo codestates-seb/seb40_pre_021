@@ -181,7 +181,7 @@ const Question = () => {
 							<Right>
 								<Body
 									dangerouslySetInnerHTML={{
-										__html: thread.contents,
+										__html: thread.contents.mdText,
 									}}></Body>
 								<Tags>
 									{thread.questionsTags.map((el) => (
@@ -259,7 +259,7 @@ const Question = () => {
 										<Right>
 											<Body
 												dangerouslySetInnerHTML={{
-													__html: el.contents,
+													__html: el.contents.mdText,
 												}}></Body>
 											<Footer>
 												<Options>
