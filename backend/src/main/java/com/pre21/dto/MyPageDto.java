@@ -37,10 +37,15 @@ public class MyPageDto {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class TagInfo {
+    public static class TagInfo implements Comparable<TagInfo> {
         private Long id;
         private String title;
         private long tagCount;
+
+        @Override
+        public int compareTo(TagInfo o) {
+            return (int) (this.tagCount - o.tagCount);
+        }
     }
 
 
@@ -63,7 +68,7 @@ public class MyPageDto {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class AnswerInfos {
+    public static class AnswerInfos implements Comparable<AnswerInfos> {
         private Long questionId;
         private Long id;
         private String title;
@@ -72,6 +77,11 @@ public class MyPageDto {
         private int vote;
         private List<String> tags;
         private String url;
+
+        @Override
+        public int compareTo(AnswerInfos o) {
+            return (int) (this.id - o.id);
+        }
     }
 
 
@@ -81,7 +91,7 @@ public class MyPageDto {
     @Setter
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class BookmarkInfo {
+    public static class BookmarkInfo implements Comparable<BookmarkInfo> {
         private Long questionId;
         private String questionUser;
         private String title;
@@ -93,6 +103,11 @@ public class MyPageDto {
         private int answerCount;
         private LocalDateTime createdAt;
         private BookmarkAnswer answer;
+
+        @Override
+        public int compareTo(BookmarkInfo o) {
+            return this.createdAt.isAfter(o.createdAt) ? 1 : 0;
+        }
     }
 
     @Builder
