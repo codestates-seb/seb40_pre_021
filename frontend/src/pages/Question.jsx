@@ -19,15 +19,11 @@ const Question = () => {
 	const [thread, setThread] = useState('');
 	const [nickname, setNickname] = useState('');
 	const [answerData, setAnswerData] = useState('');
-	const [choseAnswerId, setChoseAnswerId] = useState([]);
+	const [chosen, setChosen] = useState(false);
 	const { questionId } = useParams();
 	useEffect(() => {
 		getQuestion(questionId).then((res) => {
 			setThread(res);
-			if (res.answers) {
-				setChoseAnswerId(res.answers.filter((el) => el.chooseYn === true));
-				console.log('최초 로드 시', choseAnswerId);
-			}
 		});
 		getUserInfo().then((res) => {
 			setNickname(res.nickname);
@@ -254,11 +250,13 @@ const Question = () => {
 												votecount={el.vote}
 												votedata={el.answerLikes}
 												chose={el.chooseYn}
-												choseAnswerId={choseAnswerId}
+												chosen={chosen}
+												setChosen={setChosen}
 												QcreatorNickname={thread.nickname}
 												loginNickname={nickname}
 												questionId={questionId}
-												answerId={el.answerId}></Controller>
+												answerId={el.answerId}
+												setThread={setThread}></Controller>
 										</Left>
 										<Right>
 											<Body
