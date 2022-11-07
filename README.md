@@ -3,7 +3,7 @@
 
 2022.10.19. — 2022.11.07.
 
-https://d184hsf03uyfp2.cloudfront.net/
+<a href="https://d184hsf03uyfp2.cloudfront.net/">배포 링크</a>
 
 ### Team Introduction
 
