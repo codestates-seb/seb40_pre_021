@@ -1,25 +1,23 @@
 package com.pre21.controller;
 
 
-import com.pre21.entity.Answers;
-import com.pre21.entity.Questions;
-import com.pre21.entity.Tags;
-import com.pre21.entity.User;
-import com.pre21.mapper.AnswersMapper;
-import com.pre21.mapper.QuestionsMapper;
-import com.pre21.mapper.UserMapper;
-import com.pre21.service.AnswersService;
-import com.pre21.service.QuestionsService;
-import com.pre21.service.TagsService;
-import com.pre21.service.UserService;
-import com.pre21.util.dto.MultiResponseDto;
+import com.pre21.dto.MyPageDto;
+import com.pre21.entity.*;
+import com.pre21.mapper.*;
+import com.pre21.service.*;
+import com.pre21.util.dto.SingleResponseDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -34,53 +32,94 @@ import java.util.List;
 public class MypageController {
     private final int page = 0;
     private final int size = 5;
-    private final UserService userService;
+    private final AuthService authService;
     private final QuestionsService questionsService;
     private final AnswersService answersService;
     private final TagsService tagsService;
+    private final BookmarkService bookmarkService;
     private final UserMapper userMapper;
 
     private final AnswersMapper answersMapper;
     private final QuestionsMapper questionsMapper;
+    private final TagMapper tagMapper;
+    private final BookmarkMapper bookmarkMapper;
 
     /**
-     * 마이페이지 api 명세서 중 유저 정보에 해당하는 요청사항 컨트롤러입니다.
+     * 마이페이지 api 명세서 중 유저 정보에 해당하는 요청사항 컨트롤러
      *
-     * @param userId 쿠키에서 읽어온 접속 중인 사용자의 Id 값입니다.
+     * @param userId 사용자 식별자
+     * @return ResponseEntity
      * @author dev32user
      */
-    @GetMapping("/user-info")
+    @GetMapping("/info")
     public ResponseEntity getUserInfo(@CookieValue(name = "userId") Long userId) {
-        User findUser = userService.findUser(userId);
-
+        User findUser = authService.findVerifiedUser(userId);
         return new ResponseEntity<>(userMapper.userToUserResponse(findUser), HttpStatus.OK);
     }
 
-    @GetMapping("/answer")
-    public ResponseEntity getAnswerInfo(@CookieValue(name = "userId") Long userId) {
-        Page<Answers> answersPage = answersService.findMyAnswers(userId, page, size);
-        List<Answers> answers = answersPage.getContent();
-        return new ResponseEntity<>(
-                new MultiResponseDto<>(answersMapper.answerToAnswerResponse(answers), answersPage),
-                HttpStatus.OK);
-    }
-
-    @GetMapping("/question")
+    /**
+     * 마이페이지 api 명세서 중 질문 정보 조회에 해당하는 요청사항 컨트롤러
+     *
+     * @param userId 사용자 식별자
+     * @author dev32user
+     */
+    @GetMapping("/questions")
     public ResponseEntity getQuestionInfo(@CookieValue(name = "userId") Long userId) {
         Page<Questions> questionsPage = questionsService.findMyQuestions(userId, page, size);
-        List<Questions> questions = questionsPage.getContent();
-        return new ResponseEntity<>(
-                new MultiResponseDto<>(
-                        questionsMapper.questionsToQuestionResponses(questions), questionsPage),
-                HttpStatus.OK);
+        List<MyPageDto.QuestionInfo> response = questionsMapper.questionsToMypageQuestionResponse(questionsPage.getContent());
+        Collections.sort(response);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
-/*
-<<<<<<< Updated upstream
-   @GetMapping("/tags")
-   public ResponseEntity getTagsInfo(@CookieValue(name = "userId") Long userId) {
-       Page<Tags> tagsPage = tagsService.findMyTags(userId, page, size);
-       List<Tags> tags = tagsPage.getContent();
-       return
-   }
-   */
+
+    /**
+     * 마이페이지 api 명세서 중 답변 정보 조회에 해당하는 요청사항 컨트롤러
+     *
+     * @param userId 사용자 식별자
+     * @author dev32user
+     */
+    @GetMapping("/answers")
+    public ResponseEntity getAnswerInfo(@CookieValue(name = "userId") Long userId) {
+        Page<Answers> answersPage = answersService.findMyAnswers(userId, page, size);
+        List<MyPageDto.AnswerInfos> response = answersMapper.answerToAnswerResponses(answersPage.getContent());
+        Collections.sort(response);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
+
+    /**
+     * 마이페이지 api 명세서 중 태그 정보 조회에 해당하는 요청사항 컨트롤러
+     *
+     * @param userId 사용자 식별자
+     * @return ResponseEntity(MyPageDto.TagResponse)
+     * @author mozzi327
+     */
+    @GetMapping("/tags")
+    public ResponseEntity getTagsInfo(@CookieValue(name = "userId") Long userId) {
+        List<UserTags> tags = tagsService.findMyTags(userId);
+        List<MyPageDto.TagInfo> response = tagMapper.TagToTagResponse(tags);
+        Collections.sort(response);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
+    /**
+     * 마이페이지 api 명세서 중 북마크 정보 조회에 해당하는 요청사항 컨트롤러
+     *
+     * @param userId 사용자 식별자
+     * @return ResponseEntity(MypageDto.BookmarkResponse)
+     * @author mozzi327
+     */
+    @GetMapping("/bookmarks")
+    public ResponseEntity getBookmarkInfo(@CookieValue(name = "userId") Long userId) {
+        List<Bookmark> bookmarks = bookmarkService.findMyBookmarks(userId);
+        List<MyPageDto.BookmarkInfo> response = bookmarkMapper
+                .bookmarkToBookmarkResponses(bookmarks);
+        Collections.sort(response);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }

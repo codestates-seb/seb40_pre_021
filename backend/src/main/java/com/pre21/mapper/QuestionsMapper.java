@@ -4,15 +4,45 @@ package com.pre21.mapper;
 import com.pre21.dto.*;
 import com.pre21.entity.*;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.pre21.util.RestConstants.QUESTION_URL;
+
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface QuestionsMapper {
 
     List<QuestionDto.GetResponseDtos> questionsToQuestionResponses(List<Questions> questions);
+
+
+    @Mapping(source = "questions.users.nickname", target = "nickname")
+    QuestionDto.GetResponseDtos questionsToQuestionResponses(Questions questions);
+
+
+    default List<MyPageDto.QuestionInfo> questionsToMypageQuestionResponse(List<Questions> questions) {
+        return questions.stream()
+                .map(question -> MyPageDto.QuestionInfo
+                        .builder()
+                        .id(question.getId())
+                        .title(question.getTitle())
+                        .contents(question.getContents())
+                        .tags(question.getQuestionsTags().stream()
+                                .map(QuestionsTags::getTagValue)
+                                .collect(Collectors.toList())
+                        )
+                        .vote(question.getVote())
+                        .choosed(question.isChooseYn())
+                        .views(question.getViews())
+                        .createdAt(question.getCreatedAt())
+                        .answerCount(question.getAnswerCount())
+                        .url(QUESTION_URL + question.getId())
+                        .build()).collect(Collectors.toList());
+    }
+
+
 
     default QuestionDto.GetResponseDto questionsToQuestionResponse(Questions questions) {
         QuestionDto.GetResponseDto responseDto = new QuestionDto.GetResponseDto();
@@ -20,9 +50,10 @@ public interface QuestionsMapper {
         responseDto.setQuestionId(questions.getId());   // 질문 Id 저장
         responseDto.setTitle(questions.getTitle()); // 질문 제목 저장
         responseDto.setContents(questions.getContents());   // 질문 내용 저장
+        responseDto.setChooseYn(questions.isChooseYn());    // 질문 답변 채택 여부 저장
 
         List<QuestionsTags> questionsTags = questions.getQuestionsTags();   // 질문에 사용된 태그 정보 리스트
-        responseDto.setTags(questionsTagsToQuestionsTagsResponseDto(questionsTags));   // 태그 정보 저장
+        responseDto.setQuestionsTags(questionsTagsToQuestionsTagsResponseDto(questionsTags));   // 태그 정보 저장
 
         responseDto.setVote(questions.getVote());   // 질문 추천수 저장
 
@@ -50,10 +81,10 @@ public interface QuestionsMapper {
     }
 
     // 태그 정보 저장
-    default List<QuestionsTagsResponseDto> questionsTagsToQuestionsTagsResponseDto(List<QuestionsTags> questionsTags) {
+    default List<QuestionDto.TagResponse> questionsTagsToQuestionsTagsResponseDto(List<QuestionsTags> questionsTags) {
         // 질문에 달린 태그 정보를 리스트로 저장
         return questionsTags.stream()
-                .map(questionsTags1 -> QuestionsTagsResponseDto
+                .map(questionsTags1 -> QuestionDto.TagResponse
                         .builder()
                         .tagId(questionsTags1.getTags().getId())
                         .title(questionsTags1.getTags().getTitle())
@@ -62,10 +93,10 @@ public interface QuestionsMapper {
     }
 
     // 댓글 정보 저장
-    default List<QuestionCommentResponseDto> questionCommentsToQuestionCommentsResponseDto(List<QuestionComments> questionComments) {
+    default List<QuestionDto.CommentResponse> questionCommentsToQuestionCommentsResponseDto(List<QuestionComments> questionComments) {
         // 질문에 달린 댓글 정보를 리스트로 저장
         return questionComments.stream()
-                .map(questionComments1 -> QuestionCommentResponseDto
+                .map(questionComments1 -> QuestionDto.CommentResponse
                         .builder()
                         .id(questionComments1.getId())
                         .comments(questionComments1.getComments())
@@ -77,10 +108,10 @@ public interface QuestionsMapper {
 
 
     // 답변 정보 저장
-    default List<AnswersDto.ResponseDto> answersToAnswersResponseDto(List<Answers> answers) {
+    default List<AnswerDto.Response> answersToAnswersResponseDto(List<Answers> answers) {
         // 질문에 달린 답변 정보를 리스트로 저장
         return answers.stream()
-                .map(answers1 -> AnswersDto.ResponseDto
+                .map(answers1 -> AnswerDto.Response
                         .builder()
                         .answerId(answers1.getId())
                         .contents(answers1.getContents())
@@ -97,12 +128,12 @@ public interface QuestionsMapper {
     }
 
 
-    default List<AnswerCommentResponseDto> answerCommentsToAnswerCommentsResponseDto(List<AnswerComments> answerComments) {
+    default List<AnswerDto.CommentResponse> answerCommentsToAnswerCommentsResponseDto(List<AnswerComments> answerComments) {
         // 답글에 달린 댓글 정보를 리스트로 저장
         return answerComments.stream()
-                .map(answerComments1 -> AnswerCommentResponseDto
+                .map(answerComments1 -> AnswerDto.CommentResponse
                         .builder()
-                        .id(answerComments1.getId())
+                        .commentId(answerComments1.getId())
                         .comments(answerComments1.getComments())
                         .createdAt(answerComments1.getCreatedAt())
                         .nickname(answerComments1.getNickname())
@@ -110,11 +141,11 @@ public interface QuestionsMapper {
                 ).collect(Collectors.toList());
     }
 
-    default List<QuestionBookmarkResponseDto> questionBookmarkToQuestionBookmarkResponseDto(List<Bookmark> bookmarks) {
+    default List<QuestionDto.BookmarkResponse> questionBookmarkToQuestionBookmarkResponseDto(List<Bookmark> bookmarks) {
         // 질문을 북마크한 유저 정보를 리스트로 저장
         return bookmarks.stream()
                 .filter(bookmark -> bookmark.getAnswers() == null)
-                .map(bookmark -> QuestionBookmarkResponseDto
+                .map(bookmark -> QuestionDto.BookmarkResponse
                         .builder()
                         .id(bookmark.getId())
                         .userId(bookmark.getUsers().getId())
@@ -123,37 +154,39 @@ public interface QuestionsMapper {
                 ).collect(Collectors.toList());
     }
 
-    default List<AnswerBookmarkResponseDto> answerBookmarkToAnswerBookmarkResponseDto(List<Bookmark> bookmarks) {
+    default List<AnswerDto.BookmarkResponse> answerBookmarkToAnswerBookmarkResponseDto(List<Bookmark> bookmarks) {
         // 답변을 북마크한 유저 정보를 리스트로 저장
         return bookmarks.stream()
                 .filter(bookmark -> bookmark.getAnswers() != null)
-                .map(bookmark -> AnswerBookmarkResponseDto
+                .map(bookmark -> AnswerDto.BookmarkResponse
                         .builder()
-                        .id(bookmark.getId())
+                        .bookmarkId(bookmark.getId())
                         .userId(bookmark.getUsers().getId())
                         .nickname(bookmark.getUsers().getNickname())
                         .build()
                 ).collect(Collectors.toList());
     }
 
-    default List<QuestionLikeResponseDto> questionLikesToQuestionLikesResponseDto(List<QuestionLikes> questionLikes) {
+    default List<QuestionDto.LikeResponse> questionLikesToQuestionLikesResponseDto(List<QuestionLikes> questionLikes) {
         // 질문에 좋아요,싫어요를 체크한 유저 정보를 리스트로 저장
         return questionLikes.stream()
-                .map(questionLikes1 -> QuestionLikeResponseDto
+                .map(questionLikes1 -> QuestionDto.LikeResponse
                         .builder()
                         .userId(questionLikes1.getUsers().getId())
+                        .nickname(questionLikes1.getUsers().getNickname())
                         .likeYn(questionLikes1.isLikeYn())
                         .unlikeYn(questionLikes1.isUnlikeYn())
                         .build()
                 ).collect(Collectors.toList());
     }
 
-    default List<AnswerLikeResponseDto> answerLikesToAnswerLikesResponseDto(List<AnswerLikes> answerLikes) {
+    default List<AnswerDto.LikeResponse> answerLikesToAnswerLikesResponseDto(List<AnswerLikes> answerLikes) {
         // 답변에 좋아요,싫어요를 체크한 유저 정보를 리스트로 저장
         return answerLikes.stream()
-                .map(answerLikes1 -> AnswerLikeResponseDto
+                .map(answerLikes1 -> AnswerDto.LikeResponse
                         .builder()
                         .userId(answerLikes1.getUsers().getId())
+                        .nickname(answerLikes1.getUsers().getNickname())
                         .likeYn(answerLikes1.isLikeYn())
                         .unlikeYn(answerLikes1.isUnlikeYn())
                         .build()

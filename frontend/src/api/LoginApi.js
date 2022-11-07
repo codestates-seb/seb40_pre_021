@@ -1,22 +1,15 @@
-import axios from 'axios';
-import { root } from './root';
+import instance from './root';
 import { TokenExpireSetting } from './TokenApi';
 
-const axiosConfig = {
-	baseURL: root,
-};
-
-const instance = axios.create(axiosConfig);
-
 //test
-//test를 위해 회원가입 데이터를 get 하여 들고옴
+// test를 위해 회원가입 데이터를 get 하여 들고옴
 // export const Login = async (data) => {
 // 	try {
 // 		const result = await instance.get(`/signup`);
 // 		if (result.data.accessToken) {
 // 			TokenExpireSetting(result);
 // 		} else {
-// 			throw Error('accessToken is not defined');
+// 			throw { code: '404', message: 'accessToken is not defined' };
 // 		}
 // 		const result2 = await instance.post(
 // 			`/login
@@ -25,7 +18,8 @@ const instance = axios.create(axiosConfig);
 // 		);
 // 		return result.data;
 // 	} catch (err) {
-// 		console.log(err);
+// 		;
+// 		return err;
 // 	}
 // };
 
@@ -36,11 +30,10 @@ export const Login = async (data) => {
 		if (result.data.accessToken) {
 			TokenExpireSetting(result);
 		} else {
-			throw Error('accessToken is not defined');
+			throw { code: '404', message: 'accessToken is not defined' };
 		}
 		return result.data;
 	} catch (err) {
-		console.log(err);
-		throw Error(err);
+		return err;
 	}
 };

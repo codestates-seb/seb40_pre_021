@@ -1,29 +1,23 @@
 import styled from 'styled-components';
 import AnswerOrQuestionList from '../AnswerOrQuestionList';
 import ListBox from '../ListBox';
-import SortButtonGroup from '../SortButtonGroup';
+import SortButtonGroup from '../../common/SortButtonGroup';
 import Title from '../Title';
 
 let sortData = [
 	{
 		id: 0,
-		name: 'Score',
+		name: 'Newest',
 		clicked: true,
 	},
 	{
 		id: 1,
-		name: 'Newest',
+		name: 'Score',
 		clicked: false,
 	},
 ];
 
-const Answers = ({
-	answer,
-	setAnswer,
-	limit,
-	handleTabChange,
-	handleSortLists,
-}) => {
+const Answers = ({ answer, setAnswer, limit, handleTabChange }) => {
 	return (
 		<Container>
 			<TitleBox>
@@ -32,12 +26,7 @@ const Answers = ({
 					number={answer?.length}
 					handleTabChange={handleTabChange}
 				/>
-				<SortButtonGroup
-					menus={sortData}
-					handleSortLists={handleSortLists}
-					data={answer}
-					callback={setAnswer}
-				/>
+				<SortButtonGroup menus={sortData} data={answer} callback={setAnswer} />
 			</TitleBox>
 			<ListBox
 				text="You have not answered any questions"

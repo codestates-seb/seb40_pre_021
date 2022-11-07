@@ -7,12 +7,13 @@ const TabStyle = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-
+	font-size: 0.8rem;
 	button {
 		padding: 10px;
 		width: 100%;
 		height: 100%;
 		background-color: white;
+		color: #888888;
 
 		&:hover {
 			filter: brightness(90%);
@@ -23,6 +24,7 @@ const TabStyle = styled.div`
 	}
 	.active {
 		background-color: rgb(228, 230, 232);
+		color: #333333;
 	}
 `;
 const Tab = ({ tabList, tab, setTab }) => {

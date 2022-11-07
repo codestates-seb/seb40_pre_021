@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+/**
+ * 답변 좋아요 엔티티
+ */
 @Getter
 @Setter
 @Entity
@@ -33,8 +36,8 @@ public class AnswerLikes {
 
 
     public void addAnswer(Answers answer) {
-        // 기존에 getQuestionsTags 와 연관관계가 있다면
-        // getQuestionsTags 에서 해당 questions 을 삭제
+        // 기존에 getAnswersLike 와 연관관계가 있다면
+        // getAnswersLike 에서 해당 answer 을 삭제
         if(this.answers != null) {
             this.answers.getAnswersLike().remove(this);
         }
@@ -45,8 +48,8 @@ public class AnswerLikes {
         }
     }
     public void setUsers(User user) {
-        // 기존에 getQuestionsTags 와 연관관계가 있다면
-        // getQuestionsTags 에서 해당 questions 을 삭제
+        // 기존에 getAnswerLikes 와 연관관계가 있다면
+        // getAnswerLikes 에서 해당 user 을 삭제
         if(this.users != null) {
             this.users.getAnswerLikes().remove(this);
         }

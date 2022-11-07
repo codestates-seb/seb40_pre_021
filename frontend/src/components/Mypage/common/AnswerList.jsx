@@ -2,10 +2,12 @@ import styled from 'styled-components';
 import defaultImage from '../../../assets/images/userDefaultImage.png';
 import { GoCheck } from 'react-icons/go';
 
-const AnswerList = ({ answer }) => {
+const AnswerList = ({ answer, postUrl }) => {
 	const { answerUser, answerBody, answerCreatedAt, vote, choosed } = answer;
-	let days = new Date(answerCreatedAt).toString().split(' ');
-	let date = `${days[1]} ${days[2]} at ${days[4]}`;
+	let days = new Date(new Date(answerCreatedAt).getTime() + 9 * 60 * 60 * 1000)
+		.toString()
+		.split(' ');
+	const date = `${days[1]} ${days[2]} at ${days[4]}`;
 	return (
 		<AnswerListBox>
 			<AnswerVoteAnswerBox>
@@ -19,10 +21,12 @@ const AnswerList = ({ answer }) => {
 						<span>Accepted</span>
 					</AnswerBox>
 				) : null}
-				<AnswerContent choosed={choosed}>{answerBody}</AnswerContent>
+				<AnswerContent choosed={choosed}>
+					{answerBody.replace(/<[^>]*>?/g, '')}
+				</AnswerContent>
 			</AnswerVoteAnswerBox>
 			<AnswerAndUserInfoBox>
-				<a href="123">View answer</a>
+				<a href={postUrl}>View answer</a>
 				<UserInfoBox>
 					<UserImage src={defaultImage} alt="user-image" />
 					<a href="1">{answerUser}</a>
@@ -68,6 +72,7 @@ const AnswerContent = styled.p`
 	display: -webkit-box;
 	-webkit-line-clamp: 4;
 	-webkit-box-orient: vertical;
+	line-height: 17px;
 	overflow: hidden;
 	margin-bottom: 8px;
 	font-size: 13px;

@@ -3,18 +3,18 @@ import styled from 'styled-components';
 import ListAdditionalInfo from '../common/ListAdditionalInfo';
 import TagList from '../common/TagList';
 import UserInfo from '../common/UserInfo';
-import SortButtonGroup from './SortButtonGroup';
+import SortButtonGroup from '../common/SortButtonGroup';
 import Title from './Title';
 
 let questionSortData = [
 	{
 		id: 0,
-		name: 'Score',
+		name: 'Newest',
 		clicked: true,
 	},
 	{
 		id: 1,
-		name: 'Newest',
+		name: 'Score',
 		clicked: false,
 	},
 	{
@@ -27,74 +27,77 @@ let questionSortData = [
 let answerSortData = [
 	{
 		id: 0,
-		name: 'Score',
+		name: 'Newest',
 		clicked: true,
 	},
 	{
 		id: 1,
-		name: 'Newest',
+		name: 'Score',
 		clicked: false,
 	},
 ];
 
-const TotalList = ({ lists, title, type, handleSortLists, callback }) => {
+const TotalList = ({ lists, title, type, callback, text }) => {
 	const [sortData, setSortData] = useState([]);
-	console.log(sortData);
 
 	useEffect(() => {
-		type === 'answer'
+		type === 'answered'
 			? setSortData(answerSortData)
 			: setSortData(questionSortData);
 	}, [type]);
+
 	return (
 		<Container>
 			<TitleBox>
 				<Title title={title} number={lists?.length} />
-				<SortButtonGroup
-					menus={sortData}
-					handleSortLists={handleSortLists}
-					data={lists}
-					callback={callback}
-				/>
+				<SortButtonGroup menus={sortData} data={lists} callback={callback} />
 			</TitleBox>
 			<ListContainer>
-				{lists?.map((list) => {
-					const {
-						id,
-						answerCount,
-						choosed,
-						createdAt,
-						tags,
-						title,
-						url,
-						views,
-						vote,
-					} = list;
+				{lists?.length > 0 ? (
+					lists.map((list) => {
+						const {
+							id,
+							answerCount,
+							choosed,
+							createdAt,
+							tags,
+							title,
+							url,
+							views,
+							vote,
+						} = list;
 
-					let splitDate = new Date(createdAt).toString().split(' ');
-					let date = `${splitDate[1]} ${splitDate[2]}, ${splitDate[3]} at ${splitDate[4]}`;
-					return (
-						<ListBox key={id}>
-							<ListAdditionalInfo
-								vote={vote}
-								choosed={choosed}
-								answerCount={answerCount}
-								views={views}
-								type={type}
-							/>
-							<ContentBox>
-								<h3>
-									<a href={url}>{title}</a>
-								</h3>
-								<TagAndUserInfoBox>
-									{tags ? <TagList tag={tags} /> : <div></div>}
+						let splitDate = new Date(
+							new Date(createdAt).getTime() + 9 * 60 * 60 * 1000,
+						)
+							.toString()
+							.split(' ');
+						let date = `${splitDate[1]} ${splitDate[2]}, ${splitDate[3]} at ${splitDate[4]}`;
+						return (
+							<ListBox key={id}>
+								<ListAdditionalInfo
+									vote={vote}
+									choosed={choosed}
+									answerCount={answerCount}
+									views={views}
+									type={type}
+								/>
+								<ContentBox>
+									<h3>
+										<a href={url}>{title}</a>
+									</h3>
+									<TagAndUserInfoBox>
+										{tags ? <TagList tag={tags} /> : <div></div>}
 
-									<UserInfo date={date} />
-								</TagAndUserInfoBox>
-							</ContentBox>
-						</ListBox>
-					);
-				})}
+										<UserInfo date={date} type={type} />
+									</TagAndUserInfoBox>
+								</ContentBox>
+							</ListBox>
+						);
+					})
+				) : (
+					<EmptyText>{text}</EmptyText>
+				)}
 			</ListContainer>
 		</Container>
 	);
@@ -167,4 +170,14 @@ const TagAndUserInfoBox = styled.div`
 	flex-wrap: wrap;
 	column-gap: 6px;
 	row-gap: 8px;
+`;
+
+const EmptyText = styled.p`
+	height: 100%;
+	color: #6a737c;
+	text-align: center;
+	margin: 0 auto;
+	font-size: 13px;
+	font-weight: 400;
+	padding: 48px;
 `;

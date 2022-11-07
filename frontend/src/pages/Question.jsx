@@ -1,45 +1,154 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import Editor from '../components/common/Editor';
 import Controller from '../components/Question/Controller';
 import Button from '../components/common/Button';
-import { answer, getQuestion, getUserInfo } from '../api/QuestionApi';
+import {
+	answer,
+	commentA,
+	commentQ,
+	commentQDEL,
+	commentADEL,
+	getQuestion,
+	getUserInfo,
+} from '../api/QuestionApi';
 import timeForToday from '../utils/timeForToday';
+import markdownParse from '../utils/markdownParse';
 
 const Question = () => {
 	const [thread, setThread] = useState('');
 	const [nickname, setNickname] = useState('');
-	const [isBookmarked, setIsBookmarked] = useState(false);
-
 	const [answerData, setAnswerData] = useState('');
+	const { questionId } = useParams();
+	const navigate = useNavigate();
 
 	useEffect(() => {
-		getUserInfo().then((res) => setNickname(res.nickname));
+		getQuestion(questionId).then((res) => {
+			setThread(res);
+		});
+		getUserInfo().then((res) => {
+			setNickname(res.nickname);
+		});
 	}, []);
 
-	useEffect(() => {
-		getQuestion().then((res) => setThread(res));
-	}, []);
-
-	useEffect(() => {
-		if (thread) {
-			const bookmarked = thread.bookmarks.filter(
-				(el) => el.nickname === nickname,
-			);
-			if (bookmarked.length !== 0) setIsBookmarked(true);
-			else setIsBookmarked(false);
+	const handleCommentQ = (e) => {
+		if (e.nativeEvent.isComposing) {
+			return;
 		}
-	}, []);
+		if (e.key === 'Enter') {
+			//test
+			// const arr = [...thread.comments];
+			// const test = {
+			//  id: thread.comments.length + 1,
+			//  comments: e.target.value,
+			//  createdAt: '2022-11-03T23:20:27.362238',
+			//  nickname: 'gildong',
+			// };
+			// arr.push(test);
+			// const comments = { comments: arr };
+			// const data = Object.assign({}, thread, comments);
 
+			//real
+			const data = { comments: e.target.value, questionId };
+
+			commentQ(data).then((res) => {
+				if (!res.code) {
+					e.target.value = '';
+					getQuestion(questionId).then((res) => setThread(res));
+				}
+			});
+		}
+	};
+
+	const handleCommentA = (e, answerId) => {
+		if (e.nativeEvent.isComposing) {
+			return;
+		}
+		if (e.key === 'Enter') {
+			//test
+			// const arr = thread.answers.filter((ele) => {
+			//  return ele.answerId === answerId;
+			// });
+			// const test = {
+			//  id: thread.answers.comments?.length + 1,
+			//  comments: e.target.value,
+			//  createdAt: '2022-11-03T23:20:29.553901',
+			//  nickname: 'gildong',
+			// };
+			// arr[0].comments.push(test);
+			// const answers = { answers: arr };
+			// const data = Object.assign({}, thread, answers);
+
+			//real
+			const data = { comments: e.target.value, answerId, questionId };
+			commentA(data).then((res) => {
+				if (!res.code) {
+					e.target.value = '';
+					getQuestion(questionId).then((res) => setThread(res));
+				}
+			});
+		}
+	};
+	const handleDeleteCommentQ = (comments, idx) => {
+		const head = comments.slice(0, idx);
+		const tail = comments.slice(idx + 1);
+		const result = head.concat(tail);
+		const data = { result: result };
+		commentQDEL(data);
+		getQuestion(questionId).then((res) => setThread(res));
+	};
+	const handleDeleteCommentA = (comments, idx) => {
+		const head = comments.slice(0, idx);
+		const tail = comments.slice(idx + 1);
+		const result = head.concat(tail);
+		const data = { result: result };
+		commentADEL(data);
+		getQuestion(questionId).then((res) => setThread(res));
+	};
 	const handleAnswer = (str) => {
 		setAnswerData({
 			body: str,
 		});
 	};
-
 	const handleSubmitAnswer = () => {
-		answer(JSON.stringify(answerData));
+		//test
+		// const arr = [...thread.answers];
+		// const test = {
+		//  answerId: thread.answers.length + 1,
+		//  contents: answerData.body,
+		//  vote: -1,
+		//  chooseYn: false,
+		//  createdAt: '2022-11-03T23:20:22.798088',
+		//  modifiedAt: '2022-11-03T23:20:22.798088',
+		//  nickname: 'gildong',
+		//  comments: [],
+		//  bookmarks: [],
+		//  answerLikes: [
+		//    {
+		//      nickname: 'gildong',
+		//      userId: 1,
+		//      likeYn: true,
+		//      unlikeYn: false,
+		//    },
+		//  ],
+		// };
+		// arr.push(test);
+		// const answers = { answers: arr };
+		// const data = Object.assign({}, thread, answers);
+		// answer(data);
+		// getQuestion(questionId).then((res) => setThread(res));
+
+		//real
+		const data = { contents: answerData.body, questionId };
+		if (answerData.body.length <= 30) alert('글자 수 채워라.');
+		else {
+			answer(data).then((res) => {
+				if (!res.code) {
+					window.location.reload();
+				}
+			});
+		} //여기서 에디터가 다시 렌더링되어야함.
 	};
 
 	return (
@@ -50,10 +159,12 @@ const Question = () => {
 						<Header>
 							<Title>{thread.title}</Title>
 							<Btn>
-								<Link to="/questions/ask">Ask Question</Link>
+								<Link to="/questions/ask">
+									<Button text="Ask Question" />
+								</Link>
 							</Btn>
 							<Info>
-								Asked{' '}
+								Asked
 								<span>{' ' + timeForToday(thread.createdAt) + ' ago'}</span>
 								Viewed<span>{' ' + thread.views + ' times'}</span>
 							</Info>
@@ -62,10 +173,13 @@ const Question = () => {
 						<QuestionContainer>
 							<Left>
 								<Controller
+									bookmarkdata={thread.bookmarks}
 									votecount={thread.vote}
-									bookmark={isBookmarked}
+									votedata={thread.questionsLikes}
 									QcreatorNickname={thread.nickname}
-									loginNickname={nickname}></Controller>
+									loginNickname={nickname}
+									questionId={questionId}
+									setThread={setThread}></Controller>
 							</Left>
 							<Right>
 								<Body
@@ -74,7 +188,12 @@ const Question = () => {
 									}}></Body>
 								<Tags>
 									{thread.questionsTags.map((el) => (
-										<span key={el.tagId}>{el.title}</span>
+										<span
+											key={el.tagId}
+											role="presentation"
+											onClick={() => navigate(`/search/[${el.title}]`)}>
+											{el.title}
+										</span>
 									))}
 								</Tags>
 
@@ -94,7 +213,7 @@ const Question = () => {
 								</Footer>
 								{thread.comments && <hr />}
 								{thread.comments &&
-									thread.comments.map((c) => (
+									thread.comments.map((c, idx) => (
 										<Grouper key={c.id}>
 											<Comments>
 												<span>{c.comments} – </span>
@@ -103,13 +222,22 @@ const Question = () => {
 													{' ' + timeForToday(c.createdAt) + ' ago'}
 												</span>
 												{nickname === c.nickname && (
-													<span className="delete"> × </span>
+													<DEL
+														className="delete"
+														onClick={() =>
+															handleDeleteCommentQ(thread.comments, idx)
+														}>
+														×
+													</DEL>
 												)}
 											</Comments>
 											<hr />
 										</Grouper>
 									))}
-								<CommentCreate>Add a comment</CommentCreate>
+								<CommentCreate
+									onKeyDown={handleCommentQ}
+									placeholder="Add a comment"
+								/>
 							</Right>
 						</QuestionContainer>
 					</QuestionGroup>
@@ -125,11 +253,16 @@ const Question = () => {
 										<Left>
 											<Controller
 												kind="answer"
+												bookmarkdata={el.bookmarks}
 												votecount={el.vote}
-												bookmark={isBookmarked}
-												chose={el.choosed}
+												votedata={el.answerLikes}
+												chose={el.chooseYn}
 												QcreatorNickname={thread.nickname}
-												loginNickname={nickname}></Controller>
+												loginNickname={nickname}
+												questionId={questionId}
+												answerId={el.answerId}
+												setThread={setThread}
+												questionChose={thread.chooseYn}></Controller>
 										</Left>
 										<Right>
 											<Body
@@ -154,7 +287,7 @@ const Question = () => {
 											</Footer>
 											{el.comments && <hr />}
 											{el.comments &&
-												el.comments.map((c) => (
+												el.comments.map((c, idx) => (
 													<Grouper key={c.id}>
 														<Comments>
 															<span>{c.comments} – </span>
@@ -163,13 +296,22 @@ const Question = () => {
 																{' ' + timeForToday(c.createdAt) + ' ago'}
 															</span>
 															{nickname === c.nickname && (
-																<span className="delete"> × </span>
+																<DEL
+																	className="delete"
+																	onClick={() =>
+																		handleDeleteCommentA(el.comments, idx)
+																	}>
+																	×
+																</DEL>
 															)}
 														</Comments>
 														<hr />
 													</Grouper>
 												))}
-											<CommentCreate>Add a comment</CommentCreate>
+											<CommentCreate
+												onKeyDown={(e) => handleCommentA(e, el.answerId)}
+												placeholder="Add a comment"
+											/>
 										</Right>
 									</AnswerContainer>
 									<hr />
@@ -190,7 +332,7 @@ const Question = () => {
 const Wrapper = styled.section`
 	position: relative;
 	max-width: 1080px;
-	padding: 1.5rem 0 1.5rem 1.5rem;
+	padding: 1.5rem 1rem 1.5rem 1.5rem;
 	hr {
 		margin: 1rem 0 1rem;
 		height: 1px;
@@ -203,7 +345,8 @@ const QuestionGroup = styled.article``;
 
 const Header = styled.div``;
 const Title = styled.h1`
-	width: 100%;
+	max-width: calc(100% - 150px);
+	word-break: break-all;
 	font-size: 1.75rem;
 	font-weight: 400;
 	line-height: 140%;
@@ -211,7 +354,7 @@ const Title = styled.h1`
 `;
 const Btn = styled.div`
 	position: absolute;
-	right: 0;
+	right: 1rem;
 	top: 2rem;
 `;
 const Info = styled.div`
@@ -299,6 +442,11 @@ const Tags = styled.div`
 		background-color: rgb(227, 236, 243);
 		padding: 0.1rem 0.3rem 0.1rem 0.3rem;
 		border-radius: 3px;
+		cursor: pointer;
+	}
+	span:hover {
+		background-color: #d1e3f0;
+		color: #2c5877;
 	}
 `;
 const Footer = styled.div`
@@ -337,10 +485,25 @@ const Comments = styled.div`
 		color: rgb(108, 115, 123);
 	}
 `;
-const CommentCreate = styled.div`
-	padding: 1rem 0 0 0;
+const DEL = styled.button`
+	cursor: pointer;
+	background: none;
+	margin: 0 0.5rem 0 0.5rem;
+`;
+const CommentCreate = styled.input`
+	width: 100%;
+	padding: 1rem 1rem 1rem 0;
 	font-size: 0.85rem;
 	color: rgb(187, 191, 195);
+	&:focus-within {
+		outline: none;
+	}
+	&:focus {
+		outline: none;
+	}
+	::placeholder {
+		color: #bbbbbb;
+	}
 `;
 const AnswerGroup = styled.div``;
 const AnswerContainer = styled.article`
@@ -354,7 +517,12 @@ const AnswerCount = styled.h2`
 	margin-bottom: 1rem;
 `;
 
-const EditGroup = styled.div``;
+const EditGroup = styled.div`
+	button {
+		margin-top: 2rem;
+	}
+`;
+
 const YourAnswer = styled.h2`
 	font-size: 1.25rem;
 	font-weight: 400;

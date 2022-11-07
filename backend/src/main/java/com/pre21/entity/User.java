@@ -11,15 +11,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 /**
- * JavaDocs 테스트
- * User entity입니다.
+ * 유저 엔티티
  */
 @NoArgsConstructor
 @Getter
@@ -40,6 +39,13 @@ public class User {
 
     @Column
     private String nickname;
+
+    @Column
+    private LocalDateTime createdAt = LocalDateTime.now();
+
+    @Column
+    private LocalDateTime latestLogin;
+
 
     // Security 유저 권한
     @ElementCollection(fetch = FetchType.EAGER)
@@ -89,15 +95,15 @@ public class User {
     }
 
     public void addQuestionsLikes(QuestionLikes questionLikes) {
-        this.questionsLikes.add(questionLikes); // question 에 questionsTags 지정
+        this.questionsLikes.add(questionLikes); // user 에 questionLikes 지정
         if (questionLikes.getUsers() != this) {
-            questionLikes.setUsers(this); //(owner)questionsTags 에 question 지정
+            questionLikes.setUsers(this); //(owner)questionLikes 에 user 지정
         }
     }
 
     public void addUserTags(UserTags userTags) {
         this.userTags.add(userTags);
-        if(userTags.getUsers() != this) {
+        if (userTags.getUsers() != this) {
             userTags.setUser(this);
         }
     }
@@ -123,13 +129,16 @@ public class User {
     }
 
     /**
-     * @method
-     * @param bookmark
+     * Bookmark 리스트 추가 메서드
+     *
+     * @param bookmark 북마크 정보
+     * @author mozzi327
      */
-    public void addAdoption(Bookmark bookmark) {
+    public void addBookmark(Bookmark bookmark) {
         this.bookmarks.add(bookmark);
         if (bookmark.getUsers() != this) {
             bookmark.setUsers(this);
         }
     }
+
 }

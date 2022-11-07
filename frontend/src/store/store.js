@@ -13,11 +13,12 @@ import storage from 'redux-persist/lib/storage';
 import logger from 'redux-logger';
 import userReducer from '../modules/userReducer';
 import tagsReducer from '../modules/tagsReducer';
+import storageSession from 'redux-persist/lib/storage/session';
 
 const persistConfig = {
 	key: 'root',
 	version: 1,
-	storage,
+	storage: storageSession,
 };
 
 //reducer 합치는 부분

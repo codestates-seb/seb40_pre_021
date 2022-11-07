@@ -1,20 +1,46 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import markdownParse from '../../utils/markdownParse';
-const Container = styled.div``;
+
+const Editor = ({ id, callback }) => {
+	const [mdText, setMdText] = useState('');
+
+	const handleChange = (e) => {
+		setMdText(markdownParse(e.target.value));
+	};
+	useEffect(() => {
+		callback(mdText);
+	}, [mdText]);
+	return (
+		<>
+			<Container>
+				<Header />
+				<Textarea onKeyUp={handleChange} id={id}></Textarea>
+				<Result
+					mdText={mdText}
+					dangerouslySetInnerHTML={{ __html: mdText }}></Result>
+			</Container>
+		</>
+	); // XSS공격 대비 필요. 마크다운 텍스트 에디터를 웹으로 만드는 것의 한계인 듯하다.
+	// https://ui.toast.com/weekly-pick/ko_monthly_202006 참고. 여기서도 수동으로 XSS의 가능성이 있는 코드들을 분석해서 따로 파싱한다.
+};
+const Container = styled.div`
+	width: 100%;
+`;
 const Header = styled.div``;
 const Textarea = styled.textarea`
 	font-size: 0.8rem;
 	font-family: IBM Plex Mono, monospace;
 	border: 1px solid rgb(179, 183, 188);
-	padding: 0.5rem;
+	padding: 0.75rem;
 	height: 14rem;
-	width: 99%;
+	width: calc(100% - 1.5rem);
 	border-radius: 3px;
 	background-color: white;
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	resize: vertical;
 
 	&:focus-within {
 		outline: none;
@@ -29,6 +55,8 @@ const Result = styled.div`
 	margin-top: 1rem;
 	font-size: 1rem;
 	line-height: 130%;
+	word-break: break-all;
+	white-space: pre-wrap;
 	ul {
 		list-style-type: disc;
 		margin-left: 1rem;
@@ -76,28 +104,4 @@ const Result = styled.div`
 		margin-bottom: 1rem;
 	}
 `;
-
-const Editor = ({ id, callback }) => {
-	const [mdText, setMdText] = useState('');
-
-	const handleChange = (e) => {
-		setMdText(markdownParse(e.target.value));
-	};
-	useEffect(() => {
-		callback(mdText);
-	}, [mdText]);
-	return (
-		<>
-			<Container>
-				<Header />
-				<Textarea onKeyUp={handleChange} id={id}></Textarea>
-				<Result
-					mdText={mdText}
-					dangerouslySetInnerHTML={{ __html: mdText }}></Result>
-			</Container>
-		</>
-	); // XSS공격 대비 필요. 마크다운 텍스트 에디터를 웹으로 만드는 것의 한계인 듯하다.
-	// https://ui.toast.com/weekly-pick/ko_monthly_202006 참고. 여기서도 수동으로 XSS의 가능성이 있는 코드들을 분석해서 따로 파싱한다.
-};
-
 export default Editor;

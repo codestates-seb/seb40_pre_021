@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ListHeader from '../components/List/ListHeader';
-import { getList } from '../api/ListApi';
+import { getHomeList } from '../api/ListApi';
 import List from '../components/List/List';
 import { Link } from 'react-router-dom';
 import useDynamicTitle from '../hooks/useDynamicTitle';
@@ -16,8 +16,8 @@ const HomeStyle = styled.div`
 const More = styled.div`
 	margin-top: 36px;
 	padding: 36px;
-	font-size: 1.1em;
-	font-weight: 600;
+	font-size: 1.1rem;
+	font-weight: 400;
 
 	a {
 		text-decoration: none;
@@ -34,7 +34,7 @@ const Home = () => {
 	);
 	useEffect(() => {
 		const data = { tab: tab.toLowerCase() };
-		getList(data).then((res) => {
+		getHomeList(data).then((res) => {
 			setData(res.data);
 			dispatch(setTags(res.tags));
 		});

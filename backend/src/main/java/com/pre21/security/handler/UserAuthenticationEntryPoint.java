@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 인증되지 않은 사용자가 요청을 했을 때 동작하는 핸들러 클래스
+ * @author mozzi327
+ */
 @Slf4j
 @Component
 public class UserAuthenticationEntryPoint implements AuthenticationEntryPoint {

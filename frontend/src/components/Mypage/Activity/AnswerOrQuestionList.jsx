@@ -6,7 +6,11 @@ const AnswerOrQuestionList = ({ lists, limit }) => {
 			{lists.length &&
 				lists.map((list, i) => {
 					const { choosed, createdAt, title, url, vote, id } = list;
-					let days = new Date(createdAt).toDateString().split(' ');
+					let days = new Date(
+						new Date(createdAt).getTime() + 9 * 60 * 60 * 1000,
+					)
+						.toDateString()
+						.split(' ');
 					let date = `${days[1]} ${days[2]}, ${days[3]}`;
 
 					if (limit && i >= limit) {
@@ -95,6 +99,7 @@ const Title = styled.a`
 	margin: 0 12px;
 	:hover {
 		color: #0a95ff;
+		cursor: pointer;
 	}
 `;
 

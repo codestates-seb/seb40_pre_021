@@ -1,13 +1,7 @@
 import axios from 'axios';
-import { root } from './root';
+import instance from './root';
 
-const JWT_EXPIRY_TIME = 60 * 1000; // 만료 시간 (1분)
-
-const axiosConfig = {
-	baseURL: root,
-};
-
-const instance = axios.create(axiosConfig);
+const JWT_EXPIRY_TIME = 60 * 60 * 1000; // 만료 시간 (1시간)
 
 //acessToken reissue
 
@@ -18,12 +12,11 @@ export const AccessTokenRefresh = async () => {
 		//real
 		const result = await instance.get(`/users/refresh`);
 		if (result.data.accessToken) {
-			console.log('AccessTokenRefresh');
 			TokenExpireSetting(result);
 		}
 		return result.data;
 	} catch (err) {
-		console.log(err);
+		return err;
 	}
 };
 

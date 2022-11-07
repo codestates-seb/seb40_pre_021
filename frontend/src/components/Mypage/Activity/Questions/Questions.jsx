@@ -1,19 +1,18 @@
 import styled from 'styled-components';
-import ListAdditionalInfo from '../../common/ListAdditionalInfo';
 import AnswerOrQuestionList from '../AnswerOrQuestionList';
 import ListBox from '../ListBox';
-import SortButtonGroup from '../SortButtonGroup';
+import SortButtonGroup from '../../common/SortButtonGroup';
 import Title from '../Title';
 
 let sortData = [
 	{
 		id: 0,
-		name: 'Score',
+		name: 'Newest',
 		clicked: true,
 	},
 	{
 		id: 1,
-		name: 'Newest',
+		name: 'Score',
 		clicked: false,
 	},
 	{
@@ -23,14 +22,7 @@ let sortData = [
 	},
 ];
 
-const Questions = ({
-	question,
-	setQuestion,
-	limit,
-	handleTabChange,
-	handleSortLists,
-}) => {
-	const { vote, choosed, answerCount, view } = question;
+const Questions = ({ question, setQuestion, limit, handleTabChange }) => {
 	return (
 		<Container>
 			<TitleBox>
@@ -41,7 +33,6 @@ const Questions = ({
 				/>
 				<SortButtonGroup
 					menus={sortData}
-					handleSortLists={handleSortLists}
 					data={question}
 					callback={setQuestion}
 				/>

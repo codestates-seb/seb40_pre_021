@@ -5,49 +5,12 @@ import Reputation from '../../components/Mypage/Activity/Reputation/Reputation';
 import Summary from '../../components/Mypage/Activity/Summary';
 import Tags from '../../components/Mypage/Activity/Tags/Tags';
 import TotalList from '../../components/Mypage/Activity/TotalList';
-import useMypageData from '../../hooks/useMypageData';
+import useMypageData from './hooks/useMypageData';
 
 const MypageTabContent = ({ curTab, changeCurrentTab }) => {
 	const [answer, setAnswer] = useMypageData('answer');
 	const [question, setQuestion] = useMypageData('question');
 	const [tag, setTag] = useMypageData('tag');
-
-	const handleSortLists = (name, data, callback, tag = false) => {
-		let newData = [];
-		switch (name) {
-			case 'Score':
-				if (tag) {
-					newData = [...data].sort((a, b) => b.tagCount - a.tagCount);
-				} else {
-					newData = [...data].sort((a, b) => b.vote - a.vote);
-				}
-				break;
-			case 'Newest':
-				newData = [...data].sort(function compare(a, b) {
-					const dateA = new Date(a.createdAt).getTime();
-					const dateB = new Date(b.createdAt).getTime();
-					if (dateA > dateB) return -1;
-					if (dateA < dateB) return 1;
-					return 0;
-				});
-				break;
-			case 'Name':
-				newData = [...data].sort(function compare(a, b) {
-					if (a.title < b.title) return -1;
-					if (a.title > b.title) return 1;
-					return 0;
-				});
-				break;
-			case 'Views':
-				newData = [...data].sort(function compare(a, b) {
-					if (a.views > b.views) return -1;
-					if (a.views < b.views) return 1;
-					return 0;
-				});
-				break;
-		}
-		callback(newData);
-	};
 
 	switch (curTab) {
 		case 'Summary':
@@ -59,14 +22,12 @@ const MypageTabContent = ({ curTab, changeCurrentTab }) => {
 						setAnswer={setAnswer}
 						limit={5}
 						handleTabChange={changeCurrentTab}
-						handleSortLists={handleSortLists}
 					/>
 					<Questions
 						question={question}
 						setQuestion={setQuestion}
 						limit={5}
 						handleTabChange={changeCurrentTab}
-						handleSortLists={handleSortLists}
 					/>
 					<Tags
 						tag={tag}
@@ -84,8 +45,8 @@ const MypageTabContent = ({ curTab, changeCurrentTab }) => {
 					lists={answer}
 					title="Answers"
 					callback={setAnswer}
-					handleSortLists={handleSortLists}
-					type="answer"
+					type="answered"
+					text="You have not answered any questions"
 				/>
 			);
 		case 'Questions':
@@ -94,13 +55,11 @@ const MypageTabContent = ({ curTab, changeCurrentTab }) => {
 					lists={question}
 					title="Questions"
 					callback={setQuestion}
-					handleSortLists={handleSortLists}
+					text="You have not asked any questions"
 				/>
 			);
 		case 'Tags':
-			return (
-				<Tags tag={tag} setTag={setTag} handleSortLists={handleSortLists} />
-			);
+			return <Tags tag={tag} setTag={setTag} />;
 		case 'Reputation':
 			return <Reputation />;
 	}
@@ -113,4 +72,8 @@ const GridBox = styled.div`
 	grid-template-columns: repeat(2, minmax(0, 1fr));
 	gap: 24px;
 	margin: 8px 0 8px 8px;
+	@media screen and (max-width: 1264px) {
+		display: flex;
+		flex-direction: column;
+	}
 `;

@@ -33,7 +33,7 @@ const DropDownContainer = styled.ul`
 const SearchStyle = styled.li`
 	position: relative;
 	flex-grow: 1;
-	max-width: 50%;
+	max-width: 954px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -41,7 +41,8 @@ const SearchStyle = styled.li`
 const SearchBox = styled.div`
 	border: 1px solid rgb(179, 183, 188);
 	height: 65%;
-	width: 95%;
+	width: 93%;
+	padding-left: 0.25rem;
 	border-radius: 3px;
 	background-color: white;
 	display: flex;
@@ -54,10 +55,11 @@ const SearchBox = styled.div`
 		box-shadow: 0 0 10px #9ecaed;
 	}
 	input {
-		width: 95%;
+		width: 100%;
+		padding-top: 0.1rem;
+		padding-left: 0.25rem;
 		border: none;
 		font-size: 13px;
-		font-weight: bold;
 
 		&:focus {
 			outline: none;
@@ -100,19 +102,22 @@ const Search = () => {
 		}
 		if (options.length === 0) {
 			if (e.key === 'Enter') {
-				if (inputValue !== undefined) {
+				if (inputValue !== '') {
 					let searchWords = inputValue.split(' ').filter((ele) => {
 						return ele !== '';
 					});
-					tags.map((tag) => {
-						searchWords.map((word, idx) => {
-							if (tag === word) {
-								searchWords[idx] = `[${word}]`;
-							}
+					if (Array.isArray(tags)) {
+						tags.map((tag) => {
+							searchWords.map((word, idx) => {
+								if (tag === word) {
+									searchWords[idx] = `[${word}]`;
+								}
+							});
 						});
-					});
+					}
 					const q = searchWords.join(' ');
 					navigate(`/search/${q}`);
+					setInputValue('');
 				}
 			}
 		}
@@ -128,16 +133,18 @@ const Search = () => {
 	};
 
 	const NewOptions = (text) => {
-		const newOptions = [...tags];
-		setOptions(
-			newOptions.filter((ele) => {
-				if (text !== '') {
-					return ele.includes(text);
-				} else {
-					setIndex(0);
-				}
-			}),
-		);
+		if (Array.isArray(tags)) {
+			const newOptions = [...tags];
+			setOptions(
+				newOptions.filter((ele) => {
+					if (text !== '') {
+						return ele.includes(text);
+					} else {
+						setIndex(0);
+					}
+				}),
+			);
+		}
 	};
 	const handleInputChange = (event) => {
 		const text = event.target.value;

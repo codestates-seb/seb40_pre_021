@@ -13,22 +13,26 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class LikeService {
-    private final UserRepository userRepository;
+    private final AuthRepository authRepository;
     private final QuestionsRepository questionsRepository;
     private final QuestionLikeRepository questionLikeRepository;
     private final AnswersRepository answersRepository;
     private final AnswerLikeRepository answerLikeRepository;
 
 
-    // 질문 좋아요를 DB에 저장
-    public void saveQuestionLike(Long questionId, QuestionDto.Like like) {
-        Long userId = like.getUserId();
+    /**
+     * 질문의 좋아요를 DB에 저장하는 메서드입니다.
+     *
+     * @param questionId Long 타입, 질문의 ID 값입니다.
+     * @param like       QuestionDto.Like 타입, 좋아요 Dto입니다.
+     */
+    public void saveQuestionLike(Long questionId, QuestionDto.Like like, Long userId) {
         // 유저 id를 통해 유저 조회
         User findUser = verifiedExistUser(userId);
 
         // 질문 id를 통해 질문 조회
         Questions findQuestion = verifiedExistQuestion(questionId);
-
+        int oldVote = findQuestion.getVote();
         int compareResult = 0;
 
         // 현재 유저의 질문 좋아요 상태를 가져온 후
@@ -37,18 +41,23 @@ public class LikeService {
 
         if (findQuestionLikes.isPresent()) { // 상태 값이 있을 경우 업데이트
             QuestionLikes likes = findQuestionLikes.get();
+            compareResult = dtoCheck(oldVote, likes, like);
             likes.setLikeYn(like.isLikeYn());
             likes.setUnlikeYn(like.isUnlikeYn());
-            compareResult = dtoCheck(likes, like);
             findQuestion.setVote(compareResult);
             QuestionLikes savedLike = questionLikeRepository.save(likes);
             findQuestion.addQuestionsLikes(savedLike);
             findUser.addQuestionsLikes(savedLike);
+            questionsRepository.save(findQuestion);
         } else { // 없을 경우 QuestionLikes를 생성하여 저장
             QuestionLikes likes = new QuestionLikes(like.isLikeYn(), like.isUnlikeYn());
             likes.setUsers(findUser);
             likes.addQuestions(findQuestion);
-            compareResult = dtoCheck(likes, like);
+            if (like.isLikeYn()) {
+                compareResult = oldVote + 1;
+            } else if (like.isUnlikeYn()) {
+                compareResult = oldVote - 1;
+            }
             findQuestion.setVote(compareResult);
             QuestionLikes savedLike = questionLikeRepository.save(likes);
             findQuestion.addQuestionsLikes(savedLike);
@@ -56,17 +65,21 @@ public class LikeService {
         }
     }
 
-
+    /**
+     * 답변의 좋아요를 DB에 저장하는 메서드입니다.
+     *
+     * @param answerId Long 타입, 답변의 ID 값입니다.
+     * @param like     QuestionDto.Like 타입, 좋아요 Dto입니다.
+     */
     // 답변 좋아요를 DB에 저장
-    public void saveAnswerLike(Long answerId, QuestionDto.Like like) {
-        Long userId = like.getUserId();
+    public void saveAnswerLike(Long answerId, QuestionDto.Like like, Long userId) {
 
         // 유저 id를 통해 유저 조회
         User findUser = verifiedExistUser(userId);
 
         // 답변 id를 통해 질문 조회
         Answers findAnswer = verifiedExistAnswer(answerId);
-
+        int oldVote = findAnswer.getVote();
         int compareResult = 0;
 
         // 현재 유저의 답변 좋아요 상태를 가져온 후
@@ -74,9 +87,9 @@ public class LikeService {
 
         if (findQuestionLikes.isPresent()) { // 상태 값이 있을 경우 업데이트
             AnswerLikes likes = findQuestionLikes.get();
+            compareResult = dtoCheck(oldVote, likes, like);
             likes.setLikeYn(like.isLikeYn());
             likes.setUnlikeYn(like.isUnlikeYn());
-            compareResult = dtoCheck(likes, like);
             findAnswer.setVote(compareResult);
             AnswerLikes savedLike = answerLikeRepository.save(likes);
             findAnswer.addAnswerLike(savedLike);
@@ -85,7 +98,11 @@ public class LikeService {
             AnswerLikes likes = new AnswerLikes(like.isLikeYn(), like.isUnlikeYn());
             likes.setUsers(findUser);
             likes.addAnswer(findAnswer);
-            compareResult = dtoCheck(likes, like);
+            if (like.isLikeYn()) {
+                compareResult = oldVote + 1;
+            } else if (like.isUnlikeYn()) {
+                compareResult = oldVote - 1;
+            }
             findAnswer.setVote(compareResult);
             AnswerLikes savedLike = answerLikeRepository.save(likes);
             findAnswer.addAnswerLike(savedLike);
@@ -96,7 +113,7 @@ public class LikeService {
 
     // 유저를 찾아 리턴
     private User verifiedExistUser(Long userId) {
-        return userRepository.findById(userId).orElseThrow(() ->
+        return authRepository.findById(userId).orElseThrow(() ->
                 new BusinessLogicException(ExceptionCode.USER_NOT_FOUND)
         );
     }
@@ -123,40 +140,58 @@ public class LikeService {
     private Optional<AnswerLikes> findAnswerLike(User user) {
         return answerLikeRepository.findAnswerLikesByUsers(user);
     }
-    private int dtoCheck(QuestionLikes likes, QuestionDto.Like like) {
+
+    private int dtoCheck(int oldVote, QuestionLikes likes, QuestionDto.Like like) {
         if (likes.isLikeYn()) {
             if (like.isLikeYn()) {
-                return -1;
-            }
-            if (like.isUnlikeYn()) {
-                return -2;
+                return oldVote;
+            } else if (like.isUnlikeYn()) {
+                return oldVote - 2;
+            } else {
+                return oldVote - 1;
             }
         } else if (likes.isUnlikeYn()) {
             if (like.isLikeYn()) {
-                return +2;
+                return oldVote + 2;
+            } else if (like.isUnlikeYn()) {
+                return oldVote;
+            } else {
+                return oldVote + 1;
             }
-            if (like.isUnlikeYn()) {
-                return +1;
+        } else {
+            if (like.isLikeYn()) {
+                return oldVote + 1;
+            } else if (like.isUnlikeYn()) {
+                return oldVote - 1;
             }
         }
-        return 0;
+        return oldVote;
     }
-    private int dtoCheck(AnswerLikes likes, QuestionDto.Like like) {
+
+    private int dtoCheck(int oldVote, AnswerLikes likes, QuestionDto.Like like) {
         if (likes.isLikeYn()) {
             if (like.isLikeYn()) {
-                return -1;
-            }
-            if (like.isUnlikeYn()) {
-                return -2;
+                return oldVote;
+            } else if (like.isUnlikeYn()) {
+                return oldVote - 2;
+            } else {
+                return oldVote - 1;
             }
         } else if (likes.isUnlikeYn()) {
             if (like.isLikeYn()) {
-                return +2;
+                return oldVote + 2;
+            } else if (like.isUnlikeYn()) {
+                return oldVote;
+            } else {
+                return oldVote + 1;
             }
-            if (like.isUnlikeYn()) {
-                return +1;
+        } else {
+            if (like.isLikeYn()) {
+                return oldVote + 1;
+            } else if (like.isUnlikeYn()) {
+                return oldVote - 1;
             }
         }
-        return 0;
+        return oldVote;
     }
 }

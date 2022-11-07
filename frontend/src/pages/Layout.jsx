@@ -21,7 +21,7 @@ const Layout = () => {
 	useEffect(() => {
 		AccessTokenRefresh().then((res) => {
 			//응답이 정상일 경우
-			if (res.nickname) {
+			if (!res.code) {
 				dispatch(loginSuccess(res));
 			}
 		});

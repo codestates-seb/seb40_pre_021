@@ -4,22 +4,45 @@ import Editor from '../components/common/Editor';
 import Button from '../components/common/Button';
 import TagForm from '../components/Ask/TagForm';
 import { ask } from '../api/QuestionApi';
+import { edit } from '../api/EditApi';
 import background from '../assets/images/background.svg';
 import Header from '../components/Header/Header';
 import Footer from '../components/Footer/Footer';
+import { useNavigate } from 'react-router-dom';
+import markdownParse from '../utils/markdownParse';
 const Ask = ({ editTitle, editBody, editTag }) => {
 	const [title, setTitle] = useState('');
 	const [problem, setProblem] = useState('');
 	const [expect, setExpect] = useState('');
 	const [tagsarr, setTagsarr] = useState('');
 
+	const navigate = useNavigate();
 	const handleClick = () => {
 		const data = {
 			title: title,
-			body: problem + expect,
+			contents: markdownParse(problem) + markdownParse(expect),
 			tags: tagsarr,
 		};
-		ask(JSON.stringify(data));
+		if (
+			title.length <= 15 ||
+			problem.length <= 20 ||
+			expect.length <= 20 ||
+			tagsarr.length === 0
+		)
+			alert('제목은 15자, 본문은 각 20자, 태그에는 무언가 하나 있어야 합니다');
+		else {
+			// 편집할 때 else ask(data); // 새 글 쓸 때 } };
+
+			if (editTitle && editBody && editTag) edit(data);
+			else
+				ask(data).then((res) => {
+					if (res.id) {
+						navigate(`/questions/question/${res.id}`);
+					} else {
+						navigate(`/questions`);
+					}
+				});
+		}
 	};
 
 	const handleTitle = (e) => {
@@ -84,6 +107,7 @@ const Ask = ({ editTitle, editBody, editTag }) => {
 							maxlength="300"
 							placeholder="e.g. Is there an R function for finding the index of an element in a vector?"
 							onChange={handleTitle}
+							value={editTitle}
 						/>
 					</Group>
 					<Tip></Tip>
@@ -93,7 +117,7 @@ const Ask = ({ editTitle, editBody, editTag }) => {
 							Introduce the problem and expand on what you put in the title.
 							Minimum 20 characters.
 						</Caption>
-						<Editor callback={handleProblem} />
+						<Editor callback={handleProblem} value={editBody} />
 					</Group>
 					<Tip></Tip>
 					<Group>
@@ -113,7 +137,7 @@ const Ask = ({ editTitle, editBody, editTag }) => {
 							Add up to 5 tags to describe what your question is about. Start
 							typing to see suggestions.
 						</Caption>
-						<TagForm callback={handleTags} />
+						<TagForm callback={handleTags} value={editTag} />
 					</Group>
 					<Button text="Review your question" callback={handleClick} />
 				</BodyConatiner>
@@ -135,10 +159,12 @@ const Container = styled.section`
 const AskHeader = styled.div`
 	height: 10rem;
 	margin-right: 1.5rem;
-	background-image: url('${background}');
-	background-size: 573px;
-	background-repeat: no-repeat;
-	background-position: right top;
+	@media screen and (min-width: 750px) {
+		background-image: url('${background}');
+		background-size: 573px;
+		background-repeat: no-repeat;
+		background-position: right top;
+	}
 `;
 const BodyConatiner = styled.div`
 	padding: 0 4.5rem 4.5rem 4.5rem;
@@ -220,7 +246,7 @@ const Form = styled.input`
 		outline: none;
 	}
 	::placeholder {
-		color: #bbbbbb;
+		color: #cccccc;
 	}
 `;
 // const DiscardDraft = styled.button``;

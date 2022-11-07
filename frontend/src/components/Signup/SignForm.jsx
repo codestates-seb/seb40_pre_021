@@ -50,7 +50,11 @@ const SignupForm = () => {
 	const navigate = useNavigate();
 
 	const handleInputValue = (key) => (e) => {
-		setSignupInfo({ ...signupInfo, [key]: e.target.value });
+		const koreanExp = /[ㄱ-ㅎㅏ-ㅣ가-힣]/g;
+		setSignupInfo({
+			...signupInfo,
+			[key]: e.target.value.replace(koreanExp, ''),
+		});
 	};
 	const signupRequestHandler = () => {
 		const { nickname, email, password } = signupInfo;
@@ -67,24 +71,25 @@ const SignupForm = () => {
 		//api
 
 		Signup(signupInfo).then((res) => {
-			//결과 상태 result에 저장 후 200 = 회원가입 완료 , 400,500 = 오류가 발생했습니다 보여줄 예정
-			//200 일경우 login page로 redirect
-			// if (res.state === 200) {
-			const title = '회원가입 완료';
-			const contents = `로그인 화면으로 이동하시겠습니까?`;
-			confirmAlert({
-				customUI: ({ onClose }) => {
-					return (
-						<Confirm
-							onClose={onClose}
-							title={title}
-							content={contents}
-							callback={() => navigate('/login')}
-						/>
-					);
-				},
-			});
-			// }
+			if (res.code) {
+				alert(res.message);
+			} else {
+				const title = '회원가입 완료';
+				const contents = `로그인 화면으로 이동하시겠습니까?`;
+				confirmAlert({
+					customUI: ({ onClose }) => {
+						return (
+							<Confirm
+								onClose={onClose}
+								title={title}
+								content={contents}
+								callback={() => navigate('/login')}
+							/>
+						);
+					},
+				});
+				// }
+			}
 		});
 	};
 
