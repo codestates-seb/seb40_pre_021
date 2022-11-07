@@ -12,11 +12,11 @@ https://d184hsf03uyfp2.cloudfront.net/
 
 Backend
 
-`조경민`, `조용기`, `이동규`, `임재민`
+<a href="https://github.com/mozzi327">`조경민`</a>, <a href="https://github.com/Cristiano-Cho">`조용기`</a>, <a href="https://github.com/dev32user">`이동규`</a>, <a href="https://github.com/LimJaeminZ">`임재민`</a>
 
 Frontend
 
-`문지훈`, `부주용`, `유승윤`
+<a href="https://github.com/moonjh9392">`문지훈`</a>, <a href="https://github.com/jooyong-boo">`부주용`</a>, <a href="https://github.com/seung-yoon-yu">`유승윤`</a>
 
 ### Tech Stacks
 
