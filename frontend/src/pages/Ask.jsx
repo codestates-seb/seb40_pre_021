@@ -21,7 +21,10 @@ const Ask = ({ editTitle, editBody, editTag }) => {
 	const handleClick = () => {
 		const data = {
 			title: title,
-			contents: problem + expect,
+			contents: JSON.stringify({
+				mdText: problem + expect,
+				rawText: problemRaw + expectRaw,
+			}),
 			tags: tagsarr,
 		};
 		if (
