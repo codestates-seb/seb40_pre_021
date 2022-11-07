@@ -165,7 +165,7 @@ const List = ({ data, type }) => {
 							nickname={createId}
 							width="27px"
 							heigth="27px"
-							fontSize={`${14 - 2 * createId?.length}px`}
+							fontSize={`${20 - 2 * createId?.length}px`}
 						/>
 						<Link to="">123</Link>
 						asked {timeForToday(data.createdAt, 'ago')}
