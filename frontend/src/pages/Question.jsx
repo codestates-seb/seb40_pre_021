@@ -175,7 +175,8 @@ const Question = () => {
 									votedata={thread.questionsLikes}
 									QcreatorNickname={thread.nickname}
 									loginNickname={nickname}
-									questionId={questionId}></Controller>
+									questionId={questionId}
+									setThread={setThread}></Controller>
 							</Left>
 							<Right>
 								<Body
