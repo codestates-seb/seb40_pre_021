@@ -191,7 +191,7 @@ const Question = () => {
 										<span
 											key={el.tagId}
 											role="presentation"
-											onClick={() => navigate(`/search/${el.title}`)}>
+											onClick={() => navigate(`/search/[${el.title}]`)}>
 											{el.title}
 										</span>
 									))}
