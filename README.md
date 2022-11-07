@@ -18,7 +18,7 @@ Frontend
 Backend
 `Spring Boot`, `Spring Security`, `Spring DATA JPA`, `H2`, `Mysql`, `JWT`, `AWS EC2`, `AWS RDS`, `AWS Load Balencer`
 
-Frontend `Javascript`, `React`, `Redux-toolkit`, `Axios`, `Styled-components`, `Eslint`, `Prittier`, `AWS S3`, `Cloudfront`
+Frontend `Javascript`, `React`, `Redux-toolkit`, `Axios`, `Styled-components`, `Eslint`, `Prettier`, `AWS S3`, `Cloudfront`
 
 Other Tools `Slack`, `Git`, `Github`
 
