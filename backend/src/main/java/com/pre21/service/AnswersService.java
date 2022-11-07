@@ -30,6 +30,14 @@ public class AnswersService {
     private final AnswersRepository answersRepository;
     private final AnswerCommentRepository answerCommentRepository;
 
+    /**
+     * 답변 생성 메서드
+     *
+     * @param answersPostDto 답변 요청 바디
+     * @param questionId 질문 식별자
+     * @param userId 사용자 식별자
+     * @author LimJaeminZ
+     */
     public void createAnswer(AnswerDto.Post answersPostDto, Long questionId, Long userId) {
         // 질문 찾기
         Questions findQuestion = questionsRepository.findQuestionsById(questionId).orElseThrow(()
@@ -56,6 +64,13 @@ public class AnswersService {
 
     }
 
+
+    /**
+     * 답변 수를 업데이트하는 메서드(로직 분리)
+     *
+     * @param questions 질문 정보
+     * @author LimJaeminZ
+     */
     public void updateAnswerCount(Questions questions) {
         int earnedAnswerCount = questions.getAnswerCount() + 1;
         questions.setAnswerCount(earnedAnswerCount);
@@ -63,10 +78,11 @@ public class AnswersService {
         questionsRepository.save(questions);
     }
 
+
     /**
-     * answerId를 받아서 저장소에서 Answers 객체를 찾아 반환하는 private 메서드입니다.
+     * 답변 조회 메서드
      *
-     * @param answerId Long 타입 answerId를 받습니다.
+     * @param answerId 답변 식별자
      * @return Answers
      * @author dev32user
      */
@@ -77,16 +93,15 @@ public class AnswersService {
     }
 
     /**
-     * 답변 patch 요청에 대한 서비스 메서드입니다.
+     * 답변 수정 메서드
      *
-     * @param userId         Long 타입 사용자 Id 값입니다.
-     * @param answerId       Long 타입 answer Id 값입니다.
-     * @param answerPatchDto AnswerPatchDto 요청입니다.
+     * @param userId 사용자 식별자
+     * @param answerId 답변 식별자
+     * @param answerPatchDto 답변 수정 응답 바디
      * @author dev32user
      */
     public Answers patchAnswer(Long userId, Long answerId, AnswerDto.Patch answerPatchDto) {
         userIdAnswerIdCheck(userId, answerId);
-
 
         /*
         User findUser = userRepository
@@ -101,10 +116,10 @@ public class AnswersService {
     }
 
     /**
-     * 답변 delete 요청에 대한 서비스 메서드입니다.
+     * 답변 삭제 메서드
      *
-     * @param userId   Long 타입 사용자 Id 값입니다.
-     * @param answerId Long 타입 삭제 할 답변의 Id 값입니다.
+     * @param userId 사용자 식별자
+     * @param answerId 답변 식별자
      * @author dev32user
      */
     public void deleteAnswer(Long userId, Long answerId) {
@@ -115,11 +130,10 @@ public class AnswersService {
     }
 
     /**
-     * userId와 answer 객체에 저장된 사용자의 Id 값이 일치하는지 확인하는 메서드입니다.
-     * 일치하지 않으면 ExceptionCode.UNAUTHORIZED_USER 코드를 반환합니다.
+     * userId와 answer 객체에 저장된 사용자 식별자 값이 일치하는지 확인하는 메서드
      *
-     * @param userId   검사에 사용될 사용자의 Id 값입니다.
-     * @param answerId 검사에 사용될 답변의 Id 값입니다. 해당 값을 바탕으로 답변을 작성한 사용자의 ID를 조회합니다.
+     * @param userId 사용자 식별자
+     * @param answerId 답변 식별자
      * @author dev32user
      */
     private void userIdAnswerIdCheck(Long userId, Long answerId) {
@@ -129,10 +143,9 @@ public class AnswersService {
     }
 
     /**
-     * Id를 입력 받아서 answersRepository에서 Answers 객체를 찾아 반환하는 메서드입니다.
-     * 객체를 찾지 못하면 ExceptionCode.ANSWER_NOT_FOUND 코드를 반환합니다.
+     * 답변 조회 메서드
      *
-     * @param answerId Long 타입 찾을 답변의 Id 값입니다.
+     * @param answerId 답변 식별자
      * @return Answers
      * @author dev32user
      */
@@ -144,16 +157,14 @@ public class AnswersService {
     }
 
 
-
     /**
-     * 답변에 대한 댓글을 생성하는 메서드입니다.
-     * AnswerCommentRepository에 입력받은 answerCommentPostDto를 저장합니다.
+     * 답변 댓글 생성 메서드
      *
-     * @param answerCommentPostDto 댓글을 생성하는 요청의 RequestBody에 해당합니다.
-     * @param answerId             댓글을 생성하는 답변의 Id입니다.
+     * @param answerCommentPostDto 답변 댓글 요청 바디
+     * @param answerId 답변 식별자
      * @author dev32user
      */
-    public void createAnswerComment(AnswerDto.CommentPost answerCommentPostDto,Long userId ,Long answerId) throws Exception{
+    public void createAnswerComment(AnswerDto.CommentPost answerCommentPostDto, Long userId, Long answerId) throws Exception {
         User findUser = authRepository
                 .findById(userId)
                 .orElseThrow(() -> new RuntimeException("findUser.findById 실패"));
@@ -168,8 +179,15 @@ public class AnswersService {
     }
 
 
-
-
+    /**
+     * 답변 리스트(페이지네이션) 반환 메서드
+     *
+     * @param userId 사용자 식별자
+     * @param page 페이지 갯수
+     * @param size 게시글 수
+     * @return 페이지 정보
+     * @author dev32user
+     */
     public Page<Answers> findMyAnswers(Long userId, int page, int size) {
         return answersRepository.findAllByUsersId(
                 userId,

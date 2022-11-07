@@ -77,8 +77,8 @@ public class SecurityConfiguration {
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
                 .antMatchers(HttpMethod.GET, "/h2/**").permitAll()
                 .antMatchers(HttpMethod.POST, "**/login").permitAll()
-//                    .antMatchers(HttpMethod.POST, "/**/questions/ask").hasRole("USER")
-//                    .antMatchers(HttpMethod.GET, "/docs/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.POST, "/**/questions/ask").hasRole("USER")
+                .antMatchers(HttpMethod.GET, "/docs/**").hasRole("ADMIN")
                 .anyRequest().permitAll();
         return http.build();
     }
