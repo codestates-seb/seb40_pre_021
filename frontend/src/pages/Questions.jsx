@@ -19,7 +19,6 @@ const Questions = () => {
 	const [questionCount, setQuestionCount] = useState();
 	const tabList = ['Newest', 'Unanswered'];
 	const [tab, setTab] = useState('Unanswered');
-
 	const [pageSize, setPageSize] = useState('15');
 	const [pages, setPages] = useState([]);
 	const [now, setNow] = useState(1);
