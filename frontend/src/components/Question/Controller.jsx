@@ -26,9 +26,8 @@ const Controller = ({
 	questionId,
 	answerId,
 	setThread,
+	questionChose,
 }) => {
-	const [chosen, setChosen] = useState(chose);
-
 	// 아래 2개의 커스텀 훅이 백엔드와 통신하여 가져온 정보는
 	// 그 아래 3개의 상태와 useEffect를 통해 로컬 정보로 전환됩니다.
 	const [upVoteStatus, downVoteStatus] = useVoteStatus(votedata, loginNickname);
@@ -124,9 +123,8 @@ const Controller = ({
 
 	const handleChoose = () => {
 		if (!chose) {
-			setChosen(true);
 			choose({ questionId, answerId }).then((res) => {
-				getThread(res, true);
+				getThread(res, false);
 			}); // 채택 여부를 저장하여 보냅니다.
 		} else alert('답변 채택은 하나만 가능하다.');
 	};
@@ -155,7 +153,8 @@ const Controller = ({
 					<Choosed
 						QcreatorNickname={QcreatorNickname}
 						loginNickname={loginNickname}
-						chosen={chosen}>
+						questionChose={questionChose}
+						chosen={chose}>
 						<button onClick={handleChoose}>
 							<svg width="36" height="36" viewBox="0 0 36 36">
 								<path d="m6 14 8 8L30 6v8L14 30l-8-8v-8Z"></path>
@@ -233,7 +232,8 @@ const Bookmark = styled.button`
 const Choosed = styled.div`
 	button {
 		display: ${(props) =>
-			props.QcreatorNickname === props.loginNickname && props.chosen === false
+			props.QcreatorNickname === props.loginNickname &&
+			props.questionChose === false
 				? 'block'
 				: 'none'};
 		cursor: pointer;
