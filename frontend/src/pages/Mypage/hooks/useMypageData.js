@@ -14,32 +14,17 @@ function useMypageData(category, value = []) {
 		switch (category) {
 			case 'answer':
 				getMypageUserAnswer().then((res) => {
-					if (res.length > 1) {
-						let sortData = res.sort((a, b) => b.vote - a.vote);
-						setData(sortData);
-					} else {
-						setData(res);
-					}
+					setData(res);
 				});
 				break;
 			case 'question':
 				getMypageUserQuestion().then((res) => {
-					if (res.length > 1) {
-						let sortData = res.sort((a, b) => b.vote - a.vote);
-						setData(sortData);
-					} else {
-						setData(res);
-					}
+					setData(res);
 				});
 				break;
 			case 'tag':
 				getMypageUserTag().then((res) => {
-					if (res.length > 1) {
-						let sortData = res.sort((a, b) => b.tagCount - a.tagCount);
-						setData(sortData);
-					} else {
-						setData(res);
-					}
+					setData(res);
 				});
 				break;
 			case 'bookmark':
