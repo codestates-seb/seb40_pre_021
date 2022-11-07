@@ -27,7 +27,6 @@ const Controller = ({
 	answerId,
 	setThread,
 }) => {
-	const [vote, setVote] = useState(votecount);
 	const [chosen, setChosen] = useState(chose);
 
 	// 아래 2개의 커스텀 훅이 백엔드와 통신하여 가져온 정보는
@@ -52,6 +51,16 @@ const Controller = ({
 		}
 	}, [bookmarkStatus]);
 
+	const getThread = (res, reload) => {
+		if (!res.code) {
+			getQuestion(questionId).then((res) => {
+				setThread(res);
+				if (reload) {
+					window.location.reload();
+				}
+			});
+		}
+	};
 	const handleUpVote = () => {
 		const upVote = { likeYn: true, unlikeYn: false, questionId, answerId };
 		const cancelUpVote = {
@@ -63,12 +72,14 @@ const Controller = ({
 		if (!upVoted) {
 			setUpVoted(true);
 			setDownVoted(false);
-			setVote(votecount + 1);
-			kind === 'answer' ? upVoteForA(upVote) : upVoteForQ(upVote);
+			kind === 'answer'
+				? upVoteForA(upVote).then((res) => getThread(res, false))
+				: upVoteForQ(upVote).then((res) => getThread(res, false));
 		} else {
 			setUpVoted(false);
-			setVote(votecount);
-			kind === 'answer' ? upVoteForA(cancelUpVote) : upVoteForQ(cancelUpVote); //한 번 더 누르면 upVote 상태가 취소됨
+			kind === 'answer'
+				? upVoteForA(cancelUpVote).then((res) => getThread(res, false))
+				: upVoteForQ(cancelUpVote).then((res) => getThread(res, false)); //한 번 더 누르면 upVote 상태가 취소됨
 		}
 	};
 
@@ -83,14 +94,14 @@ const Controller = ({
 		if (!downVoted) {
 			setDownVoted(true);
 			setUpVoted(false);
-			setVote(votecount - 1);
-			kind === 'answer' ? downVoteForA(downVote) : downVoteForQ(downVote);
+			kind === 'answer'
+				? downVoteForA(downVote).then((res) => getThread(res, false))
+				: downVoteForQ(downVote).then((res) => getThread(res, false));
 		} else {
 			setDownVoted(false);
-			setVote(votecount);
 			kind === 'answer'
-				? downVoteForA(cancelDownVote)
-				: downVoteForQ(cancelDownVote);
+				? downVoteForA(cancelDownVote).then((res) => getThread(res, false))
+				: downVoteForQ(cancelDownVote).then((res) => getThread(res, false));
 		}
 	};
 
@@ -114,9 +125,9 @@ const Controller = ({
 	const handleChoose = () => {
 		if (!chose) {
 			setChosen(true);
-			choose({ questionId, answerId }); // 채택 여부를 저장하여 보냅니다.
-			getQuestion(questionId).then((res) => setThread(res)); // 화면을 한 번 리로드합니다.
-			window.location.reload();
+			choose({ questionId, answerId }).then((res) => {
+				getThread(res, true);
+			}); // 채택 여부를 저장하여 보냅니다.
 		} else alert('답변 채택은 하나만 가능하다.');
 	};
 
@@ -128,7 +139,7 @@ const Controller = ({
 						<path d="M2 25h32L18 9 2 25Z"></path>
 					</svg>
 				</Up>
-				<Votes>{vote}</Votes>
+				<Votes>{votecount}</Votes>
 				<Down onClick={handleDownVote} downVoted={downVoted}>
 					<svg width="36" height="36" viewBox="0 0 36 36">
 						<path d="M2 11h32L18 27 2 11Z"></path>
