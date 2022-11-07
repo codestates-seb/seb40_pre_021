@@ -5,7 +5,7 @@
 
 https://d184hsf03uyfp2.cloudfront.net/
 
-## Team Introduction
+### Team Introduction
 
 Backend
 조경민, 조용기, 이동규, 임재민
@@ -13,7 +13,7 @@ Backend
 Frontend
 문지훈, 부주용, 유승윤
 
-## Tech Stacks
+### Tech Stacks
 
 Backend
 Spring Boot, Spring Security, Spring DATA JPA, H2, Mysql, JWT, AWS EC2, AWS RDS, AWS Load Balencer
