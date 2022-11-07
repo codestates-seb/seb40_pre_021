@@ -26,6 +26,7 @@ const Question = () => {
 			setThread(res);
 			if (res.answers) {
 				setChoseAnswerId(res.answers.filter((el) => el.chooseYn === true));
+				console.log('최초 로드 시', choseAnswerId);
 			}
 		});
 		getUserInfo().then((res) => {
