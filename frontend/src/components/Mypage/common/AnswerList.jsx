@@ -7,7 +7,7 @@ const AnswerList = ({ answer, postUrl }) => {
 	let days = new Date(new Date(answerCreatedAt).getTime() + 9 * 60 * 60 * 1000)
 		.toString()
 		.split(' ');
-	let date = `${days[1]} ${days[2]} at ${days[4]}`;
+	const date = `${days[1]} ${days[2]} at ${days[4]}`;
 	return (
 		<AnswerListBox>
 			<AnswerVoteAnswerBox>
@@ -21,7 +21,9 @@ const AnswerList = ({ answer, postUrl }) => {
 						<span>Accepted</span>
 					</AnswerBox>
 				) : null}
-				<AnswerContent choosed={choosed}>{answerBody}</AnswerContent>
+				<AnswerContent choosed={choosed}>
+					{answerBody.replace(/<[^>]*>?/g, '')}
+				</AnswerContent>
 			</AnswerVoteAnswerBox>
 			<AnswerAndUserInfoBox>
 				<a href={postUrl}>View answer</a>
