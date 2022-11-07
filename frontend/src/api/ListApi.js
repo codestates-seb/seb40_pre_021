@@ -12,7 +12,9 @@ export const getList = async (data) => {
 		//real
 		const result = await instance.get(url, { params: data });
 		return result.data;
-	} catch (err) {}
+	} catch (err) {
+		return err;
+	}
 };
 
 export const getHomeList = async (data) => {
@@ -22,5 +24,7 @@ export const getHomeList = async (data) => {
 		//real
 		const result = await instance.get('/', { params: data });
 		return result.data;
-	} catch (err) {}
+	} catch (err) {
+		return err;
+	}
 };
