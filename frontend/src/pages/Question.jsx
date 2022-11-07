@@ -253,7 +253,8 @@ const Question = () => {
 												loginNickname={nickname}
 												questionId={questionId}
 												answerId={el.answerId}
-												setThread={setThread}></Controller>
+												setThread={setThread}
+												questionChose={thread.chooseYn}></Controller>
 										</Left>
 										<Right>
 											<Body
