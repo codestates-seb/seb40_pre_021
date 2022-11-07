@@ -101,6 +101,7 @@ const RightSection = styled.div`
 
 		a {
 			margin-right: 10px;
+			margin-left: 5px;
 		}
 	}
 `;
@@ -161,12 +162,12 @@ const List = ({ data, type }) => {
 					</div>
 					<div className="create">
 						<Avatar
-							nickname={data.createId}
+							nickname={createId}
 							width="27px"
 							heigth="27px"
 							fontSize={`${14 - 2 * createId?.length}px`}
 						/>
-						<Link to="">{createId}</Link>
+						<Link to="">123</Link>
 						asked {timeForToday(data.createdAt, 'ago')}
 					</div>
 				</div>
