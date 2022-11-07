@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -64,10 +66,10 @@ public class MypageController {
     @GetMapping("/questions")
     public ResponseEntity getQuestionInfo(@CookieValue(name = "userId") Long userId) {
         Page<Questions> questionsPage = questionsService.findMyQuestions(userId, page, size);
-        List<Questions> questions = questionsPage.getContent();
-        return new ResponseEntity<>(
-                questionsMapper.questionsToMypageQuestionResponse(questions),
-                HttpStatus.OK);
+        List<MyPageDto.QuestionInfo> response = questionsMapper.questionsToMypageQuestionResponse(questionsPage.getContent());
+        Collections.sort(response);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**
@@ -79,9 +81,10 @@ public class MypageController {
     @GetMapping("/answers")
     public ResponseEntity getAnswerInfo(@CookieValue(name = "userId") Long userId) {
         Page<Answers> answersPage = answersService.findMyAnswers(userId, page, size);
-        List<Answers> answers = answersPage.getContent();
-        return new ResponseEntity<>(answersMapper.answerToAnswerResponses(answers),
-                HttpStatus.OK);
+        List<MyPageDto.AnswerInfos> response = answersMapper.answerToAnswerResponses(answersPage.getContent());
+        Collections.sort(response);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 
@@ -97,8 +100,9 @@ public class MypageController {
     public ResponseEntity getTagsInfo(@CookieValue(name = "userId") Long userId) {
         List<UserTags> tags = tagsService.findMyTags(userId);
         List<MyPageDto.TagInfo> response = tagMapper.TagToTagResponse(tags);
-        return new ResponseEntity<>(
-                response, HttpStatus.OK);
+        Collections.sort(response);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
 
@@ -115,8 +119,6 @@ public class MypageController {
         List<MyPageDto.BookmarkInfo> response = bookmarkMapper
                 .bookmarkToBookmarkResponses(bookmarks);
 
-        return new ResponseEntity<>(
-                response, HttpStatus.OK
-        );
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
