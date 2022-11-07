@@ -7,11 +7,16 @@ https://d184hsf03uyfp2.cloudfront.net/
 
 ### Team Introduction
 
+<img width="520" alt="스크린샷 2022-11-07 20 06 12" src="https://user-images.githubusercontent.com/87458626/200295452-c229b77e-cd3d-4030-9a28-23b10bd8b115.png">
+
+
 Backend
-조경민, 조용기, 이동규, 임재민
+
+`조경민`, `조용기`, `이동규`, `임재민`
 
 Frontend
-문지훈, 부주용, 유승윤
+
+`문지훈`, `부주용`, `유승윤`
 
 ### Tech Stacks
 
@@ -54,3 +59,5 @@ Other Tools `Slack`, `Git`, `Github`
 
 ### Project Architecture
 ![스크린샷 2022-11-07 오후 7 43 26](https://user-images.githubusercontent.com/80810465/200291260-9e2a2c66-042e-47cb-9916-6fbcea33191f.png)
+
+
