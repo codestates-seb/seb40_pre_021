@@ -16,10 +16,13 @@ Frontend
 ### Tech Stacks
 
 Backend
-Spring Boot, Spring Security, Spring DATA JPA, H2, Mysql, JWT, AWS EC2, AWS RDS, AWS Load Balencer
+`Spring Boot`, `Spring Security`, `Spring DATA JPA`, `H2`, `Mysql`, `JWT`, `AWS EC2`, `AWS RDS`, `AWS Load Balencer`
 
-Frontend
-Javascript, React, Redux-toolkit, Axios, Styled-components, Eslint, Prittier, AWS S3, Cloudfront
+Frontend `Javascript`, `React`, `Redux-toolkit`, `Axios`, `Styled-components`, `Eslint`, `Prittier`, `AWS S3`, `Cloudfront`
 
-Communication Tools
-Slack, Git, Github
+Other Tools `Slack`, `Git`, `Github`
+
+### 구현한 기능들
+
+- <'////////>< 갈치
+- <:-)>< 오징어
