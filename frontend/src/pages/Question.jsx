@@ -103,9 +103,9 @@ const Question = () => {
 		commentADEL(data);
 		getQuestion(questionId).then((res) => setThread(res));
 	};
-	const handleAnswer = (str) => {
+	const handleAnswer = (obj) => {
 		setAnswerData({
-			body: str,
+			body: obj.mdText,
 		});
 	};
 	const handleSubmitAnswer = () => {

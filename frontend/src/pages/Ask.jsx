@@ -12,7 +12,9 @@ import { useNavigate } from 'react-router-dom';
 const Ask = ({ editTitle, editBody, editTag }) => {
 	const [title, setTitle] = useState('');
 	const [problem, setProblem] = useState('');
+	const [problemRaw, setProblemRaw] = useState('');
 	const [expect, setExpect] = useState('');
+	const [expectRaw, setExpectRaw] = useState('');
 	const [tagsarr, setTagsarr] = useState('');
 
 	const navigate = useNavigate();
@@ -47,11 +49,13 @@ const Ask = ({ editTitle, editBody, editTag }) => {
 	const handleTitle = (e) => {
 		setTitle(e.target.value);
 	};
-	const handleProblem = (str) => {
-		setProblem(str);
+	const handleProblem = (obj) => {
+		setProblem(obj.mdText);
+		setProblemRaw(obj.rawText);
 	};
-	const handleExpect = (str) => {
-		setExpect(str);
+	const handleExpect = (obj) => {
+		setExpect(obj.mdText);
+		setExpectRaw(obj.rawText);
 	};
 	const handleTags = (arr) => {
 		setTagsarr(arr);
