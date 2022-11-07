@@ -92,6 +92,7 @@ public class MyPageDto {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class BookmarkInfo implements Comparable<BookmarkInfo> {
+        private Long id;
         private Long questionId;
         private String questionUser;
         private String title;
@@ -106,7 +107,7 @@ public class MyPageDto {
 
         @Override
         public int compareTo(BookmarkInfo o) {
-            return this.createdAt.isAfter(o.createdAt) ? 1 : -1;
+            return (int) (this.id - o.id);
         }
     }
 
