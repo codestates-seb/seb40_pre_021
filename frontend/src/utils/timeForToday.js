@@ -1,6 +1,13 @@
 export default function timeForToday(value, type = '') {
+	const KR_TIME_DIFF = 9 * 60 * 60 * 1000;
 	let today = new Date();
 	let timeValue = new Date(value);
+	today = today.getTime() + today.getTimezoneOffset() * 60 * 1000;
+	timeValue = timeValue.getTime() + timeValue.getTimezoneOffset() * 60 * 1000;
+	today = new Date(today);
+	timeValue = new Date(timeValue + KR_TIME_DIFF);
+
+	console.log(today, timeValue);
 
 	const betweenTime = Math.floor(
 		(today.getTime() - timeValue.getTime()) / 1000 / 60,
