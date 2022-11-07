@@ -48,9 +48,9 @@ public class AnswerComments extends Auditable {
     private User user;
 
     /**
-     * 댓글의 내용을 받아서 AnswerComments 엔티티에 저장합니다.
+     * 댓글의 내용을 받아서 AnswerComments 엔티티에 저장
      *
-     * @param comments 댓글의 내용을 String 타입으로 받습니다.
+     * @param comments 댓글의 내용
      * @author dev32user
      */
     public AnswerComments(String comments) {
