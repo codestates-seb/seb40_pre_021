@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import Editor from '../components/common/Editor';
 import Controller from '../components/Question/Controller';
 import Button from '../components/common/Button';
@@ -21,6 +21,8 @@ const Question = () => {
 	const [nickname, setNickname] = useState('');
 	const [answerData, setAnswerData] = useState('');
 	const { questionId } = useParams();
+	const navigate = useNavigate();
+
 	useEffect(() => {
 		getQuestion(questionId).then((res) => {
 			setThread(res);
@@ -186,7 +188,12 @@ const Question = () => {
 									}}></Body>
 								<Tags>
 									{thread.questionsTags.map((el) => (
-										<span key={el.tagId}>{el.title}</span>
+										<span
+											key={el.tagId}
+											role="presentation"
+											onClick={() => navigate(`/search/${el.title}`)}>
+											{el.title}
+										</span>
 									))}
 								</Tags>
 
@@ -338,8 +345,7 @@ const QuestionGroup = styled.article``;
 
 const Header = styled.div``;
 const Title = styled.h1`
-	width: 100%;
-	max-width: calc(100% - 150px)
+	max-width: calc(100% - 150px);
 	word-break: break-all;
 	font-size: 1.75rem;
 	font-weight: 400;
@@ -436,6 +442,11 @@ const Tags = styled.div`
 		background-color: rgb(227, 236, 243);
 		padding: 0.1rem 0.3rem 0.1rem 0.3rem;
 		border-radius: 3px;
+		cursor: pointer;
+	}
+	span:hover {
+		background-color: #d1e3f0;
+		color: #2c5877;
 	}
 `;
 const Footer = styled.div`
