@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Button from '../common/Button';
 import timeForToday from '../../utils/timeForToday';
 import { GoCheck } from 'react-icons/go';
+import Avatar from '../Mypage/UserProfile/Avatar';
 
 const ListStyle = styled.div`
 	border-top: 1px solid rgb(209, 211, 215);
@@ -56,6 +57,9 @@ const RightSection = styled.div`
 	a {
 		text-decoration: none;
 		color: hsl(209, 100%, 37.5%);
+		:hover {
+			color: #0087fe;
+		}
 	}
 	.title {
 		color: hsl(209, 100%, 37.5%);
@@ -91,8 +95,9 @@ const RightSection = styled.div`
 	}
 	.create {
 		display: flex;
-		align-items: flex-end;
+		align-items: center;
 		color: hsl(210, 8%, 45%);
+		margin-top: 10px;
 
 		a {
 			margin-right: 10px;
@@ -155,6 +160,12 @@ const List = ({ data, type }) => {
 							})}
 					</div>
 					<div className="create">
+						<Avatar
+							nickname={data.createId}
+							width="27px"
+							heigth="27px"
+							fontSize={`${14 - 2 * createId?.length}px`}
+						/>
 						<Link to="">{createId}</Link>
 						asked {timeForToday(data.createdAt, 'ago')}
 					</div>
