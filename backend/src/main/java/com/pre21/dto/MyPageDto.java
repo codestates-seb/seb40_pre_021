@@ -106,7 +106,7 @@ public class MyPageDto {
 
         @Override
         public int compareTo(BookmarkInfo o) {
-            return o.createdAt.isAfter(this.createdAt) ? 1 : -1;
+            return this.createdAt.isAfter(o.createdAt) ? 1 : -1;
         }
     }
 
