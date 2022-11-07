@@ -20,6 +20,7 @@ const SavesListBox = ({ bookmarks }) => {
 					views,
 					vote,
 					answer,
+					id,
 				} = bookmark;
 
 				let days = new Date(new Date(createdAt).getTime() + 9 * 60 * 60 * 1000)
@@ -27,7 +28,7 @@ const SavesListBox = ({ bookmarks }) => {
 					.split(' ');
 				let date = `${days[1]} ${days[2]} at ${days[4]}`;
 				return (
-					<ListBox key={questionId}>
+					<ListBox key={id}>
 						<ListAdditionalInfo
 							vote={vote}
 							choosed={choosed}
