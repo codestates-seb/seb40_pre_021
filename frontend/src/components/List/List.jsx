@@ -77,6 +77,7 @@ const RightSection = styled.div`
 		word-wrap: break-word;
 		line-height: 1.2em;
 		height: 2.4em;
+		word-break: break-all;
 	}
 	.bottomBox {
 		width: 100%;
