@@ -1,7 +1,6 @@
 package com.pre21.mapper;
 
 import com.pre21.dto.AnswerDto;
-import com.pre21.dto.AnswerInfoDto;
 import com.pre21.dto.MyPageDto;
 import com.pre21.entity.Answers;
 import com.pre21.entity.QuestionsTags;
@@ -22,6 +21,11 @@ public interface AnswersMapper {
     @Mapping(source = "answers.questions.title", target = "title")
     MyPageDto.AnswerInfo answersToAnswerResponses(Answers answers);
 
+    /**
+     * @param answers Answers 객체를 포함한 List 객체
+     * @return List  MyPageDto.AnswerInfos 객체를 포함한 List 반환
+     * @author Mozzi327
+     */
     default List<MyPageDto.AnswerInfos> answerToAnswerResponses(List<Answers> answers) {
         return answers.stream()
                 .map(answer -> MyPageDto.AnswerInfos
@@ -41,6 +45,12 @@ public interface AnswersMapper {
     }
 
 
+    /**
+     * 답변 수정 요청 시 반환 Dto 생성용 매퍼 메서드
+     *
+     * @param answers   패치된 질문 객체
+     * @author Mozzi327
+     */
     default AnswerDto.GetResponse answerToAnswerResponse(Answers answers) {
         AnswerDto.GetResponse responseDto = new AnswerDto.GetResponse();
 
