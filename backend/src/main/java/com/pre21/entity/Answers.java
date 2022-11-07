@@ -23,7 +23,7 @@ public class Answers {
     @Column(name = "ANSWER_ID")
     private Long id;
 
-    @Column
+    @Column(length = 5000)
     private String contents;
 
     @Column
