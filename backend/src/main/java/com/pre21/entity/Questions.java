@@ -27,11 +27,11 @@ public class Questions {
     private Long id;
 
     // 질문 제목
-    @Column
+    @Column(length = 600)
     private String title;
 
     // 질문 내용
-    @Column
+    @Column(length = 5000)
     private String contents;
 
     // 질문 채택 여부

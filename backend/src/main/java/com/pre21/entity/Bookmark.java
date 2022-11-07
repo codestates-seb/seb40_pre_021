@@ -36,7 +36,7 @@ public class Bookmark {
     @JoinColumn(name = "ANSWER_ID")
     private Answers answers;
 
-    @Column
+    @Column(length = 1000)
     private String url;
 
     @Column

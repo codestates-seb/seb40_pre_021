@@ -25,7 +25,7 @@ public class QuestionComments extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
+    @Column(length = 600)
     private String comments;
 
     @Column

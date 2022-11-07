@@ -30,7 +30,7 @@ public class AnswerComments extends Auditable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(nullable = false)
+    @Column(length = 600)
     private String comments;
 
     @Column
