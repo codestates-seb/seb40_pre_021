@@ -72,6 +72,7 @@ const AnswerContent = styled.p`
 	display: -webkit-box;
 	-webkit-line-clamp: 4;
 	-webkit-box-orient: vertical;
+	line-height: 17px;
 	overflow: hidden;
 	margin-bottom: 8px;
 	font-size: 13px;
