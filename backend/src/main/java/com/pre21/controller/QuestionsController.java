@@ -41,6 +41,7 @@ public class QuestionsController {
     @PostMapping("/ask")
     public ResponseEntity createQuestion(@RequestBody QuestionDto.Post post,
                                          @CookieValue(name = "userId", required = true) Long userId) {
+        log.info("###################### 제발 나와라 @##########################, {}", post);
         Questions questions = questionsService.createQuestion(post, userId);
 
         return new ResponseEntity<>(
