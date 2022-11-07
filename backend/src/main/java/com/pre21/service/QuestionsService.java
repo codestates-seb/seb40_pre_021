@@ -29,11 +29,15 @@ public class QuestionsService {
     private final AdoptionRepository adoptionRepository;
     private final BookmarkRepository bookmarkRepository;
     private final QuestionCommentRepository questionCommentRepository;
-
     private final UserTagRepository userTagRepository;
 
-
-    // 질문 생성
+    /**
+     * 질문 생성 메서드
+     * @param post 질문 생성 요청 Dto
+     * @param userId 쿠키에 담긴 유저Id
+     * @return 생성된 질문
+     * @author LimJaeminZ
+     */
     public Questions createQuestion(QuestionDto.Post post,
                                     Long userId) {
         User findUser = authRepository.findById(userId).orElseThrow(() ->
@@ -75,6 +79,13 @@ public class QuestionsService {
         return questions;
     }
 
+
+    /**
+     * 질문 조회 메서드
+     * @param questionId 조회할 질문Id
+     * @return
+     * @author LimJaeminZ
+     */
     // 질문 조회
     public Questions findQuestion(Long questionId) {
         Questions findQuestion = verifiedExistQuestion(questionId);
@@ -83,25 +94,48 @@ public class QuestionsService {
         return findQuestion;
     }
 
-    // 질문 전체 조회
+
+    /**
+     * 질문 전체 조회
+     * @return
+     * @author LimJaeminZ
+     */
     public List<Questions> findQuestions() {
 
         return (List<Questions>) questionsRepository.findAll();
     }
 
+
+    /**
+     * 페이지별 질문 조회
+     * @param page 페이지
+     * @param size 페이지 출력될 질문
+     * @return
+     * @author LimJaeminZ
+     */
     public Page<Questions> findPageQuestions(int page, int size) {
 
         return questionsRepository.findAll(PageRequest.of(page, size,
                 Sort.by("id").descending()));
     }
 
-    // 질문 전체 개수 출력
+
+    /**
+     * 전체 질문 개수
+     * @return
+     * @author LimJaeminZ
+     */
     public long findQuestionCount() {
 
         return questionsRepository.count();
     }
 
-    // 질문 삭제
+
+    /**
+     * 질문 삭제 메서드
+     * @param questionId 삭제할 질문Id
+     * @param userId 쿠키에 담긴 유저Id
+     */
     public void deleteQuestion(Long questionId, Long userId) {
 
         Questions findQuestion = verifiedExistQuestion(questionId);
@@ -112,7 +146,12 @@ public class QuestionsService {
         questionsRepository.delete(findQuestion);
     }
 
-    // 태그 수 업데이트
+
+    /**
+     * 태그 개수 업데이트
+     * @param tags 태그 정보
+     * @author LimJaeminZ
+     */
     private void updateTagCountUp(Tags tags) {
 
         int earnedTagCount = tags.getCount() + 1;
@@ -120,19 +159,6 @@ public class QuestionsService {
         tags.setLatest(LocalDateTime.now());
 
         tagsRepository.save(tags);
-    }
-
-    private void updateTagCountDown(Tags tags) {
-        int nowTagCount = tags.getCount();
-
-        if(nowTagCount == 1) {
-            tagsRepository.delete(tags);
-        } else {
-            int earnedTagCount = nowTagCount - 1;
-            tags.setCount(earnedTagCount);
-
-            tagsRepository.save(tags);
-        }
     }
 
 
@@ -166,11 +192,11 @@ public class QuestionsService {
 
 
     /**
-     * 질문 patch 요청에 대한 서비스 메서드입니다.
+     * 질문 patch 요청에 대한 서비스 메서드
      *
-     * @param userId           Long 타입 사용자 Id 값입니다.
-     * @param questionId       Long 타입 Question Id 값입니다.
-     * @param patch QuestionPatchDto 요청입니다.
+     * @param userId 쿠키에 담긴 유저Id
+     * @param questionId 수정할 질문Id
+     * @param patch QuestionPatchDto 요청
      * @author dev32user
      */
     public Questions patchQuestion(Long userId, Long questionId, QuestionDto.Patch patch) {
@@ -220,6 +246,13 @@ public class QuestionsService {
         return questionsRepository.save(updatedQuestion);
     }
 
+
+    /**
+     * 질문 북마크
+     * @param questionId 북마크할 질문Id
+     * @param userId 쿠키에 담긴 유저Id
+     * @author LimJaeminZ
+     */
     public void addQuestionBookmark(Long questionId, Long userId) {
         User findUser = verifiedExistUser(userId);
         Questions findQuestion = verifiedExistQuestion(questionId);
@@ -237,6 +270,14 @@ public class QuestionsService {
         }
     }
 
+
+    /**
+     * 답변 북마크
+     * @param questionId 답변이 달린 질문Id
+     * @param answerId 북마크할 답변Id
+     * @param userId 쿠키에 담긴 유저Id
+     * @author LimJaeminZ
+     */
     public void addAnswerBookmark(Long questionId,  Long answerId, Long userId) {
         User findUser = verifiedExistUser(userId);
         Questions findQuestion = verifiedExistQuestion(questionId);
@@ -256,11 +297,11 @@ public class QuestionsService {
 
 
     /**
-     * 질문에 대한 댓글을 생성하는 메서드입니다.
-     * QuestionCommentRepository에 입력받은 questionCommentPostDto를 저장합니다.
+     * 질문에 대한 댓글을 생성하는 메서드-
+     * QuestionCommentRepository에 입력받은 questionCommentPostDto를 저장-
      *
-     * @param commentPost 댓글을 생성하는 요청의 RequestBody에 해당합니다.
-     * @param questionId             댓글을 생성하는 질문의 Id입니다.
+     * @param commentPost 댓글을 생성하는 요청의 RequestBody
+     * @param questionId 댓글을 생성하는 질문Id
      * @author dev32user
      */
     public void createQuestionComment(QuestionDto.CommentPost commentPost,Long userId ,Long questionId) throws Exception {
@@ -317,7 +358,14 @@ public class QuestionsService {
     }
 
 
-
+    /**
+     * 마이페이지 질문 조회
+     * @param userId 쿠키에 담긴 유저Id
+     * @param page 페이지
+     * @param size 페이지에 담긴 질문
+     * @return
+     * @author dev32user
+     */
     public Page<Questions> findMyQuestions(Long userId, int page, int size) {
         return questionsRepository.findAllByUsersId(
                 userId,

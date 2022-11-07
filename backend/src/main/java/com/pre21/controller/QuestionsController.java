@@ -32,8 +32,9 @@ public class QuestionsController {
 
     /**
      * 질문 생성 메서드
-     * @param post   질문 생성 Dto
+     * @param post 질문 생성 Dto
      * @param userId 쿠키에 담긴 유저 Id
+     * @author LimJaeminZ
      */
     @PostMapping("/ask")
     public ResponseEntity createQuestion(@RequestBody QuestionDto.Post post,
@@ -52,6 +53,7 @@ public class QuestionsController {
     /**
      * 질문 상세 조회 메서드
      * @param questionId 질문 식별자
+     * @author LimJaeminZ
      */
     @GetMapping("/{question-id}")
     public ResponseEntity getQuestion(@PathVariable("question-id") Long questionId) {
@@ -63,8 +65,8 @@ public class QuestionsController {
 
     /**
      * 질문 patch 요청에 대한 컨트롤러 메서드
-     * @param userId     쿠키에 담긴 유저Id
-     * @param patch      질문 수정 요청
+     * @param userId 쿠키에 담긴 유저Id
+     * @param patch 질문 수정 요청
      * @param questionId 수정한 질문Id
      * @author dev32user
      */
@@ -79,7 +81,8 @@ public class QuestionsController {
 
     /**
      * 질문 전체 조회 메서드
-     * @return  생성된 질문 전체 + 질문 개수
+     * @return 생성된 질문 전체 + 질문 개수
+     * @author LimJaeminZ
      */
     @GetMapping
     public ResponseEntity getQuestions() {
@@ -95,9 +98,10 @@ public class QuestionsController {
 
     /**
      * Pagination 질문 전체 조회 메서드
-     * @param page  페이지
-     * @param size  페이지에 출력되는 개수
+     * @param page 페이지
+     * @param size 페이지에 출력되는 개수
      * @return 생성된 질문 중 size 개수 + pageInfo
+     * @author LimJaeminZ
      */
     @GetMapping("/question")
     public ResponseEntity getPagingQuestions(@RequestParam int page,
@@ -112,8 +116,9 @@ public class QuestionsController {
 
     /**
      * 질문 삭제 메서드
-     * @param questionId    삭제할 질문Id
-     * @param userId        쿠키에 담긴 유저Id
+     * @param questionId 삭제할 질문Id
+     * @param userId 쿠키에 담긴 유저Id
+     * @author LimJaeminZ
      */
     @DeleteMapping("/delete/{question-id}")
     public void deleteQuestions(@PathVariable("question-id") Long questionId,
@@ -124,9 +129,9 @@ public class QuestionsController {
 
     /**
      * 질문 작성자 채택 메서드
-     * @param questionId : 질문식별자
-     * @param answerId   : 답변식별자
-     * @param userId     : 로그인 유저식별자
+     * @param questionId 질문식별자
+     * @param answerId 답변식별자
+     * @param userId 로그인 유저식별자
      * @author mozzi327
      */
     @GetMapping("/question/{question-id}/adopt/{answer-id}")
@@ -138,8 +143,8 @@ public class QuestionsController {
 
     /**
      * 질문 북마크 메서드
-     * @param questionId    북마크 처리 할 질문Id
-     * @param userId        쿠키에 담긴 유저Id
+     * @param questionId 북마크 처리 할 질문Id
+     * @param userId 쿠키에 담긴 유저Id
      * @author mozzi327
      */
     @PostMapping("/bookmark/{question-id}")
@@ -150,9 +155,10 @@ public class QuestionsController {
 
     /**
      * 답변 북마크 메서드
-     * @param questionId    답변이 달린 질문Id
-     * @param answerId      북마크 처리 할 답변Id
-     * @param userId        쿠키에 담긴 유저Id
+     * @param questionId 답변이 달린 질문Id
+     * @param answerId 북마크 처리 할 답변Id
+     * @param userId 쿠키에 담긴 유저Id
+     * @author LimJaeminZ
      */
     @PostMapping("/bookmark/{question-id}/{answer-id}")
     public void clickAnswerBookmark(@PathVariable("question-id") Long questionId,
@@ -163,7 +169,7 @@ public class QuestionsController {
 
     /**
      * 질문에 대한 댓글 생성
-     * @param questionId             댓글을 생성하는 질문Id
+     * @param questionId 댓글을 생성하는 질문Id
      * @param commentPost 댓글을 생성하는 요청의 RequestBody
      * @author dev32user
      */
@@ -180,7 +186,7 @@ public class QuestionsController {
     /**
      * 질문 좋아요,싫어요 메서드
      * @param questionId 질문식별자
-     * @param request
+     * @param request 좋아요, 싫어요 요청 RequestBody
      * @author dev32user
      */
     @ResponseStatus(HttpStatus.OK)
@@ -191,7 +197,13 @@ public class QuestionsController {
         likeService.saveQuestionLike(questionId, request, userId);
     }
 
-
+    /**
+     * 답변 생성 메서드
+     * @param questionId 답변을 생성할 질문Id
+     * @param userId 쿠키에서 가져온 유저Id
+     * @param answerPostDto 답변 생성 요청 RequestBody
+     * @author LimJaeminZ
+     */
     @PostMapping("/answer/{question-id}")
     public void createAnswer(@PathVariable("question-id") Long questionId,
                              @CookieValue(name = "userId") Long userId,
@@ -200,6 +212,13 @@ public class QuestionsController {
         answersService.createAnswer(answerPostDto, questionId, userId);
     }
 
+    /**
+     * 답변 좋아요, 싫어요
+     * @param answerId 좋아요, 싫어요 기능을 적용할 답변Id
+     * @param userId 쿠키에 담긴 유저Id
+     * @param request 좋아요, 싫어요 요청 RequestBody
+     * @author mozzi327
+     */
     @PostMapping("/answer/{answer-id}/like")
     public void clickAnswerLike(@PathVariable("answer-id") Long answerId,
                                 @CookieValue("userId") Long userId,
@@ -209,11 +228,10 @@ public class QuestionsController {
     }
 
     /**
-     * 답변 patch 요청에 대한 컨트롤러 메서드입니다.
-     *
-     * @param userId         쿠키에서 값을 받아옵니다.
-     * @param answerPatchDto 답변 수정 요청입니다.
-     * @param answerId       수정한 답변의 Id입니다.
+     * 답변 patch 요청에 대한 컨트롤러 메서드
+     * @param userId 쿠키에서 가져운 유저Id
+     * @param answerPatchDto 답변 수정 요청
+     * @param answerId 수정한 답변Id
      * @author dev32user
      */
     @PatchMapping("/answer/{answer-id}/edit")
@@ -227,10 +245,9 @@ public class QuestionsController {
 
 
     /**
-     * 답번 delete 요청에 대한 컨트롤러 메서드입니다.
-     *
-     * @param userId   Long 타입의 삭제를 요청한 사용자의 Id 값입니다. 쿠키에서 값을 받아옵니다.
-     * @param answerId Long 타입의 삭제 할 답변의 Id 값입니다.
+     * 답번 delete 요청에 대한 컨트롤러 메서드
+     * @param userId Long 타입의 삭제를 요청한 쿠키 유저Id
+     * @param answerId Long 타입의 삭제 할 답변Id
      * @author dev32user
      */
     @DeleteMapping("/answer/{answer-id}/delete")
@@ -250,8 +267,8 @@ public class QuestionsController {
      * requestBody : {"userId":"userId", "comments":"string"} <br>
      * responseBody : NULL
      *
-     * @param answerId             댓글을 생성하는 답변의 Id입니다.
-     * @param answerCommentPostDto 댓글을 생성하는 요청의 RequestBody에 해당합니다.
+     * @param answerId 댓글을 생성하는 답변Id
+     * @param answerCommentPostDto 댓글을 생성하는 요청의 RequestBody
      * @author dev32user
      */
     @PostMapping("/answer/{answer-id}/comment")
