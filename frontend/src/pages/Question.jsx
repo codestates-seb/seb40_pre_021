@@ -143,8 +143,7 @@ const Question = () => {
 		else {
 			answer(data).then((res) => {
 				if (!res.code) {
-					getQuestion(questionId).then((res) => setThread(res));
-					setAnswerData('');
+					window.location.reload();
 				}
 			});
 		} //여기서 에디터가 다시 렌더링되어야함.
