@@ -23,6 +23,7 @@ public interface BookmarkMapper {
                             if (ifExistAdoptedAnswer == null) {
                                 return MyPageDto.BookmarkInfo
                                         .builder()
+                                        .id(bookmark.getId())
                                         .questionId(bookmark.getQuestions().getId())
                                         .questionUser(bookmark.getUsers().getNickname())
                                         .title(bookmark.getQuestions().getTitle())
@@ -37,6 +38,7 @@ public interface BookmarkMapper {
                             } else {
                                 return MyPageDto.BookmarkInfo
                                         .builder()
+                                        .id(bookmark.getId())
                                         .questionId(bookmark.getQuestions().getId())
                                         .questionUser(bookmark.getUsers().getNickname())
                                         .title(bookmark.getQuestions().getTitle())
