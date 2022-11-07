@@ -4,15 +4,13 @@ import markdownParse from '../../utils/markdownParse';
 
 const Editor = ({ id, callback }) => {
 	const [mdText, setMdText] = useState('');
-	const [rawText, setRawText] = useState('');
 
 	const handleChange = (e) => {
 		setMdText(markdownParse(e.target.value));
-		setRawText(e.target.value);
 	};
 	useEffect(() => {
-		callback(rawText);
-	}, [rawText]);
+		callback(mdText);
+	}, [mdText]);
 	return (
 		<>
 			<Container>

@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from '../common/Button';
 import timeForToday from '../../utils/timeForToday';
-import htmlClarify from '../../utils/htmlClarify';
 import { GoCheck } from 'react-icons/go';
 import Avatar from '../Mypage/UserProfile/Avatar';
 
@@ -136,7 +135,7 @@ const List = ({ data, type }) => {
 					{data.title}
 				</div>
 				{type === 'Questions' && (
-					<div className="body">{htmlClarify(data.contents)}</div>
+					<div className="body">{data.contents.replace(/<[^>]*>?/g, '')}</div>
 				)}
 				<div className="bottomBox">
 					<div className="tags">
