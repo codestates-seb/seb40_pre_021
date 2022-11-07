@@ -13,8 +13,8 @@ public class RestConstants {
     public static final String SECURED_API_URL = "/api/v1/**";
 
     public static final String BASIC_PAGE = "https://d184hsf03uyfp2.cloudfront.net/";
-    public static final String BOOKMARK_URL = BASIC_PAGE + "user/";
     public static final String DETAIL = "questions/question/";
+    public static final String BOOKMARK_URL = BASIC_PAGE + DETAIL;
 
     public static final String QUESTION_URL = BASIC_PAGE + DETAIL;
 }
