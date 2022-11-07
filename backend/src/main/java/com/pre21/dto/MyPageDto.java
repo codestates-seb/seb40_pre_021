@@ -70,6 +70,7 @@ public class MyPageDto {
         private LocalDateTime createdAt;
         private boolean choosed;
         private int vote;
+        private List<String> tags;
         private String url;
     }
 

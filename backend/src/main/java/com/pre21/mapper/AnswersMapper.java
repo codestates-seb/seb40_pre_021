@@ -4,6 +4,7 @@ import com.pre21.dto.AnswerDto;
 import com.pre21.dto.AnswerInfoDto;
 import com.pre21.dto.MyPageDto;
 import com.pre21.entity.Answers;
+import com.pre21.entity.QuestionsTags;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.ReportingPolicy;
@@ -31,6 +32,10 @@ public interface AnswersMapper {
                         .createdAt(answer.getCreatedAt())
                         .choosed(answer.isChooseYn())
                         .vote(answer.getVote())
+                        .tags(answer.getQuestions().getQuestionsTags()
+                                .stream()
+                                .map(QuestionsTags::getTagValue)
+                                .collect(Collectors.toList()))
                         .url(QUESTION_URL + answer.getQuestions().getId())
                         .build()).collect(Collectors.toList());
     }
