@@ -118,6 +118,7 @@ public class MypageController {
         List<Bookmark> bookmarks = bookmarkService.findMyBookmarks(userId);
         List<MyPageDto.BookmarkInfo> response = bookmarkMapper
                 .bookmarkToBookmarkResponses(bookmarks);
+        Collections.sort(response);
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
