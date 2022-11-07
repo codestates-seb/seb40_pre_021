@@ -1,8 +1,6 @@
 package com.pre21.mapper;
 
-import com.pre21.dto.AnswerDto;
 import com.pre21.dto.AuthDto;
-import com.pre21.dto.UserDto;
 import com.pre21.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;

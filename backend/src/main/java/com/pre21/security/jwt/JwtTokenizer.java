@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.Cookie;
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Component
@@ -118,9 +119,12 @@ public class JwtTokenizer {
     }
 
     public User findUserByEmail(String email) {
-        return authRepository
+        User findUser = authRepository
                 .findUserByEmail(email)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.USER_NOT_FOUND));
+        findUser.setLatestLogin(LocalDateTime.now());
+        authRepository.save(findUser);
+        return findUser;
     }
 
 

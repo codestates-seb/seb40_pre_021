@@ -43,6 +43,10 @@ public class User {
     @Column
     private LocalDateTime createdAt = LocalDateTime.now();
 
+    @Column
+    private LocalDateTime latestLogin;
+
+
     // Security 유저 권한
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();
