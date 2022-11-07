@@ -14,6 +14,7 @@ import {
 	getUserInfo,
 } from '../api/QuestionApi';
 import timeForToday from '../utils/timeForToday';
+import markdownParse from '../utils/markdownParse';
 
 const Question = () => {
 	const [thread, setThread] = useState('');
@@ -103,9 +104,9 @@ const Question = () => {
 		commentADEL(data);
 		getQuestion(questionId).then((res) => setThread(res));
 	};
-	const handleAnswer = (obj) => {
+	const handleAnswer = (str) => {
 		setAnswerData({
-			body: obj.mdText,
+			body: markdownParse(str),
 		});
 	};
 	const handleSubmitAnswer = () => {
