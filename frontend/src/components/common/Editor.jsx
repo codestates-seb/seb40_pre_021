@@ -1,19 +1,18 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import markdownParse from '../../utils/markdownParse';
-import htmlClarify from '../../utils/htmlClarify';
 
-const Editor = ({ id, callback, callback2 }) => {
+const Editor = ({ id, callback }) => {
 	const [mdText, setMdText] = useState('');
 	const [rawText, setRawText] = useState('');
 
 	const handleChange = (e) => {
 		setMdText(markdownParse(e.target.value));
-		setRawText(htmlClarify(e.target.value));
+		setRawText(e.target.value);
 	};
 	useEffect(() => {
-		callback({ mdText: mdText, rawText: rawText });
-	}, [mdText]);
+		callback(rawText);
+	}, [rawText]);
 	return (
 		<>
 			<Container>
