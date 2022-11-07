@@ -21,8 +21,6 @@ const Controller = ({
 	votedata,
 	bookmarkdata,
 	chose,
-	chosen,
-	setChosen,
 	QcreatorNickname,
 	loginNickname,
 	questionId,
@@ -30,7 +28,7 @@ const Controller = ({
 	setThread,
 }) => {
 	const [vote, setVote] = useState(votecount);
-	const [chooseCheck, setChooseCheck] = useState(chose);
+	const [chosen, setChosen] = useState(chose);
 
 	// 아래 2개의 커스텀 훅이 백엔드와 통신하여 가져온 정보는
 	// 그 아래 3개의 상태와 useEffect를 통해 로컬 정보로 전환됩니다.
@@ -113,13 +111,13 @@ const Controller = ({
 		}
 	};
 
-	const handleChose = () => {
+	const handleChoose = () => {
 		if (!chose) {
-			setChooseCheck(true);
 			setChosen(true);
 		}
 		choose({ questionId, answerId }); // 채택 여부를 저장하여 보냅니다.
 		getQuestion(questionId).then((res) => setThread(res)); // 화면을 한 번 리로드합니다.
+		window.location.reload();
 	};
 
 	return (
@@ -146,10 +144,9 @@ const Controller = ({
 					<Choosed
 						QcreatorNickname={QcreatorNickname}
 						loginNickname={loginNickname}
-						chooseCheck={chooseCheck}
 						chosen={chosen}
 						setChosen={setChosen}>
-						<button onClick={handleChose}>
+						<button onClick={handleChoose}>
 							<svg width="36" height="36" viewBox="0 0 36 36">
 								<path d="m6 14 8 8L30 6v8L14 30l-8-8v-8Z"></path>
 							</svg>
@@ -226,22 +223,19 @@ const Bookmark = styled.button`
 const Choosed = styled.div`
 	button {
 		display: ${(props) =>
-			props.QcreatorNickname === props.loginNickname &&
-			props.chooseCheck === false &&
-			props.chosen === false
+			props.QcreatorNickname === props.loginNickname && props.chosen === false
 				? 'block'
 				: 'none'};
 		cursor: pointer;
 	}
 	div {
-		display: ${(props) =>
-			props.chooseCheck === true || props.chosen === true ? 'block' : 'none'};
+		display: ${(props) => (props.chosen === true ? 'block' : 'none')};
 	}
 	svg {
 		display: block;
 		background-color: white;
 		fill: ${(props) =>
-			props.chooseCheck === true ? 'rgb(64, 110, 72)' : 'rgb(187, 191, 195)'};
+			props.chosen === true ? 'rgb(64, 110, 72)' : 'rgb(187, 191, 195)'};
 	}
 `;
 const History = styled.button`
