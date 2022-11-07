@@ -110,15 +110,6 @@ const List = ({ data, type }) => {
 	const [createId, setCreateId] = useState(data.nickname);
 	const [choosed, setChoosed] = useState(data.chooseYn);
 	const navigate = useNavigate();
-	let body;
-	let checkJSON = false;
-	try {
-		body = JSON.parse(data.contents);
-		checkJSON = true;
-	} catch {
-		//이전글들 오류 때문에 그냥 넘김
-		body = data.contents;
-	}
 
 	const buttonProps = {
 		color: `hsl(205,47%,42%)`,
@@ -143,9 +134,7 @@ const List = ({ data, type }) => {
 					onClick={() => navigate(`/questions/question/${data.id}`)}>
 					{data.title}
 				</div>
-				{type === 'Questions' && (
-					<div className="body">{checkJSON ? body.rawText : body}</div>
-				)}
+				{type === 'Questions' && <div className="body">{data.contents}</div>}
 				<div className="bottomBox">
 					<div className="tags">
 						{Array.isArray(data.questionsTags) &&
@@ -167,7 +156,7 @@ const List = ({ data, type }) => {
 							heigth="27px"
 							fontSize={`${20 - 2 * createId?.length}px`}
 						/>
-						<Link to="">123</Link>
+						<Link to="">{createId}</Link>
 						asked {timeForToday(data.createdAt, 'ago')}
 					</div>
 				</div>
