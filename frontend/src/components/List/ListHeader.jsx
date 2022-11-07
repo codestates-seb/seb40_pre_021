@@ -12,6 +12,9 @@ const ListHeaderStyle = styled.div`
 		padding: 12px;
 		display: flex;
 		align-items: center;
+		:first-child {
+			padding: 0;
+		}
 	}
 `;
 
@@ -19,8 +22,8 @@ const Section = styled.section`
 	justify-content: space-between;
 
 	.title {
-		font-size: 32px;
-		font-weight: 500;
+		font-size: 27px;
+		font-weight: 400;
 	}
 `;
 const BottomSection = styled.section`
@@ -28,7 +31,7 @@ const BottomSection = styled.section`
 
 	.questions {
 		font-size: 1.30769231rem;
-		font-weight: 500;
+		font-weight: 400;
 	}
 `;
 
