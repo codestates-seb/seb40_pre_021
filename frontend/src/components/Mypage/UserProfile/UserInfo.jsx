@@ -3,7 +3,7 @@ import { MdCake } from 'react-icons/md';
 import { AiOutlineClockCircle } from 'react-icons/ai';
 import { FaRegCalendarAlt } from 'react-icons/fa';
 
-const UserInfo = ({ date }) => {
+const UserInfo = ({ date, recentLogin }) => {
 	return (
 		<Container>
 			<Box>
@@ -12,12 +12,12 @@ const UserInfo = ({ date }) => {
 			</Box>
 			<Box>
 				<ClockIcon />
-				<InfoText>Last seen {date}</InfoText>
+				<InfoText>Last seen {recentLogin}</InfoText>
 			</Box>
-			<Box>
+			{/* <Box>
 				<CalendarIcon />
 				<InfoText>Visited 3 days, 3 consecutive</InfoText>
-			</Box>
+			</Box> */}
 		</Container>
 	);
 };
