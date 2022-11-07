@@ -102,7 +102,7 @@ const RightSection = styled.div`
 const List = ({ data, type }) => {
 	// const [questionId, setQuestionId] = useState(data.questionId);
 	const [createId, setCreateId] = useState(data.nickname);
-	const [choosed, setChoosed] = useState(data.choosed);
+	const [choosed, setChoosed] = useState(data.chooseYn);
 	const navigate = useNavigate();
 
 	const buttonProps = {
@@ -117,7 +117,7 @@ const List = ({ data, type }) => {
 				<div className="vote">{data.vote} votes</div>
 				<div className="answer">
 					{choosed && <GoCheck />}
-					{data.answerCount} answer
+					{data.answerCount} {data.answerCount === 1 ? 'answer' : 'answers'}
 				</div>
 				<div className="views">{data.views} views</div>
 			</LeftSection>
