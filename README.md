@@ -26,3 +26,6 @@ Other Tools `Slack`, `Git`, `Github`
 
 - <'////////>< 갈치
 - <:-)>< 오징어
+
+### Project Architecture
+![스크린샷 2022-11-07 오후 7 43 26](https://user-images.githubusercontent.com/80810465/200291260-9e2a2c66-042e-47cb-9916-6fbcea33191f.png)
