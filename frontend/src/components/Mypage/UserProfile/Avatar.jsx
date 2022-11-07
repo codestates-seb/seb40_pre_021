@@ -4,7 +4,7 @@ const Avatar = ({ nickname, ...props }) => {
 	return (
 		<AvatarBox {...props}>
 			<AvatarText {...props}>
-				{nickname?.length > 3 ? nickname.slice(0, 3) : nickname}
+				{nickname?.length > 4 ? nickname.slice(0, 4) : nickname}
 			</AvatarText>
 		</AvatarBox>
 	);
